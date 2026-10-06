@@ -1,0 +1,113 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Онлайн-запись — Графит</title>
+<meta name="description" content="Графит: выберите услугу, мастера и время — запись онлайн.">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Графит">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="styles.css">
+<style>:root,:root:not(.x){--page:#000000;--bg:#0a0b0d;--surface:#121418;--surface-2:#191c21;--ink:#eceae6;--muted:#8e949c;--line:rgba(255,255,255,.16);--line-soft:rgba(255,255,255,.09);--glass:rgba(10,10,11,.86);--accent-soft:rgba(255,255,255,.08);--ok:#55d6a0;--danger:#ff7b7b;--signal:#2cb7f5;--accent:#a9b8c8;--accent-ink:#111111;color-scheme:dark}</style>
+</head>
+<body>
+<div class="stage">
+  <div class="app" id="app">
+    <header class="topbar">
+      <button class="icon-btn" id="backBtn" type="button" aria-label="Назад" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <div class="ttl" id="topTitle"></div>
+      <button class="icon-btn" id="installBtn" type="button" aria-label="Установить на телефон">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M12 7v7M9 11.5l3 3 3-3"/></svg>
+      </button>
+    </header>
+
+    <main class="scroll" id="scroll">
+      <!-- КЛИЕНТ: запись -->
+      <section id="vBook" hidden>
+        <div class="hero" id="hero">
+          <div class="hero-top">
+            <span class="live" id="liveNow"><i></i><span></span></span>
+            <span class="demo-tag">демо</span>
+          </div>
+          <h1 id="shopName"></h1>
+          <p class="hero-sub" id="heroSub"></p>
+          <div class="team" id="team" hidden></div>
+          <div class="hero-actions" id="heroActions"></div>
+        </div>
+        <button class="soon" id="soonBtn" type="button" hidden></button>
+
+        <div class="prog" id="prog"><span></span><span></span><span></span></div>
+
+        <div id="p1" class="pane">
+          <div class="step-h"><small>Шаг 1 из 3</small><h2>Какая услуга?</h2></div>
+          <div class="svc-list" id="svcList"></div>
+        </div>
+        <div id="p2" class="pane" hidden>
+          <div class="step-h"><small>Шаг 2 из 3</small><h2 id="p2h">Когда вам удобно?</h2></div>
+          <div id="masterStrip" hidden></div>
+          <div class="days" id="dayStrip"></div>
+          <div id="timeGrid"></div>
+        </div>
+        <div id="p3" class="pane" hidden>
+          <div class="step-h"><small>Шаг 3 из 3</small><h2>Ваши контакты</h2></div>
+          <div class="recap" id="recap"></div>
+          <form id="form" class="fields" autocomplete="on" novalidate>
+            <label class="f" for="fName">Ваше имя<input id="fName" name="name" autocomplete="name" maxlength="60" placeholder="Как к вам обращаться"></label>
+            <label class="f" for="fPhone">Телефон<input id="fPhone" name="tel" type="tel" inputmode="tel" autocomplete="tel" maxlength="24" placeholder="+7 900 000-00-00"></label>
+            <label class="f full" for="fComment">Пожелания<textarea id="fComment" maxlength="500" placeholder="Необязательно. Например: первый раз у вас"></textarea></label>
+            <div class="consent full">
+              <input id="fConsent" type="checkbox">
+              <label for="fConsent">Даю <a href="consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a> и принимаю <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a></label>
+            </div>
+          </form>
+        </div>
+        <div id="p4" class="pane done" hidden></div>
+      </section>
+
+      <!-- КЛИЕНТ: мои записи -->
+      <section id="vMine" hidden>
+        <div class="step-h"><small>История</small><h2>Мои записи</h2></div>
+        <div class="mine-list" id="mineList"></div>
+      </section>
+
+      <!-- ВЛАДЕЛЕЦ -->
+      <section id="vOwner" hidden>
+        <div class="stats" id="stats"></div>
+        <div class="seg" id="oseg" role="tablist"></div>
+        <div id="oBookings">
+          <div class="chips" id="chips"></div>
+          <div id="bookingList"></div>
+        </div>
+        <div id="oClients" hidden></div>
+        <div id="oServices" hidden></div>
+        <div id="oMasters" hidden></div>
+        <div id="oSettings" hidden></div>
+      </section>
+    </main>
+
+    <div class="cta" id="cta" hidden>
+      <div class="sum"><small id="ctaLabel"></small><b id="ctaVal"></b></div>
+      <button class="btn primary" id="ctaNext" type="button">Далее</button>
+    </div>
+    <nav class="tabbar" id="tabbar" aria-label="Разделы"></nav>
+
+    <div class="sheet" id="sheet" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-label="Установка на телефон" id="sheetPanel"></div>
+    </div>
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+  </div>
+</div>
+<script src="store.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
+

@@ -171,9 +171,9 @@ p { margin: 0; }
 /* работы */
 .work { padding: 120px 0 0; overflow: hidden; }
 .works { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
-.works a { display: grid; grid-template-columns: 70px minmax(0, 1.3fr) 1fr 1.4fr 40px; align-items: center; gap: 20px; padding: 26px 0; border-top: 1px solid var(--line); text-decoration: none; transition: padding .35s var(--ease), color .3s; }
+.works a { display: grid; grid-template-columns: 70px minmax(0, 1.6fr) 1fr 1.3fr 40px; align-items: center; gap: 20px; padding: 26px 0; border-top: 1px solid var(--line); text-decoration: none; transition: padding .35s var(--ease), color .3s; }
 .works a:hover { padding-left: 14px; }
-.works b { font-size: clamp(34px, 5vw, 76px); font-weight: 700; letter-spacing: -.04em; line-height: 1; }
+.works b { font-size: clamp(32px, 4.2vw, 64px); font-weight: 700; letter-spacing: -.04em; line-height: 1; }
 .works .mono { color: var(--muted); }
 .w-kind { font-weight: 600; }
 .w-what { color: var(--muted); font-size: 15px; }

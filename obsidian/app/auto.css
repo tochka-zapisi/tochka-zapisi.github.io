@@ -1,0 +1,113 @@
+/* Приложение автосервиса: дополнения к styles.css — заставка, первый экран с фото, статус ремонта, гараж, госномер, смета. */
+.brandbar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.brandbar img { width: auto; height: 28px; }
+.brandbar > span:not(.demo-tag) { flex: 1; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; font-size: 13px; }
+.brandbar .demo-tag { margin-right: 4px; }
+
+.hero { position: relative; overflow: hidden; border-radius: 26px; padding: 22px 20px 20px; min-height: 238px; display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; color: #fff; isolation: isolate;
+  background: #0b0b0c var(--img, none) center / cover no-repeat; box-shadow: 0 24px 50px -30px rgba(0, 0, 0, .9); }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0, 0, 0, .05) 0%, rgba(0, 0, 0, .45) 45%, rgba(0, 0, 0, .9) 100%); }
+.hero small { color: rgba(255, 255, 255, .72); font-size: 14px; }
+.hero b { font-family: var(--f-display); font-size: 30px; font-weight: var(--wd); line-height: 1.05; }
+.hero p { color: rgba(255, 255, 255, .72); font-size: 13.5px; margin: 4px 0 14px; }
+.hero .btn { align-self: flex-start; }
+.hero .btn svg { width: 17px; height: 17px; }
+
+.quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0 4px; }
+.quick > * { display: grid; justify-items: center; gap: 6px; padding: 12px 4px 10px; border-radius: 18px; border: 1px solid var(--line); background: var(--surface); text-decoration: none; color: inherit; font-size: 12.5px; font-weight: 600; }
+.quick svg { width: 22px; height: 22px; color: var(--accent); }
+.quick > *:active { transform: scale(.97); }
+
+/* машина в сервисе */
+.live { margin-top: 14px; border-radius: 26px; padding: 18px; background: linear-gradient(160deg, var(--surface-2), var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); position: relative; overflow: hidden; }
+.live::after { content: ""; position: absolute; right: -80px; top: -80px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%); pointer-events: none; }
+.live-top { display: flex; align-items: center; gap: 8px; }
+.live-top small { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.pulse { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent); animation: pulse 1.8s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 10px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+.live-car { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; }
+.live-car b { font-size: 20px; font-family: var(--f-display); font-weight: var(--wd); }
+.live-t { color: var(--muted); font-size: 14px; margin-top: 2px; }
+.live-s { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; font-size: 14px; color: var(--muted); }
+.live-s svg { width: 20px; height: 20px; flex: none; color: var(--accent); }
+.live-s.ok { color: var(--ink); }
+.live .row { display: flex; gap: 8px; margin-top: 14px; }
+.live .row .btn { flex: 1; }
+.track { list-style: none; margin: 18px 0 4px; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); position: relative; }
+.track::before { content: ""; position: absolute; left: 10%; right: 10%; top: 6px; height: 2px; background: var(--line); }
+.track li { display: grid; justify-items: center; gap: 8px; position: relative; text-align: center; }
+.track li + li::before { content: ""; position: absolute; right: 50%; width: 100%; top: 6px; height: 2px; background: transparent; }
+.track li.pass + li::before { background: var(--accent); }
+.track i { width: 14px; height: 14px; border-radius: 50%; background: var(--surface); border: 2px solid var(--line); position: relative; z-index: 1; }
+.track .pass i { background: var(--accent); border-color: var(--accent); }
+.track .now i { border-color: var(--accent); box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 22%, transparent); background: var(--bg); }
+.track span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } /* подписи — для экранного диктора; видимая — одна строка ниже */
+.track-cap { font-size: 13px; color: var(--muted); margin-top: 12px; }
+.track-cap b { color: var(--ink); }
+
+.est { margin-top: 16px; border-top: 1px dashed var(--line); padding-top: 12px; display: grid; gap: 8px; }
+.est > div { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+.est > div span { color: var(--muted); }
+.est em { font-style: normal; font-size: 11px; color: var(--ok, #3aa76d); border: 1px solid currentColor; border-radius: 99px; padding: 0 6px; margin-left: 4px; }
+.est .tot { border-top: 1px solid var(--line); padding-top: 10px; font-size: 16px; }
+.est .tot span { color: var(--ink); font-weight: 700; }
+.est-h { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+.est-h svg { width: 18px; height: 18px; color: var(--accent); }
+.btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+
+/* госномер — как настоящая табличка */
+.plate { display: inline-flex; align-items: stretch; height: 26px; border: 1.5px solid #111; border-radius: 5px; background: #fff; color: #111; font: 700 13px/1 "Roboto Mono", ui-monospace, "SFMono-Regular", Menlo, monospace; letter-spacing: .04em; overflow: hidden; flex: none; white-space: nowrap; }
+.plate b { display: flex; align-items: center; padding: 0 7px; }
+.plate i { font-style: normal; display: grid; place-items: center; border-left: 1.5px solid #111; padding: 0 5px; line-height: .9; }
+.plate em { font-style: normal; font-size: 11px; }
+.plate small { font-size: 6px; letter-spacing: .1em; }
+
+/* машина */
+.carc { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 16px; }
+.carc-h { display: flex; align-items: center; gap: 12px; }
+.carc-h > div { flex: 1; min-width: 0; }
+.carc-h b { display: block; font-size: 17px; }
+.carc-h small { color: var(--muted); font-size: 13px; }
+.carc-ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); flex: none; }
+.carc-ic svg { width: 26px; height: 26px; }
+.to { margin-top: 14px; }
+.to-h { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+.to-h span { display: flex; align-items: center; gap: 6px; }
+.to-h svg { width: 18px; height: 18px; color: var(--accent); }
+.to-h small { color: var(--muted); font-weight: 400; font-size: 12.5px; }
+.bar.warn i { background: linear-gradient(90deg, var(--accent), #ff7a3d); }
+.carc .row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+
+.vis { display: flex; justify-content: space-between; gap: 12px; width: 100%; text-align: left; border: 0; background: none; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.vis:last-child { border-bottom: 0; }
+.vis > span { display: grid; gap: 2px; min-width: 0; }
+.vis small { color: var(--muted); font-size: 12.5px; }
+.vis b { white-space: nowrap; }
+.kick { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+.nt { padding: 14px 16px; border-bottom: 1px solid var(--line); display: grid; gap: 2px; }
+.nt:last-child { border-bottom: 0; }
+.nt small { color: var(--muted); }
+.demo-note { display: flex; gap: 8px; align-items: flex-start; }
+.demo-note svg { width: 18px; height: 18px; flex: none; color: var(--accent); margin-top: 1px; }
+.sheet-img { width: calc(100% + 0px); aspect-ratio: 16 / 9; object-fit: cover; border-radius: 18px; margin-bottom: 14px; }
+.rate { display: flex; justify-content: center; gap: 8px; margin: 6px 0 4px; }
+.rate button { width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; color: var(--muted); }
+.rate button svg { width: 22px; height: 22px; }
+.rate button.on { color: var(--accent); border-color: var(--accent); }
+.rate button.on svg { fill: currentColor; }
+.loyal .brand { display: inline-flex; align-items: center; gap: 8px; }
+.loyal .brand img { height: 22px; width: auto; }
+.works { grid-template-columns: repeat(2, 1fr); }
+.chip[data-act="add-car"] { border-style: dashed; }
+
+/* заставка */
+.splash { position: absolute; inset: 0; z-index: 50; display: grid; place-content: center; justify-items: center; gap: 18px; background: var(--bg); transition: opacity .55s ease, visibility .55s; }
+.splash img { width: 120px; height: auto; animation: sp-in .9s cubic-bezier(.2, .8, .2, 1) both; }
+.splash b { font-weight: 700; letter-spacing: .42em; text-transform: uppercase; font-size: 15px; padding-left: .42em; animation: sp-in .9s .15s cubic-bezier(.2, .8, .2, 1) both; }
+.splash i { width: 120px; height: 2px; background: var(--line); overflow: hidden; position: relative; }
+.splash i::after { content: ""; position: absolute; inset: 0; background: var(--accent); transform-origin: left; animation: sp-bar 1s ease-in-out both; }
+.splash.out { opacity: 0; visibility: hidden; }
+@keyframes sp-in { from { opacity: 0; transform: translateY(10px) scale(.96); } }
+@keyframes sp-bar { from { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) { .splash, .pulse { animation: none !important; } }
+.est > div b { white-space: nowrap; }

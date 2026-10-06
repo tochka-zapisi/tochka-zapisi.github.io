@@ -1,0 +1,62 @@
+[
+  {
+    "file": "a-barber-shop-with-a-BBGyxhtP.webp",
+    "id": "BBGyxhtPpC0",
+    "source": "unsplash",
+    "width": 1920,
+    "height": 1280,
+    "alt": "a barber shop with a chair and a mirror",
+    "author": "Redd Francisco",
+    "authorUrl": "https://unsplash.com/@reddfrancisco?utm_source=studio&utm_medium=referral",
+    "photoUrl": "https://unsplash.com/photos/a-barber-shop-with-a-chair-and-a-mirror-BBGyxhtPpC0?utm_source=studio&utm_medium=referral",
+    "license": "Unsplash License"
+  },
+  {
+    "file": "a-close-up-of-a-3D6AiPBl.webp",
+    "id": "3D6AiPBlG9M",
+    "source": "unsplash",
+    "width": 1500,
+    "height": 1000,
+    "alt": "a close up of a hair brush on a table",
+    "author": "Alexander JT",
+    "authorUrl": "https://unsplash.com/@sawa4244?utm_source=studio&utm_medium=referral",
+    "photoUrl": "https://unsplash.com/photos/a-close-up-of-a-hair-brush-on-a-table-3D6AiPBlG9M?utm_source=studio&utm_medium=referral",
+    "license": "Unsplash License"
+  },
+  {
+    "file": "a-black-and-white-photo-sqtcS14C.webp",
+    "id": "sqtcS14Cho8",
+    "source": "unsplash",
+    "width": 1500,
+    "height": 1000,
+    "alt": "a black and white photo of a man getting his hair cut",
+    "author": "Shrikant Ambawale",
+    "authorUrl": "https://unsplash.com/@ishrikant?utm_source=studio&utm_medium=referral",
+    "photoUrl": "https://unsplash.com/photos/a-black-and-white-photo-of-a-man-getting-his-hair-cut-sqtcS14Cho8?utm_source=studio&utm_medium=referral",
+    "license": "Unsplash License"
+  },
+  {
+    "file": "grayscale-photo-of-man-shaving-Twd3yaqA.webp",
+    "id": "Twd3yaqA2NM",
+    "source": "unsplash",
+    "width": 1500,
+    "height": 1000,
+    "alt": "grayscale photo of man shaving his beard",
+    "author": "Arthur Humeau",
+    "authorUrl": "https://unsplash.com/@_aaarthy?utm_source=studio&utm_medium=referral",
+    "photoUrl": "https://unsplash.com/photos/grayscale-photo-of-man-shaving-his-beard-Twd3yaqA2NM?utm_source=studio&utm_medium=referral",
+    "license": "Unsplash License"
+  },
+  {
+    "file": "person-using-white-hair-clipper-m4Pd_e-4.webp",
+    "id": "m4Pd_e-4zKs",
+    "source": "unsplash",
+    "width": 1500,
+    "height": 1000,
+    "alt": "person using white hair clipper",
+    "author": "Hai Phung",
+    "authorUrl": "https://unsplash.com/@itspminhai?utm_source=studio&utm_medium=referral",
+    "photoUrl": "https://unsplash.com/photos/person-using-white-hair-clipper-m4Pd_e-4zKs?utm_source=studio&utm_medium=referral",
+    "license": "Unsplash License"
+  }
+]

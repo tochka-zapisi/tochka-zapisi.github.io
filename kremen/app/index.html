@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Кремень — приложение</title>
+<meta name="description" content="Запись, бонусы и подарочные сертификаты салона — в одном приложении.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0a0b0d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Кремень">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="styles.css">
+<style>:root{--accent:#bfae94;--accent-ink:#111;--bg:#0a0b0d;--surface:#121418;--surface-2:#191c21;--ink:#eceae6;--muted:#8e949c;--gold:color-mix(in srgb, #bfae94 55%, #fff);--f-display:"Playfair Display", Georgia, serif;--f-body:"Inter Tight", system-ui, -apple-system, "Segoe UI", sans-serif;--wd:500}</style>
+</head>
+<body>
+<div class="app" id="app">
+  <main class="view" id="view"></main>
+  <nav class="tabs" id="tabs" aria-label="Разделы"></nav>
+  <div class="sheet" id="sheet" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</div>
+<script src="data.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
