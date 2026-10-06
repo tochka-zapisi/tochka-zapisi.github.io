@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Туман — приложение</title>
+<meta name="description" content="Запись, бонусы и подарочные сертификаты салона — в одном приложении.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#2a1d17">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Туман">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="styles.css">
+<style>:root{--accent:#a9c4b5;--accent-ink:#111;--bg:#2a1d17;--surface:#3a2a22;--surface-2:#432f26;--ink:#f1e7dc;--muted:#c2b1a1;--gold:color-mix(in srgb, #a9c4b5 55%, #fff);--f-display:"Bona Nova", Georgia, serif;--f-body:"Commissioner", system-ui, -apple-system, "Segoe UI", sans-serif;--wd:400}</style>
+</head>
+<body>
+<div class="app" id="app">
+  <main class="view" id="view"></main>
+  <nav class="tabs" id="tabs" aria-label="Разделы"></nav>
+  <div class="sheet" id="sheet" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</div>
+<script src="data.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

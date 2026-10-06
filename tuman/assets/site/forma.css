@@ -1,0 +1,155 @@
+/* Стиль «Форма» (forma.mjs): спокойная вёрстка для студий заботы о теле. Одно запоминающееся место — фото в арке/раме
+   и полоса «визит по минутам». Остальное — тихо: без номеров у разделов, без меток капсом, без появления каждого блока.
+   Цвета и шрифты — из site.json (theme.vars, theme.fonts); --h1 и --h1w задаёт theme.h1 / theme.h1w через <style> в head. */
+[data-style="forma"] { --r-img: 22px; --gut: 20px; }
+[data-style="forma"] body { font: 400 17px/1.65 var(--font-body); }
+[data-style="forma"] h1, [data-style="forma"] h2, [data-style="forma"] h3 { font-weight: var(--hw, 500); letter-spacing: var(--hls, -.01em); }
+
+/* шапка */
+.f-top { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 90%, transparent); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.f-top-in { display: flex; align-items: center; gap: 28px; min-height: 64px; }
+.f-logo { margin-right: auto; font: var(--hw, 500) 24px/1 var(--font-head); letter-spacing: .01em; text-decoration: none; }
+.f-nav, .f-tel { display: none; }
+.f-nav a, .f-tel { color: var(--muted); text-decoration: none; font-size: 15px; transition: color .2s; }
+.f-nav a:hover, .f-tel:hover { color: var(--ink); }
+@media (min-width: 900px) { .f-nav { display: flex; gap: 28px; } }
+@media (min-width: 1120px) { .f-tel { display: block; font-variant-numeric: tabular-nums; } }
+
+/* первый экран */
+.f-hero { padding: 36px 0 64px; }
+.f-hero-in { display: grid; gap: 40px; }
+.f-where { color: var(--muted); font-size: 15px; margin-bottom: 20px; }
+.f-hero h1 { font-size: var(--h1, clamp(46px, 9vw, 112px)); line-height: var(--h1lh, .95); font-weight: var(--h1w, var(--hw, 500)); max-width: var(--h1max, 11ch); }
+.f-lead { margin-top: 26px; max-width: 32em; font-size: 18px; color: var(--muted); }
+.f-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 30px; margin-top: 34px; }
+.f-link { font-weight: 500; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.f-link:hover { color: var(--accent); }
+.f-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 18px 32px; margin: 44px 0 0; padding-top: 22px; border-top: 1px solid var(--line); }
+.f-facts dt { color: var(--muted); font-size: 13px; margin-bottom: 4px; }
+.f-facts dd { margin: 0; font-size: 15px; line-height: 1.5; }
+.f-facts small { color: var(--muted); font-size: 13px; }
+.f-facts .stars { color: var(--accent); letter-spacing: 1px; font-size: 13px; }
+.f-photo { margin: 0; position: relative; }
+.f-photo img { width: 100%; object-fit: cover; aspect-ratio: 4 / 5; border-radius: var(--r-img); animation: f-open 1.4s cubic-bezier(.2, .7, .2, 1) both; }
+.f-photo figcaption { margin-top: 12px; color: var(--muted); font-size: 14px; }
+[data-shape="arch"] .f-photo img { border-radius: 999px 999px var(--r-img) var(--r-img); aspect-ratio: 3 / 4; }
+[data-shape="frame"] .f-photo img { border-radius: 3px; }
+[data-shape="frame"] .f-photo::after { content: ''; position: absolute; inset: 14px; border: 1px solid color-mix(in srgb, #fff 45%, transparent); border-radius: 2px; pointer-events: none; }
+@keyframes f-open { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@media (min-width: 960px) {
+  .f-hero { padding: 56px 0 88px; }
+  .f-hero-in { grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); align-items: end; gap: 72px; }
+  [data-shape="frame"] .f-hero-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+}
+/* телефон: фото — первым, арка компактно по центру, рама — во всю ширину */
+@media (max-width: 959px) {
+  .f-hero { padding-top: 24px; }
+  .f-hero-in { gap: 28px; }
+  .f-photo { order: -1; max-width: 520px; }
+  [data-shape="arch"] .f-photo { width: 64%; margin: 0 auto; }
+  [data-shape="frame"] .f-photo img { aspect-ratio: 5 / 4; }
+  .f-photo figcaption { display: none; }
+}
+[data-style="forma"] .c-list dt { text-transform: none; letter-spacing: 0; font-size: 13px; }
+
+/* разделы */
+.f-sec { padding: 76px 0; }
+.f-tight { padding-bottom: 40px; }
+.f-alt { background: var(--bg-2); }
+.f-head { max-width: 760px; }
+.f-head h2, .f-ritual h2 { font-size: var(--h2, clamp(34px, 5.4vw, 64px)); line-height: 1; }
+.f-sub { margin-top: 16px; color: var(--muted); max-width: 40em; }
+@media (min-width: 900px) { .f-sec { padding: 112px 0; } .f-tight { padding-bottom: 56px; } }
+
+/* программа визита: длина отрезка = минуты этапа */
+.f-ritual-head { display: grid; gap: 14px; }
+.f-total { color: var(--muted); }
+.f-total b { font: var(--hw, 500) 44px/1 var(--font-head); color: var(--ink); margin-right: 6px; }
+.f-bar { list-style: none; margin: 40px 0 0; padding: 0; display: grid; gap: 26px; }
+.f-bar li { min-width: 0; }
+.f-fill { display: block; height: 12px; border-radius: 99px; width: calc(var(--m) / var(--total) * 100%); min-width: 28px; background: var(--accent); transform-origin: left center; }
+.f-bar li:nth-child(2n) .f-fill { opacity: .72; }
+.f-bar li:nth-child(3n) .f-fill { opacity: .5; }
+.f-bar b { display: inline-block; margin: 14px 10px 0 0; font: var(--hw, 500) 22px/1.2 var(--font-head); }
+.f-min { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+.f-bar p { margin-top: 6px; color: var(--muted); font-size: 15px; max-width: 28em; }
+.js .f-bar .f-fill { transform: scaleX(0); transition: transform 1s cubic-bezier(.2, .7, .2, 1) calc(var(--i) * 220ms); }
+.js .f-bar.in .f-fill { transform: none; }
+@media (min-width: 900px) {
+  .f-ritual-head { grid-template-columns: 1fr auto; align-items: end; }
+  .f-bar { display: flex; gap: 6px; margin-top: 56px; }
+  .f-bar li { flex: var(--m) 1 0; padding-right: 18px; }
+  .f-fill { width: auto; min-width: 0; }
+}
+
+/* меню цен */
+.f-menu { list-style: none; margin: 40px 0 0; padding: 0; }
+.f-menu li { display: grid; grid-template-columns: 1fr auto; gap: 2px 20px; padding: 20px 0; border-top: 1px solid var(--line); }
+.f-item b { font-weight: 600; font-size: 17px; }
+.f-item small { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; }
+.f-time { grid-column: 1; grid-row: 2; color: var(--muted); font-size: 14px; }
+.f-price { grid-column: 2; grid-row: 1; font-weight: 500; white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
+.f-more { margin-top: 36px; }
+@media (min-width: 1000px) {
+  .f-menu { display: grid; grid-template-columns: 1fr 1fr; column-gap: 72px; }
+  .f-menu li { grid-template-columns: 1fr auto auto; align-items: baseline; }
+  .f-time { grid-column: 2; grid-row: 1; text-align: right; }
+  .f-price { grid-column: 3; min-width: 110px; }
+}
+
+/* пространство */
+.f-gal { display: grid; gap: 12px; margin-top: 40px; grid-template-columns: 1fr 1fr; }
+.f-gal figure { margin: 0; }
+.f-gal img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 5; border-radius: var(--r-img); }
+.f-gal figure:first-child { grid-column: 1 / -1; }
+.f-gal figure:first-child img { aspect-ratio: 16 / 10; }
+[data-shape="arch"] .f-gal figure:first-child img { border-radius: 999px 999px var(--r-img) var(--r-img); aspect-ratio: 4 / 3; }
+[data-shape="frame"] .f-gal img { border-radius: 3px; }
+.f-gal figcaption { margin-top: 10px; color: var(--muted); font-size: 14px; }
+@media (min-width: 900px) {
+  .f-gal-3 { grid-template-columns: 1.3fr 1fr; grid-template-rows: auto auto; gap: 18px; }
+  .f-gal-3 figure:first-child { grid-column: 1; grid-row: 1 / span 2; }
+  .f-gal-3 figure:first-child img, [data-shape="arch"] .f-gal-3 figure:first-child img { aspect-ratio: auto; height: 100%; min-height: 560px; }
+  .f-gal-3 figure:not(:first-child) img { aspect-ratio: 16 / 11; }
+}
+
+/* почему мы */
+.f-why { display: grid; gap: 34px 72px; margin-top: 44px; }
+.f-why > div { padding-top: 22px; border-top: 1px solid var(--line); }
+.f-why h3 { font-size: 26px; line-height: 1.15; }
+.f-why p { margin-top: 10px; color: var(--muted); max-width: 30em; }
+@media (min-width: 900px) { .f-why { grid-template-columns: 1fr 1fr; } }
+
+/* шаги — это последовательность, поэтому с номерами */
+.f-steps { list-style: none; margin: 40px 0 0; padding: 0; counter-reset: s; display: grid; gap: 26px; }
+.f-steps li { counter-increment: s; display: grid; grid-template-columns: 44px 1fr; column-gap: 8px; }
+.f-steps li::before { content: counter(s); grid-row: 1 / span 2; font: var(--hw, 500) 30px/1 var(--font-head); color: var(--accent); }
+.f-steps b { font-weight: 600; }
+.f-steps p { color: var(--muted); font-size: 15px; }
+@media (min-width: 900px) { .f-steps { grid-template-columns: repeat(4, 1fr); gap: 36px; } }
+
+/* отзывы: один крупно, два тише */
+.f-quote { margin: 44px 0 0; max-width: 980px; }
+.f-quote blockquote { margin: 0; font: var(--hw, 500) clamp(26px, 3.6vw, 44px)/1.22 var(--font-head); letter-spacing: var(--hls, -.01em); text-wrap: pretty; }
+.f-quote blockquote::before { content: '«'; } .f-quote blockquote::after { content: '»'; }
+.f-quote figcaption, .f-quotes figcaption { margin-top: 16px; color: var(--muted); font-size: 15px; }
+.f-quotes { display: grid; gap: 28px 72px; margin-top: 48px; }
+.f-quotes figure { margin: 0; padding-top: 20px; border-top: 1px solid var(--line); }
+.f-quotes blockquote { margin: 0; font-size: 17px; }
+@media (min-width: 900px) { .f-quotes { grid-template-columns: 1fr 1fr; } }
+
+/* вопросы и контакты — база из style.css, здесь только ритм */
+[data-style="forma"] .faq { margin-top: 36px; max-width: 860px; }
+.f-contacts { display: grid; gap: 40px; }
+.f-contacts .c-list { margin-top: 32px; }
+[data-style="forma"] .map { border-radius: var(--r-img); }
+[data-shape="frame"] .map { border-radius: 3px; }
+@media (min-width: 900px) { .f-contacts { grid-template-columns: 1fr 1fr; align-items: start; gap: 72px; } }
+
+/* подвал: имя студии крупно, всё остальное — мелко */
+.f-foot { padding: 72px 0 40px; border-top: 1px solid var(--line); }
+.f-foot-name { font: var(--hw, 500) clamp(64px, 16vw, 220px)/.85 var(--font-head); letter-spacing: var(--hls, -.02em); color: color-mix(in srgb, var(--ink) 88%, var(--bg)); }
+.f-foot-in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px 40px; margin-top: 36px; color: var(--muted); font-size: 14px; }
+.f-foot-in a { color: inherit; }
+.f-foot .legal { font-size: 13px; }
+@media (min-width: 900px) { [data-style="forma"] .dock { display: none; } [data-style="forma"] body { padding-bottom: 0; } }
