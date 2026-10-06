@@ -277,6 +277,7 @@
           <p class="check-sum"><span class="mono">Итого от</span><b id="sum">39 900 ₽</b></p>
           <p class="check-free mono">Демо&nbsp;— 0&nbsp;₽ · без предоплаты</p>
           <a class="btn btn-w" id="sendWa" href="https://wa.me/79333399483" target="_blank" rel="noopener"><i></i>Отправить в&nbsp;WhatsApp</a>
+          <button class="btn btn-o" id="sendMax" type="button" data-max>Отправить в&nbsp;MAX</button>
           <a class="btn btn-o" id="sendTg" href="https://t.me/tochka_zapisi_bot" target="_blank" rel="noopener">Оформить в&nbsp;Telegram-боте</a>
           <p class="check-n" id="tgNote">В&nbsp;Telegram откроется наш бот: заявка уже заполнена, останутся название и&nbsp;контакт. Вы&nbsp;передаёте только то, что написали сами. <a href="privacy.html">Политика конфиденциальности</a></p>
         </div>
@@ -355,7 +356,7 @@
         <a class="btn btn-k" href="#price"><i></i>Получить демо бесплатно</a>
         <a class="link" href="tel:+79130364962">+7 913 036-49-62</a>
       </div>
-      <p class="fin-links"><a href="https://t.me/opiumxxxxl" target="_blank" rel="noopener">Telegram</a><a href="https://wa.me/79333399483" target="_blank" rel="noopener">WhatsApp</a><a href="https://t.me/tochka_zapisi_bot" target="_blank" rel="noopener">Бот студии: дизайны и&nbsp;цены</a></p>
+      <p class="fin-links"><a href="https://t.me/opiumxxxxl" target="_blank" rel="noopener">Telegram</a><a href="https://wa.me/79333399483" target="_blank" rel="noopener">WhatsApp</a><a href="#max" data-max>MAX</a><a href="https://t.me/tochka_zapisi_bot" target="_blank" rel="noopener">Бот студии: дизайны и&nbsp;цены</a></p>
     </div>
   </div>
 </section>
@@ -368,6 +369,19 @@
     <p class="small">© <span id="y">2026</span> Точка записи. Демо-проекты на&nbsp;сайте&nbsp;— с&nbsp;вымышленными названиями и&nbsp;данными. Сайт не&nbsp;собирает персональные данные: вы&nbsp;пишете нам сами в&nbsp;мессенджер. <a href="privacy.html">Политика конфиденциальности</a></p>
   </div>
 </footer>
+
+<dialog class="maxd" id="maxDlg" aria-labelledby="maxH">
+  <form method="dialog" class="maxd-in">
+    <p class="label" id="maxH">Написать в&nbsp;MAX</p>
+    <p class="maxd-num"><a href="tel:+79130364962">+7 913 036-49-62</a></p>
+    <p class="maxd-t" id="maxT">Найдите нас в&nbsp;MAX по&nbsp;этому номеру&nbsp;— Руслан, «Точка записи».</p>
+    <div class="maxd-b">
+      <button class="btn btn-k" type="button" id="maxCopy" autofocus>Скопировать номер</button>
+      <a class="btn btn-o" id="maxOpen" href="https://web.max.ru/" target="_blank" rel="noopener">Открыть MAX</a>
+    </div>
+    <button class="maxd-x" value="close" aria-label="Закрыть">×</button>
+  </form>
+</dialog>
 
 <nav class="dock" id="dock" aria-label="Быстрая связь">
   <a href="https://wa.me/79333399483" target="_blank" rel="noopener">WhatsApp</a>

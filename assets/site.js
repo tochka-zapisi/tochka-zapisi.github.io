@@ -243,6 +243,7 @@
     prevKeys = keys;
     const text = 'Здравствуйте! Хочу бесплатное демо.\nБизнес: ' + niche() + (biz ? ' — ' + biz : '') + '\nНужно: пакет «' + plan.value + '»' + (extras.length ? ', ' + extras.map(x => x.value).join(', ') : '') + '\nОриентир по цене: от ' + fmt(sum);
     $('#sendWa').href = 'https://wa.me/79333399483?text=' + encodeURIComponent(text);
+    window.__maxText = text;
     /* бот студии с заполненной заявкой: s-<ниша>-<пакет>-<дополнения> (порядок — как в боте: направления/боты/студия/сценарий.js) */
     const ni = $$('#niche button').findIndex(b => b.getAttribute('aria-pressed') === 'true'), pi = $$('#plan input').indexOf(plan), xm = $$('#extra input').reduce((m, x, i) => m | (x.checked ? 1 << i : 0), 0);
     $('#sendTg').href = 'https://t.me/tochka_zapisi_bot?start=s-' + Math.max(ni, 0) + '-' + Math.max(pi, 0) + '-' + xm;
@@ -255,4 +256,23 @@
   $('#sendTg').addEventListener('click', calc);
   calc();
   const y = $('#y'); if (y) y.textContent = new Date().getFullYear();
+})();
+
+/* MAX: прямой ссылки на профиль пока нет — окно с номером. Появится ссылка (MAX → профиль → «Поделиться») — вписать в MAX_URL */
+(() => {
+  const MAX_URL = '', NUM = '+79130364962';
+  const dlg = document.getElementById('maxDlg'); if (!dlg) return;
+  const t = document.getElementById('maxT'), copyBtn = document.getElementById('maxCopy');
+  const copy = async s => { try { await navigator.clipboard.writeText(s); return true; } catch (e) { return false; } };
+  document.querySelectorAll('[data-max]').forEach(el => el.addEventListener('click', async e => {
+    e.preventDefault();
+    const fromCalc = el.id === 'sendMax' && window.__maxText;
+    if (MAX_URL) { if (fromCalc) await copy(window.__maxText); window.open(MAX_URL, '_blank', 'noopener'); return; }
+    if (fromCalc && await copy(window.__maxText)) t.textContent = 'Текст заявки скопирован. Найдите нас в MAX по номеру и вставьте сообщение.';
+    else t.textContent = 'Найдите нас в MAX по этому номеру — Руслан, «Точка записи».';
+    copyBtn.textContent = 'Скопировать номер';
+    if (typeof dlg.showModal === 'function') dlg.showModal(); else window.open('https://web.max.ru/', '_blank', 'noopener');
+  }));
+  copyBtn.addEventListener('click', async () => { copyBtn.textContent = (await copy(NUM)) ? 'Номер скопирован' : NUM; });
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
 })();

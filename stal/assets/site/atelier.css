@@ -324,3 +324,6 @@
   [data-style="atelier"] .mq-track { animation: none !important; }
   [data-style="atelier"] .hero-light { display: none; }
 }
+
+/* Знак клиента в шапке (site.brand.mark) — по своим пропорциям, без скругления */
+[data-style="atelier"] .logo-mark { width: auto; height: 30px; border-radius: 0; }

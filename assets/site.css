@@ -483,3 +483,13 @@ h1, h2 { font-weight: 600; }
   html { scroll-behavior: auto; }
   .mark { background-size: 100% .09em; }
 }
+
+/* окно MAX */
+.maxd { border: 1px solid var(--line); border-radius: 18px; padding: 0; width: min(420px, calc(100vw - 32px)); background: var(--paper); color: var(--ink); box-shadow: 0 30px 80px rgba(0, 0, 0, .25); }
+.maxd::backdrop { background: rgba(10, 10, 10, .45); }
+.maxd-in { position: relative; padding: 28px 24px 24px; display: grid; gap: 12px; }
+.maxd-num { font-size: 30px; font-weight: 700; letter-spacing: -.02em; }
+.maxd-num a { text-decoration: none; }
+.maxd-t { color: var(--muted); }
+.maxd-b { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.maxd-x { position: absolute; top: 10px; right: 12px; width: 40px; height: 40px; border: 0; background: none; font-size: 26px; color: var(--muted); cursor: pointer; }
