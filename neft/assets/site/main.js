@@ -23,46 +23,63 @@
   var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var mouse = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (top) {
-    /* одна обработка прокрутки на кадр: матовая шапка, полоса прогресса, параллакс фото первого экрана */
+    /* одна обработка прокрутки на кадр: матовая шапка, полоса прогресса, параллакс фото первого экрана.
+       Размеры страницы запоминаются заранее (resize, load) — в кадре прокрутки только запись, без пересчёта вёрстки;
+       стили пишутся прямо в нужный элемент, а не переменной на весь блок (иначе браузер пересчитывает всё внутри). */
     var hero = document.querySelector('.hero');
-    var root = document.documentElement, tick = false;
+    var heroImg = hero && hero.querySelector('.hero-bg img');
+    var heroIn = hero && hero.querySelector('.hero-in');
+    var bar = top.querySelector('.progress');
+    var root = document.documentElement, tick = false, max = 1, hh = 1, scrolled = null, heroDone = false;
+    var measure = function () { max = Math.max(1, root.scrollHeight - window.innerHeight); hh = hero ? hero.offsetHeight : 1; };
     var mark = function () {
       tick = false;
       var y = window.scrollY;
-      top.classList.toggle('is-scrolled', y > 40);
-      var max = root.scrollHeight - window.innerHeight;
-      top.style.setProperty('--p', max > 0 ? Math.min(1, y / max).toFixed(4) : 0);
+      var s = y > 40;
+      if (s !== scrolled) { scrolled = s; top.classList.toggle('is-scrolled', s); }
+      if (bar) bar.style.transform = 'scaleX(' + Math.min(1, y / max).toFixed(4) + ')';
       if (hero && !still) {
-        var hh = hero.offsetHeight;
         if (y < hh) {
-          hero.style.setProperty('--py', (y * 0.32).toFixed(1));
-          hero.style.setProperty('--fade', Math.max(0, 1 - y / (hh * 0.75)).toFixed(3));
-        }
+          heroDone = false;
+          if (heroImg) heroImg.style.translate = '0 ' + (y * 0.32).toFixed(1) + 'px';
+          if (heroIn) { heroIn.style.opacity = Math.max(0, 1 - y / (hh * 0.75)).toFixed(3); heroIn.style.translate = '0 ' + (y * -0.08).toFixed(1) + 'px'; }
+        } else if (!heroDone) { heroDone = true; if (heroIn) heroIn.style.opacity = '0'; }
       }
     };
-    window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(mark); } }, { passive: true });
-    window.addEventListener('resize', mark, { passive: true });
-    mark();
+    var onScroll = function () { if (!tick) { tick = true; requestAnimationFrame(mark); } };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () { measure(); onScroll(); }, { passive: true });
+    window.addEventListener('load', function () { measure(); onScroll(); });
+    measure(); mark();
 
-    /* мягкий свет за курсором на первом экране (только мышь) */
-    if (hero && mouse && !still) {
-      var lit = false, mx = 0, my = 0;
+    /* мягкий свет за курсором на первом экране (только мышь): двигается transform, градиент не перерисовывается */
+    var light = hero && hero.querySelector('.hero-light');
+    if (light && mouse && !still) {
+      var lit = false, mx = 0, my = 0, box = null;
+      hero.addEventListener('pointerenter', function () { box = hero.getBoundingClientRect(); hero.classList.add('lit'); });
       hero.addEventListener('pointermove', function (e) {
-        var r = hero.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top;
-        if (!lit) { lit = true; requestAnimationFrame(function () { lit = false; hero.style.setProperty('--mx', mx + 'px'); hero.style.setProperty('--my', my + 'px'); }); }
-        hero.classList.add('lit');
+        if (!box) box = hero.getBoundingClientRect();
+        mx = e.clientX - box.left; my = e.clientY - box.top;
+        if (!lit) { lit = true; requestAnimationFrame(function () { lit = false; light.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)'; }); }
       });
       hero.addEventListener('pointerleave', function () { hero.classList.remove('lit'); });
+      window.addEventListener('scroll', function () { box = null; }, { passive: true });
     }
+
+    /* бегущая строка стоит, когда её не видно — не тратит силы телефона */
+    var mq = document.querySelector('.marquee');
+    if (mq && 'IntersectionObserver' in window) new IntersectionObserver(function (l) { mq.classList.toggle('off', !l[0].isIntersecting); }).observe(mq);
 
     /* кнопки слегка тянутся к курсору (только мышь) */
     if (mouse && !still) document.querySelectorAll('main .btn, .top .btn').forEach(function (b) {
+      var r = null;
+      b.addEventListener('pointerenter', function () { r = b.getBoundingClientRect(); });
       b.addEventListener('pointermove', function (e) {
-        var r = b.getBoundingClientRect();
+        if (!r) r = b.getBoundingClientRect();
         var dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
         b.classList.add('magnet'); b.style.translate = (dx * 0.18).toFixed(1) + 'px ' + (dy * 0.3).toFixed(1) + 'px';
       });
-      b.addEventListener('pointerleave', function () { b.classList.remove('magnet'); b.style.translate = ''; });
+      b.addEventListener('pointerleave', function () { r = null; b.classList.remove('magnet'); b.style.translate = ''; });
     });
 
     /* цифры рейтинга и отзывов отсчитываются, когда появляется строка фактов */
