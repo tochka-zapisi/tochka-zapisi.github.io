@@ -71,14 +71,14 @@
 .f-bar li:nth-child(2n) .f-fill { opacity: .72; }
 .f-bar li:nth-child(3n) .f-fill { opacity: .5; }
 .f-bar b { display: inline-block; margin: 14px 10px 0 0; font: var(--hw, 500) 22px/1.2 var(--font-head); }
-.f-min { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+.f-min { display: block; margin-top: 2px; color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
 .f-bar p { margin-top: 6px; color: var(--muted); font-size: 15px; max-width: 28em; }
 .js .f-bar .f-fill { transform: scaleX(0); transition: transform 1s cubic-bezier(.2, .7, .2, 1) calc(var(--i) * 220ms); }
 .js .f-bar.in .f-fill { transform: none; }
 @media (min-width: 900px) {
   .f-ritual-head { grid-template-columns: 1fr auto; align-items: end; }
   .f-bar { display: flex; gap: 6px; margin-top: 56px; }
-  .f-bar li { flex: var(--m) 1 0; padding-right: 18px; }
+  .f-bar li { flex: var(--m) 1 0; min-width: 170px; padding-right: 22px; }
   .f-fill { width: auto; min-width: 0; }
 }
 
