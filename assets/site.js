@@ -243,16 +243,16 @@
     prevKeys = keys;
     const text = 'Здравствуйте! Хочу бесплатное демо.\nБизнес: ' + niche() + (biz ? ' — ' + biz : '') + '\nНужно: пакет «' + plan.value + '»' + (extras.length ? ', ' + extras.map(x => x.value).join(', ') : '') + '\nОриентир по цене: от ' + fmt(sum);
     $('#sendWa').href = 'https://wa.me/79333399483?text=' + encodeURIComponent(text);
+    /* бот студии с заполненной заявкой: s-<ниша>-<пакет>-<дополнения> (порядок — как в боте: направления/боты/студия/сценарий.js) */
+    const ni = $$('#niche button').findIndex(b => b.getAttribute('aria-pressed') === 'true'), pi = $$('#plan input').indexOf(plan), xm = $$('#extra input').reduce((m, x, i) => m | (x.checked ? 1 << i : 0), 0);
+    $('#sendTg').href = 'https://t.me/tochka_zapisi_bot?start=s-' + Math.max(ni, 0) + '-' + Math.max(pi, 0) + '-' + xm;
     return text;
   }
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   $('#niche').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; $$('#niche button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); calc(); });
   $('#calc').addEventListener('input', calc);
   $('#calc').addEventListener('change', calc);
-  $('#sendTg').addEventListener('click', () => {
-    const t = calc(), note = $('#tgNote');
-    try { navigator.clipboard.writeText(t).then(() => { note.textContent = 'Текст скопирован — вставьте его в чат Telegram.'; note.classList.add('ok'); }, () => {}); } catch (e) { /* нет доступа */ }
-  });
+  $('#sendTg').addEventListener('click', calc);
   calc();
   const y = $('#y'); if (y) y.textContent = new Date().getFullYear();
 })();
