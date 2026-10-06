@@ -1,0 +1,52 @@
+{
+ "hero": {
+  "src": "assets/img/real/gs-hex-hood.webp",
+  "w": 1600,
+  "h": 1093
+ },
+ "heroPortrait": {
+  "src": "assets/img/real/gs-hex-hood-portrait.webp",
+  "w": 662,
+  "h": 1002
+ },
+ "x7": {
+  "src": "assets/img/real/gs-x7-hex.webp",
+  "w": 1088,
+  "h": 1520
+ },
+ "lights": {
+  "src": "assets/img/real/gs-headlight-night.webp",
+  "w": 800,
+  "h": 1029
+ },
+ "black": {
+  "src": "assets/img/real/gs-black-polish.webp",
+  "w": 1000,
+  "h": 1333
+ },
+ "grille": {
+  "src": "assets/img/real/gs-bmw-grille.webp",
+  "w": 1600,
+  "h": 610
+ },
+ "merc": {
+  "src": "assets/img/real/gs-merc-hex.webp",
+  "w": 1000,
+  "h": 1173
+ },
+ "gate": {
+  "src": "assets/img/real/gs-entrance.webp",
+  "w": 810,
+  "h": 1080
+ },
+ "interior": {
+  "src": "assets/img/real/gs-dry-clean.webp",
+  "w": 1000,
+  "h": 750
+ },
+ "lens": {
+  "src": "assets/img/real/gs-lens.webp",
+  "w": 800,
+  "h": 1067
+ }
+}

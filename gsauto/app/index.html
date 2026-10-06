@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>GS-Auto — приложение</title>
-<meta name="description" content="Запись, бонусы и подарочные сертификаты салона — в одном приложении.">
+<meta name="description" content="Запись, статус ремонта, гараж, бонусы и сертификаты автосервиса — в одном приложении.">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#0a0b0d">
+<meta name="theme-color" content="#09090a">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -15,10 +15,12 @@
 <meta name="apple-mobile-web-app-title" content="GS-Auto">
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="styles.css">
-<style>:root{--accent:#8fb8de;--accent-ink:#111;--bg:#0a0b0d;--surface:#121418;--surface-2:#191c21;--ink:#eceae6;--muted:#8e949c;--gold:color-mix(in srgb, #8fb8de 55%, #fff);--f-display:"Playfair Display", Georgia, serif;--f-body:"Inter Tight", system-ui, -apple-system, "Segoe UI", sans-serif;--wd:500}</style>
+<link rel="stylesheet" href="auto.css">
+<style>:root{--accent:#f7c716;--accent-ink:#111;--bg:#09090a;--surface:#131315;--surface-2:#1a1a1d;--ink:#efede8;--muted:#94918a;--gold:color-mix(in srgb, #f7c716 55%, #fff);--f-display:"Montserrat", Georgia, serif;--f-body:"Inter Tight", system-ui, -apple-system, "Segoe UI", sans-serif;--wd:600}</style>
 </head>
 <body>
 <div class="app" id="app">
+  <div class="splash" id="splash" aria-hidden="true"><img src="" alt=""><b></b><i></i></div>
   <main class="view" id="view"></main>
   <nav class="tabs" id="tabs" aria-label="Разделы"></nav>
   <div class="sheet" id="sheet" hidden></div>

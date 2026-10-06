@@ -1,6 +1,6 @@
 /* Офлайн-оболочка: приложение открывается и без интернета. VER меняет tools/clientapp.mjs при каждой сборке. */
-const VER = 'gsauto-app-5fc1bc09';
-const SHELL = ['./', './index.html', './styles.css', './app.js', './data.js', './vendor/qrcode.js', './manifest.webmanifest', './assets/fonts/fonts.css'];
+const VER = 'gsauto-app-1517bcf0';
+const SHELL = ['./', './index.html', './styles.css', './auto.css', './app.js', './data.js', './vendor/qrcode.js', './manifest.webmanifest', './assets/fonts/fonts.css'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(VER).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== VER).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {

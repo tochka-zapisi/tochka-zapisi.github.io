@@ -4,7 +4,7 @@ window.APP = {
  "name": "GS-Auto",
  "address": "Северное шоссе, 9/2, Красноярск",
  "phone": "+7 923 367-67-67",
- "site": "",
+ "site": "../",
  "demo": true,
  "hours": {
   "0": [
@@ -124,14 +124,10 @@ window.APP = {
  ],
  "masters": [],
  "photos": [
-  "assets/img/a-man-is-working-on-M5lsL2E4.webp",
-  "assets/img/a-man-using-a-car-B7hVEFTF-portrait.webp",
-  "assets/img/a-man-using-a-car-B7hVEFTF.webp",
-  "assets/img/a-man-waxing-a-car-CsZjHjFN.webp",
-  "assets/img/a-person-with-a-sponge-9-muyFk7.webp",
-  "assets/img/man-in-black-t-shirt-GaOk6Cfd.webp",
-  "assets/img/mechanic-working-on-cars-in-WbKt-Wmd.webp",
-  "assets/img/person-holding-car-steering-wheel-rS9PBJBY.webp"
+  "assets/img/real/gs-x7-hex.webp",
+  "assets/img/real/gs-headlight-night.webp",
+  "assets/img/real/gs-black-polish.webp",
+  "assets/img/real/gs-bmw-grille.webp"
  ],
  "promos": [
   {
@@ -139,19 +135,19 @@ window.APP = {
    "title": "Утро будней −15%",
    "text": "На любые услуги до 12:00 по будням",
    "more": "Пример акции. Настоящие условия — в настройках приложения.",
-   "photo": "assets/img/a-man-is-working-on-M5lsL2E4.webp"
+   "photo": "assets/img/real/gs-x7-hex.webp"
   },
   {
    "tag": "Новым",
    "title": "500 бонусов на первый визит",
    "text": "Скачайте приложение и запишитесь онлайн",
-   "photo": "assets/img/a-man-using-a-car-B7hVEFTF-portrait.webp"
+   "photo": "assets/img/real/gs-headlight-night.webp"
   },
   {
    "tag": "Демо-акция",
    "title": "Полировка + бронь фар",
    "text": "Комплекс — выгоднее, чем по отдельности",
-   "photo": "assets/img/a-man-using-a-car-B7hVEFTF.webp"
+   "photo": "assets/img/real/gs-black-polish.webp"
   }
  ],
  "bonus": {
@@ -189,5 +185,9 @@ window.APP = {
   "s1": "Фирменный",
   "toLabel": "Имя получателя",
   "toExample": "Саша"
- }
+ },
+ "hero": "assets/img/real/gs-hex-hood.webp",
+ "mark": "assets/brand/gs-mark.png",
+ "whatsapp": "79233676767",
+ "review": "https://yandex.ru/maps/org/152754958695/"
 };
