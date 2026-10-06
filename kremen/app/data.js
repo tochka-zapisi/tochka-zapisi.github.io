@@ -186,7 +186,9 @@ window.APP = {
    }
   ]
  },
- "telegram": "",
+ "kind": "Барбершоп",
+ "telegram": "https://t.me/kremen_demo",
+ "max": "https://max.ru/u/kremen_demo",
  "words": {
   "gift": "Подарите стрижку",
   "friendTo": "другу",

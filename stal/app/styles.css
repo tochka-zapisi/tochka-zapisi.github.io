@@ -224,3 +224,57 @@ img { display: block; max-width: 100%; }
 :root[data-mode="dark"] .sheet { background: rgba(0, 0, 0, .66); }
 :root[data-mode="dark"] .sheet .panel { box-shadow: 0 -1px 0 var(--line); }
 :root[data-mode="dark"] .cert.s1 { background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 62%, #000), #0b0b0b); color: #fff; }
+
+/* ===== вкладка 8: «дороже» — отсчёт, блок ниши, металл карты, заставка ===== */
+.next .in { position: relative; z-index: 1; display: table; margin-top: 10px; padding: 5px 10px; border-radius: 99px; background: rgba(255, 255, 255, .14); color: #fff; font-size: 12.5px; font-weight: 700; letter-spacing: 0; text-transform: none; }
+:root[data-mode="dark"] .next .in { background: var(--accent); color: var(--accent-ink); }
+.nich { margin-top: 14px; padding: 18px; border-radius: 22px; background: var(--surface); box-shadow: 0 1px 0 var(--line), 0 12px 30px -24px rgba(43, 34, 32, .5); }
+:root[data-mode="dark"] .nich { box-shadow: 0 0 0 1px var(--line); }
+.nich-h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+.nich-h b { font-family: var(--f-display); font-weight: var(--wd); font-size: 21px; line-height: 1.1; }
+.nich-h small { color: var(--muted); font-size: 13px; white-space: nowrap; }
+.sch { display: grid; gap: 6px; }
+.sch div { display: grid; grid-template-columns: 54px 1fr auto; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 14px; background: var(--surface-2); }
+.sch time { font-weight: 800; font-variant-numeric: tabular-nums; }
+.sch span { min-width: 0; font-size: 14.5px; line-height: 1.3; } .sch span small { display: block; color: var(--muted); font-size: 12.5px; }
+.sch .nx { background: color-mix(in srgb, var(--accent) 16%, var(--surface-2)); box-shadow: inset 3px 0 0 var(--accent); }
+.sch .past { opacity: .45; }
+.sch em { font-style: normal; font-size: 12px; font-weight: 800; color: var(--accent); }
+.pet { display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: center; }
+.pet .av { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--accent) 16%, var(--surface-2)); color: var(--accent); }
+.pet .av svg { width: 30px; height: 30px; }
+.pet b { font-size: 18px; } .pet small { display: block; color: var(--muted); font-size: 13.5px; }
+.meter { height: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; margin: 14px 0 6px; }
+.meter i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 50%, #fff)); }
+.track { display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: 4px; margin: 4px 0 12px; }
+.track span { position: relative; padding-top: 18px; font-size: 11.5px; line-height: 1.25; color: var(--muted); text-align: center; }
+.track span::before { content: ""; position: absolute; top: 4px; left: 0; right: 0; height: 4px; border-radius: 99px; background: var(--surface-2); }
+.track span.pass::before, .track span.now::before { background: var(--accent); }
+.track span.now { color: var(--ink); font-weight: 800; }
+.track span.now::after { content: ""; position: absolute; top: 0; left: 50%; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent); animation: tr-pulse 1.8s ease-in-out infinite; }
+@keyframes tr-pulse { 50% { box-shadow: 0 0 0 9px color-mix(in srgb, var(--accent) 0%, transparent); } }
+.nich p.note { font-size: 14px; color: var(--muted); }
+.nich .row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.nich .tagd { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+/* карта лояльности: металл уровня и блик за пальцем/курсором */
+.loyal { --mx: 30%; --my: 20%; transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
+:root .loyal.lv1 { background: linear-gradient(135deg, #3a3f46, #9aa3ad 46%, #2b2f35); }
+:root .loyal.lv2 { background: linear-gradient(135deg, #5a4316, #d8b25e 44%, #7a5a1c 78%, #3b2a0c); }
+:root .loyal.lv3 { background: linear-gradient(135deg, #15161a, #4a4d57 42%, #0c0d10 80%); }
+.loyal .sheen { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(260px circle at var(--mx) var(--my), rgba(255, 255, 255, .28), transparent 60%); mix-blend-mode: soft-light; }
+:root[data-mode="dark"] .loyal.lv1, :root[data-mode="dark"] .loyal.lv2, :root[data-mode="dark"] .loyal.lv3 { color: #fff; box-shadow: 0 0 0 1px rgba(255, 255, 255, .12); }
+:root[data-mode="dark"] .loyal.lv1 small, :root[data-mode="dark"] .loyal.lv2 small, :root[data-mode="dark"] .loyal.lv3 small { color: rgba(255, 255, 255, .78); }
+:root .loyal.lv2 .lvl { background: #1d1508; color: #f3d48a; }
+:root .loyal.lv3 .lvl { background: linear-gradient(90deg, #e9e9ee, #a7a9b4); color: #111; }
+/* смена вкладок */
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .22s; }
+/* заставка салона (у автосервиса — своя в auto.css) */
+.splash { position: absolute; inset: 0; z-index: 50; display: grid; place-content: center; justify-items: center; gap: 16px; background: var(--bg); transition: opacity .55s ease, visibility .55s; }
+.splash b { font-family: var(--f-display); font-weight: var(--wd); font-size: 40px; line-height: 1; animation: sp-in .9s cubic-bezier(.2, .8, .2, 1) both; }
+.splash small { color: var(--muted); font-size: 13px; animation: sp-in .9s .15s cubic-bezier(.2, .8, .2, 1) both; }
+.splash i { width: 120px; height: 2px; background: var(--line); overflow: hidden; position: relative; }
+.splash i::after { content: ""; position: absolute; inset: 0; background: var(--accent); transform-origin: left; animation: sp-bar 1s ease-in-out both; }
+.splash.out { opacity: 0; visibility: hidden; }
+@keyframes sp-in { from { opacity: 0; transform: translateY(10px) scale(.96); } }
+@keyframes sp-bar { from { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) { .splash *, .track span.now::after { animation: none !important; } .loyal { transform: none !important; } }

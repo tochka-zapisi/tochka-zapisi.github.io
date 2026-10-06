@@ -170,7 +170,9 @@ window.APP = {
    }
   ]
  },
- "telegram": "",
+ "kind": "SPA и массаж",
+ "telegram": "https://t.me/tuman_demo",
+ "max": "https://max.ru/u/tuman_demo",
  "words": {
   "gift": "Подарите два часа тишины",
   "friendTo": "близкому",

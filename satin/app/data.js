@@ -125,7 +125,7 @@ window.APP = {
  "masters": [
   {
    "id": "m1",
-   "name": "Мастер 1",
+   "name": "Алина Мороз",
    "role": "Маникюр и педикюр",
    "services": [
     "s1",
@@ -141,7 +141,7 @@ window.APP = {
   },
   {
    "id": "m2",
-   "name": "Мастер 2",
+   "name": "Вероника Лис",
    "role": "Маникюр и педикюр",
    "services": [
     "s1",
@@ -157,7 +157,7 @@ window.APP = {
   },
   {
    "id": "m3",
-   "name": "Мастер 3",
+   "name": "Дарина Ким",
    "role": "Брови и ресницы",
    "services": [
     "s9",
@@ -216,7 +216,9 @@ window.APP = {
    }
   ]
  },
- "telegram": "",
+ "kind": "Студия красоты",
+ "telegram": "https://t.me/satin_demo",
+ "max": "https://max.ru/u/satin_demo",
  "hero": "assets/img/a-woman-with-her-hands-T8Wnesok.webp",
  "mark": "",
  "whatsapp": "79000000000",

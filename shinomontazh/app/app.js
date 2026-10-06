@@ -117,7 +117,7 @@
 
   /* ---------- каркас ---------- */
   const st = { tab: 'home', bk: { svc: null, car: null, date: null, time: null, note: '' } };
-  function go(tab) { st.tab = tab; render(); $('#view').scrollTop = 0; }
+  function go(tab) { const run = () => { st.tab = tab; render(); $('#view').scrollTop = 0; }; if (document.startViewTransition && tab !== st.tab && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.startViewTransition(run); else run(); }
   function render() {
     const v = $('#view');
     v.innerHTML = st.tab === 'home' ? home() : st.tab === 'garage' ? garage() : st.tab === 'book' ? book() : st.tab === 'bonus' ? bonus() : profile();
@@ -132,6 +132,13 @@
   const upcoming = () => D.bookings.filter(b => (b.status === 'new' || b.status === 'confirmed') && (b.date > dstr(new Date()) || (b.date === dstr(new Date()) && b.startMin > new Date().getHours() * 60))).sort((a, b) => (a.date + fromMin(a.startMin)).localeCompare(b.date + fromMin(b.startMin)));
   const greet = () => { const h = new Date().getHours(); return h < 6 ? 'Доброй ночи' : h < 12 ? 'Доброе утро' : h < 18 ? 'Добрый день' : 'Добрый вечер'; };
   const route = () => 'https://yandex.ru/maps/?text=' + encodeURIComponent(A.address || '');
+  /* «через 2 дня» до записи */
+  const until = b => { const ms = parseD(b.date).getTime() + b.startMin * 6e4 - Date.now(); if (ms <= 0) return ''; const h = Math.round(ms / 36e5), d = Math.round(ms / 864e5);
+    return ms < 36e5 ? 'через ' + Math.max(1, Math.round(ms / 6e4)) + ' мин' : h < 24 ? 'через ' + h + ' ' + plural(h, 'час', 'часа', 'часов') : 'через ' + d + ' ' + plural(d, 'день', 'дня', 'дней'); };
+  /* карта лояльности: блик и лёгкий наклон за пальцем или курсором */
+  document.addEventListener('pointermove', e => { const c = e.target.closest && e.target.closest('.loyal'); if (!c || matchMedia('(prefers-reduced-motion: reduce)').matches) return; const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    c.style.setProperty('--mx', (x * 100).toFixed(1) + '%'); c.style.setProperty('--my', (y * 100).toFixed(1) + '%'); c.style.setProperty('--ry', ((x - .5) * 8).toFixed(2) + 'deg'); c.style.setProperty('--rx', ((.5 - y) * 6).toFixed(2) + 'deg'); }, { passive: true });
+  document.addEventListener('pointerout', e => { const c = e.target.closest && e.target.closest('.loyal'); if (c && !c.contains(e.relatedTarget)) { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); } });
   const telHref = () => 'tel:' + String(A.phone || '').replace(/[^\d+]/g, '');
   const brandRow = () => '<div class="brandbar">' + (A.mark ? '<img src="' + esc(A.mark) + '" alt="" width="34" height="28">' : '') + '<span>' + esc(A.name) + '</span>' + (A.demo ? '<span class="demo-tag">демо</span>' : '') +
     '<button class="icon-btn" type="button" data-act="notif" aria-label="Уведомления">' + svg('bell') + (D.live && D.live.stage === 2 && !D.live.approved ? '<span class="badge"></span>' : '') + '</button></div>';
@@ -163,10 +170,10 @@
       '<button class="btn primary" type="button" data-tab="book">Записаться ' + svg('arrow', 2.2) + '</button></div>';
     h += '<div class="quick">' + [['tab:book', 'cal', 'Запись'], ['tel', 'phone', 'Позвонить'], ['route', 'pin', 'Маршрут'], ['chat', 'chat', 'Написать']].map(([k, ic, t]) =>
       k === 'tel' ? '<a href="' + telHref() + '">' + svg(ic) + '<span>' + t + '</span></a>' : k === 'route' ? '<a href="' + route() + '" target="_blank" rel="noopener">' + svg(ic) + '<span>' + t + '</span></a>' :
-        k === 'chat' ? (A.telegram ? '<a href="' + esc(A.telegram) + '" target="_blank" rel="noopener">' : '<a href="' + (A.whatsapp ? 'https://wa.me/' + esc(A.whatsapp) : telHref()) + '" target="_blank" rel="noopener">') + svg(ic) + '<span>' + t + '</span></a>' :
+        k === 'chat' ? (A.telegram ? '<a href="' + esc(A.telegram) + '" target="_blank" rel="noopener">' : '<a href="' + (A.whatsapp ? 'https://wa.me/' + esc(A.whatsapp) : A.max ? esc(A.max) : telHref()) + '" target="_blank" rel="noopener">') + svg(ic) + '<span>' + t + '</span></a>' :
           '<button type="button" data-tab="book">' + svg(ic) + '<span>' + t + '</span></button>').join('') + '</div>';
     h += liveCard();
-    if (nx) { const c = carById(nx.carId); h += '<div class="next"><small>' + (nx.status === 'confirmed' ? 'Запись подтверждена' : 'Запись ждёт подтверждения') + '</small><div class="when">' + esc(nice(nx.date)) + ', ' + fromMin(nx.startMin) + '</div><p>' + esc(nx.serviceName) + ' · ' + esc(carName(c)) + '</p>' +
+    if (nx) { const c = carById(nx.carId); h += '<div class="next"><small>' + (nx.status === 'confirmed' ? 'Запись подтверждена' : 'Запись ждёт подтверждения') + '</small>' + (until(nx) ? '<span class="in">' + until(nx) + '</span>' : '') + '<div class="when">' + esc(nice(nx.date)) + ', ' + fromMin(nx.startMin) + '</div><p>' + esc(nx.serviceName) + ' · ' + esc(carName(c)) + '</p>' +
       '<div class="row"><a class="btn white small" href="' + route() + '" target="_blank" rel="noopener">' + svg('pin') + 'Маршрут</a><button class="btn light small" type="button" data-act="ics" data-id="' + nx.id + '">' + svg('cal') + 'В календарь</button></div></div>'; }
     h += '<section class="sec"><div class="sec-h"><h2>Мой автомобиль</h2><button type="button" data-tab="garage">Все ' + D.cars.length + '</button></div>' + carCard(D.cars[0]) + '</section>';
     h += '<button class="card bonus-mini" type="button" data-tab="bonus"><span class="ic">' + svg('star') + '</span><span style="flex:1"><b>' + D.balance.toLocaleString('ru-RU') + ' бонусов</b><small>' + lv.name + ' · ' + lv.rate + '% с каждого визита' + (nl ? ' · до ' + nl.name + ' ' + (nl.from - D.count) + ' ' + plural(nl.from - D.count, 'визит', 'визита', 'визитов') : '') + '</small>' +
@@ -272,7 +279,7 @@
   function bonus() {
     const lv = level(), nl = nextLevel(), code = String(A.slug || 'AUTO').replace(/-app$/, '').toUpperCase().slice(0, 8) + '-' + (D.profile.phone.replace(/\D/g, '').slice(-4) || '0000');
     let h = '<div class="head"><div class="hi"><small>Клубная карта</small><b>Бонусы</b></div></div>';
-    h += '<div class="loyal"><div class="top"><span class="brand">' + (A.mark ? '<img src="' + esc(A.mark) + '" alt="" width="30" height="25">' : '') + esc(A.name) + '</span><span class="lvl">' + lv.name + '</span></div><div class="bal">' + D.balance.toLocaleString('ru-RU') + '</div><small>бонусов · 1 бонус = 1 ₽</small>' +
+    h += '<div class="loyal lv' + (B.levels.indexOf(lv) + 1) + '"><i class="sheen"></i><div class="top"><span class="brand">' + (A.mark ? '<img src="' + esc(A.mark) + '" alt="" width="30" height="25">' : '') + esc(A.name) + '</span><span class="lvl">' + lv.name + '</span></div><div class="bal">' + D.balance.toLocaleString('ru-RU') + '</div><small>бонусов · 1 бонус = 1 ₽</small>' +
       '<div class="row" style="margin-top:18px"><div><small>Карта</small><div style="font-weight:800;letter-spacing:.14em;margin-top:2px">' + cardNo() + '</div><small style="display:block;margin-top:8px">Покажите QR на приёмке</small></div><div class="qr">' + qrSvg('CARD:' + cardNo().replace(' ', '') + ';' + A.name) + '</div></div></div>';
     h += '<p style="color:var(--muted);font-size:13.5px;margin:12px 4px 0">' + lv.rate + '% с каждого визита возвращается бонусами. Оплачивайте ими до ' + B.maxPay + '% стоимости работ.</p>';
     h += '<section class="sec"><div class="sec-h"><h2>Уровни</h2></div><div class="levels">' + B.levels.map(l => '<div class="' + (l.name === lv.name ? 'on' : '') + '"><b>' + l.name + '</b><small>' + l.rate + '% · от ' + l.from + ' ' + plural(l.from, 'визита', 'визитов', 'визитов') + '</small></div>').join('') + '</div>' +
@@ -315,6 +322,8 @@
       '<label><span class="t">Акции и новости<small>Не чаще раза в неделю</small></span><input class="sw" type="checkbox" data-set="news"' + (D.settings.news ? ' checked' : '') + '></label>' +
       (A.phone ? '<a href="' + telHref() + '">' + svg('phone') + '<span class="t">Позвонить ' + esc(W.placeTo) + '<small>' + esc(A.phone) + '</small></span></a>' : '') +
       (A.telegram ? '<a href="' + esc(A.telegram) + '" target="_blank" rel="noopener">' + svg('chat') + '<span class="t">Написать в Telegram</span></a>' : '') +
+      (A.whatsapp ? '<a href="https://wa.me/' + esc(A.whatsapp) + '" target="_blank" rel="noopener">' + svg('chat') + '<span class="t">Написать в WhatsApp</span></a>' : '') +
+      (A.max ? '<a href="' + esc(A.max) + '" target="_blank" rel="noopener">' + svg('chat') + '<span class="t">Написать в MAX</span></a>' : '') +
       '<a href="' + route() + '" target="_blank" rel="noopener">' + svg('pin') + '<span class="t">Как добраться<small>' + esc(A.address) + '</small></span></a>' +
       (A.site ? '<a href="' + esc(A.site) + '" target="_blank" rel="noopener">' + svg('arrow') + '<span class="t">Сайт и цены</span></a>' : '') +
       '<button type="button" data-act="install">' + svg('dl') + '<span class="t">Приложение на экран телефона<small>Без App Store и Google Play</small></span></button></div></section>';

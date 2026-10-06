@@ -111,7 +111,7 @@ window.APP = {
  "masters": [
   {
    "id": "m1",
-   "name": "Старший барбер",
+   "name": "Максим Орлов",
    "role": "Высший уровень",
    "services": [
     "s3",
@@ -128,14 +128,14 @@ window.APP = {
   },
   {
    "id": "m2",
-   "name": "Барбер",
+   "name": "Даниил Крылов",
    "role": "Основной уровень",
    "services": null,
    "days": null
   },
   {
    "id": "m3",
-   "name": "Младший барбер",
+   "name": "Егор Савин",
    "role": "Доступные цены",
    "services": [
     "s1",
@@ -196,7 +196,9 @@ window.APP = {
    }
   ]
  },
- "telegram": "",
+ "kind": "Барбершоп",
+ "telegram": "https://t.me/stal_demo",
+ "max": "https://max.ru/u/stal_demo",
  "words": {
   "gift": "Подарите стрижку",
   "friendTo": "другу",

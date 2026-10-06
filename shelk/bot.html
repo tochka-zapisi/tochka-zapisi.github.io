@@ -303,6 +303,8 @@ function createSalonBot({ config: c, store, now = () => new Date() }) {
       const h = [1, 2, 3, 4, 5, 6, 0].map(d => `${WD[d]} ${hoursOf(d) ? hoursOf(d).join('–') : 'выходной'}`).join('\n');
       const b = [[link('Маршрут', 'https://yandex.ru/maps/?text=' + encodeURIComponent(c.address || ''))]];
       if (c.site) b[0].push(link('Сайт', c.site));
+      const m = c.messengers || {}, chats = [m.whatsapp && link('WhatsApp', m.whatsapp), m.max && link('MAX', m.max)].filter(Boolean);
+      if (chats.length) b.push(chats);
       return [{ chat, text: `«${c.name}»\n${c.address}\n${c.phone ? 'Телефон: ' + c.phone + '\n' : ''}\n${h}`, buttons: b.concat([[btn('Записаться', 'book'), btn('Меню', 'menu')]]) }];
     }
     if (cmd === 'ask') { S.setSt(chat, { step: 'ask' }); return [{ chat, text: 'Напишите вопрос одним сообщением — администратор ответит сюда.' }]; }
@@ -364,11 +366,24 @@ function createSalonBot({ config: c, store, now = () => new Date() }) {
 
 /* Бот студии: показывает дизайны и цены, собирает заявку на бесплатное демо, передаёт вопросы владельцу студии.
    createStudioBot({ config, store, now }) → { onMessage(msg), onCallback(q), tick() } — массивы сообщений (см. общее.js).
-   config: { brand, city, person, packages: [{ name, price, days, what, best }], support: [{ name, price }], creatives: [{ file, caption }],
-             showcase: { file, caption } | null, privacy, adminCode }
+   config: { brand, city, person, site, demos: [{ name, kind, url }], packages: [{ name, price, days, what, best }], support: [{ name, price }],
+             extras: [{ name, price }], creatives: [{ file, caption }], showcase: { file, caption } | null, privacy, adminCode }
+   Заявка с сайта: кнопка «Telegram» в калькуляторе открывает бота со ссылкой t.me/<бот>?start=s-<ниша>-<пакет>-<дополнения>
+   (ниша — номер в SITE_NICHES, пакет — номер в SITE_PLANS, дополнения — сумма флагов SITE_EXTRAS) — бот спрашивает только название и контакт.
    Заявки: store 'leads' (+ onLead(lead) — запуск в Telegram дописывает их в sales/leads.csv). */
 
 const NICHES = [['beauty', 'Салон красоты'], ['nails', 'Маникюр, брови'], ['barber', 'Барбершоп'], ['auto', 'Автосервис, шиномонтаж'], ['clinic', 'Клиника, массаж'], ['other', 'Другое']];
+/* как на сайте студии (studio-site/index.html: #niche, #plan, #extra) — порядок важен */
+const SITE_NICHES = ['Автосервис', 'Детейлинг', 'Шиномонтаж', 'Барбершоп', 'Салон красоты', 'Другое'];
+const SITE_PLANS = ['Старт', 'Бизнес', 'Бизнес + Запись'];
+const SITE_EXTRAS = ['Telegram-бот записи', 'Приложение для клиентов', 'Логотип и мини-стиль', 'Карточки на картах'];
+
+/* «s-3-2-5» → { niche: 'Барбершоп', plan: 'Бизнес + Запись', extras: ['Telegram-бот записи', 'Логотип и мини-стиль'] } */
+function parseSiteStart(p) {
+  const m = /^s-(\d)-(\d)-(\d{1,2})$/.exec(p || '');
+  if (!m || !SITE_NICHES[+m[1]] || !SITE_PLANS[+m[2]]) return null;
+  return { niche: SITE_NICHES[+m[1]], plan: SITE_PLANS[+m[2]], extras: SITE_EXTRAS.filter((x, i) => +m[3] & (1 << i)) };
+}
 
 function createStudioBot({ config: c, store, now = () => new Date(), onLead = null }) {
   const S = {
@@ -379,8 +394,10 @@ function createStudioBot({ config: c, store, now = () => new Date(), onLead = nu
     st(chat) { return (store.get('states') || {})[chat] || {}; },
     setSt(chat, v) { const all = store.get('states') || {}; all[chat] = v; store.set('states', all); }
   };
-  const menu = chat => ({ chat, text: 'С чего начнём?', buttons: [[btn('Хочу демо — бесплатно', 'demo')], [btn('Посмотреть дизайны', 'designs'), btn('Цены', 'prices')], [btn('Как это работает', 'how'), btn('Задать вопрос', 'ask')]] });
+  const siteRow = () => c.site ? [link('Наш сайт', c.site)] : null;
+  const menu = chat => ({ chat, text: 'С чего начнём?', buttons: [[btn('Хочу демо — бесплатно', 'demo')], [btn('Посмотреть работы', 'designs'), btn('Цены', 'prices')], [btn('Как это работает', 'how'), btn('Связаться', 'contact')], siteRow()].filter(Boolean) });
   const nicheName = k => (NICHES.find(n => n[0] === k) || [k, k])[1];
+  const order = l => [l.plan ? 'пакет «' + l.plan + '»' : '', ...(l.extras || [])].filter(Boolean).join(', ');
 
   async function onMessage(msg) {
     const chat = msg.chat, text = (msg.text || '').trim(), st = S.st(chat);
@@ -390,12 +407,18 @@ function createStudioBot({ config: c, store, now = () => new Date(), onLead = nu
     }
     if (chat === S.owner && text === '/leads') {
       const l = S.leads.slice(-10).reverse();
-      return [{ chat, text: l.length ? 'Последние заявки:\n\n' + l.map(x => `№${x.n} · ${x.date} · ${nicheName(x.niche)} · ${x.title}${x.link ? ' · ' + x.link : ''} · ${x.contact}`).join('\n') : 'Заявок пока нет.' }];
+      return [{ chat, text: l.length ? 'Последние заявки:\n\n' + l.map(x => `№${x.n} · ${x.date} · ${nicheName(x.niche)} · ${x.title}${order(x) ? ' · ' + order(x) : ''}${x.link ? ' · ' + x.link : ''} · ${x.contact}`).join('\n') : 'Заявок пока нет.' }];
     }
     if (chat === S.owner && st.replyTo) { S.setSt(chat, {}); return [{ chat: st.replyTo, text: `${c.person ? c.person + ' (' + c.brand + ')' : c.brand}:\n${text}`, buttons: [[btn('Хочу демо', 'demo'), btn('Меню', 'menu')]] }, { chat, text: 'Отправлено.' }]; }
+    /* заявка из калькулятора на сайте */
+    const fromSite = /^\/start\s+/.test(text) ? parseSiteStart(text.split(/\s+/)[1]) : null;
+    if (fromSite) {
+      S.setSt(chat, { step: 'title', niche: fromSite.niche, plan: fromSite.plan, extras: fromSite.extras, source: 'сайт' });
+      return [{ chat, text: `Здравствуйте! Это ${c.brand}${c.person ? ', на связи ' + c.person : ''}. Вижу вашу заявку с сайта:\n\n• Бизнес: ${fromSite.niche}\n• Нужно: ${order(fromSite)}\n\nСоберём демо вашего сайта бесплатно — за 1 день. Осталось два вопроса.\n\nКак называется ваш бизнес и в каком городе? Например: «Мотор, Красноярск».`, removeKeyboard: true }];
+    }
     if (/^\/start\b/.test(text) || text === '/menu') {
       S.setSt(chat, {});
-      return [{ chat, text: `Здравствуйте! Это ${c.brand}${c.person ? ', на связи ' + c.person : ''}.\n\nДелаем сайты с онлайн-записью для салонов, барбершопов и автосервисов${c.city ? ' — ' + c.city : ''}. Сначала показываем ваш сайт готовым — бесплатно. Понравится — запускаем за 3–10 дней.`, removeKeyboard: true }, menu(chat)];
+      return [{ chat, text: `Здравствуйте! Это ${c.brand}${c.person ? ', на связи ' + c.person : ''}.\n\nДелаем сайты с онлайн-записью, Telegram-ботов и приложения для автосервисов, барбершопов и салонов${c.city ? ' — ' + c.city + ' и вся Россия' : ''}. Сначала показываем ваш сайт готовым — бесплатно, за 1 день. Понравится — запускаем за 3–10 дней.${c.site ? '\n\nНаш сайт: ' + c.site : ''}`, removeKeyboard: true }, menu(chat)];
     }
     if (st.step === 'title' && text) { S.setSt(chat, { ...st, step: 'link', title: text.slice(0, 120) }); return [{ chat, text: 'Пришлите ссылку на вас в 2ГИС, Яндекс Картах или соцсетях — возьмём оттуда услуги и цены для демо.', buttons: [[btn('Ссылки нет — пропустить', 'skip')]] }]; }
     if (st.step === 'link' && text) { S.setSt(chat, { ...st, step: 'contact', link: text.slice(0, 300) }); return askContact(chat); }
@@ -417,11 +440,12 @@ function createStudioBot({ config: c, store, now = () => new Date(), onLead = nu
   }
   function saveLead(chat, st, contact, from) {
     const n = now(), lead = { n: S.leads.length + 1, date: n.toISOString().slice(0, 10), chat, niche: st.niche, title: st.title, link: st.link || '',
+      plan: st.plan || '', extras: st.extras || [], source: st.source || 'бот',
       contact: contact || (from?.username ? '@' + from.username : 'Telegram, чат ' + chat), username: from?.username || '' };
     S.leads = S.leads.concat(lead); S.setSt(chat, {});
     if (onLead) try { onLead(lead); } catch (e) { /* заявка всё равно сохранена */ }
-    const out = [{ chat, text: `Спасибо! Заявка №${lead.n} принята.\n\nСоберём демо сайта для «${lead.title}» за 1 день и пришлём сюда ссылку. Это бесплатно и ни к чему не обязывает.`, removeKeyboard: true, buttons: [[btn('Посмотреть дизайны', 'designs'), btn('Цены', 'prices')]] }];
-    if (S.owner) out.push({ chat: S.owner, text: `Заявка на демо №${lead.n}\nНиша: ${nicheName(lead.niche)}\nБизнес: ${lead.title}\nСсылка: ${lead.link || '—'}\nКонтакт: ${lead.contact}${lead.username && !String(lead.contact).startsWith('@') ? ' (@' + lead.username + ')' : ''}`, buttons: [[btn('Написать ответ', 'reply:' + chat)]] });
+    const out = [{ chat, text: `Спасибо! Заявка №${lead.n} принята.\n\nСоберём демо сайта для «${lead.title}» за 1 день и пришлём сюда ссылку. Это бесплатно и ни к чему не обязывает.`, removeKeyboard: true, buttons: [[btn('Посмотреть работы', 'designs'), btn('Цены', 'prices')]] }];
+    if (S.owner) out.push({ chat: S.owner, text: `Заявка на демо №${lead.n}${lead.source === 'сайт' ? ' (с сайта)' : ''}\nНиша: ${nicheName(lead.niche)}\nБизнес: ${lead.title}${order(lead) ? '\nНужно: ' + order(lead) : ''}\nСсылка: ${lead.link || '—'}\nКонтакт: ${lead.contact}${lead.username && !String(lead.contact).startsWith('@') ? ' (@' + lead.username + ')' : ''}`, buttons: [[btn('Написать ответ', 'reply:' + chat)]] });
     return out;
   }
 
@@ -434,16 +458,23 @@ function createStudioBot({ config: c, store, now = () => new Date(), onLead = nu
     if (cmd === 'here' && st.step === 'contact') return saveLead(chat, st, '', q.from);
     if (cmd === 'designs') {
       const out = (c.creatives || []).map(x => ({ chat, photo: x, text: x.caption || '' }));
-      if (c.showcase) out.push({ chat, document: c.showcase, text: c.showcase.caption || 'Витрина дизайнов целиком — откройте файл в браузере.' });
+      if (c.demos && c.demos.length) out.push({ chat, text: 'Живые демо — откройте и попробуйте записаться, как ваш клиент. Названия вымышленные, всё работает:', buttons: rows(c.demos.map(d => link(`${d.name} · ${d.kind}`, d.url)), 1) });
+      else if (c.showcase) out.push({ chat, document: c.showcase, text: c.showcase.caption || 'Витрина дизайнов целиком — откройте файл в браузере.' });
       out.push({ chat, text: 'Хотите так же — с вашими услугами и ценами?', buttons: [[btn('Хочу демо — бесплатно', 'demo')], [btn('Цены', 'prices'), btn('Меню', 'menu')]] });
       return out;
     }
     if (cmd === 'prices') {
       const p = (c.packages || []).map(x => `• ${x.name}${x.best ? ' (рекомендуем)' : ''} — ${x.price}, ${x.days}`).join('\n');
       const s = (c.support || []).map(x => `• ${x.name} — ${x.price}`).join('\n');
-      return [{ chat, text: `Пакеты:\n${p}\n\nСопровождение:\n${s}\n\nОплата: 50% после демо, 50% после сдачи. Демо — бесплатно.`, buttons: [[btn('Хочу демо — бесплатно', 'demo')], [btn('Как это работает', 'how'), btn('Меню', 'menu')]] }];
+      const e = (c.extras || []).map(x => `• ${x.name} — ${x.price}`).join('\n');
+      return [{ chat, text: `Пакеты:\n${p}\n\nСопровождение:\n${s}${e ? '\n\nДополнительно:\n' + e : ''}\n\nTelegram-бот и приложение для клиентов — считаем после демо.\nОплата: 50% после демо, 50% после сдачи. Демо — бесплатно.`, buttons: [[btn('Хочу демо — бесплатно', 'demo')], [btn('Как это работает', 'how'), btn('Меню', 'menu')], siteRow()].filter(Boolean) }];
     }
-    if (cmd === 'how') return [{ chat, text: 'Как это работает:\n\n1. Демо — 1 день, бесплатно: собираем сайт с вашим названием, услугами и ценами.\n2. Встреча 15 минут: показываем на вашем телефоне, отвечаем на вопросы.\n3. Запуск — 3–10 дней: тексты, фото, домен, онлайн-запись.\n4. Сопровождение: правки — сообщением сюда, отчёт по заявкам раз в месяц.', buttons: [[btn('Хочу демо — бесплатно', 'demo')], [btn('Меню', 'menu')]] }];
+    if (cmd === 'how') return [{ chat, text: 'Как это работает:\n\n1. Демо — 1 день, бесплатно: собираем сайт с вашим названием, услугами и ценами.\n2. Встреча 15 минут: показываем на вашем телефоне, отвечаем на вопросы.\n3. Запуск — 3–10 дней: тексты, фото, домен, онлайн-запись, бот, приложение.\n4. Сопровождение: правки — сообщением сюда, отчёт по заявкам раз в месяц.', buttons: [[btn('Хочу демо — бесплатно', 'demo')], [btn('Меню', 'menu')]] }];
+    if (cmd === 'contact') {
+      const k = c.contacts || {}, wa = k.whatsapp ? 'https://wa.me/' + k.whatsapp : '', tg = k.telegram ? 'https://t.me/' + k.telegram : '';
+      const lines = [k.phone ? '📞 Телефон: ' + k.phone + (k.person ? ' — ' + k.person : '') : '', k.whatsapp ? '💬 WhatsApp: +' + k.whatsapp.replace(/^7(\d{3})(\d{3})(\d{2})(\d{2})$/, '7 $1 $2-$3-$4') : '', k.telegram ? '✈️ Telegram: @' + k.telegram : '', k.max || k.maxPhone ? '🟦 MAX: ' + (k.maxPhone || '') + (k.max ? '' : ' (найдите в MAX по номеру)') : '', c.site ? '🌐 Сайт: ' + c.site : ''].filter(Boolean);
+      return [{ chat, text: `Связаться с «${c.brand}»:\n\n${lines.join('\n')}\n\nЗвоните или пишите — ответим в течение дня. Можно задать вопрос прямо здесь.`, buttons: [[wa && link('Написать в WhatsApp', wa), tg && link('Написать в Telegram', tg), k.max && link('Написать в MAX', k.max)].filter(Boolean), [btn('Задать вопрос здесь', 'ask'), btn('Меню', 'menu')]].filter(r => r.length) }];
+    }
     if (cmd === 'ask') { S.setSt(chat, { step: 'ask' }); return [{ chat, text: 'Напишите вопрос одним сообщением — ответим здесь.' }]; }
     if (cmd === 'reply' && chat === S.owner) { S.setSt(chat, { replyTo: arg }); return [{ chat, text: 'Напишите ответ — отправлю.' }]; }
     return [menu(chat)];
@@ -451,7 +482,7 @@ function createStudioBot({ config: c, store, now = () => new Date(), onLead = nu
   return { onMessage, onCallback, tick: () => [] };
 }
 
-var SALON = {"placeGen":"студии","name":"Шёлк","address":"ул. Карла Маркса, 95, Красноярск","phone":"+7 900 000-00-00","site":"","privacy":"","hours":{"0":["10:00","22:00"],"1":["10:00","22:00"],"2":["10:00","22:00"],"3":["10:00","22:00"],"4":["10:00","22:00"],"5":["10:00","22:00"],"6":["10:00","22:00"]},"step":30,"services":[{"id":"s1","name":"Комбинированный маникюр без покрытия","duration":60,"price":1550,"from":true},{"id":"s2","name":"Снятие и маникюр с покрытием гель-лак","duration":120,"price":2050,"from":true},{"id":"s3","name":"Снятие, маникюр, укрепление, покрытие гель-лак","duration":120,"price":2150,"from":true},{"id":"s4","name":"Маникюр с наращиванием и покрытием","duration":150,"price":2150,"from":true},{"id":"s5","name":"Детский маникюр","duration":60,"price":1200,"from":true},{"id":"s6","name":"Педикюр без покрытия","duration":60,"price":1650,"from":true},{"id":"s7","name":"Педикюр с покрытием гель-лак","duration":90,"price":2050,"from":true},{"id":"s8","name":"Полный педикюр с покрытием SMART","duration":120,"price":2850,"from":true},{"id":"s9","name":"Коррекция бровей без окрашивания","duration":30,"price":800,"from":true},{"id":"s10","name":"Окрашивание ресниц краской","duration":30,"price":900,"from":true},{"id":"s11","name":"Ламинирование нижних ресниц","duration":60,"price":900,"from":true},{"id":"s12","name":"Наращивание ресниц MEGA VOLUME и CRAZY EFFECT","duration":150,"price":2900,"from":false}],"masters":[{"id":"m1","name":"Мастер 1","role":"Маникюр и педикюр","services":["s1","s2","s3","s4","s5","s6","s7","s8"],"days":null},{"id":"m2","name":"Мастер 2","role":"Маникюр и педикюр","services":["s1","s2","s3","s4","s5","s6","s7","s8"],"days":null},{"id":"m3","name":"Мастер 3","role":"Брови и ресницы","services":["s9","s10","s11","s12"],"days":null}],"pdInTelegram":false,"demo":true,"review":"","adminCode":"1234"}, STUDIO = {"brand":"Точка записи","city":"Красноярск","person":"Руслан","privacy":"","packages":[{"name":"Старт","best":false,"what":"Одностраничный сайт из шаблона: услуги с ценами, отзывы, контакты, карта, кнопки звонка и мессенджеров, Метрика, адаптация под телефон","days":"3 дня","price":"19 900 ₽"},{"name":"Бизнес","best":true,"what":"Лендинг под бренд клиента: дизайн, продающие тексты, SEO-база под Яндекс, Schema.org, превью для мессенджеров, логотип-надпись при необходимости, скорость 90+","days":"5 дней","price":"39 900 ₽"},{"name":"Бизнес + Запись","best":false,"what":"Всё из «Бизнес» + онлайн-запись (приложение на телефон) + уведомления владельцу в Telegram (без личных данных клиентов в сообщениях — по 152-ФЗ) + согласие и политика ПД. Первые 3 месяца сопровождения «Бизнес» — бесплатно","days":"7–10 дней","price":"59 900 ₽"}],"support":[{"name":"Базовое","price":"1 990 ₽/мес"},{"name":"Бизнес","price":"3 990 ₽/мес"},{"name":"Сайт по подписке","price":"0 ₽ старт + 4 990 ₽/мес"}],"creatives":[],"showcase":{"name":"витрина.html","caption":"Витрина дизайнов целиком — откройте файл в браузере телефона."},"adminCode":"1234"};
+var SALON = {"placeGen":"студии","name":"Шёлк","address":"ул. Карла Маркса, 95, Красноярск","phone":"+7 900 000-00-00","site":"","privacy":"","hours":{"0":["10:00","22:00"],"1":["10:00","22:00"],"2":["10:00","22:00"],"3":["10:00","22:00"],"4":["10:00","22:00"],"5":["10:00","22:00"],"6":["10:00","22:00"]},"step":30,"services":[{"id":"s1","name":"Комбинированный маникюр без покрытия","duration":60,"price":1550,"from":true},{"id":"s2","name":"Снятие и маникюр с покрытием гель-лак","duration":120,"price":2050,"from":true},{"id":"s3","name":"Снятие, маникюр, укрепление, покрытие гель-лак","duration":120,"price":2150,"from":true},{"id":"s4","name":"Маникюр с наращиванием и покрытием","duration":150,"price":2150,"from":true},{"id":"s5","name":"Детский маникюр","duration":60,"price":1200,"from":true},{"id":"s6","name":"Педикюр без покрытия","duration":60,"price":1650,"from":true},{"id":"s7","name":"Педикюр с покрытием гель-лак","duration":90,"price":2050,"from":true},{"id":"s8","name":"Полный педикюр с покрытием SMART","duration":120,"price":2850,"from":true},{"id":"s9","name":"Коррекция бровей без окрашивания","duration":30,"price":800,"from":true},{"id":"s10","name":"Окрашивание ресниц краской","duration":30,"price":900,"from":true},{"id":"s11","name":"Ламинирование нижних ресниц","duration":60,"price":900,"from":true},{"id":"s12","name":"Наращивание ресниц MEGA VOLUME и CRAZY EFFECT","duration":150,"price":2900,"from":false}],"masters":[{"id":"m1","name":"Софья Белова","role":"Маникюр и педикюр","services":["s1","s2","s3","s4","s5","s6","s7","s8"],"days":null},{"id":"m2","name":"Ева Миронова","role":"Маникюр и педикюр","services":["s1","s2","s3","s4","s5","s6","s7","s8"],"days":null},{"id":"m3","name":"Злата Орлова","role":"Брови и ресницы","services":["s9","s10","s11","s12"],"days":null}],"pdInTelegram":false,"demo":true,"review":"","messengers":{"telegram":"https://t.me/shelk_demo","whatsapp":"https://wa.me/79000000000","max":"https://max.ru/u/shelk_demo"},"adminCode":"1234"}, STUDIO = {"brand":"Точка записи","city":"Красноярск","person":"Руслан","privacy":"https://tochka-zapisi.github.io/privacy.html","site":"https://tochka-zapisi.github.io/","demos":[{"name":"Сталь","kind":"Барбершоп","url":"https://tochka-zapisi.github.io/stal/"},{"name":"Мрамор","kind":"Студия пилатеса","url":"https://tochka-zapisi.github.io/mramor/"},{"name":"Гранит","kind":"Юридическое бюро","url":"https://tochka-zapisi.github.io/granit/"},{"name":"Базальт","kind":"Бокс-клуб","url":"https://tochka-zapisi.github.io/bazalt/"},{"name":"Туман","kind":"SPA и массаж","url":"https://tochka-zapisi.github.io/tuman/"},{"name":"Мята","kind":"Ветеринарная клиника","url":"https://tochka-zapisi.github.io/myata/"},{"name":"Шёлк","kind":"Студия красоты","url":"https://tochka-zapisi.github.io/shelk/"},{"name":"Кварц","kind":"Ремонт смартфонов и ноутбуков","url":"https://tochka-zapisi.github.io/kvarc/"},{"name":"Колесо","kind":"Шиномонтаж","url":"https://tochka-zapisi.github.io/shinomontazh/"},{"name":"Янтарь","kind":"Школа танцев","url":"https://tochka-zapisi.github.io/yantar/"},{"name":"Латунь","kind":"Барбершоп","url":"https://tochka-zapisi.github.io/latun/"},{"name":"Перламутр","kind":"Стоматология","url":"https://tochka-zapisi.github.io/perlamutr/"},{"name":"Обсидиан","kind":"Детейлинг-центр","url":"https://tochka-zapisi.github.io/obsidian/"},{"name":"Графит","kind":"Барбершоп","url":"https://tochka-zapisi.github.io/grafit/"},{"name":"Сатин","kind":"Студия красоты","url":"https://tochka-zapisi.github.io/satin/"}],"extras":[{"name":"Логотип и мини-стиль","price":"4 900 ₽"},{"name":"Карточки в Яндекс Бизнесе и 2ГИС под ключ","price":"5 900 ₽"},{"name":"Настройка Яндекс Директа (без бюджета на рекламу)","price":"от 14 900 ₽"},{"name":"Дополнительная страница (услуга, акция)","price":"4 900 ₽"}],"contacts":{"phone":"+7 913 036-49-62","whatsapp":"79333399483","telegram":"opiumxxxxl","person":"Руслан","max":"","maxPhone":"+7 913 036-49-62"},"packages":[{"name":"Старт","best":false,"what":"Одностраничный сайт из шаблона: услуги с ценами, отзывы, контакты, карта, кнопки звонка и мессенджеров, Метрика, адаптация под телефон","days":"3 дня","price":"19 900 ₽"},{"name":"Бизнес","best":true,"what":"Лендинг под бренд клиента: дизайн, продающие тексты, SEO-база под Яндекс, Schema.org, превью для мессенджеров, логотип-надпись при необходимости, скорость 90+","days":"5 дней","price":"39 900 ₽"},{"name":"Бизнес + Запись","best":false,"what":"Всё из «Бизнес» + онлайн-запись (приложение на телефон) + уведомления владельцу в Telegram (без личных данных клиентов в сообщениях — по 152-ФЗ) + согласие и политика ПД. Первые 3 месяца сопровождения «Бизнес» — бесплатно","days":"7–10 дней","price":"59 900 ₽"}],"support":[{"name":"Базовое","price":"1 990 ₽/мес"},{"name":"Бизнес","price":"3 990 ₽/мес"},{"name":"Сайт по подписке","price":"0 ₽ старт + 4 990 ₽/мес"}],"creatives":[],"showcase":{"name":"витрина.html","caption":"Витрина дизайнов целиком — откройте файл в браузере телефона."},"adminCode":"1234"};
 var BOTS = {
   salon: { name: 'Запись · ' + SALON.name, acc: '#8c5a55', ink: '#ffffff', txt: '#8c5a55', who: ["Клиентка студии","Владелец студии"],
     lead: 'Клиент записывается прямо в Telegram — услуга, мастер, день, время. Владелец получает запись и подтверждает одной кнопкой. Клиенту — подтверждение, напоминания накануне и за 2 часа (с кнопками «Приду», «Перенести», «Не смогу»), после визита — просьба оценить: довольных бот зовёт оставить отзыв на карте, недовольных — передаёт администратору.',

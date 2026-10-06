@@ -168,8 +168,14 @@ window.APP = {
    }
   ]
  },
- "telegram": "",
+ "kind": "Студия пилатеса",
+ "telegram": "https://t.me/mramor_demo",
+ "max": "https://max.ru/u/mramor_demo",
  "words": {
+  "master": "тренер",
+  "masters": "Тренеры",
+  "masterCap": "Тренер",
+  "works": "Наш зал",
   "gift": "Подарите занятие пилатесом",
   "friendTo": "подруге",
   "friendAcc": "подругу",

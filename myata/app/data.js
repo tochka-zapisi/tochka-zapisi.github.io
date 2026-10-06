@@ -221,9 +221,36 @@ window.APP = {
    }
   ]
  },
+ "kind": "Ветеринарная клиника",
+ "pets": [
+  {
+   "id": "cat",
+   "name": "Кошка",
+   "icon": "cat"
+  },
+  {
+   "id": "dog",
+   "name": "Собака",
+   "icon": "dog"
+  },
+  {
+   "id": "rabbit",
+   "name": "Кролик или грызун",
+   "icon": "rabbit"
+  },
+  {
+   "id": "bird",
+   "name": "Птица",
+   "icon": "bird"
+  }
+ ],
  "telegram": "https://t.me/myata_demo",
  "max": "https://max.ru/u/myata_demo",
  "words": {
+  "master": "врач",
+  "masters": "Врачи",
+  "masterCap": "Врач",
+  "works": "Наша клиника",
   "gift": "Подарите заботу о питомце",
   "friendTo": "другу",
   "friendAcc": "друга",

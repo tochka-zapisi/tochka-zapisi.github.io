@@ -39,7 +39,7 @@
   /* ---------- данные клиента (демо) ---------- */
   const KEY = 'clientapp.' + (A.slug || 'salon') + '.v1';
   /* слова под нишу: салон (по умолчанию) или барбершоп — из data.js → words */
-  const W = Object.assign({ gift: 'Подарите красоту', friendTo: 'подруге', friendAcc: 'подругу', him: 'Ей', his: 'её', placeTo: 'в салон', placeBy: 'салоном', demoName: 'Екатерина', s1: 'Пудра', toLabel: 'Имя получательницы', toExample: 'Маша' }, A.words || {});
+  const W = Object.assign({ gift: 'Подарите красоту', friendTo: 'подруге', friendAcc: 'подругу', him: 'Ей', his: 'её', placeTo: 'в салон', placeBy: 'салоном', demoName: 'Екатерина', s1: 'Пудра', toLabel: 'Имя получательницы', toExample: 'Маша', master: 'мастер', masters: 'Мастера', masterCap: 'Мастер', works: 'Работы мастеров' }, A.words || {});
   const hoursOf = dow => { const h = (A.hours || {})[dow]; return h && toMin(h[1]) > toMin(h[0]) ? h : null; };
   const svcById = id => A.services.find(s => s.id === id);
   const mById = id => (A.masters || []).find(m => m.id === id);
@@ -94,7 +94,7 @@
 
   /* ---------- каркас ---------- */
   const st = { tab: 'home', bk: { svc: null, who: 'any', date: null, time: null } };
-  function go(tab) { st.tab = tab; render(); $('#view').scrollTop = 0; }
+  function go(tab) { const run = () => { st.tab = tab; render(); $('#view').scrollTop = 0; }; if (document.startViewTransition && tab !== st.tab && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.startViewTransition(run); else run(); }
   function render() {
     const v = $('#view');
     v.innerHTML = st.tab === 'home' ? home() : st.tab === 'book' ? book() : st.tab === 'bonus' ? bonus() : profile();
@@ -109,26 +109,62 @@
   const upcoming = () => D.bookings.filter(b => (b.status === 'new' || b.status === 'confirmed') && (b.date > dstr(new Date()) || (b.date === dstr(new Date()) && b.startMin > new Date().getHours() * 60))).sort((a, b) => (a.date + fromMin(a.startMin)).localeCompare(b.date + fromMin(b.startMin)));
   const greet = () => { const h = new Date().getHours(); return h < 6 ? 'Доброй ночи' : h < 12 ? 'Доброе утро' : h < 18 ? 'Добрый день' : 'Добрый вечер'; };
   const route = () => 'https://yandex.ru/maps/?text=' + encodeURIComponent(A.address || '');
+  /* «через 2 дня» до записи */
+  const until = b => { const ms = parseD(b.date).getTime() + b.startMin * 6e4 - Date.now(); if (ms <= 0) return ''; const h = Math.round(ms / 36e5), d = Math.round(ms / 864e5);
+    return ms < 36e5 ? 'через ' + Math.max(1, Math.round(ms / 6e4)) + ' мин' : h < 24 ? 'через ' + h + ' ' + plural(h, 'час', 'часа', 'часов') : 'через ' + d + ' ' + plural(d, 'день', 'дня', 'дней'); };
+  /* карта лояльности: блик и лёгкий наклон за пальцем или курсором */
+  document.addEventListener('pointermove', e => { const c = e.target.closest && e.target.closest('.loyal'); if (!c || matchMedia('(prefers-reduced-motion: reduce)').matches) return; const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    c.style.setProperty('--mx', (x * 100).toFixed(1) + '%'); c.style.setProperty('--my', (y * 100).toFixed(1) + '%'); c.style.setProperty('--ry', ((x - .5) * 8).toFixed(2) + 'deg'); c.style.setProperty('--rx', ((.5 - y) * 6).toFixed(2) + 'deg'); }, { passive: true });
+  document.addEventListener('pointerout', e => { const c = e.target.closest && e.target.closest('.loyal'); if (c && !c.contains(e.relatedTarget)) { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); } });
 
   /* ---------- главная ---------- */
   function home() {
     const nx = upcoming()[0], lv = level(), nl = nextLevel(), today = hoursOf(new Date().getDay());
     let h = '<div class="head"><div class="hi"><small>' + greet() + ',</small><b>' + esc(D.profile.name) + '</b></div>' + (A.demo ? '<span class="demo-tag">демо</span>' : '') +
       '<button class="icon-btn" type="button" data-act="notif" aria-label="Уведомления">' + svg('bell') + '<span class="badge"></span></button></div>';
-    h += nx ? '<div class="next"><small>' + (nx.status === 'confirmed' ? 'Ваша запись · подтверждена' : 'Ваша запись · ждёт подтверждения') + '</small><div class="when">' + esc(nice(nx.date)) + ', ' + fromMin(nx.startMin) + '</div><p>' + esc(nx.serviceName) + (nx.masterName ? ' · мастер ' + esc(nx.masterName) : '') + '</p>' +
+    h += nx ? '<div class="next"><small>' + (nx.status === 'confirmed' ? 'Ваша запись · подтверждена' : 'Ваша запись · ждёт подтверждения') + '</small>' + (until(nx) ? '<span class="in">' + until(nx) + '</span>' : '') + '<div class="when">' + esc(nice(nx.date)) + ', ' + fromMin(nx.startMin) + '</div><p>' + esc(nx.serviceName) + (nx.masterName ? ' · ' + W.master + ' ' + esc(nx.masterName) : '') + '</p>' +
       '<div class="row"><a class="btn white small" href="' + route() + '" target="_blank" rel="noopener">' + svg('pin') + 'Маршрут</a><button class="btn light small" type="button" data-act="ics" data-id="' + nx.id + '">' + svg('cal') + 'В календарь</button></div></div>'
-      : '<div class="cta-card"><h2>Запишитесь за&nbsp;минуту</h2><p>Свободное время мастеров — прямо здесь, без звонка.</p><button class="btn white" type="button" data-tab="book">Выбрать время</button></div>';
+      : '<div class="cta-card"><h2>Запишитесь за&nbsp;минуту</h2><p>Свободное время — прямо здесь, без звонка.</p><button class="btn white" type="button" data-tab="book">Выбрать время</button></div>';
     h += '<button class="card bonus-mini" type="button" data-tab="bonus"><span class="ic">' + svg('star') + '</span><span style="flex:1"><b>' + D.balance.toLocaleString('ru-RU') + ' бонусов</b><small>Уровень ' + lv.name + ' · ' + lv.rate + '% с каждого визита' + (nl ? ' · до ' + nl.name + ' ' + (nl.from - D.visits) + ' ' + plural(nl.from - D.visits, 'визит', 'визита', 'визитов') : '') + '</small>' +
       (nl ? '<div class="bar"><i style="width:' + Math.round((D.visits - lv.from) / (nl.from - lv.from) * 100) + '%"></i></div>' : '') + '</span></button>';
+    h += niche();
     if ((A.promos || []).length) h += '<section class="sec"><div class="sec-h"><h2>Для вас</h2></div><div class="hscroll">' + A.promos.map((p, i) =>
       '<button class="promo" type="button" data-act="promo" data-i="' + i + '">' + (p.photo ? '<img src="' + esc(p.photo) + '" alt="" loading="lazy">' : '') + '<span class="tag">' + esc(p.tag || 'Акция') + '</span><b>' + esc(p.title) + '</b><small>' + esc(p.text) + '</small></button>').join('') + '</div></section>';
-    if ((A.masters || []).length) h += '<section class="sec"><div class="sec-h"><h2>Мастера</h2><button type="button" data-tab="book">Записаться</button></div><div class="hscroll">' + A.masters.map(m =>
-      '<button class="mst" type="button" data-act="master" data-id="' + m.id + '"><div class="ring"><span>' + esc(m.name[0]) + '</span></div><b>' + esc(m.name) + '</b><small>' + esc(m.role || 'Мастер') + '</small></button>').join('') + '</div></section>';
-    if ((A.photos || []).length) h += '<section class="sec"><div class="sec-h"><h2>Работы мастеров</h2></div><div class="works">' + A.photos.slice(0, 3).map(p => '<button type="button" data-act="photo" data-src="' + esc(p) + '"><img src="' + esc(p) + '" alt="Работа мастера" loading="lazy"></button>').join('') + '</div></section>';
+    if ((A.masters || []).length) h += '<section class="sec"><div class="sec-h"><h2>' + esc(W.masters) + '</h2><button type="button" data-tab="book">Записаться</button></div><div class="hscroll">' + A.masters.map(m =>
+      '<button class="mst" type="button" data-act="master" data-id="' + m.id + '"><div class="ring"><span>' + esc(m.name[0]) + '</span></div><b>' + esc(m.name) + '</b><small>' + esc(m.role || W.masterCap) + '</small></button>').join('') + '</div></section>';
+    if ((A.photos || []).length) h += '<section class="sec"><div class="sec-h"><h2>' + esc(W.works) + '</h2></div><div class="works">' + A.photos.slice(0, 3).map(p => '<button type="button" data-act="photo" data-src="' + esc(p) + '"><img src="' + esc(p) + '" alt="" loading="lazy"></button>').join('') + '</div></section>';
     h += '<section class="sec"><button class="gift" type="button" data-act="cert"><span class="g">' + svg('gift') + '</span><span><b>' + W.gift + '</b><small>Сертификат от ' + rub(2000) + ' — красиво оформим и отправим ' + W.friendTo + '</small></span></button></section>';
     h += '<section class="sec info"><div class="sec-h"><h2>' + esc(A.name) + '</h2></div><span>' + svg('pin') + ' ' + esc(A.address) + '</span><span>' + svg('clock') + ' Сегодня ' + (today ? today.join('–') : 'выходной') + '</span>' +
       (A.phone ? '<a href="tel:' + esc(A.phone.replace(/[^\d+]/g, '')) + '">' + svg('phone') + ' ' + esc(A.phone) + '</a>' : '') + '</section>';
     return h;
+  }
+
+  /* ---------- блок ниши: расписание (site.board), питомец (site.pets), статус заказа (app.track) ---------- */
+  const PETI = { cat: '<path d="M4 9V3.5l4.2 3h7.6l4.2-3V9c.7 1.1 1 2.3 1 3.6C21 17 17 20.5 12 20.5S3 17 3 12.6C3 11.3 3.3 10.1 4 9z"/><path d="M9 12.5h.01M15 12.5h.01"/>', dog: '<path d="M7.5 5 3.5 6 3 11.5l3 .8M16.5 5l4 1 .5 5.5-3 .8"/><path d="M6 9c.9-2.6 3.3-4.3 6-4.3S17.1 6.4 18 9v5c0 3.6-2.7 6.5-6 6.5S6 17.6 6 14z"/>', rabbit: '<path d="M9.2 9.5C8 6.5 8 2 9.6 2s2.2 4.2 1.9 7.5M14.8 9.5C16 6.5 16 2 14.4 2s-2.2 4.2-1.9 7.5"/><circle cx="12" cy="15.2" r="6"/>', bird: '<path d="M20.5 7.5 18 6.2C17.2 4.3 15.6 3.5 14 3.5a4.5 4.5 0 0 0-4.5 4.5v2L3.5 20H11a7 7 0 0 0 7-7V8.6z"/>' };
+  function niche() {
+    const demoTag = A.demo ? '<span class="tagd">пример</span>' : '';
+    const bd = A.board && A.board.days;
+    if (bd) {
+      const n = new Date(), now = n.getHours() * 60 + n.getMinutes();
+      let k = 0, list = [];
+      for (; k < 7; k++) { const d = (n.getDay() + k) % 7; list = (bd[d] || []).filter(x => k > 0 || toMin(x[0]) > now - 75); if (list.length) break; }
+      if (!list.length) return '';
+      const nxt = list.find(x => k > 0 || toMin(x[0]) > now);
+      return '<div class="nich"><div class="nich-h"><b>' + (k === 0 ? 'Сегодня' : k === 1 ? 'Завтра' : WDL[(n.getDay() + k) % 7][0].toUpperCase() + WDL[(n.getDay() + k) % 7].slice(1)) + ' в расписании</b>' + demoTag + '</div><div class="sch">' +
+        list.slice(0, 4).map(x => '<div class="' + (x === nxt ? 'nx' : k === 0 && toMin(x[0]) <= now ? 'past' : '') + '"><time>' + esc(x[0]) + '</time><span>' + esc(x[1]) + (x[2] ? '<small>' + esc(x[2]) + '</small>' : '') + '</span>' + (x === nxt ? '<em>скоро</em>' : '<i></i>') + '</div>').join('') +
+        '</div><div class="row"><button class="btn primary small" type="button" data-tab="book">Записаться</button></div></div>';
+    }
+    if ((A.pets || []).length) {
+      const p = A.pets[0], name = p.id === 'dog' ? 'Рекс' : p.id === 'cat' ? 'Барсик' : 'Кеша', left = 23;
+      return '<div class="nich"><div class="nich-h"><b>Мой питомец</b>' + demoTag + '</div><div class="pet"><span class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + (PETI[p.icon || p.id] || PETI.cat) + '</svg></span><span><b>' + name + '</b><small>' + esc(p.name) + ' · 3 года · 4,2 кг</small></span></div>' +
+        '<div class="meter"><i style="width:' + Math.round((365 - left) / 365 * 100) + '%"></i></div><p class="note">Прививка через ' + left + ' ' + plural(left, 'день', 'дня', 'дней') + ' — напомним за неделю</p><div class="row"><button class="btn primary small" type="button" data-tab="book">Записаться на прививку</button></div></div>';
+    }
+    const t = A.track;
+    if (t && (t.steps || []).length) {
+      return '<div class="nich"><div class="nich-h"><b>' + esc(t.title || 'Ваш заказ') + '</b>' + demoTag + '</div><p style="font-weight:700;margin-bottom:12px">' + esc(t.item || '') + '</p><div class="track" style="--n:' + t.steps.length + '">' +
+        t.steps.map((s, i) => '<span class="' + (i < t.now ? 'pass' : i === t.now ? 'now' : '') + '">' + esc(s) + '</span>').join('') + '</div>' + (t.note ? '<p class="note">' + esc(t.note) + '</p>' : '') + '</div>';
+    }
+    return '';
   }
 
   /* ---------- запись ---------- */
@@ -141,7 +177,7 @@
     }
     h += '<button class="opt" type="button" data-act="change-svc" aria-pressed="true"><span class="t"><b>' + esc(s.name) + '</b><small>около ' + s.duration + ' мин · изменить</small></span><span class="p">' + esc(price(s)) + '</span></button>';
     const ms = mastersFor(s);
-    if (ms.length) h += '<p class="lbl">Мастер</p><div class="chips"><button class="chip" type="button" data-who="any" aria-pressed="' + (b.who === 'any') + '"><span class="mini">' + svg('sparkle') + '</span>Любой</button>' +
+    if (ms.length) h += '<p class="lbl">' + esc(W.masterCap) + '</p><div class="chips"><button class="chip" type="button" data-who="any" aria-pressed="' + (b.who === 'any') + '"><span class="mini">' + svg('sparkle') + '</span>Любой</button>' +
       ms.map(m => '<button class="chip" type="button" data-who="' + m.id + '" aria-pressed="' + (b.who === m.id) + '"><span class="mini">' + esc(m.name[0]) + '</span>' + esc(m.name) + '</button>').join('') + '</div>';
     const n = new Date(), days = [];
     for (let i = 0; i < 14; i++) { const d = new Date(n.getFullYear(), n.getMonth(), n.getDate() + i), ds = dstr(d); days.push({ ds, d, open: slots(s, ds, b.who).length > 0 }); }
@@ -149,14 +185,14 @@
     h += '<p class="lbl">День</p><div class="chips">' + days.map(x => '<button class="day" type="button" data-date="' + x.ds + '"' + (x.open ? '' : ' disabled') + ' aria-pressed="' + (b.date === x.ds) + '"><small>' + (x.ds === dstr(n) ? 'Сег' : WD[x.d.getDay()]) + '</small><b>' + x.d.getDate() + '</b></button>').join('') + '</div>';
     const ts = b.date ? slots(s, b.date, b.who) : [];
     if (b.time != null && !ts.includes(b.time)) b.time = null;
-    h += '<p class="lbl">Время' + (b.date ? ' · ' + esc(nice(b.date).toLowerCase()) : '') + '</p>' + (ts.length ? '<div class="times">' + ts.map(m => '<button class="time" type="button" data-time="' + m + '" aria-pressed="' + (b.time === m) + '">' + fromMin(m) + '</button>').join('') + '</div>' : '<div class="hint">Свободного времени нет — выберите другой день или «Любой» мастер.</div>');
+    h += '<p class="lbl">Время' + (b.date ? ' · ' + esc(nice(b.date).toLowerCase()) : '') + '</p>' + (ts.length ? '<div class="times">' + ts.map(m => '<button class="time" type="button" data-time="' + m + '" aria-pressed="' + (b.time === m) + '">' + fromMin(m) + '</button>').join('') + '</div>' : '<div class="hint">Свободного времени нет — выберите другой день или «Любой».</div>');
     h += '<div class="dock"><button class="btn primary block" type="button" data-act="confirm"' + (b.time == null ? ' disabled' : '') + '>' + (b.time == null ? 'Выберите время' : 'Записаться · ' + esc(nice(b.date)) + ', ' + fromMin(b.time)) + '</button></div>';
     return h;
   }
   function confirmSheet() {
     const b = st.bk, s = svcById(b.svc), m = freeMaster(s, b.date, b.time, b.who), lv = level();
     if (m === undefined) { toast('Это время только что заняли — выберите другое'); b.time = null; render(); return; }
-    sheet('<h2 class="h1">Проверьте запись</h2><div class="card" style="display:grid;gap:6px"><b style="font-size:17px">' + esc(s.name) + '</b><span>' + esc(nice(b.date)) + ', ' + fromMin(b.time) + (m ? ' · мастер ' + esc(m.name) : '') + '</span><span style="color:var(--muted)">' + esc(A.address) + '</span><b>' + esc(price(s)) + '</b></div>' +
+    sheet('<h2 class="h1">Проверьте запись</h2><div class="card" style="display:grid;gap:6px"><b style="font-size:17px">' + esc(s.name) + '</b><span>' + esc(nice(b.date)) + ', ' + fromMin(b.time) + (m ? ' · ' + W.master + ' ' + esc(m.name) : '') + '</span><span style="color:var(--muted)">' + esc(A.address) + '</span><b>' + esc(price(s)) + '</b></div>' +
       '<p class="lbl">Ваши данные</p><div class="card" style="display:grid;gap:4px"><b>' + esc(D.profile.name) + '</b><span style="color:var(--muted)">' + esc(D.profile.phone) + '</span></div>' +
       '<p style="color:var(--muted);font-size:13.5px;margin:14px 2px">После визита начислим ' + lv.rate + '% бонусами' + (s.price ? ' — около ' + Math.round(s.price * lv.rate / 100) + ' ₽' : '') + '. Записываясь, вы соглашаетесь на обработку персональных данных ' + W.placeBy + '.</p>' +
       '<button class="btn primary block" type="button" data-act="do-book">Подтвердить запись</button><button class="btn block" type="button" data-act="close" style="margin-top:8px">Изменить</button>');
@@ -165,7 +201,7 @@
     const b = st.bk, s = svcById(b.svc), m = freeMaster(s, b.date, b.time, b.who);
     if (m === undefined) { closeSheet(); toast('Это время только что заняли'); b.time = null; render(); return; }
     const r = mk(s, m || null, b.date, b.time, 'new'); D.bookings.push(r); save(); buzz();
-    sheet('<div class="done"><div class="ck">' + svg('check', 2.6) + '</div><h2 class="h1">Запись отправлена</h2><p style="color:var(--muted)">' + esc(nice(r.date)) + ', ' + fromMin(r.startMin) + ' · ' + esc(r.serviceName) + (r.masterName ? ', мастер ' + esc(r.masterName) : '') + '</p></div>' +
+    sheet('<div class="done"><div class="ck">' + svg('check', 2.6) + '</div><h2 class="h1">Запись отправлена</h2><p style="color:var(--muted)">' + esc(nice(r.date)) + ', ' + fromMin(r.startMin) + ' · ' + esc(r.serviceName) + (r.masterName ? ', ' + W.master + ' ' + esc(r.masterName) : '') + '</p></div>' +
       '<button class="btn primary block" type="button" data-act="ics" data-id="' + r.id + '">' + svg('dl') + 'Добавить в календарь</button><button class="btn block" type="button" data-act="home" style="margin-top:8px">На главную</button>');
     st.bk = { svc: null, who: 'any', date: null, time: null };
     setTimeout(() => { const x = D.bookings.find(y => y.id === r.id); if (x && x.status === 'new') { x.status = 'confirmed'; save(); toast('«' + A.name + '» подтвердил запись ✓'); if ($('#sheet').hidden) render(); } }, 4000);
@@ -180,9 +216,9 @@
 
   /* ---------- бонусы ---------- */
   function bonus() {
-    const lv = level(), nl = nextLevel(), code = 'PUDRA-' + (D.profile.phone.replace(/\D/g, '').slice(-4) || '0000');
+    const lv = level(), nl = nextLevel(), code = String(A.slug || 'CLUB').replace(/-app$/, '').toUpperCase().slice(0, 8) + '-' + (D.profile.phone.replace(/\D/g, '').slice(-4) || '0000');
     let h = '<div class="head"><div class="hi"><small>Программа лояльности</small><b>Бонусы</b></div></div>';
-    h += '<div class="loyal"><div class="top"><span class="brand" style="color:#fff">' + esc(A.name) + '</span><span class="lvl">' + lv.name + '</span></div><div class="bal">' + D.balance.toLocaleString('ru-RU') + '</div><small>бонусов · 1 бонус = 1 ₽</small>' +
+    h += '<div class="loyal lv' + (B.levels.indexOf(lv) + 1) + '"><i class="sheen"></i><div class="top"><span class="brand" style="color:#fff">' + esc(A.name) + '</span><span class="lvl">' + lv.name + '</span></div><div class="bal">' + D.balance.toLocaleString('ru-RU') + '</div><small>бонусов · 1 бонус = 1 ₽</small>' +
       '<div class="row" style="margin-top:18px"><div><small>Карта</small><div style="font-weight:800;letter-spacing:.14em;margin-top:2px">' + cardNo() + '</div><small style="display:block;margin-top:8px">Покажите QR администратору</small></div><div class="qr">' + qrSvg('CARD:' + cardNo().replace(' ', '') + ';' + A.name) + '</div></div></div>';
     h += '<p style="color:var(--muted);font-size:13.5px;margin:12px 4px 0">' + lv.rate + '% с каждого визита возвращается бонусами. Оплачивайте ими до ' + B.maxPay + '% стоимости.</p>';
     h += '<section class="sec"><div class="sec-h"><h2>Уровни</h2></div><div class="levels">' + B.levels.map(l => '<div class="' + (l.name === lv.name ? 'on' : '') + '"><b>' + l.name + '</b><small>' + l.rate + '% · от ' + l.from + ' ' + plural(l.from, 'визита', 'визитов', 'визитов') + '</small></div>').join('') + '</div>' +
@@ -252,7 +288,7 @@
     else if (a === 'ics') ics(t.dataset.id);
     else if (a === 'master') { st.bk = { svc: null, who: t.dataset.id, date: null, time: null }; go('book'); }
     else if (a === 'promo') { const p = A.promos[+t.dataset.i]; sheet('<h2 class="h1">' + esc(p.title) + '</h2><p style="margin-bottom:16px">' + esc(p.text) + '</p>' + (p.more ? '<p style="color:var(--muted);margin-bottom:16px">' + esc(p.more) + '</p>' : '') + '<button class="btn primary block" type="button" data-tab="book">Записаться</button>'); }
-    else if (a === 'photo') { const lb = document.createElement('div'); lb.className = 'lightbox'; lb.innerHTML = '<img src="' + esc(t.dataset.src) + '" alt="Работа мастера">'; lb.onclick = () => lb.remove(); $('#app').appendChild(lb); }
+    else if (a === 'photo') { const lb = document.createElement('div'); lb.className = 'lightbox'; lb.innerHTML = '<img src="' + esc(t.dataset.src) + '" alt="">'; lb.onclick = () => lb.remove(); $('#app').appendChild(lb); }
     else if (a === 'cert') certSheet();
     else if (a === 'buy-cert') { cert.to = ($('#cTo') || {}).value || ''; cert.msg = ($('#cMsg') || {}).value || ''; buyCert(); }
     else if (a === 'share-cert' || a === 'share-ref') {
@@ -274,6 +310,9 @@
   document.addEventListener('input', e => { if (e.target.id === 'cTo' || e.target.id === 'cMsg') { cert.to = $('#cTo').value; cert.msg = $('#cMsg').value; const p = $('#certPrev'); if (p) p.innerHTML = certCard(cert); } });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#sheet').hidden) closeSheet(); });
 
+  const sp = $('#splash');
+  if (sp) { let seen = false; try { seen = sessionStorage.getItem(KEY + '.splash'); sessionStorage.setItem(KEY + '.splash', '1'); } catch (e) { /* нет */ }
+    if (seen || matchMedia('(prefers-reduced-motion: reduce)').matches) sp.remove(); else { sp.querySelector('b').textContent = A.name; sp.querySelector('small').textContent = A.kind || ''; setTimeout(() => sp.classList.add('out'), 1100); setTimeout(() => sp.remove(), 1700); } }
   if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => { /* офлайн необязателен */ });
   render();
   window.__app = { st, go, D: () => D };

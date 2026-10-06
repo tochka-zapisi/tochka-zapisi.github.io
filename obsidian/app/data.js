@@ -143,7 +143,9 @@ window.APP = {
    }
   ]
  },
- "telegram": "",
+ "kind": "Детейлинг-центр",
+ "telegram": "https://t.me/obsidian_demo",
+ "max": "https://max.ru/u/obsidian_demo",
  "words": {
   "gift": "Подарите уход за авто",
   "friendTo": "другу",

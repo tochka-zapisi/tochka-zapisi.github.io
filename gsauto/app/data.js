@@ -172,7 +172,9 @@ window.APP = {
    }
   ]
  },
- "telegram": "",
+ "kind": "Автотехцентр и детейлинг",
+ "telegram": "https://t.me/+79233676767",
+ "max": "",
  "words": {
   "gift": "Подарите уход за авто",
   "friendTo": "другу",

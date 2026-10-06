@@ -104,7 +104,7 @@ window.APP = {
  "masters": [
   {
    "id": "m1",
-   "name": "Терапевт",
+   "name": "Елена Гордеева",
    "role": "Лечение кариеса и каналов",
    "services": [
     "s1",
@@ -116,7 +116,7 @@ window.APP = {
   },
   {
    "id": "m2",
-   "name": "Ортопед-хирург",
+   "name": "Андрей Волков",
    "role": "Коронки, импланты, удаление",
    "services": [
     "s1",
@@ -128,7 +128,7 @@ window.APP = {
   },
   {
    "id": "m3",
-   "name": "Гигиенист",
+   "name": "Ксения Рябова",
    "role": "Чистка и профилактика",
    "services": [
     "s2",
@@ -138,7 +138,7 @@ window.APP = {
   },
   {
    "id": "m4",
-   "name": "Детский стоматолог",
+   "name": "Марина Светлова",
    "role": "Дети от 3 лет",
    "services": [
     "s9",
@@ -195,8 +195,14 @@ window.APP = {
    }
   ]
  },
- "telegram": "",
+ "kind": "Стоматология",
+ "telegram": "https://t.me/perlamutr_demo",
+ "max": "https://max.ru/u/perlamutr_demo",
  "words": {
+  "master": "врач",
+  "masters": "Врачи",
+  "masterCap": "Врач",
+  "works": "Наша клиника",
   "gift": "Подарите здоровую улыбку",
   "friendTo": "близкому",
   "friendAcc": "близкого",

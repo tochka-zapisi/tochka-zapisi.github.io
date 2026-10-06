@@ -122,7 +122,9 @@ window.APP = {
    }
   ]
  },
- "telegram": "",
+ "kind": "Шиномонтаж",
+ "telegram": "https://t.me/koleso_abakan_demo",
+ "max": "https://max.ru/u/shinomontazh_demo",
  "words": {
   "gift": "Подарите уход за авто",
   "friendTo": "другу",

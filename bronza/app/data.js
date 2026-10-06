@@ -193,7 +193,9 @@ window.APP = {
    }
   ]
  },
- "telegram": "",
+ "kind": "Барбершоп",
+ "telegram": "https://t.me/bronza_demo",
+ "max": "https://max.ru/u/bronza_demo",
  "words": {
   "gift": "Подарите стрижку",
   "friendTo": "другу",

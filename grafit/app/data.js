@@ -111,7 +111,7 @@ window.APP = {
  "masters": [
   {
    "id": "m1",
-   "name": "Старший барбер",
+   "name": "Роман Белов",
    "role": "Высший уровень",
    "services": [
     "s3",
@@ -128,14 +128,14 @@ window.APP = {
   },
   {
    "id": "m2",
-   "name": "Барбер",
+   "name": "Кирилл Зуев",
    "role": "Основной уровень",
    "services": null,
    "days": null
   },
   {
    "id": "m3",
-   "name": "Младший барбер",
+   "name": "Матвей Гусев",
    "role": "Доступные цены",
    "services": [
     "s1",
@@ -196,7 +196,9 @@ window.APP = {
    }
   ]
  },
- "telegram": "",
+ "kind": "Барбершоп",
+ "telegram": "https://t.me/grafit_demo",
+ "max": "https://max.ru/u/grafit_demo",
  "words": {
   "gift": "Подарите стрижку",
   "friendTo": "другу",

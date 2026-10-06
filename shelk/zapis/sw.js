@@ -1,5 +1,5 @@
 ﻿/* Офлайн-оболочка: приложение открывается даже без интернета. */
-const VER = 'demo-shelk-zapis-f1fc31f2';
+const VER = 'demo-shelk-zapis-94e9b506';
 const SHELL = ['./', './index.html', './styles.css', './app.js', './store.js', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png', './privacy.html', './consent.html', './docs.css', './docs.js', './assets/fonts/fonts.css'];
 
 self.addEventListener('install', e => { e.waitUntil(caches.open(VER).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });

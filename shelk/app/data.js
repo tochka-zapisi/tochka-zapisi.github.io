@@ -4,7 +4,7 @@ window.APP = {
  "name": "Шёлк",
  "address": "ул. Карла Маркса, 95, Красноярск",
  "phone": "+7 900 000-00-00",
- "site": "",
+ "site": "../",
  "demo": true,
  "hours": {
   "0": [
@@ -125,7 +125,7 @@ window.APP = {
  "masters": [
   {
    "id": "m1",
-   "name": "Мастер 1",
+   "name": "Софья Белова",
    "role": "Маникюр и педикюр",
    "services": [
     "s1",
@@ -141,7 +141,7 @@ window.APP = {
   },
   {
    "id": "m2",
-   "name": "Мастер 2",
+   "name": "Ева Миронова",
    "role": "Маникюр и педикюр",
    "services": [
     "s1",
@@ -157,7 +157,7 @@ window.APP = {
   },
   {
    "id": "m3",
-   "name": "Мастер 3",
+   "name": "Злата Орлова",
    "role": "Брови и ресницы",
    "services": [
     "s9",
@@ -169,11 +169,9 @@ window.APP = {
   }
  ],
  "photos": [
+  "assets/img/person-with-silver-ring-on-QDLcmSCQ.webp",
   "assets/img/a-woman-s-hands-with-WIo3zAWq.webp",
-  "assets/img/a-woman-with-her-hands-T8Wnesok-portrait.webp",
-  "assets/img/a-woman-with-her-hands-T8Wnesok.webp",
-  "assets/img/close-up-of-a-person-YCMkMQev.webp",
-  "assets/img/person-with-silver-ring-on-QDLcmSCQ.webp"
+  "assets/img/close-up-of-a-person-YCMkMQev.webp"
  ],
  "promos": [
   {
@@ -181,19 +179,19 @@ window.APP = {
    "title": "Утро будней −15%",
    "text": "На любые услуги до 12:00 по будням",
    "more": "Пример акции. Настоящие условия — в настройках приложения.",
-   "photo": "assets/img/a-woman-s-hands-with-WIo3zAWq.webp"
+   "photo": "assets/img/person-with-silver-ring-on-QDLcmSCQ.webp"
   },
   {
    "tag": "Новым",
    "title": "500 бонусов на первый визит",
    "text": "Скачайте приложение и запишитесь онлайн",
-   "photo": "assets/img/a-woman-with-her-hands-T8Wnesok-portrait.webp"
+   "photo": "assets/img/a-woman-s-hands-with-WIo3zAWq.webp"
   },
   {
    "tag": "Демо-акция",
    "title": "Маникюр + педикюр",
    "text": "Вместе — выгоднее, чем по отдельности",
-   "photo": "assets/img/a-woman-with-her-hands-T8Wnesok.webp"
+   "photo": "assets/img/close-up-of-a-person-YCMkMQev.webp"
   }
  ],
  "bonus": {
@@ -218,5 +216,11 @@ window.APP = {
    }
   ]
  },
- "telegram": ""
+ "kind": "Студия красоты",
+ "telegram": "https://t.me/shelk_demo",
+ "max": "https://max.ru/u/shelk_demo",
+ "hero": "assets/img/a-woman-with-her-hands-T8Wnesok.webp",
+ "mark": "",
+ "whatsapp": "79000000000",
+ "review": ""
 };

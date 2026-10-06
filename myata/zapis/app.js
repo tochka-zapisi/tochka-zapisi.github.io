@@ -59,9 +59,9 @@
   const masterById = id => S.masters.find(m => m.id === id);
   const hasMasters = () => S.masters.length > 0;
   const mastersFor = svc => (svc ? S.masters.filter(m => !m.services || m.services.includes(svc.id)) : []);
-  /* У мастера свои рабочие дни (null — все дни салона) */
+  /* У врача свои рабочие дни (null — все дни салона) */
   const worksOn = (m, dow) => !m || !m.days || m.days.includes(dow);
-  /* Ссылка «запись к мастеру»: ?m=<id> — мастер ставит её у себя в соцсетях */
+  /* Ссылка «запись к врачу»: ?m=<id> — врач ставит её у себя в соцсетях */
   const linkFor = id => location.origin + location.pathname + '?m=' + encodeURIComponent(id);
   const onlyMaster = () => (st.only ? masterById(st.only) : null);
   const initial = n => (String(n).trim()[0] || '•').toUpperCase();
@@ -90,7 +90,7 @@
     return h && h[0] && h[1] && toMin(h[1]) > toMin(h[0]) ? h : null;
   }
   function coveringMins(svc, m) { const n = Math.max(1, Math.ceil((Number(svc.duration) || cfg().step) / cfg().step)); return Array.from({ length: n }, (_, i) => m + i * cfg().step); }
-  /* Кто может принять: выбранный мастер, или все мастера услуги — сначала менее загруженные в этот день. Без мастеров — общая очередь (id '') */
+  /* Кто может принять: выбранный врач, или все врача услуги — сначала менее загруженные в этот день. Без врачей — общая очередь (id '') */
   function poolFor(svc, date, who) {
     if (!hasMasters()) return [''];
     const load = id => S.bookings.filter(b => b.masterId === id && b.date === date && (b.status === 'new' || b.status === 'confirmed')).length;
@@ -98,7 +98,7 @@
     const list = mastersFor(svc).filter(m => (!who || who === 'any' || m.id === who) && worksOn(m, dow));
     return list.map(m => [m.id, load(m.id), m.order || 0]).sort((a, b) => a[1] - b[1] || a[2] - b[2]).map(x => x[0]);
   }
-  /* Занято ли время у мастера. Общая очередь ('') занята, если в это время есть любая запись — и к мастерам, которых уже убрали */
+  /* Занято ли время у врача. Общая очередь ('') занята, если в это время есть любая запись — и к врачам, которых уже убрали */
   function busy(occ, date, x, mid) {
     const k = S.helpers.slotId(date, x, mid);
     if (occ.has(k)) return true;
@@ -174,18 +174,18 @@
   }
   function go(step) {
     st.step = step; st.err = ''; renderShell(); $('#scroll').scrollTop = 0;
-    if (step === 2) { $('#p2h').textContent = hasMasters() ? 'Мастер и время' : 'Когда вам удобно?'; renderMasters(); renderDays(); renderTimes(); }
+    if (step === 2) { $('#p2h').textContent = hasMasters() ? 'Врач и время' : 'Когда вам удобно?'; renderMasters(); renderDays(); renderTimes(); }
     if (step === 3) renderRecap();
   }
 
-  /* ---------- клиент: герой, услуги, мастера, дни, время ---------- */
+  /* ---------- клиент: герой, услуги, врача, дни, время ---------- */
   function renderHero() {
     const c = cfg(), os = openState();
     $('#shopName').textContent = c.name;
     const live = $('#liveNow'); live.classList.toggle('closed', !os.open); live.lastElementChild.textContent = os.t;
     const om = onlyMaster();
-    $('#heroSub').innerHTML = om ? 'Запись к мастеру <b>' + esc(om.name) + '</b>' + (om.role ? ' · ' + esc(om.role) : '') + '. <button type="button" class="linkish" id="allMasters">Все мастера</button>'
-      : hasMasters() ? 'Выберите услугу, мастера и время. Мы увидим запись сразу.' : 'Выберите услугу и время. Мы увидим запись сразу.';
+    $('#heroSub').innerHTML = om ? 'Запись к врачу <b>' + esc(om.name) + '</b>' + (om.role ? ' · ' + esc(om.role) : '') + '. <button type="button" class="linkish" id="allMasters">Все врачи</button>'
+      : hasMasters() ? 'Выберите услугу, врача и время. Мы увидим запись сразу.' : 'Выберите услугу и время. Мы увидим запись сразу.';
     const a = [];
     if (c.phone) a.push('<a class="ha" href="tel:' + esc(c.phone.replace(/[^\d+]/g, '')) + '">' + svg(TAB.phone) + '<span>Позвонить</span></a>');
     if (c.address) a.push('<a class="ha" target="_blank" rel="noopener" href="https://yandex.ru/maps/?text=' + encodeURIComponent(c.address) + '">' + svg(TAB.pin) + '<span>' + esc(c.address) + '</span></a>');
@@ -193,7 +193,7 @@
     const ms = S.masters, team = $('#team');
     team.hidden = !ms.length;
     team.innerHTML = ms.length ? '<div class="avs">' + ms.slice(0, 5).map(m => '<span class="av">' + esc(initial(m.name)) + '</span>').join('') + (ms.length > 5 ? '<span class="av more">+' + (ms.length - 5) + '</span>' : '') + '</div>' +
-      '<div class="team-t"><b>' + ms.length + ' ' + plural(ms.length, 'мастер', 'мастера', 'мастеров') + '</b><span>' + esc(ms.map(m => m.name).join(', ')) + '</span></div>' : '';
+      '<div class="team-t"><b>' + ms.length + ' ' + plural(ms.length, 'врач', 'врача', 'врачей') + '</b><span>' + esc(ms.map(m => m.name).join(', ')) + '</span></div>' : '';
   }
   function renderSoon() {
     const om = onlyMaster(), svcs = S.services.filter(s => !om || !om.services || om.services.includes(s.id)), btn = $('#soonBtn');
@@ -215,9 +215,9 @@
     if (st.sel.master !== 'any' && !list.some(m => m.id === st.sel.master)) st.sel.master = 'any';
     box.hidden = false;
     const btn = (id, av, name, role) => '<button type="button" class="mst" data-m="' + esc(id) + '" aria-pressed="' + (st.sel.master === id) + '"><span class="av">' + av + '</span><b>' + esc(name) + '</b><small>' + esc(role) + '</small></button>';
-    box.innerHTML = '<div class="part first">Мастер</div><div class="masters">' + btn('any', svg(IC.sparkle), 'Любой', 'кто свободен') + list.map(m => btn(m.id, esc(initial(m.name)), m.name, m.role || 'Мастер')).join('') + '</div><div class="part">День и время</div>';
+    box.innerHTML = '<div class="part first">Врач</div><div class="masters">' + btn('any', svg(IC.sparkle), 'Любой', 'кто свободен') + list.map(m => btn(m.id, esc(initial(m.name)), m.name, m.role || 'Врач')).join('') + '</div><div class="part">День и время</div>';
   }
-  /* День открыт, если работает салон и хотя бы один подходящий мастер (или выбранный мастер) */
+  /* День открыт, если работает салон и хотя бы один подходящий врач (или выбранный врач) */
   function dayOpen(dow) {
     if (!hoursOf(dow)) return false;
     if (!hasMasters()) return true;
@@ -236,16 +236,16 @@
   function renderTimes() {
     const box = $('#timeGrid'), svc = selSvc();
     if (!svc) { box.innerHTML = '<div class="hint">Сначала выберите услугу на первом шаге.</div>'; return; }
-    if (hasMasters() && !mastersFor(svc).length) { box.innerHTML = '<div class="hint">Эту услугу сейчас не выполняет ни один мастер. Позвоните нам' + (cfg().phone ? ': <a href="tel:' + esc(cfg().phone.replace(/[^\d+]/g, '')) + '">' + esc(cfg().phone) + '</a>' : '') + '.</div>'; return; }
+    if (hasMasters() && !mastersFor(svc).length) { box.innerHTML = '<div class="hint">Эту услугу сейчас не выполняет ни один врач. Позвоните нам' + (cfg().phone ? ': <a href="tel:' + esc(cfg().phone.replace(/[^\d+]/g, '')) + '">' + esc(cfg().phone) + '</a>' : '') + '.</div>'; return; }
     if (st.sel.date && !dayOpen(parseD(st.sel.date).getDay())) st.sel.date = null;
     if (!st.sel.date) { box.innerHTML = '<div class="hint">Выберите день, и здесь появится свободное время.</div>'; return; }
     const list = timesFor(svc, st.sel.date, st.sel.master);
-    if (!list.length || !list.some(t => t.ok)) { box.innerHTML = '<div class="hint">' + (st.sel.master !== 'any' && hasMasters() ? 'У этого мастера в этот день свободного времени нет. Выберите другой день или «Любой».' : 'На этот день свободного времени нет. Выберите другой день.') + '</div>'; if (st.sel.time != null) st.sel.time = null; return; }
+    if (!list.length || !list.some(t => t.ok)) { box.innerHTML = '<div class="hint">' + (st.sel.master !== 'any' && hasMasters() ? 'У этого врача в этот день свободного времени нет. Выберите другой день или «Любой».' : 'На этот день свободного времени нет. Выберите другой день.') + '</div>'; if (st.sel.time != null) st.sel.time = null; return; }
     if (st.sel.time != null && !list.some(t => t.m === st.sel.time && t.ok)) st.sel.time = null;
     const part = (t, from, to) => { const arr = list.filter(x => x.m >= from * 60 && x.m < to * 60); return arr.length ? '<div class="part">' + t + '</div><div class="times">' + arr.map(x => '<button type="button" class="time" data-m="' + x.m + '" ' + (x.ok ? '' : 'disabled') + ' aria-pressed="' + (st.sel.time === x.m) + '">' + fromMin(x.m) + '</button>').join('') + '</div>' : ''; };
     box.innerHTML = part('Утро', 0, 12) + part('День', 12, 17) + part('Вечер', 17, 24);
   }
-  /* Кто примет в выбранное время (при «Любой» — менее загруженный свободный мастер) */
+  /* Кто примет в выбранное время (при «Любой» — менее загруженный свободный врач) */
   function chosenMaster() {
     const svc = selSvc(); if (!svc || !st.sel.date || st.sel.time == null) return null;
     const id = freeIn(poolFor(svc, st.sel.date, st.sel.master), svc, st.sel.date, st.sel.time, S.occupied());
@@ -254,7 +254,7 @@
   function renderRecap() {
     const svc = selSvc(); if (!svc) return;
     const who = chosenMaster(), mName = who && who.m ? who.m.name : '';
-    $('#recap').innerHTML = '<span class="ic">' + svg(IC[iconFor(svc.name)]) + '</span><div><b>' + esc(svc.name) + ' · ' + esc(priceOf(svc)) + '</b><span>' + esc(fmtD(st.sel.date)) + ', ' + fromMin(st.sel.time) + (mName ? ' · мастер ' + esc(mName) : '') + '</span></div>';
+    $('#recap').innerHTML = '<span class="ic">' + svg(IC[iconFor(svc.name)]) + '</span><div><b>' + esc(svc.name) + ' · ' + esc(priceOf(svc)) + '</b><span>' + esc(fmtD(st.sel.date)) + ', ' + fromMin(st.sel.time) + (mName ? ' · врач ' + esc(mName) : '') + '</span></div>';
   }
   function formProblem() {
     if (!$('#fName').value.trim()) return 'Укажите имя.';
@@ -298,7 +298,7 @@
     const end = b.startMin + (b.duration || 60);
     const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Studio//Zapis//RU', 'BEGIN:VEVENT', 'UID:' + (b.id || Date.now()) + '@zapis', 'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z',
       'DTSTART:' + d + 'T' + t(b.startMin), 'DTEND:' + d + 'T' + t(end), 'SUMMARY:' + icsEsc(b.serviceName + ' — ' + cfg().name), 'LOCATION:' + icsEsc(cfg().address),
-      'DESCRIPTION:' + icsEsc((b.masterName ? 'Мастер: ' + b.masterName + '. ' : '') + 'Телефон: ' + (cfg().phone || '')), 'BEGIN:VALARM', 'TRIGGER:-PT2H', 'ACTION:DISPLAY', 'DESCRIPTION:' + icsEsc('Запись: ' + cfg().name), 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'];
+      'DESCRIPTION:' + icsEsc((b.masterName ? 'Врач: ' + b.masterName + '. ' : '') + 'Телефон: ' + (cfg().phone || '')), 'BEGIN:VALARM', 'TRIGGER:-PT2H', 'ACTION:DISPLAY', 'DESCRIPTION:' + icsEsc('Запись: ' + cfg().name), 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'];
     return L.join('\r\n');
   }
   function downloadIcs(b) {
@@ -311,7 +311,7 @@
     $('#p4').innerHTML = '<div class="check">' + svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>', 'stroke-width="2.6"') + '</div><h2>Запись отправлена</h2><p class="note">' + esc(cfg().name) + ' получит заявку и подтвердит её. Статус будет во вкладке «Мои записи».</p>' +
       '<dl class="ticket"><div class="kv"><dt>Когда</dt><dd class="big">' + esc(fmtD(b.date)) + ', ' + esc(b.time) + '</dd></div><div class="perf"></div>' +
       '<div class="kv"><dt>Услуга</dt><dd>' + esc(b.serviceName) + ' · ' + esc(money(b.price, b.priceFrom)) + '</dd></div>' +
-      (b.masterName ? '<div class="kv"><dt>Мастер</dt><dd>' + esc(b.masterName) + '</dd></div>' : '') +
+      (b.masterName ? '<div class="kv"><dt>Врач</dt><dd>' + esc(b.masterName) + '</dd></div>' : '') +
       (cfg().address ? '<div class="kv"><dt>Адрес</dt><dd>' + esc(cfg().address) + '</dd></div>' : '') + '</dl>' +
       '<div class="stack-btns"><button class="btn primary" id="doneIcs" type="button">' + svg(TAB.cal) + 'Добавить в календарь</button><button class="btn ghost" id="doneMine" type="button">Мои записи</button><button class="btn" id="doneAgain" type="button">Записаться ещё</button></div>';
     st.step = 'done'; renderShell(); $('#scroll').scrollTop = 0;
@@ -330,7 +330,7 @@
     else box.innerHTML = list.map(b => {
       const live = b.status === 'new' || b.status === 'confirmed';
       return '<article class="card mine-item" data-id="' + esc(b.id) + '"><div class="top"><b>' + esc(b.serviceName) + '</b><span class="pill ' + esc(b.status) + '">' + esc(STATUS[b.status] || b.status) + '</span></div>' +
-        '<div class="when">' + esc(fmtD(b.date)) + ', ' + esc(b.time) + '</div><div class="note">' + (b.masterName ? 'Мастер ' + esc(b.masterName) + ' · ' : '') + esc(money(b.price, b.priceFrom)) + '</div>' +
+        '<div class="when">' + esc(fmtD(b.date)) + ', ' + esc(b.time) + '</div><div class="note">' + (b.masterName ? 'Врач ' + esc(b.masterName) + ' · ' : '') + esc(money(b.price, b.priceFrom)) + '</div>' +
         '<div class="row-btns">' + (live ? '<button class="btn small" data-ics type="button">' + svg(TAB.cal) + 'В календарь</button><button class="btn small danger" data-cancel type="button">Отменить</button>' : '') +
         '<button class="btn small' + (live ? ' ghost' : '') + '" data-again type="button">Записаться снова</button></div></article>';
     }).join('');
@@ -343,7 +343,7 @@
     const todayN = bks.filter(b => b.date === today && (b.status === 'new' || b.status === 'confirmed')).length;
     const actN = bks.filter(b => b.status === 'new' || b.status === 'confirmed').length;
     $('#stats').innerHTML = '<div class="stat ' + (n ? 'hot' : '') + '"><small>Новые</small><b>' + n + '</b></div><div class="stat"><small>Сегодня</small><b>' + todayN + '</b></div><div class="stat"><small>Активные</small><b>' + actN + '</b></div>';
-    $('#oseg').innerHTML = [['bookings', 'Записи'], ['clients', 'Клиенты'], ['services', 'Услуги'], ['masters', 'Мастера'], ['settings', 'Настройки']].map(([k, t]) => '<button type="button" role="tab" data-ot="' + k + '" aria-selected="' + (st.otab === k) + '">' + t + '</button>').join('');
+    $('#oseg').innerHTML = [['bookings', 'Записи'], ['clients', 'Клиенты'], ['services', 'Услуги'], ['masters', 'Врача'], ['settings', 'Настройки']].map(([k, t]) => '<button type="button" role="tab" data-ot="' + k + '" aria-selected="' + (st.otab === k) + '">' + t + '</button>').join('');
     $('#oBookings').hidden = st.otab !== 'bookings'; $('#oClients').hidden = st.otab !== 'clients'; $('#oServices').hidden = st.otab !== 'services'; $('#oMasters').hidden = st.otab !== 'masters'; $('#oSettings').hidden = st.otab !== 'settings';
     if (st.otab === 'bookings') renderBookings();
     else if (st.otab === 'clients') renderClients();
@@ -355,7 +355,7 @@
     const defs = [['new', 'Новые'], ['confirmed', 'Подтверждённые'], ['all', 'Все']], ms = S.masters;
     if (st.mfilter !== 'all' && !ms.some(m => m.id === st.mfilter)) st.mfilter = 'all';
     $('#chips').innerHTML = defs.map(([k, t]) => '<button type="button" class="chip" data-f="' + k + '" aria-pressed="' + (st.filter === k) + '">' + t + '</button>').join('') + '<span class="sp"></span><button type="button" class="chip" id="soundBtn" aria-pressed="' + st.sound + '">Звук ' + (st.sound ? 'вкл' : 'выкл') + '</button>' +
-      (ms.length ? '<label class="f mfilter" for="mFilter">Мастер<select id="mFilter"><option value="all">Все мастера</option>' + ms.map(m => '<option value="' + esc(m.id) + '"' + (st.mfilter === m.id ? ' selected' : '') + '>' + esc(m.name) + '</option>').join('') + '</select></label>' : '');
+      (ms.length ? '<label class="f mfilter" for="mFilter">Врач<select id="mFilter"><option value="all">Все врачи</option>' + ms.map(m => '<option value="' + esc(m.id) + '"' + (st.mfilter === m.id ? ' selected' : '') + '>' + esc(m.name) + '</option>').join('') + '</select></label>' : '');
     let list = S.bookings;
     if (st.filter === 'new') list = list.filter(b => b.status === 'new'); else if (st.filter === 'confirmed') list = list.filter(b => b.status === 'confirmed');
     if (st.mfilter !== 'all') list = list.filter(b => b.masterId === st.mfilter);
@@ -392,18 +392,18 @@
     const list = clients();
     $('#oClients').innerHTML = '<div class="cl-head"><p class="note">Клиенты собираются из записей сами. Выгрузка открывается в Excel.</p><button class="btn small" id="csvBtn" type="button">Скачать для Excel</button></div>' +
       (list.length ? '<div class="cl-list">' + list.map(c => '<article class="cl"><div><b>' + esc(c.name) + '</b><a href="tel:' + esc(String(c.phone).replace(/[^\d+]/g, '')) + '">' + esc(c.phone) + '</a></div>' +
-        '<dl><div><dt>Визитов</dt><dd>' + c.visits + '</dd></div><div><dt>Последний</dt><dd>' + esc(fmtD(c.last)) + '</dd></div>' + (c.master ? '<div><dt>Мастер</dt><dd>' + esc(c.master) + '</dd></div>' : '') + '<div><dt>Оплачено</dt><dd>' + (c.sum ? esc(money(c.sum)) : '—') + '</dd></div></dl></article>').join('') + '</div>'
+        '<dl><div><dt>Визитов</dt><dd>' + c.visits + '</dd></div><div><dt>Последний</dt><dd>' + esc(fmtD(c.last)) + '</dd></div>' + (c.master ? '<div><dt>Врач</dt><dd>' + esc(c.master) + '</dd></div>' : '') + '<div><dt>Оплачено</dt><dd>' + (c.sum ? esc(money(c.sum)) : '—') + '</dd></div></dl></article>').join('') + '</div>'
         : '<div class="empty-state">' + svg(IC.user) + '<b>Клиентов пока нет</b>Они появятся здесь после первых записей.</div>');
   }
   function downloadClients() {
     const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
-    const rows = [['Имя', 'Телефон', 'Визитов', 'Последний визит', 'Мастер', 'Оплачено, ₽']].concat(clients().map(c => [c.name, c.phone, c.visits, c.last, c.master, c.sum]));
+    const rows = [['Имя', 'Телефон', 'Визитов', 'Последний визит', 'Врач', 'Оплачено, ₽']].concat(clients().map(c => [c.name, c.phone, c.visits, c.last, c.master, c.sum]));
     const blob = new Blob(['\ufeff' + rows.map(r => r.map(q).join(';')).join('\r\n')], { type: 'text/csv;charset=utf-8' }), a = document.createElement('a');
     a.href = URL.createObjectURL(blob); a.download = 'klienty.csv'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
   }
   function renderServicesAdmin() {
     const list = S.services;
-    $('#oServices').innerHTML = '<p class="note" style="margin-bottom:10px">Длительность определяет, сколько времени в расписании мастера занимает запись.</p><div id="svcEditor">' +
+    $('#oServices').innerHTML = '<p class="note" style="margin-bottom:10px">Длительность определяет, сколько времени в расписании врача занимает запись.</p><div id="svcEditor">' +
       (list.length ? list.map(s => '<div class="svc-row" data-id="' + esc(s.id) + '">' +
         '<label class="f name-f" for="sn-' + esc(s.id) + '">Название<input id="sn-' + esc(s.id) + '" data-k="name" maxlength="80" value="' + esc(s.name) + '"></label>' +
         '<label class="f" for="sd-' + esc(s.id) + '">Минут<input id="sd-' + esc(s.id) + '" data-k="duration" type="number" inputmode="numeric" min="15" step="15" value="' + esc(s.duration) + '"></label>' +
@@ -414,18 +414,18 @@
   }
   function renderMastersAdmin() {
     const list = S.masters, svcs = S.services;
-    $('#oMasters').innerHTML = '<p class="note" style="margin-bottom:10px">У каждого мастера своё расписание: пока один занят, к другому можно записаться на то же время. Отметьте услуги, которые делает мастер.</p><div id="mEditor">' +
+    $('#oMasters').innerHTML = '<p class="note" style="margin-bottom:10px">У каждого врача своё расписание: пока один занят, к другому можно записаться на то же время. Отметьте услуги, которые делает врач.</p><div id="mEditor">' +
       (list.length ? list.map(m => '<div class="m-row" data-id="' + esc(m.id) + '">' +
         '<label class="f" for="mn-' + esc(m.id) + '">Имя<input id="mn-' + esc(m.id) + '" data-mk="name" maxlength="40" value="' + esc(m.name) + '"></label>' +
         '<label class="f" for="mr-' + esc(m.id) + '">Специализация<input id="mr-' + esc(m.id) + '" data-mk="role" maxlength="60" placeholder="Например: стилист" value="' + esc(m.role || '') + '"></label>' +
-        '<div class="full"><div class="note" style="margin-bottom:8px">Услуги мастера</div><div class="days-set">' +
+        '<div class="full"><div class="note" style="margin-bottom:8px">Услуги врача</div><div class="days-set">' +
         (svcs.length ? svcs.map(s => '<label><input type="checkbox" data-ms value="' + esc(s.id) + '" ' + (!m.services || m.services.includes(s.id) ? 'checked' : '') + '>' + esc(s.name) + '</label>').join('') : '<span class="note">Сначала добавьте услуги.</span>') + '</div></div>' +
-        '<div class="full"><div class="note" style="margin-bottom:8px">Рабочие дни мастера</div><div class="days-set">' +
+        '<div class="full"><div class="note" style="margin-bottom:8px">Рабочие дни врача</div><div class="days-set">' +
         [1, 2, 3, 4, 5, 6, 0].map(d => '<label><input type="checkbox" data-md value="' + d + '" ' + (worksOn(m, d) ? 'checked' : '') + '>' + WD[d] + '</label>').join('') + '</div></div>' +
-        '<div class="full mlink"><div class="note">Ссылка для записи к мастеру — для его соцсетей и визитки</div><code>' + esc(linkFor(m.id)) + '</code><button class="btn small" data-copy="' + esc(linkFor(m.id)) + '" type="button">Скопировать</button></div>' +
-        '<button class="btn danger small full" data-mdel type="button">Удалить мастера</button></div>').join('')
-        : '<div class="empty-state">' + svg(IC.user) + '<b>Мастеров нет</b>Все записи идут в одну общую очередь. Добавьте мастеров, чтобы клиенты выбирали, к кому идти, и записывались к разным мастерам на одно время.</div>') +
-      '</div><button class="btn block" id="addMaster" type="button" style="margin-top:6px">Добавить мастера</button>';
+        '<div class="full mlink"><div class="note">Ссылка для записи к врачу — для его соцсетей и визитки</div><code>' + esc(linkFor(m.id)) + '</code><button class="btn small" data-copy="' + esc(linkFor(m.id)) + '" type="button">Скопировать</button></div>' +
+        '<button class="btn danger small full" data-mdel type="button">Удалить врача</button></div>').join('')
+        : '<div class="empty-state">' + svg(IC.user) + '<b>Врачей нет</b>Все записи идут в одну общую очередь. Добавьте врачей, чтобы клиенты выбирали, к кому идти, и записывались к разным врачам на одно время.</div>') +
+      '</div><button class="btn block" id="addMaster" type="button" style="margin-top:6px">Добавить врача</button>';
   }
   function renderSettings() {
     const c = cfg(), rows = [1, 2, 3, 4, 5, 6, 0].map(d => {
@@ -537,7 +537,7 @@
     else if (t.id === 'addSvc') { await S.addService({}); renderServicesAdmin(); }
     else if (t.hasAttribute('data-del')) { if (!armed(t, 'Точно удалить?', 'Удалить услугу')) return; await S.deleteService(t.closest('.svc-row').dataset.id); renderServicesAdmin(); }
     else if (t.id === 'addMaster') { await S.addMaster({}); renderMastersAdmin(); }
-    else if (t.hasAttribute('data-mdel')) { if (!armed(t, 'Точно удалить?', 'Удалить мастера')) return; await S.deleteMaster(t.closest('.m-row').dataset.id); renderMastersAdmin(); }
+    else if (t.hasAttribute('data-mdel')) { if (!armed(t, 'Точно удалить?', 'Удалить врача')) return; await S.deleteMaster(t.closest('.m-row').dataset.id); renderMastersAdmin(); }
     else if (t.id === 'simBtn') {
       const b = await S.simulateIncoming(svc => { const f = firstFree(svc, 'any'); return f && { date: f.date, m: f.m, masterId: f.mid }; });
       if (!b) toast('Нет свободного времени или нет услуг.');
@@ -552,7 +552,7 @@
       let v = el.value; if (el.dataset.k !== 'name') v = Math.max(el.dataset.k === 'duration' ? 15 : 0, Number(v) || 0); else v = v.trim() || 'Услуга';
       await S.updateService(row.dataset.id, { [el.dataset.k]: v });
     }
-    if (mrow && el.dataset.mk) await S.updateMaster(mrow.dataset.id, { [el.dataset.mk]: el.dataset.mk === 'name' ? (el.value.trim() || 'Мастер') : el.value.trim() });
+    if (mrow && el.dataset.mk) await S.updateMaster(mrow.dataset.id, { [el.dataset.mk]: el.dataset.mk === 'name' ? (el.value.trim() || 'Врач') : el.value.trim() });
     if (mrow && el.hasAttribute('data-md')) {
       const on = Array.from(mrow.querySelectorAll('input[data-md]:checked')).map(x => Number(x.value));
       await S.updateMaster(mrow.dataset.id, { days: on.length === 7 ? null : on });
@@ -581,7 +581,7 @@
 
   /* ---------- запуск ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => { /* офлайн необязателен */ });
-  try { const m = new URLSearchParams(location.search).get('m'); if (m && masterById(m)) st.only = m; } catch (e) { /* без ссылки на мастера */ }
+  try { const m = new URLSearchParams(location.search).get('m'); if (m && masterById(m)) st.only = m; } catch (e) { /* без ссылки на врача */ }
   prefill();
   S.subscribe(onData);
   onData();
