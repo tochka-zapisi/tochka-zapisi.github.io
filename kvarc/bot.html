@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Telegram-бот записи — Кварц</title><meta name="robots" content="noindex">
+<style>
+:root{--bg:#eef1f4;--ink:#16181d;--muted:#5c6470;--line:rgba(0,0,0,.1);--acc:#9c5566;--acc-ink:#fff;--acc-t:#9c5566;--me:#effdde;--chat:#dbe4ec;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 16px 48px}
+h1{font-size:clamp(26px,5vw,40px);line-height:1.1;margin:0 0 10px;letter-spacing:-.01em}
+.lead{color:var(--muted);max-width:44em;margin:0 0 20px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tabs button{font:inherit;font-weight:600;border:1.5px solid var(--ink);background:transparent;border-radius:999px;padding:10px 18px;cursor:pointer;min-height:44px}
+.tabs button[aria-selected=true]{background:var(--ink);color:#fff}
+.stage{display:grid;gap:26px;justify-content:center}
+@media(min-width:860px){.stage{grid-template-columns:repeat(2,minmax(0,380px))}}
+.who{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 8px 6px}
+.phone{background:#101114;border-radius:42px;padding:10px;box-shadow:0 30px 60px -24px rgba(0,0,0,.45);width:min(380px,100%)}
+.scr{border-radius:33px;overflow:hidden;background:var(--chat);height:min(700px,82vh);display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:12px;background:#fff;padding:14px 16px;border-bottom:1px solid var(--line)}
+.av{width:40px;height:40px;border-radius:50%;background:var(--acc);color:var(--acc-ink);display:grid;place-items:center;font-weight:700;flex:none}
+.top b{display:block;font-size:15px;line-height:1.2}.top small{color:var(--muted);font-size:13px}
+.msgs{flex:1;overflow-y:auto;padding:14px 10px;display:flex;flex-direction:column;gap:8px;background-image:radial-gradient(rgba(255,255,255,.35) 1px,transparent 1px);background-size:18px 18px}
+.m{max-width:86%;padding:8px 12px;border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px;line-height:1.4;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.m.bot{background:#fff;align-self:flex-start;border-bottom-left-radius:4px}
+.m.me{background:var(--me);align-self:flex-end;border-bottom-right-radius:4px}
+.m.sys{align-self:center;background:rgba(0,0,0,.25);color:#fff;font-size:13px;border-radius:999px;padding:4px 12px;box-shadow:none}
+.m img{display:block;width:100%;border-radius:10px;margin:-2px 0 6px}
+.file{display:flex;gap:10px;align-items:center}.file i{width:40px;height:40px;border-radius:50%;background:var(--acc);flex:none}
+.kb{align-self:flex-start;max-width:86%;display:grid;gap:4px;margin-top:-4px;width:86%}
+.kb .r{display:flex;gap:4px}
+.kb button,.kb a{flex:1;font:inherit;font-size:14px;font-weight:600;background:rgba(255,255,255,.75);color:var(--acc-t);border:0;border-radius:10px;padding:9px 6px;cursor:pointer;text-align:center;text-decoration:none;min-height:40px}
+.kb button:hover,.kb a:hover{background:#fff}
+.reply{background:#f4f5f7;border-top:1px solid var(--line);padding:8px}
+.reply button{width:100%;font:inherit;font-weight:600;border:0;border-radius:10px;padding:12px;background:#fff;color:var(--acc-t);cursor:pointer;min-height:44px}
+.inp{display:flex;gap:8px;padding:10px;background:#fff;border-top:1px solid var(--line)}
+.inp input{flex:1;font:inherit;border:1px solid var(--line);border-radius:999px;padding:10px 14px;min-height:44px;min-width:0}
+.inp button{font:inherit;font-weight:700;border:0;border-radius:999px;background:var(--acc);color:var(--acc-ink);padding:0 16px;cursor:pointer;min-height:44px}
+.start{padding:10px;background:#fff;border-top:1px solid var(--line)}
+.start button{width:100%;font:inherit;font-weight:700;border:0;border-radius:12px;background:var(--acc);color:var(--acc-ink);padding:12px;min-height:46px;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 4px 0}
+.chips button{font:inherit;font-size:14px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;cursor:pointer;min-height:40px}
+.note{color:var(--muted);font-size:14px;margin:8px 6px 0;max-width:380px}
+.how{margin-top:34px;display:grid;gap:14px}@media(min-width:860px){.how{grid-template-columns:repeat(3,1fr)}}
+.how div{background:#fff;border-radius:18px;padding:18px;border:1px solid var(--line)}.how b{display:block;margin-bottom:6px}
+.how p{margin:0;color:var(--muted);font-size:15px}
+</style></head><body><div class="wrap">
+<h1>Telegram-бот записи «Кварц» — демо</h1>
+<p class="lead" id="lead"></p>
+<div class="tabs" role="tablist"><button id="reset" style="margin-left:auto;border-style:dashed">Начать заново</button></div>
+<div class="stage">
+  <div><p class="who" id="w1"></p><div class="phone"><div class="scr" id="p-client"></div></div><p class="note" id="n1"></p></div>
+  <div><p class="who" id="w2"></p><div class="phone"><div class="scr" id="p-owner"></div></div><div class="chips" id="chips"></div><p class="note" id="n2"></p></div>
+</div>
+<div class="how" id="how"></div>
+</div>
+<script>
+/* Общее для сценариев ботов: даты, деньги, кнопки. Работает и в Node (настоящий Telegram), и в браузере (демо).
+   Ответ сценария — массив сообщений: { chat, text, buttons?: [[{ text, data } | { text, url }]], contact?: 'текст кнопки', removeKeyboard?: true, photo?: { file, data } } */
+const WD = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+const MON = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+const pad = n => String(n).padStart(2, '0');
+const dstr = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const parseD = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+const fmtD = s => { const d = parseD(s); return WD[d.getDay()] + ', ' + d.getDate() + ' ' + MON[d.getMonth()]; };
+const toMin = t => { const [h, m] = String(t).split(':').map(Number); return (h || 0) * 60 + (m || 0); };
+const fromMin = m => pad(Math.floor(m / 60)) + ':' + pad(m % 60);
+const money = (v, from) => (Number(v) > 0 ? (from ? 'от ' : '') + Number(v).toLocaleString('ru-RU').replace(/ /g, ' ') + ' ₽' : 'по запросу');
+const btn = (text, data) => ({ text, data });
+const link = (text, url) => ({ text, url });
+/* кнопки по n в ряд */
+const rows = (list, n = 1) => { const out = []; for (let i = 0; i < list.length; i += n) out.push(list.slice(i, i + n)); return out; };
+const digits = s => String(s || '').replace(/\D/g, '');
+const plural = (n, a, b, c) => { const m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? a : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? b : c; };
+
+/* Бот салона: запись в Telegram, уведомление владельцу с кнопками, напоминание клиенту, вопрос администратору.
+   createSalonBot({ config, store, now }) → { onMessage(msg), onCallback(q), tick() } — каждый возвращает массив сообщений (см. общее.js).
+   config: { name, address, phone, site, privacy, hours: { "1": ["10:00","20:00"] … }, step, services: [{ id, name, duration, price, from }],
+             masters: [{ id, name, role, services|null, days|null }], adminCode, pdInTelegram, review }
+   review — ссылка на карточку (Яндекс Карты / 2ГИС): после визита бот спрашивает оценку; 4–5 — зовёт оставить отзыв там, 1–3 — передаёт администратору.
+   Клиент: запись, «Мои записи», перенос, отмена, напоминания накануне (с 18:00) и за 2 часа, «Записаться снова», вопрос администратору.
+   Владелец: подтверждение/отклонение, ответы на вопросы, утренняя сводка в 9:00, /today, /tomorrow, /week, /stats, /help.
+   pdInTelegram: false (по умолчанию) — владельцу в Telegram уходит запись БЕЗ имени и телефона клиента (152-ФЗ: Telegram — передача за границу);
+   контакты — в панели записи. true — только если салон оформил трансграничную передачу.
+   store: { get(key), set(key, value) } — синхронное хранилище (файл в Node, localStorage в браузере). */
+
+function createSalonBot({ config: c, store, now = () => new Date() }) {
+  const S = {
+    get bookings() { return store.get('bookings') || []; },
+    set bookings(v) { store.set('bookings', v); },
+    get owner() { return store.get('owner') || null; },
+    set owner(v) { store.set('owner', v); },
+    st(chat) { return (store.get('states') || {})[chat] || {}; },
+    setSt(chat, v) { const all = store.get('states') || {}; all[chat] = v; store.set('states', all); }
+  };
+  const svc = id => c.services.find(s => s.id === id);
+  const master = id => (c.masters || []).find(m => m.id === id);
+  const mastersFor = s => (c.masters || []).filter(m => !m.services || m.services.includes(s.id));
+  const works = (m, dow) => !m || !m.days || m.days.includes(dow);
+  const hoursOf = dow => { const h = (c.hours || {})[dow]; return h && toMin(h[1]) > toMin(h[0]) ? h : null; };
+  const step = c.step || 30;
+  const active = b => b.status === 'new' || b.status === 'confirmed';
+  let skip = ''; /* при переносе своя же запись не мешает выбрать соседнее время */
+  const busy = (date, m, mid, dur) => {
+    const end = m + dur;
+    return S.bookings.some(b => b.id !== skip && active(b) && b.date === date && (b.masterId || '') === (mid || '') && b.startMin < end && m < b.startMin + b.duration);
+  };
+  const startOf = b => { const d = parseD(b.date); d.setMinutes(b.startMin); return d; };
+  /* что сохранить в состоянии при переходах между шагами: перенос и уже известные имя и телефон */
+  const keep = st => ({ ...(st.resched ? { resched: st.resched } : {}), ...(st.name && st.phone ? { name: st.name, phone: st.phone } : {}) });
+  /* свободные мастера на время: «любой» — менее загруженный в этот день */
+  function freeMaster(s, date, m, who) {
+    const dow = parseD(date).getDay(), ms = (c.masters || []).length ? mastersFor(s).filter(x => (who === 'any' || x.id === who) && works(x, dow)) : [null];
+    const load = id => S.bookings.filter(b => active(b) && b.date === date && b.masterId === id).length;
+    const sorted = ms.slice().sort((a, b) => (a ? load(a.id) : 0) - (b ? load(b.id) : 0));
+    const hit = sorted.find(x => !busy(date, m, x ? x.id : '', s.duration));
+    return hit === undefined ? undefined : hit;
+  }
+  function times(s, date, who) {
+    const h = hoursOf(parseD(date).getDay()); if (!h) return [];
+    const n = now(), today = dstr(n) === date, lead = n.getHours() * 60 + n.getMinutes() + 60, out = [];
+    for (let m = toMin(h[0]); m + s.duration <= toMin(h[1]); m += step) {
+      if (today && m < lead) continue;
+      if (freeMaster(s, date, m, who) !== undefined) out.push(m);
+    }
+    return out;
+  }
+  function days(s, who) {
+    const out = [], n = now();
+    for (let i = 0; i < 14 && out.length < 9; i++) {
+      const d = new Date(n.getFullYear(), n.getMonth(), n.getDate() + i), ds = dstr(d);
+      if (times(s, ds, who).length) out.push(ds);
+    }
+    return out;
+  }
+  const clientLine = b => c.pdInTelegram ? `${b.name}, ${b.phone}` : 'имя и телефон — в панели записи';
+  const bookingLine = b => `${b.serviceName}${b.masterName ? ', мастер ' + b.masterName : ''} — ${fmtD(b.date)} в ${fromMin(b.startMin)}`;
+  const menu = chat => ({ chat, text: `Что хотите сделать?`, buttons: [[btn('Записаться', 'book')], [btn('Мои записи', 'my'), btn('Цены', 'prices')], [btn('Адрес и часы', 'info'), btn('Вопрос администратору', 'ask')]] });
+
+  async function onMessage(msg) {
+    const chat = msg.chat, text = (msg.text || '').trim(), st = S.st(chat);
+    /* владелец: /admin <код> — один раз, чтобы получать записи */
+    if (/^\/admin\b/.test(text)) {
+      if (text.split(/\s+/)[1] === String(c.adminCode)) { S.owner = chat; return [{ chat, text: `Готово: сюда будут приходить новые записи «${c.name}». Команды: /today — записи на сегодня, /tomorrow — на завтра, /help — все команды.` }]; }
+      return [{ chat, text: 'Код не подошёл.' }];
+    }
+    if (chat === S.owner && /^\/(today|tomorrow)\b/.test(text)) {
+      const n = now(), d = dstr(text.startsWith('/today') ? n : new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1));
+      const list = S.bookings.filter(b => active(b) && b.date === d).sort((a, b) => a.startMin - b.startMin);
+      return [{ chat, text: list.length ? `Записи на ${fmtD(d)}:\n` + list.map(b => `${fromMin(b.startMin)} — ${b.serviceName}${b.masterName ? ', ' + b.masterName : ''} (№${b.n}${b.status === 'new' ? ', ждёт подтверждения' : ''})`).join('\n') : `На ${fmtD(d)} записей нет.` }];
+    }
+    if (chat === S.owner && /^\/(week|stats|help)\b/.test(text)) {
+      const n = now(), today = dstr(n);
+      if (text.startsWith('/help')) return [{ chat, text: 'Команды владельца:\n/today — записи на сегодня\n/tomorrow — на завтра\n/week — на 7 дней вперёд\n/stats — итоги за 30 дней\nНовые записи, переносы, отмены, вопросы и оценки клиентов приходят сюда сами; в 9:00 — сводка дня.' }];
+      if (text.startsWith('/week')) {
+        const end = dstr(new Date(n.getFullYear(), n.getMonth(), n.getDate() + 7));
+        const list = S.bookings.filter(b => active(b) && b.date >= today && b.date < end).sort((a, b) => (a.date + fromMin(a.startMin)).localeCompare(b.date + fromMin(b.startMin)));
+        if (!list.length) return [{ chat, text: 'На 7 дней вперёд записей нет.' }];
+        const by = {}; list.forEach(b => { (by[b.date] = by[b.date] || []).push(b); });
+        return [{ chat, text: 'Записи на неделю:\n' + Object.keys(by).map(d => `\n${fmtD(d)} — ${by[d].length}\n` + by[d].map(b => `  ${fromMin(b.startMin)} ${b.serviceName}${b.masterName ? ', ' + b.masterName : ''}`).join('\n')).join('\n') }];
+      }
+      const from = n.getTime() - 30 * 864e5, list = S.bookings.filter(b => (b.createdAt || 0) >= from);
+      const ok = list.filter(b => b.status === 'confirmed'), cx = list.filter(b => b.status === 'cancelled').length;
+      const sum = ok.reduce((a, b) => a + (Number(b.price) || 0), 0), rates = list.filter(b => b.rating).map(b => b.rating);
+      return [{ chat, text: `Итоги за 30 дней (бот):\nЗаписей: ${list.length}\nПодтверждено: ${ok.length}\nОтменено: ${cx}\nСумма подтверждённых: ${money(sum, ok.some(b => b.from))}` + (rates.length ? `\nСредняя оценка клиентов: ${(rates.reduce((a, b) => a + b, 0) / rates.length).toFixed(1).replace('.', ',')} (${rates.length})` : '') }];
+    }
+    if (st.step === 'fb' && text) {
+      S.setSt(chat, {});
+      const b = S.bookings.find(x => x.id === st.id);
+      const out = [{ chat, text: 'Спасибо, что написали. Передали администратору — разберёмся и ответим.', buttons: [[btn('Меню', 'menu')]] }];
+      if (S.owner) out.push({ chat: S.owner, text: `Клиент недоволен визитом (оценка ${b ? b.rating : '?'})${b ? ': ' + bookingLine(b) : ''}\nОтзыв: ${text}`, buttons: [[btn('Ответить', 'reply:' + chat)]] });
+      return out;
+    }
+    if (chat === S.owner && st.replyTo) {
+      S.setSt(chat, {});
+      return [{ chat: st.replyTo, text: `Ответ администратора «${c.name}»:\n${text}`, buttons: [[btn('Записаться', 'book'), btn('Меню', 'menu')]] }, { chat, text: 'Отправлено клиенту.' }];
+    }
+    if (/^\/start\b/.test(text) || text === '/menu') {
+      S.setSt(chat, {});
+      return [{ chat, text: `Здравствуйте! Это бот ${c.placeGen || 'салона'} «${c.name}». Записаться можно прямо здесь — за минуту, без звонка.`, removeKeyboard: true }, menu(chat)];
+    }
+    if (st.step === 'name' && text) {
+      S.setSt(chat, { ...st, step: 'phone', name: text.slice(0, 60) });
+      return [{ chat, text: 'Спасибо! Оставьте номер телефона — по нему администратор свяжется, если что-то изменится.\n\nНажимая «Отправить номер», вы соглашаетесь на обработку персональных данных для записи' + (c.privacy ? ` (политика: ${c.privacy}).` : '.'), contact: 'Отправить номер' }];
+    }
+    if (st.step === 'phone') {
+      const phone = msg.contact ? msg.contact.phone : text;
+      if (digits(phone).length < 10) return [{ chat, text: 'Проверьте номер — не хватает цифр. Или нажмите «Отправить номер».', contact: 'Отправить номер' }];
+      return finish(chat, st, phone);
+    }
+    if (st.step === 'ask' && text) {
+      S.setSt(chat, {});
+      const out = [{ chat, text: 'Передали администратору — ответ придёт сюда.', buttons: [[btn('Меню', 'menu')]] }];
+      if (S.owner) out.push({ chat: S.owner, text: `Вопрос от клиента:\n${text}`, buttons: [[btn('Ответить', 'reply:' + chat)]] });
+      return out;
+    }
+    return [menu(chat)];
+  }
+
+  function finish(chat, st, phone) {
+    const s = svc(st.svc), who = st.master || 'any', mm = freeMaster(s, st.date, st.time, who);
+    if (mm === undefined) { S.setSt(chat, { svc: st.svc, master: st.master }); return [{ chat, text: 'Пока вы вводили данные, это время заняли. Выберите другое:', removeKeyboard: true, buttons: dayButtons(s, who) }]; }
+    const all = S.bookings, b = { id: 'b' + Date.now().toString(36), n: all.length + 1, chat, serviceId: s.id, serviceName: s.name, duration: s.duration, price: s.price, from: !!s.from,
+      masterId: mm ? mm.id : '', masterName: mm ? mm.name : '', date: st.date, startMin: st.time, name: st.name, phone: String(phone), status: 'new', reminded: false, createdAt: now().getTime() };
+    S.bookings = all.concat(b); S.setSt(chat, {});
+    const out = [{ chat, text: `Запись отправлена ✓\n${bookingLine(b)}\n${money(b.price, b.from)}\n\nАдминистратор подтвердит её в ближайшее время — сообщение придёт сюда.`, removeKeyboard: true, buttons: [[btn('Мои записи', 'my'), btn('Меню', 'menu')]] }];
+    if (S.owner) out.push({ chat: S.owner, text: `Новая запись №${b.n}\n${bookingLine(b)}\nКлиент: ${clientLine(b)}`, buttons: [[btn('Подтвердить', 'ok:' + b.id), btn('Отклонить', 'no:' + b.id)]] });
+    return out;
+  }
+  function dayButtons(s, who) {
+    const ds = days(s, who);
+    return ds.length ? rows(ds.map(d => btn(fmtD(d), 'd:' + d)), 3).concat([[btn('← Мастер', 'svc:' + s.id)]]) : [[btn('Свободного времени нет — меню', 'menu')]];
+  }
+
+  async function onCallback(q) {
+    const chat = q.chat, data = q.data || '', st = S.st(chat);
+    skip = st.resched || '';
+    try { return await callback(chat, data, st); } finally { skip = ''; }
+  }
+  async function callback(chat, data, st) {
+    const [cmd, arg] = [data.split(':')[0], data.slice(data.indexOf(':') + 1)];
+    if (cmd === 'menu') { S.setSt(chat, {}); return [menu(chat)]; }
+    /* перенос: тот же выбор дня и времени, имя и телефон не спрашиваем */
+    if (cmd === 'rs' || cmd === 'again') {
+      const b = S.bookings.find(x => x.id === arg && x.chat === chat), s = b && svc(b.serviceId); if (!s) return [menu(chat)];
+      if (cmd === 'rs' && !active(b)) return [{ chat, text: 'Эта запись уже отменена.', buttons: [[btn('Записаться', 'book')]] }];
+      const who = b.masterId && master(b.masterId) ? b.masterId : 'any';
+      S.setSt(chat, cmd === 'rs' ? { svc: s.id, master: who, resched: b.id } : { svc: s.id, master: who, name: b.name, phone: b.phone });
+      skip = cmd === 'rs' ? b.id : '';
+      return [{ chat, text: `${cmd === 'rs' ? 'Перенос: ' + bookingLine(b) + '\nВыберите новый день' : `${s.name}${b.masterName && who !== 'any' ? ', мастер ' + b.masterName : ''}. Выберите день`}:`, buttons: dayButtons(s, who) }];
+    }
+    if (cmd === 'yes') {
+      const b = S.bookings.find(x => x.id === arg && x.chat === chat); if (!b || !active(b)) return [menu(chat)];
+      S.bookings = S.bookings.map(x => x.id === b.id ? { ...x, visitOk: true } : x);
+      const out = [{ chat, text: `Отлично, ждём вас ${fmtD(b.date)} в ${fromMin(b.startMin)} ✓`, buttons: [[link('Маршрут', 'https://yandex.ru/maps/?text=' + encodeURIComponent(c.address || ''))]] }];
+      if (S.owner) out.push({ chat: S.owner, text: `Клиент подтвердил, что придёт: №${b.n}, ${bookingLine(b)}` });
+      return out;
+    }
+    if (cmd === 'rv') {
+      const [id, v] = arg.split('/'), r = Number(v), b = S.bookings.find(x => x.id === id && x.chat === chat); if (!b || !r) return [menu(chat)];
+      if (b.rating) return [{ chat, text: 'Оценка уже учтена — спасибо!', buttons: [[btn('Записаться снова', 'again:' + b.id)]] }];
+      S.bookings = S.bookings.map(x => x.id === b.id ? { ...x, rating: r } : x);
+      if (r >= 4) {
+        const out = [{ chat, text: `Спасибо! Очень рады, что понравилось.${c.review ? '\n\nЕсли не сложно — оставьте пару слов на карте: так нас находят новые клиенты.' : ''}`, buttons: (c.review ? [[link('Оставить отзыв', c.review)]] : []).concat([[btn('Записаться снова', 'again:' + b.id)]]) }];
+        if (S.owner) out.push({ chat: S.owner, text: `Оценка клиента: ${'★'.repeat(r)} — №${b.n}, ${bookingLine(b)}` });
+        return out;
+      }
+      S.setSt(chat, { step: 'fb', id: b.id });
+      return [{ chat, text: 'Жаль, что не всё понравилось. Напишите, что было не так, — администратор разберётся и ответит лично.' }];
+    }
+    if (cmd === 'book') {
+      S.setSt(chat, { step: 'svc' });
+      return [{ chat, text: 'Выберите услугу:', buttons: c.services.map(s => [btn(`${s.name} · ${money(s.price, s.from)}`, 'svc:' + s.id)]).concat([[btn('← Меню', 'menu')]]) }];
+    }
+    if (cmd === 'svc') {
+      const s = svc(arg); if (!s) return [menu(chat)];
+      if (!(c.masters || []).length) { S.setSt(chat, { ...keep(st), svc: s.id, master: 'any' }); return [{ chat, text: `${s.name}, около ${s.duration} мин. Выберите день:`, buttons: dayButtons(s, 'any') }]; }
+      S.setSt(chat, { ...keep(st), svc: s.id });
+      return [{ chat, text: `${s.name}, около ${s.duration} мин. К какому мастеру?`, buttons: [[btn('Любой свободный', 'm:any')]].concat(rows(mastersFor(s).map(m => btn(`${m.name}${m.role ? ' · ' + m.role : ''}`, 'm:' + m.id)), 1)).concat([[btn('← Услуги', 'book')]]) }];
+    }
+    if (cmd === 'm') {
+      const s = svc(st.svc); if (!s) return [menu(chat)];
+      S.setSt(chat, { ...keep(st), svc: s.id, master: arg });
+      return [{ chat, text: `${arg === 'any' ? 'Любой свободный мастер' : 'Мастер ' + (master(arg) || {}).name}. Выберите день:`, buttons: dayButtons(s, arg) }];
+    }
+    if (cmd === 'd') {
+      const s = svc(st.svc); if (!s) return [menu(chat)];
+      const ts = times(s, arg, st.master || 'any');
+      S.setSt(chat, { ...st, date: arg });
+      if (!ts.length) return [{ chat, text: `На ${fmtD(arg)} мест нет. Выберите другой день:`, buttons: dayButtons(s, st.master || 'any') }];
+      return [{ chat, text: `${fmtD(arg)}. Свободное время:`, buttons: rows(ts.map(m => btn(fromMin(m), 't:' + m)), 4).concat([[btn('← Другой день', 'm:' + (st.master || 'any'))]]) }];
+    }
+    if (cmd === 't') {
+      const s = svc(st.svc); if (!s || !st.date) return [menu(chat)];
+      const m = Number(arg), mm = freeMaster(s, st.date, m, st.master || 'any');
+      if (mm === undefined) return [{ chat, text: 'Это время только что заняли. Выберите другое:', buttons: dayButtons(s, st.master || 'any') }];
+      if (st.resched) {
+        const old = S.bookings.find(x => x.id === st.resched && x.chat === chat); if (!old || !active(old)) { S.setSt(chat, {}); return [menu(chat)]; }
+        const nb = { ...old, date: st.date, startMin: m, masterId: mm ? mm.id : '', masterName: mm ? mm.name : '', status: 'new', reminded: false, remindedEve: false };
+        S.bookings = S.bookings.map(x => x.id === old.id ? nb : x); S.setSt(chat, {});
+        const out = [{ chat, text: `Запись перенесена ✓\n${bookingLine(nb)}\n\nАдминистратор подтвердит новое время — сообщение придёт сюда.`, buttons: [[btn('Мои записи', 'my'), btn('Меню', 'menu')]] }];
+        if (S.owner) out.push({ chat: S.owner, text: `Перенос записи №${old.n}\nБыло: ${fmtD(old.date)} в ${fromMin(old.startMin)}\nСтало: ${bookingLine(nb)}`, buttons: [[btn('Подтвердить', 'ok:' + nb.id), btn('Отклонить', 'no:' + nb.id)]] });
+        return out;
+      }
+      /* «Записаться снова»: имя и телефон уже есть */
+      if (st.name && st.phone) return finish(chat, { ...st, time: m }, st.phone);
+      S.setSt(chat, { ...st, time: m, step: 'name' });
+      return [{ chat, text: `Проверьте:\n${s.name}${mm ? ', мастер ' + mm.name : ''} — ${fmtD(st.date)} в ${fromMin(m)}\n${money(s.price, s.from)}\n\nКак к вам обращаться? Напишите имя.` }];
+    }
+    if (cmd === 'my') {
+      const mine = S.bookings.filter(b => b.chat === chat && active(b) && b.date >= dstr(now()));
+      if (!mine.length) return [{ chat, text: 'Активных записей нет.', buttons: [[btn('Записаться', 'book'), btn('Меню', 'menu')]] }];
+      return mine.map(b => ({ chat, text: `${bookingLine(b)}\n${b.status === 'confirmed' ? 'Подтверждена ✓' : 'Ждёт подтверждения'}`, buttons: [[btn('Перенести', 'rs:' + b.id), btn('Отменить', 'cx:' + b.id)]] })).concat([menu(chat)]);
+    }
+    if (cmd === 'cx') return [{ chat, text: 'Точно отменить запись?', buttons: [[btn('Да, отменить', 'cxx:' + arg), btn('Нет', 'my')]] }];
+    if (cmd === 'cxx') {
+      const b = S.bookings.find(x => x.id === arg && x.chat === chat); if (!b) return [menu(chat)];
+      S.bookings = S.bookings.map(x => x.id === arg ? { ...x, status: 'cancelled' } : x);
+      const out = [{ chat, text: 'Запись отменена. Будем рады видеть вас в другой раз.', buttons: [[btn('Записаться снова', 'book')]] }];
+      if (S.owner) out.push({ chat: S.owner, text: `Клиент отменил запись №${b.n}: ${bookingLine(b)}` });
+      return out;
+    }
+    if (cmd === 'prices') return [{ chat, text: 'Цены:\n' + c.services.map(s => `• ${s.name} — ${money(s.price, s.from)}, ~${s.duration} мин`).join('\n'), buttons: [[btn('Записаться', 'book'), btn('Меню', 'menu')]] }];
+    if (cmd === 'info') {
+      const h = [1, 2, 3, 4, 5, 6, 0].map(d => `${WD[d]} ${hoursOf(d) ? hoursOf(d).join('–') : 'выходной'}`).join('\n');
+      const b = [[link('Маршрут', 'https://yandex.ru/maps/?text=' + encodeURIComponent(c.address || ''))]];
+      if (c.site) b[0].push(link('Сайт', c.site));
+      const m = c.messengers || {}, chats = [m.whatsapp && link('WhatsApp', m.whatsapp), m.max && link('MAX', m.max)].filter(Boolean);
+      if (chats.length) b.push(chats);
+      return [{ chat, text: `«${c.name}»\n${c.address}\n${c.phone ? 'Телефон: ' + c.phone + '\n' : ''}\n${h}`, buttons: b.concat([[btn('Записаться', 'book'), btn('Меню', 'menu')]]) }];
+    }
+    if (cmd === 'ask') { S.setSt(chat, { step: 'ask' }); return [{ chat, text: 'Напишите вопрос одним сообщением — администратор ответит сюда.' }]; }
+    /* владелец */
+    if (chat === S.owner && ['ok', 'no', 'nox', 'keep', 'reply'].includes(cmd)) {
+      if (cmd === 'reply') { S.setSt(chat, { replyTo: arg }); return [{ chat, text: 'Напишите ответ — отправлю клиенту.' }]; }
+      const b = S.bookings.find(x => x.id === arg); if (!b) return [{ chat, text: 'Запись не найдена.' }];
+      if (b.status !== 'new') return [{ chat, text: `Запись №${b.n} уже ${b.status === 'confirmed' ? 'подтверждена' : 'отменена'}.` }];
+      if (cmd === 'no') return [{ chat, text: `Отклонить запись №${b.n}? Клиент получит сообщение и предложение выбрать другое время.`, buttons: [[btn('Да, отклонить', 'nox:' + b.id), btn('Нет', 'keep:' + b.id)]] }];
+      if (cmd === 'keep') return [{ chat, text: `Запись №${b.n} ждёт решения.`, buttons: [[btn('Подтвердить', 'ok:' + b.id), btn('Отклонить', 'no:' + b.id)]] }];
+      const ok = cmd === 'ok';
+      S.bookings = S.bookings.map(x => x.id === b.id ? { ...x, status: ok ? 'confirmed' : 'cancelled' } : x);
+      return [
+        { chat, text: ok ? `Запись №${b.n} подтверждена ✓ Клиент получил сообщение.` : `Запись №${b.n} отклонена. Клиенту предложено другое время.` },
+        ok ? { chat: b.chat, text: `Ваша запись подтверждена ✓\n${bookingLine(b)}\n${c.address}\n\nНапомним накануне и за 2 часа. Если планы изменятся — перенесите или отмените здесь.`, buttons: [[btn('Мои записи', 'my')], [link('Маршрут', 'https://yandex.ru/maps/?text=' + encodeURIComponent(c.address || ''))]] }
+          : { chat: b.chat, text: `К сожалению, ${fmtD(b.date)} в ${fromMin(b.startMin)} не получится. Выберите, пожалуйста, другое время:`, buttons: [[btn('Записаться', 'book')]] }
+      ];
+    }
+    return [menu(chat)];
+  }
+
+  /* раз в минуту: напоминания (накануне с 18:00 и за 2 часа), просьба оценить визит (через 2 часа после конца, до 21:00), сводка владельцу в 9:00 */
+  function tick() {
+    const n = now(), out = [], today = dstr(n), hm = n.getHours() * 60 + n.getMinutes();
+    const tomorrow = dstr(new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1));
+    let changed = false;
+    const list = S.bookings.map(b => {
+      if (b.status !== 'confirmed') return b;
+      const left = (startOf(b) - n) / 60000, line = `${b.serviceName}${b.masterName ? ', мастер ' + b.masterName : ''}`;
+      if (!b.remindedEve && !b.reminded && b.date === tomorrow && hm >= 18 * 60 && hm < 22 * 60 && (b.createdAt || 0) < n.getTime() - 3 * 36e5) {
+        changed = true;
+        out.push({ chat: b.chat, text: `Напоминаем: завтра, ${fmtD(b.date)}, в ${fromMin(b.startMin)} — ${line}.\n${c.address}\n\nВсё в силе?`, buttons: [[btn('Приду ✓', 'yes:' + b.id)], [btn('Перенести', 'rs:' + b.id), btn('Не смогу', 'cx:' + b.id)]] });
+        return { ...b, remindedEve: true };
+      }
+      if (!b.reminded && left > 0 && left <= 120) {
+        changed = true;
+        out.push({ chat: b.chat, text: `Напоминаем: сегодня в ${fromMin(b.startMin)} — ${line}.\n${c.address}`, buttons: [[btn('Приду ✓', 'yes:' + b.id)], [btn('Перенести', 'rs:' + b.id), btn('Не смогу', 'cx:' + b.id)]] });
+        return { ...b, reminded: true };
+      }
+      const after = -left - b.duration;
+      if (!b.askedReview && after >= 120 && after < 26 * 60 && hm >= 10 * 60 && hm < 21 * 60) {
+        changed = true;
+        out.push({ chat: b.chat, text: `Спасибо, что были у нас! Как вам ${b.serviceName.toLowerCase()}${b.masterName ? ' у мастера ' + b.masterName : ''}? Оцените, пожалуйста:`, buttons: [[1, 2, 3, 4, 5].map(r => btn(r + ' ★', 'rv:' + b.id + '/' + r))] });
+        return { ...b, askedReview: true };
+      }
+      return b;
+    });
+    if (changed) S.bookings = list;
+    /* утренняя сводка владельцу */
+    if (S.owner && hm >= 9 * 60 && store.get('digest') !== today) {
+      store.set('digest', today);
+      const day = S.bookings.filter(b => active(b) && b.date === today).sort((a, b) => a.startMin - b.startMin);
+      if (day.length) out.push({ chat: S.owner, text: `Доброе утро! Сегодня ${day.length} ${plural(day.length, 'запись', 'записи', 'записей')}:\n` + day.map(b => `${fromMin(b.startMin)} — ${b.serviceName}${b.masterName ? ', ' + b.masterName : ''}${b.status === 'new' ? ' (ждёт подтверждения)' : ''}`).join('\n') });
+    }
+    return out;
+  }
+  return { onMessage, onCallback, tick };
+}
+
+/* Бот студии: показывает дизайны и цены, собирает заявку на бесплатное демо, передаёт вопросы владельцу студии.
+   createStudioBot({ config, store, now }) → { onMessage(msg), onCallback(q), tick() } — массивы сообщений (см. общее.js).
+   config: { brand, city, person, site, demos: [{ name, kind, url }], packages: [{ name, price, days, what, best }], support: [{ name, price }],
+             extras: [{ name, price }], creatives: [{ file, caption }], showcase: { file, caption } | null, privacy, adminCode }
+   Заявка с сайта: кнопка «Telegram» в калькуляторе открывает бота со ссылкой t.me/<бот>?start=s-<ниша>-<пакет>-<дополнения>
+   (ниша — номер в SITE_NICHES, пакет — номер в SITE_PLANS, дополнения — сумма флагов SITE_EXTRAS) — бот спрашивает только название и контакт.
+   Заявки: store 'leads' (+ onLead(lead) — запуск в Telegram дописывает их в sales/leads.csv). */
+
+const NICHES = [['beauty', 'Салон красоты'], ['nails', 'Маникюр, брови'], ['barber', 'Барбершоп'], ['auto', 'Автосервис, шиномонтаж'], ['clinic', 'Клиника, массаж'], ['other', 'Другое']];
+/* как на сайте студии (studio-site/index.html: #niche, #plan, #extra) — порядок важен */
+const SITE_NICHES = ['Автосервис', 'Детейлинг', 'Шиномонтаж', 'Барбершоп', 'Салон красоты', 'Другое'];
+const SITE_PLANS = ['Старт', 'Бизнес', 'Бизнес + Запись'];
+const SITE_EXTRAS = ['Telegram-бот записи', 'Приложение для клиентов', 'Логотип и мини-стиль', 'Карточки на картах'];
+
+/* «s-3-2-5» → { niche: 'Барбершоп', plan: 'Бизнес + Запись', extras: ['Telegram-бот записи', 'Логотип и мини-стиль'] } */
+function parseSiteStart(p) {
+  const m = /^s-(\d)-(\d)-(\d{1,2})$/.exec(p || '');
+  if (!m || !SITE_NICHES[+m[1]] || !SITE_PLANS[+m[2]]) return null;
+  return { niche: SITE_NICHES[+m[1]], plan: SITE_PLANS[+m[2]], extras: SITE_EXTRAS.filter((x, i) => +m[3] & (1 << i)) };
+}
+
+function createStudioBot({ config: c, store, now = () => new Date(), onLead = null }) {
+  const S = {
+    get leads() { return store.get('leads') || []; },
+    set leads(v) { store.set('leads', v); },
+    get owner() { return store.get('owner') || null; },
+    set owner(v) { store.set('owner', v); },
+    st(chat) { return (store.get('states') || {})[chat] || {}; },
+    setSt(chat, v) { const all = store.get('states') || {}; all[chat] = v; store.set('states', all); }
+  };
+  const siteRow = () => c.site ? [link('Наш сайт', c.site)] : null;
+  const menu = chat => ({ chat, text: 'С чего начнём?', buttons: [[btn('Хочу демо — бесплатно', 'demo')], [btn('Посмотреть работы', 'designs'), btn('Цены', 'prices')], [btn('Как это работает', 'how'), btn('Связаться', 'contact')], siteRow()].filter(Boolean) });
+  const nicheName = k => (NICHES.find(n => n[0] === k) || [k, k])[1];
+  const order = l => [l.plan ? 'пакет «' + l.plan + '»' : '', ...(l.extras || [])].filter(Boolean).join(', ');
+
+  async function onMessage(msg) {
+    const chat = msg.chat, text = (msg.text || '').trim(), st = S.st(chat);
+    if (/^\/admin\b/.test(text)) {
+      if (text.split(/\s+/)[1] === String(c.adminCode)) { S.owner = chat; return [{ chat, text: 'Готово: сюда будут приходить заявки и вопросы. Команда /leads — последние заявки.' }]; }
+      return [{ chat, text: 'Код не подошёл.' }];
+    }
+    if (chat === S.owner && text === '/leads') {
+      const l = S.leads.slice(-10).reverse();
+      return [{ chat, text: l.length ? 'Последние заявки:\n\n' + l.map(x => `№${x.n} · ${x.date} · ${nicheName(x.niche)} · ${x.title}${order(x) ? ' · ' + order(x) : ''}${x.link ? ' · ' + x.link : ''} · ${x.contact}`).join('\n') : 'Заявок пока нет.' }];
+    }
+    if (chat === S.owner && st.replyTo) { S.setSt(chat, {}); return [{ chat: st.replyTo, text: `${c.person ? c.person + ' (' + c.brand + ')' : c.brand}:\n${text}`, buttons: [[btn('Хочу демо', 'demo'), btn('Меню', 'menu')]] }, { chat, text: 'Отправлено.' }]; }
+    /* заявка из калькулятора на сайте */
+    const fromSite = /^\/start\s+/.test(text) ? parseSiteStart(text.split(/\s+/)[1]) : null;
+    if (fromSite) {
+      S.setSt(chat, { step: 'title', niche: fromSite.niche, plan: fromSite.plan, extras: fromSite.extras, source: 'сайт' });
+      return [{ chat, text: `Здравствуйте! Это ${c.brand}${c.person ? ', на связи ' + c.person : ''}. Вижу вашу заявку с сайта:\n\n• Бизнес: ${fromSite.niche}\n• Нужно: ${order(fromSite)}\n\nСоберём демо вашего сайта бесплатно — за 1 день. Осталось два вопроса.\n\nКак называется ваш бизнес и в каком городе? Например: «Мотор, Красноярск».`, removeKeyboard: true }];
+    }
+    if (/^\/start\b/.test(text) || text === '/menu') {
+      S.setSt(chat, {});
+      return [{ chat, text: `Здравствуйте! Это ${c.brand}${c.person ? ', на связи ' + c.person : ''}.\n\nДелаем сайты с онлайн-записью, Telegram-ботов и приложения для автосервисов, барбершопов и салонов${c.city ? ' — ' + c.city + ' и вся Россия' : ''}. Сначала показываем ваш сайт готовым — бесплатно, за 1 день. Понравится — запускаем за 3–10 дней.${c.site ? '\n\nНаш сайт: ' + c.site : ''}`, removeKeyboard: true }, menu(chat)];
+    }
+    if (st.step === 'title' && text) { S.setSt(chat, { ...st, step: 'link', title: text.slice(0, 120) }); return [{ chat, text: 'Пришлите ссылку на вас в 2ГИС, Яндекс Картах или соцсетях — возьмём оттуда услуги и цены для демо.', buttons: [[btn('Ссылки нет — пропустить', 'skip')]] }]; }
+    if (st.step === 'link' && text) { S.setSt(chat, { ...st, step: 'contact', link: text.slice(0, 300) }); return askContact(chat); }
+    if (st.step === 'contact') {
+      const phone = msg.contact ? msg.contact.phone : text;
+      if (!msg.contact && digits(phone).length < 10) return [{ chat, text: 'Проверьте номер — не хватает цифр. Или нажмите кнопку ниже.', contact: 'Отправить номер' }];
+      return saveLead(chat, st, phone, msg.from);
+    }
+    if (st.step === 'ask' && text) {
+      S.setSt(chat, {});
+      const out = [{ chat, text: 'Спасибо! Ответим здесь в течение дня.', buttons: [[btn('Меню', 'menu')]] }];
+      if (S.owner) out.push({ chat: S.owner, text: `Вопрос${msg.from?.username ? ' от @' + msg.from.username : ''}:\n${text}`, buttons: [[btn('Ответить', 'reply:' + chat)]] });
+      return out;
+    }
+    return [menu(chat)];
+  }
+  function askContact(chat) {
+    return [{ chat, text: 'Как с вами связаться, когда демо будет готово? Можно отправить номер кнопкой или ответить «пишите сюда».\n\nОставляя контакт, вы соглашаетесь на обработку персональных данных — только для связи по заявке' + (c.privacy ? ` (${c.privacy}).` : '.'), contact: 'Отправить номер', buttons: [[btn('Пишите сюда, в Telegram', 'here')]] }];
+  }
+  function saveLead(chat, st, contact, from) {
+    const n = now(), lead = { n: S.leads.length + 1, date: n.toISOString().slice(0, 10), chat, niche: st.niche, title: st.title, link: st.link || '',
+      plan: st.plan || '', extras: st.extras || [], source: st.source || 'бот',
+      contact: contact || (from?.username ? '@' + from.username : 'Telegram, чат ' + chat), username: from?.username || '' };
+    S.leads = S.leads.concat(lead); S.setSt(chat, {});
+    if (onLead) try { onLead(lead); } catch (e) { /* заявка всё равно сохранена */ }
+    const out = [{ chat, text: `Спасибо! Заявка №${lead.n} принята.\n\nСоберём демо сайта для «${lead.title}» за 1 день и пришлём сюда ссылку. Это бесплатно и ни к чему не обязывает.`, removeKeyboard: true, buttons: [[btn('Посмотреть работы', 'designs'), btn('Цены', 'prices')]] }];
+    if (S.owner) out.push({ chat: S.owner, text: `Заявка на демо №${lead.n}${lead.source === 'сайт' ? ' (с сайта)' : ''}\nНиша: ${nicheName(lead.niche)}\nБизнес: ${lead.title}${order(lead) ? '\nНужно: ' + order(lead) : ''}\nСсылка: ${lead.link || '—'}\nКонтакт: ${lead.contact}${lead.username && !String(lead.contact).startsWith('@') ? ' (@' + lead.username + ')' : ''}`, buttons: [[btn('Написать ответ', 'reply:' + chat)]] });
+    return out;
+  }
+
+  async function onCallback(q) {
+    const chat = q.chat, data = q.data || '', st = S.st(chat), cmd = data.split(':')[0], arg = data.slice(data.indexOf(':') + 1);
+    if (cmd === 'menu') { S.setSt(chat, {}); return [menu(chat)]; }
+    if (cmd === 'demo') { S.setSt(chat, { step: 'niche' }); return [{ chat, text: 'Отлично! Три вопроса — и соберём демо с вашими услугами.\n\n1. Какой у вас бизнес?', buttons: rows(NICHES.map(([k, t]) => btn(t, 'n:' + k)), 2) }]; }
+    if (cmd === 'n') { S.setSt(chat, { step: 'title', niche: arg }); return [{ chat, text: '2. Как называется ваш бизнес и в каком городе? Например: «Пудра, Красноярск».' }]; }
+    if (cmd === 'skip' && st.step === 'link') { S.setSt(chat, { ...st, step: 'contact', link: '' }); return askContact(chat); }
+    if (cmd === 'here' && st.step === 'contact') return saveLead(chat, st, '', q.from);
+    if (cmd === 'designs') {
+      const out = (c.creatives || []).map(x => ({ chat, photo: x, text: x.caption || '' }));
+      if (c.demos && c.demos.length) out.push({ chat, text: 'Живые демо — откройте и попробуйте записаться, как ваш клиент. Названия вымышленные, всё работает:', buttons: rows(c.demos.map(d => link(`${d.name} · ${d.kind}`, d.url)), 1) });
+      else if (c.showcase) out.push({ chat, document: c.showcase, text: c.showcase.caption || 'Витрина дизайнов целиком — откройте файл в браузере.' });
+      out.push({ chat, text: 'Хотите так же — с вашими услугами и ценами?', buttons: [[btn('Хочу демо — бесплатно', 'demo')], [btn('Цены', 'prices'), btn('Меню', 'menu')]] });
+      return out;
+    }
+    if (cmd === 'prices') {
+      const p = (c.packages || []).map(x => `• ${x.name}${x.best ? ' (рекомендуем)' : ''} — ${x.price}, ${x.days}`).join('\n');
+      const s = (c.support || []).map(x => `• ${x.name} — ${x.price}`).join('\n');
+      const e = (c.extras || []).map(x => `• ${x.name} — ${x.price}`).join('\n');
+      return [{ chat, text: `Пакеты:\n${p}\n\nСопровождение:\n${s}${e ? '\n\nДополнительно:\n' + e : ''}\n\nTelegram-бот и приложение для клиентов — считаем после демо.\nОплата: 50% после демо, 50% после сдачи. Демо — бесплатно.`, buttons: [[btn('Хочу демо — бесплатно', 'demo')], [btn('Как это работает', 'how'), btn('Меню', 'menu')], siteRow()].filter(Boolean) }];
+    }
+    if (cmd === 'how') return [{ chat, text: 'Как это работает:\n\n1. Демо — 1 день, бесплатно: собираем сайт с вашим названием, услугами и ценами.\n2. Встреча 15 минут: показываем на вашем телефоне, отвечаем на вопросы.\n3. Запуск — 3–10 дней: тексты, фото, домен, онлайн-запись, бот, приложение.\n4. Сопровождение: правки — сообщением сюда, отчёт по заявкам раз в месяц.', buttons: [[btn('Хочу демо — бесплатно', 'demo')], [btn('Меню', 'menu')]] }];
+    if (cmd === 'contact') {
+      const k = c.contacts || {}, wa = k.whatsapp ? 'https://wa.me/' + k.whatsapp : '', tg = k.telegram ? 'https://t.me/' + k.telegram : '';
+      const lines = [k.phone ? '📞 Телефон: ' + k.phone + (k.person ? ' — ' + k.person : '') : '', k.whatsapp ? '💬 WhatsApp: +' + k.whatsapp.replace(/^7(\d{3})(\d{3})(\d{2})(\d{2})$/, '7 $1 $2-$3-$4') : '', k.telegram ? '✈️ Telegram: @' + k.telegram : '', k.max || k.maxPhone ? '🟦 MAX: ' + (k.maxPhone || '') + (k.max ? '' : ' (найдите в MAX по номеру)') : '', c.site ? '🌐 Сайт: ' + c.site : ''].filter(Boolean);
+      return [{ chat, text: `Связаться с «${c.brand}»:\n\n${lines.join('\n')}\n\nЗвоните или пишите — ответим в течение дня. Можно задать вопрос прямо здесь.`, buttons: [[wa && link('Написать в WhatsApp', wa), tg && link('Написать в Telegram', tg), k.max && link('Написать в MAX', k.max)].filter(Boolean), [btn('Задать вопрос здесь', 'ask'), btn('Меню', 'menu')]].filter(r => r.length) }];
+    }
+    if (cmd === 'ask') { S.setSt(chat, { step: 'ask' }); return [{ chat, text: 'Напишите вопрос одним сообщением — ответим здесь.' }]; }
+    if (cmd === 'reply' && chat === S.owner) { S.setSt(chat, { replyTo: arg }); return [{ chat, text: 'Напишите ответ — отправлю.' }]; }
+    return [menu(chat)];
+  }
+  return { onMessage, onCallback, tick: () => [] };
+}
+
+var SALON = {"placeGen":"салона","name":"Кварц","address":"ул. 78-й Добровольческой бригады, 12, Красноярск","phone":"+7 900 000-00-00","site":"","privacy":"","hours":{"0":["10:00","21:00"],"1":["10:00","21:00"],"2":["10:00","21:00"],"3":["10:00","21:00"],"4":["10:00","21:00"],"5":["10:00","21:00"],"6":["10:00","21:00"]},"step":30,"services":[{"id":"s1","name":"Диагностика","duration":30,"price":0,"from":false},{"id":"s2","name":"Замена экрана iPhone","duration":60,"price":6900,"from":true},{"id":"s3","name":"Замена экрана Android","duration":60,"price":4500,"from":true},{"id":"s4","name":"Замена аккумулятора","duration":30,"price":2900,"from":true},{"id":"s5","name":"Замена разъёма зарядки","duration":60,"price":2400,"from":true},{"id":"s6","name":"Чистка ноутбука и замена термопасты","duration":30,"price":2500,"from":false},{"id":"s7","name":"Замена клавиатуры ноутбука","duration":30,"price":3500,"from":true},{"id":"s8","name":"Восстановление после воды","duration":30,"price":3000,"from":true}],"masters":[{"id":"m1","name":"Денис Орлов","role":"смартфоны и планшеты","services":["s1","s2","s3","s4","s5","s8"],"days":null},{"id":"m2","name":"Игорь Белов","role":"ноутбуки","services":["s1","s6","s7","s8"],"days":null}],"pdInTelegram":false,"demo":true,"review":"","messengers":{"telegram":"https://t.me/kvarc_demo","whatsapp":"https://wa.me/79000000000","max":"https://max.ru/u/kvarc_demo"},"adminCode":"1234"}, STUDIO = {"brand":"Точка записи","city":"Красноярск","person":"Руслан","privacy":"https://tochka-zapisi.github.io/privacy.html","site":"https://tochka-zapisi.github.io/","demos":[{"name":"Сталь","kind":"Барбершоп","url":"https://tochka-zapisi.github.io/stal/"},{"name":"Шёлк","kind":"Студия красоты","url":"https://tochka-zapisi.github.io/shelk/"},{"name":"Колесо","kind":"Шиномонтаж","url":"https://tochka-zapisi.github.io/shinomontazh/"},{"name":"Латунь","kind":"Барбершоп","url":"https://tochka-zapisi.github.io/latun/"},{"name":"Перламутр","kind":"Стоматология","url":"https://tochka-zapisi.github.io/perlamutr/"},{"name":"Обсидиан","kind":"Детейлинг-центр","url":"https://tochka-zapisi.github.io/obsidian/"},{"name":"Графит","kind":"Барбершоп","url":"https://tochka-zapisi.github.io/grafit/"},{"name":"Сатин","kind":"Студия красоты","url":"https://tochka-zapisi.github.io/satin/"},{"name":"Дуб","kind":"Барбершоп","url":"https://tochka-zapisi.github.io/dub/"},{"name":"Бронза","kind":"Барбершоп","url":"https://tochka-zapisi.github.io/bronza/"},{"name":"Кремень","kind":"Барбершоп","url":"https://tochka-zapisi.github.io/kremen/"},{"name":"Мрамор","kind":"Студия пилатеса","url":"https://tochka-zapisi.github.io/mramor/"},{"name":"Туман","kind":"SPA и массаж","url":"https://tochka-zapisi.github.io/tuman/"}],"extras":[{"name":"Логотип и мини-стиль","price":"4 900 ₽"},{"name":"Карточки в Яндекс Бизнесе и 2ГИС под ключ","price":"5 900 ₽"},{"name":"Настройка Яндекс Директа (без бюджета на рекламу)","price":"от 14 900 ₽"},{"name":"Дополнительная страница (услуга, акция)","price":"4 900 ₽"}],"contacts":{"phone":"+7 913 036-49-62","whatsapp":"79333399483","telegram":"opiumxxxxl","person":"Руслан","max":"","maxPhone":"+7 913 036-49-62"},"packages":[{"name":"Старт","best":false,"what":"Одностраничный сайт из шаблона: услуги с ценами, отзывы, контакты, карта, кнопки звонка и мессенджеров, Метрика, адаптация под телефон","days":"3 дня","price":"19 900 ₽"},{"name":"Бизнес","best":true,"what":"Лендинг под бренд клиента: дизайн, продающие тексты, SEO-база под Яндекс, Schema.org, превью для мессенджеров, логотип-надпись при необходимости, скорость 90+","days":"5 дней","price":"39 900 ₽"},{"name":"Бизнес + Запись","best":false,"what":"Всё из «Бизнес» + онлайн-запись (приложение на телефон) + уведомления владельцу в Telegram (без личных данных клиентов в сообщениях — по 152-ФЗ) + согласие и политика ПД. Первые 3 месяца сопровождения «Бизнес» — бесплатно","days":"7–10 дней","price":"59 900 ₽"}],"support":[{"name":"Базовое","price":"1 990 ₽/мес"},{"name":"Бизнес","price":"3 990 ₽/мес"},{"name":"Сайт по подписке","price":"0 ₽ старт + 4 990 ₽/мес"}],"creatives":[],"showcase":{"name":"витрина.html","caption":"Витрина дизайнов целиком — откройте файл в браузере телефона."},"adminCode":"1234"};
+var BOTS = {
+  salon: { name: 'Запись · ' + SALON.name, acc: '#ff8a1f', ink: '#16181d', txt: '#b26116', who: ["Клиентка салона","Владелец салона"],
+    lead: 'Клиент записывается прямо в Telegram — услуга, мастер, день, время. Владелец получает запись и подтверждает одной кнопкой. Клиенту — подтверждение, напоминания накануне и за 2 часа (с кнопками «Приду», «Перенести», «Не смогу»), после визита — просьба оценить: довольных бот зовёт оставить отзыв на карте, недовольных — передаёт администратору.',
+    n1: 'Нажмите «Начать», затем кнопки под сообщениями. Номер отправится демо-номером.',
+    n2: 'Имя и телефон клиента не уходят владельцу в Telegram (152-ФЗ) — они в панели записи. Кнопки ниже перематывают время, чтобы увидеть напоминания и отзыв.',
+    chips: [['/today', 'Записи на сегодня'], ['/week', 'На неделю'], ['/stats', 'Итоги'], ['@eve', '⏩ Накануне вечером'], ['@remind', '⏩ За 2 часа'], ['@after', '⏩ После визита']],
+    how: [['Сделаем', 'Бот с вашими услугами, мастерами, ценами и часами — из того же сайта, что и онлайн-запись.'], ['Подключите', 'Вы создаёте бота в BotFather за 2 минуты, ключ вставляете на одноразовой страничке.'], ['Работает', 'Записи и переносы — в Telegram, подтверждение одной кнопкой, напоминания снижают неявки, оценки после визита приводят отзывы на карты.']],
+    make: function (store, now) { return createSalonBot({ config: SALON, store: store, now: now }); } },
+  studio: { name: STUDIO.brand, acc: '#c2410c', ink: '#ffffff', txt: '#c2410c', who: ['Владелец бизнеса', 'Мы (студия)'],
+    lead: 'Наш бот для рекламы и визиток: показывает дизайны и цены, задаёт три вопроса и собирает заявку на бесплатное демо. Заявка сразу приходит нам.',
+    n1: 'Нажмите «Начать» — и «Хочу демо».', n2: 'Сюда приходят заявки и вопросы. Ответ уходит клиенту в его чат.',
+    chips: [['/leads', 'Последние заявки']],
+    how: [['Ссылка везде', 'Ссылка на бота — в рекламе, на визитке, в QR-коде на витрине.'], ['Без звонков', 'Человек сам рассказывает о бизнесе: ниша, название, ссылка на карты.'], ['Заявка нам', 'Сразу в Telegram и в таблицу клиентов sales/leads.csv.']],
+    make: function (store, now) { return createStudioBot({ config: STUDIO, store: store, now: now }); } }
+};
+var cur = 'salon', offset = 0;
+function now() { return new Date(Date.now() + offset); }
+function key(b) { return 'demo-bots.' + b; }
+function load(b) { try { return JSON.parse(localStorage.getItem(key(b))) || {}; } catch (e) { return {}; } }
+function save(b, d) { try { localStorage.setItem(key(b), JSON.stringify(d)); } catch (e) {} }
+var DB, bot;
+function store() { return { get: function (k) { return DB.data[k]; }, set: function (k, v) { DB.data[k] = v; save(cur, DB); } }; }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function push(chat, item) { (DB.chats[chat] = DB.chats[chat] || []).push(item); }
+function deliver(outs) {
+  (outs || []).forEach(function (o) {
+    var chat = o.chat === 'owner' ? 'owner' : 'client';
+    push(chat, { from: 'bot', text: o.text || '', buttons: o.buttons || null, photo: o.photo ? o.photo.data : null, doc: o.document ? o.document.name : null });
+    if (o.contact) DB.kb[chat] = o.contact; else if (o.removeKeyboard || o.buttons || o.text) { if (!o.contact && (o.removeKeyboard)) DB.kb[chat] = null; }
+  });
+  save(cur, DB); render();
+}
+function start() {
+  DB = load(cur); DB.data = DB.data || {}; DB.chats = DB.chats || {}; DB.kb = DB.kb || {};
+  bot = BOTS[cur].make(store(), now);
+  if (!DB.data.owner) { Promise.resolve(bot.onMessage({ chat: 'owner', text: '/admin 1234' })).then(function (o) { push('owner', { from: 'sys', text: 'Владелец подключился командой /admin' }); deliver(o); }); }
+  document.documentElement.style.setProperty('--acc', BOTS[cur].acc); document.documentElement.style.setProperty('--acc-ink', BOTS[cur].ink); document.documentElement.style.setProperty('--acc-t', BOTS[cur].txt);
+  document.querySelectorAll('.tabs [data-bot]').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.bot === cur)); });
+  document.getElementById('lead').textContent = BOTS[cur].lead;
+  document.getElementById('w1').textContent = BOTS[cur].who[0]; document.getElementById('w2').textContent = BOTS[cur].who[1];
+  document.getElementById('n1').textContent = BOTS[cur].n1; document.getElementById('n2').textContent = BOTS[cur].n2;
+  document.getElementById('chips').innerHTML = BOTS[cur].chips.map(function (c) { return '<button data-chip="' + esc(c[0]) + '">' + esc(c[1]) + '</button>'; }).join('');
+  document.getElementById('how').innerHTML = BOTS[cur].how.map(function (h) { return '<div><b>' + esc(h[0]) + '</b><p>' + esc(h[1]) + '</p></div>'; }).join('');
+  render();
+}
+function phone(chat) {
+  var list = DB.chats[chat] || [], h = '<div class="top"><span class="av">' + esc((cur === 'salon' ? SALON.name : STUDIO.brand)[0]) + '</span><div><b>' + esc(BOTS[cur].name) + '</b><small>бот</small></div></div><div class="msgs">';
+  list.forEach(function (m) {
+    if (m.from === 'sys') { h += '<div class="m sys">' + esc(m.text) + '</div>'; return; }
+    h += '<div class="m ' + (m.from === 'me' ? 'me' : 'bot') + '">' + (m.photo ? '<img src="' + m.photo + '" alt="">' : '') + (m.doc ? '<div class="file"><i></i><div><b>' + esc(m.doc) + '</b><br><small>HTML-файл</small></div></div>' : '') + esc(m.text) + '</div>';
+    if (m.buttons) h += '<div class="kb">' + m.buttons.map(function (r) { return '<div class="r">' + r.map(function (b) { return b.url ? '<a href="' + esc(b.url) + '" target="_blank" rel="noopener">' + esc(b.text) + ' ↗</a>' : '<button data-chat="' + chat + '" data-cb="' + esc(b.data) + '">' + esc(b.text) + '</button>'; }).join('') + '</div>'; }).join('') + '</div>';
+  });
+  h += '</div>';
+  if (chat === 'client' && !list.length) h += '<div class="start"><button data-start>Начать</button></div>';
+  else {
+    if (DB.kb[chat]) h += '<div class="reply"><button data-contact="' + chat + '">📱 ' + esc(DB.kb[chat]) + '</button></div>';
+    h += '<form class="inp" data-form="' + chat + '"><input aria-label="Сообщение" placeholder="Сообщение" autocomplete="off"><button>➤</button></form>';
+  }
+  return h;
+}
+function render() {
+  ['client', 'owner'].forEach(function (c) { var el = document.getElementById('p-' + c); el.innerHTML = phone(c); var m = el.querySelector('.msgs'); m.scrollTop = m.scrollHeight; });
+}
+function userText(chat, text) {
+  push(chat, { from: 'me', text: text }); save(cur, DB); render();
+  Promise.resolve(bot.onMessage({ chat: chat, text: text, from: { username: chat === 'client' ? 'demo_client' : 'owner' } })).then(deliver);
+}
+document.addEventListener('click', function (e) {
+  var t = e.target.closest('button,a'); if (!t) return;
+  if (t.dataset.bot) { cur = t.dataset.bot; start(); }
+  else if (t.id === 'reset') { try { localStorage.removeItem(key(cur)); } catch (x) {} offset = 0; start(); }
+  else if (t.hasAttribute('data-start')) userText('client', '/start');
+  else if (t.dataset.cb) Promise.resolve(bot.onCallback({ chat: t.dataset.chat, data: t.dataset.cb, from: { username: 'demo_client' } })).then(deliver);
+  else if (t.dataset.contact) { var c = t.dataset.contact; DB.kb[c] = null; push(c, { from: 'me', text: '📱 Контакт: +7 900 000-00-00' }); save(cur, DB); render(); Promise.resolve(bot.onMessage({ chat: c, contact: { phone: '+79000000000' }, from: { username: 'demo_client' } })).then(deliver); }
+  else if (t.dataset.chip && t.dataset.chip[0] === '@') {
+    /* перемотка времени: накануне в 19:00, за 1,5 часа, через 2,5 часа после конца визита */
+    var w = t.dataset.chip, bs = (DB.data.bookings || []).filter(function (b) { return b.status === 'confirmed' && (w === '@after' ? !b.askedReview : !b.reminded); });
+    if (!bs.length) { push('owner', { from: 'sys', text: 'Сначала запишитесь слева и подтвердите запись здесь' }); render(); return; }
+    var b = bs[0], d = parseD(b.date);
+    if (w === '@eve') { d.setDate(d.getDate() - 1); d.setHours(19, 0); var made = d.getTime() - 4 * 36e5; DB.data.bookings = DB.data.bookings.map(function (x) { return x.id === b.id && x.createdAt > made ? Object.assign({}, x, { createdAt: made }) : x; }); }
+    else if (w === '@remind') d.setMinutes(b.startMin - 90);
+    else { d.setMinutes(b.startMin + b.duration + 150); if (d.getHours() >= 21) { d.setDate(d.getDate() + 1); d.setHours(10, 0); } else if (d.getHours() < 10) d.setHours(10, 0); }
+    offset = d - Date.now();
+    push('client', { from: 'sys', text: 'Время перемотано: ' + (w === '@eve' ? 'накануне, 19:00' : w === '@remind' ? 'за 1,5 часа до записи' : 'после визита') });
+    deliver(bot.tick()); offset = 0;
+    if (innerWidth < 860) document.getElementById('p-client').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  else if (t.dataset.chip) userText('owner', t.dataset.chip);
+});
+document.addEventListener('submit', function (e) { e.preventDefault(); var f = e.target, i = f.querySelector('input'), v = i.value.trim(); if (!v) return; i.value = ''; userText(f.dataset.form, v); });
+start();
+</script>
+</body></html>

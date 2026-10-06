@@ -1,0 +1,205 @@
+/* Данные салона для приложения — собрано tools/clientapp.mjs из site.json. Правки — в site.json (business, services, booking.masters, app) и пересборка. */
+window.APP = {
+ "slug": "yantar-app",
+ "name": "Янтарь",
+ "address": "пр. Мира, 54, Красноярск",
+ "phone": "+7 900 000-00-00",
+ "site": "../",
+ "demo": true,
+ "hours": {
+  "0": [
+   "11:00",
+   "19:00"
+  ],
+  "1": [
+   "17:00",
+   "22:30"
+  ],
+  "2": [
+   "17:00",
+   "22:30"
+  ],
+  "3": [
+   "17:00",
+   "22:30"
+  ],
+  "4": [
+   "17:00",
+   "22:30"
+  ],
+  "5": [
+   "17:00",
+   "22:30"
+  ],
+  "6": [
+   "11:00",
+   "19:00"
+  ]
+ },
+ "services": [
+  {
+   "id": "s1",
+   "name": "Пробный урок",
+   "duration": 60,
+   "price": 500,
+   "from": false
+  },
+  {
+   "id": "s2",
+   "name": "Разовое занятие",
+   "duration": 60,
+   "price": 800,
+   "from": false
+  },
+  {
+   "id": "s3",
+   "name": "4 занятия",
+   "duration": 30,
+   "price": 2900,
+   "from": false
+  },
+  {
+   "id": "s4",
+   "name": "8 занятий",
+   "duration": 30,
+   "price": 4900,
+   "from": false
+  },
+  {
+   "id": "s5",
+   "name": "Безлимит",
+   "duration": 30,
+   "price": 6900,
+   "from": false
+  },
+  {
+   "id": "s6",
+   "name": "Индивидуальный урок",
+   "duration": 60,
+   "price": 2800,
+   "from": false
+  },
+  {
+   "id": "s7",
+   "name": "Постановка свадебного танца",
+   "duration": 30,
+   "price": 9000,
+   "from": true
+  }
+ ],
+ "masters": [
+  {
+   "id": "m1",
+   "name": "Марта и Илья",
+   "role": "сальса",
+   "services": [
+    "s1",
+    "s2",
+    "s6",
+    "s7"
+   ],
+   "days": null
+  },
+  {
+   "id": "m2",
+   "name": "Лев Орлов",
+   "role": "бачата",
+   "services": [
+    "s1",
+    "s2",
+    "s6",
+    "s7"
+   ],
+   "days": null
+  },
+  {
+   "id": "m3",
+   "name": "Ника Сомова",
+   "role": "современный танец",
+   "services": [
+    "s1",
+    "s2",
+    "s6"
+   ],
+   "days": null
+  },
+  {
+   "id": "m4",
+   "name": "Вика Ден",
+   "role": "хай-хилс",
+   "services": [
+    "s1",
+    "s2",
+    "s6"
+   ],
+   "days": null
+  }
+ ],
+ "photos": [
+  "assets/img/group-of-people-dancing-6Woj_woz.webp",
+  "assets/img/group-of-women-running-on-Vdx-2lsu.webp",
+  "assets/img/group-of-people-dancing-drIebcFZ.webp"
+ ],
+ "promos": [
+  {
+   "tag": "Демо-акция",
+   "title": "Пробный урок за 500 ₽",
+   "text": "Любое направление, без пары",
+   "photo": "assets/img/group-of-women-running-on-Vdx-2lsu.webp",
+   "more": "Пример акции. Настоящие условия — в настройках приложения."
+  },
+  {
+   "tag": "Новым",
+   "title": "Практика в пятницу — в подарок",
+   "text": "К первому абонементу",
+   "photo": "assets/img/group-of-people-dancing-6Woj_woz.webp"
+  },
+  {
+   "tag": "Демо-акция",
+   "title": "Свадебный танец",
+   "text": "Пять уроков — поставим номер под вашу песню",
+   "photo": "assets/img/group-of-people-dancing-drIebcFZ.webp"
+  }
+ ],
+ "bonus": {
+  "welcome": 500,
+  "maxPay": 30,
+  "referral": 500,
+  "levels": [
+   {
+    "name": "Silver",
+    "from": 0,
+    "rate": 5
+   },
+   {
+    "name": "Gold",
+    "from": 5,
+    "rate": 7
+   },
+   {
+    "name": "Platinum",
+    "from": 12,
+    "rate": 10
+   }
+  ]
+ },
+ "telegram": "https://t.me/yantar_demo",
+ "max": "https://max.ru/u/yantar_demo",
+ "words": {
+  "gift": "Подарите урок танцев",
+  "friendTo": "близкому",
+  "friendAcc": "близкого",
+  "him": "Близкому",
+  "his": "его",
+  "placeTo": "в школу",
+  "placeBy": "школой",
+  "demoName": "Екатерина",
+  "s1": "Подарочный",
+  "toLabel": "Имя получателя",
+  "toExample": "Аня"
+ },
+ "hero": "assets/img/a-man-is-doing-a-FDoClJEG.webp",
+ "mark": "",
+ "whatsapp": "79000000000",
+ "review": ""
+};

@@ -1,0 +1,200 @@
+/* Данные салона для приложения — собрано tools/clientapp.mjs из site.json. Правки — в site.json (business, services, booking.masters, app) и пересборка. */
+window.APP = {
+ "slug": "bazalt-app",
+ "name": "Базальт",
+ "address": "ул. Партизана Железняка, 18, Красноярск",
+ "phone": "+7 900 000-00-00",
+ "site": "../",
+ "demo": true,
+ "hours": {
+  "0": [
+   "10:00",
+   "16:00"
+  ],
+  "1": [
+   "07:00",
+   "22:00"
+  ],
+  "2": [
+   "07:00",
+   "22:00"
+  ],
+  "3": [
+   "07:00",
+   "22:00"
+  ],
+  "4": [
+   "07:00",
+   "22:00"
+  ],
+  "5": [
+   "07:00",
+   "22:00"
+  ],
+  "6": [
+   "10:00",
+   "16:00"
+  ]
+ },
+ "services": [
+  {
+   "id": "s1",
+   "name": "Пробная тренировка",
+   "duration": 90,
+   "price": 0,
+   "from": false
+  },
+  {
+   "id": "s2",
+   "name": "Разовая тренировка",
+   "duration": 90,
+   "price": 900,
+   "from": false
+  },
+  {
+   "id": "s3",
+   "name": "8 тренировок",
+   "duration": 30,
+   "price": 5600,
+   "from": false
+  },
+  {
+   "id": "s4",
+   "name": "Безлимит",
+   "duration": 30,
+   "price": 7900,
+   "from": false
+  },
+  {
+   "id": "s5",
+   "name": "Персональная тренировка",
+   "duration": 60,
+   "price": 2500,
+   "from": false
+  },
+  {
+   "id": "s6",
+   "name": "Детская группа, 8 занятий",
+   "duration": 30,
+   "price": 4800,
+   "from": false
+  },
+  {
+   "id": "s7",
+   "name": "Женский бокс, 8 занятий",
+   "duration": 30,
+   "price": 5600,
+   "from": false
+  }
+ ],
+ "masters": [
+  {
+   "id": "m1",
+   "name": "Кирилл Ветров",
+   "role": "группы «Бокс с нуля», техника",
+   "services": [
+    "s1",
+    "s2",
+    "s5"
+   ],
+   "days": null
+  },
+  {
+   "id": "m2",
+   "name": "Артур Саркисян",
+   "role": "опытные, спарринги, открытый ринг",
+   "services": [
+    "s2",
+    "s5"
+   ],
+   "days": null
+  },
+  {
+   "id": "m3",
+   "name": "Дарья Лунёва",
+   "role": "женский бокс",
+   "services": [
+    "s1",
+    "s2",
+    "s5"
+   ],
+   "days": null
+  },
+  {
+   "id": "m4",
+   "name": "Сергей Тимофеев",
+   "role": "детские группы 8–14 лет",
+   "services": [
+    "s1"
+   ],
+   "days": null
+  }
+ ],
+ "photos": [
+  "assets/img/boxing-gym-with-hanging-punching-fTe0U5Lm.webp",
+  "assets/img/woman-in-pink-long-sleeve-9D_rUDe7.webp",
+  "assets/img/a-person-standing-on-a-lP0d_41X.webp"
+ ],
+ "promos": [
+  {
+   "tag": "Демо-акция",
+   "title": "Утро будней −15%",
+   "text": "Абонемент на группы в 7:00",
+   "photo": "assets/img/boxing-gym-with-hanging-punching-fTe0U5Lm.webp",
+   "more": "Пример акции. Настоящие условия — в настройках приложения."
+  },
+  {
+   "tag": "Новым",
+   "title": "Первая тренировка бесплатно",
+   "text": "Перчатки и бинты дадим",
+   "photo": "assets/img/woman-in-pink-long-sleeve-9D_rUDe7.webp"
+  },
+  {
+   "tag": "Демо-акция",
+   "title": "Приведи друга",
+   "text": "Ему — пробная, вам — неделя к абонементу",
+   "photo": "assets/img/a-person-standing-on-a-lP0d_41X.webp"
+  }
+ ],
+ "bonus": {
+  "welcome": 500,
+  "maxPay": 30,
+  "referral": 500,
+  "levels": [
+   {
+    "name": "Silver",
+    "from": 0,
+    "rate": 5
+   },
+   {
+    "name": "Gold",
+    "from": 5,
+    "rate": 7
+   },
+   {
+    "name": "Platinum",
+    "from": 12,
+    "rate": 10
+   }
+  ]
+ },
+ "telegram": "https://t.me/bazalt_demo",
+ "max": "https://max.ru/u/bazalt_demo",
+ "words": {
+  "gift": "Подарите тренировку по боксу",
+  "friendTo": "другу",
+  "friendAcc": "друга",
+  "him": "Ему",
+  "his": "его",
+  "placeTo": "в клуб",
+  "placeBy": "клубом",
+  "demoName": "Максим",
+  "s1": "Подарочный",
+  "toLabel": "Имя получателя",
+  "toExample": "Саша"
+ },
+ "hero": "assets/img/a-man-in-a-boxing-J-hY05bz.webp",
+ "mark": "",
+ "whatsapp": "79000000000",
+ "review": ""
+};
