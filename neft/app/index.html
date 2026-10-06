@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Нефть — приложение</title>
+<meta name="description" content="Запись, бонусы и подарочные сертификаты салона — в одном приложении.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0c0a08">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Нефть">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="styles.css">
+<style>:root{--accent:#d6a350;--accent-ink:#111;--bg:#0c0a08;--surface:#16120e;--surface-2:#1d1812;--ink:#efe9df;--muted:#9a9082;--gold:color-mix(in srgb, #d6a350 55%, #fff);--f-display:"Prata", Georgia, serif;--f-body:"Jost", system-ui, -apple-system, "Segoe UI", sans-serif;--wd:400}</style>
+</head>
+<body>
+<div class="app" id="app">
+  <main class="view" id="view"></main>
+  <nav class="tabs" id="tabs" aria-label="Разделы"></nav>
+  <div class="sheet" id="sheet" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</div>
+<script src="data.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
