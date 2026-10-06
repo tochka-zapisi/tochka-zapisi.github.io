@@ -312,7 +312,7 @@ legend .mono { width: 26px; height: 26px; border-radius: 50%; border: 1.5px soli
 .js [data-r].in { opacity: 1; transform: none; }
 
 /* ——— дороже: тонкая типографика, воздух, волоски, зерно ——— */
-.grain { position: fixed; inset: 0; z-index: 80; pointer-events: none; opacity: .5; background: url(grain.png); transform: translateZ(0); }
+.grain { position: fixed; inset: 0; z-index: 80; pointer-events: none; opacity: .2; background: url(grain.png); transform: translateZ(0); }
 h1, h2 { font-weight: 600; }
 .hero h1 { font-weight: 600; font-size: clamp(42px, 6.8vw, 112px); letter-spacing: -.055em; line-height: .96; }
 .hero h1 .lt { font-weight: 250; letter-spacing: -.05em; }
