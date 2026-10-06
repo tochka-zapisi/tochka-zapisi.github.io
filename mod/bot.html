@@ -2,7 +2,7 @@
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Telegram-бот записи — Mod</title><meta name="robots" content="noindex">
 <style>
-:root{--bg:#eef1f4;--ink:#16181d;--muted:#5c6470;--line:rgba(0,0,0,.1);--acc:#9c5566;--me:#effdde;--chat:#dbe4ec;color-scheme:light}
+:root{--bg:#eef1f4;--ink:#16181d;--muted:#5c6470;--line:rgba(0,0,0,.1);--acc:#9c5566;--acc-ink:#fff;--acc-t:#9c5566;--me:#effdde;--chat:#dbe4ec;color-scheme:light}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
 .wrap{max-width:1100px;margin:0 auto;padding:28px 16px 48px}
 h1{font-size:clamp(26px,5vw,40px);line-height:1.1;margin:0 0 10px;letter-spacing:-.01em}
@@ -16,7 +16,7 @@ h1{font-size:clamp(26px,5vw,40px);line-height:1.1;margin:0 0 10px;letter-spacing
 .phone{background:#101114;border-radius:42px;padding:10px;box-shadow:0 30px 60px -24px rgba(0,0,0,.45);width:min(380px,100%)}
 .scr{border-radius:33px;overflow:hidden;background:var(--chat);height:min(700px,82vh);display:flex;flex-direction:column}
 .top{display:flex;align-items:center;gap:12px;background:#fff;padding:14px 16px;border-bottom:1px solid var(--line)}
-.av{width:40px;height:40px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;font-weight:700;flex:none}
+.av{width:40px;height:40px;border-radius:50%;background:var(--acc);color:var(--acc-ink);display:grid;place-items:center;font-weight:700;flex:none}
 .top b{display:block;font-size:15px;line-height:1.2}.top small{color:var(--muted);font-size:13px}
 .msgs{flex:1;overflow-y:auto;padding:14px 10px;display:flex;flex-direction:column;gap:8px;background-image:radial-gradient(rgba(255,255,255,.35) 1px,transparent 1px);background-size:18px 18px}
 .m{max-width:86%;padding:8px 12px;border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px;line-height:1.4;box-shadow:0 1px 1px rgba(0,0,0,.08)}
@@ -27,15 +27,15 @@ h1{font-size:clamp(26px,5vw,40px);line-height:1.1;margin:0 0 10px;letter-spacing
 .file{display:flex;gap:10px;align-items:center}.file i{width:40px;height:40px;border-radius:50%;background:var(--acc);flex:none}
 .kb{align-self:flex-start;max-width:86%;display:grid;gap:4px;margin-top:-4px;width:86%}
 .kb .r{display:flex;gap:4px}
-.kb button,.kb a{flex:1;font:inherit;font-size:14px;font-weight:600;background:rgba(255,255,255,.75);color:var(--acc);border:0;border-radius:10px;padding:9px 6px;cursor:pointer;text-align:center;text-decoration:none;min-height:40px}
+.kb button,.kb a{flex:1;font:inherit;font-size:14px;font-weight:600;background:rgba(255,255,255,.75);color:var(--acc-t);border:0;border-radius:10px;padding:9px 6px;cursor:pointer;text-align:center;text-decoration:none;min-height:40px}
 .kb button:hover,.kb a:hover{background:#fff}
 .reply{background:#f4f5f7;border-top:1px solid var(--line);padding:8px}
-.reply button{width:100%;font:inherit;font-weight:600;border:0;border-radius:10px;padding:12px;background:#fff;color:var(--acc);cursor:pointer;min-height:44px}
+.reply button{width:100%;font:inherit;font-weight:600;border:0;border-radius:10px;padding:12px;background:#fff;color:var(--acc-t);cursor:pointer;min-height:44px}
 .inp{display:flex;gap:8px;padding:10px;background:#fff;border-top:1px solid var(--line)}
 .inp input{flex:1;font:inherit;border:1px solid var(--line);border-radius:999px;padding:10px 14px;min-height:44px;min-width:0}
-.inp button{font:inherit;font-weight:700;border:0;border-radius:999px;background:var(--acc);color:#fff;padding:0 16px;cursor:pointer;min-height:44px}
+.inp button{font:inherit;font-weight:700;border:0;border-radius:999px;background:var(--acc);color:var(--acc-ink);padding:0 16px;cursor:pointer;min-height:44px}
 .start{padding:10px;background:#fff;border-top:1px solid var(--line)}
-.start button{width:100%;font:inherit;font-weight:700;border:0;border-radius:12px;background:var(--acc);color:#fff;padding:12px;min-height:46px;cursor:pointer}
+.start button{width:100%;font:inherit;font-weight:700;border:0;border-radius:12px;background:var(--acc);color:var(--acc-ink);padding:12px;min-height:46px;cursor:pointer}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 4px 0}
 .chips button{font:inherit;font-size:14px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;cursor:pointer;min-height:40px}
 .note{color:var(--muted);font-size:14px;margin:8px 6px 0;max-width:380px}
@@ -453,14 +453,14 @@ function createStudioBot({ config: c, store, now = () => new Date(), onLead = nu
 
 var SALON = {"placeGen":"барбершопа","name":"Mod","address":"ул. Алексеева, 48а, Красноярск","phone":"+7 906 914-62-42","site":"","privacy":"","hours":{"0":["10:00","21:00"],"1":["10:00","21:00"],"2":["10:00","21:00"],"3":["10:00","21:00"],"4":["10:00","21:00"],"5":["10:00","21:00"],"6":["10:00","21:00"]},"step":30,"services":[{"id":"s1","name":"Стрижка любой сложности","duration":60,"price":1500,"from":true},{"id":"s2","name":"Фейд","duration":60,"price":1200,"from":true},{"id":"s3","name":"Стрижка машинкой","duration":30,"price":1000,"from":true},{"id":"s4","name":"Детская стрижка","duration":60,"price":1300,"from":true},{"id":"s5","name":"Отец + сын","duration":90,"price":2600,"from":true},{"id":"s6","name":"Оформление бороды","duration":30,"price":1100,"from":true},{"id":"s7","name":"Борода «Graham Hill»","duration":60,"price":1600,"from":true},{"id":"s8","name":"Чистое бритьё лица бритвой","duration":60,"price":1500,"from":true},{"id":"s9","name":"Бритьё головы бритвой","duration":60,"price":1500,"from":true},{"id":"s10","name":"Стрижка + оформление бороды","duration":90,"price":2300,"from":true},{"id":"s11","name":"Уход за кожей лица «Volcano»","duration":30,"price":1200,"from":true},{"id":"s12","name":"Укладка или окантовка","duration":30,"price":600,"from":false}],"masters":[{"id":"m1","name":"Барбер 1","role":"Барбер","services":null,"days":null},{"id":"m2","name":"Барбер 2","role":"Барбер","services":null,"days":null},{"id":"m3","name":"Барбер 3","role":"Барбер","services":null,"days":null}],"pdInTelegram":false,"demo":true,"review":"https://2gis.ru/krasnoyarsk/firm/70000001089571315","adminCode":"1234"}, STUDIO = {"brand":"Точка записи","city":"Красноярск","person":"Руслан","privacy":"","packages":[{"name":"Старт","best":false,"what":"Одностраничный сайт из шаблона: услуги с ценами, отзывы, контакты, карта, кнопки звонка и мессенджеров, Метрика, адаптация под телефон","days":"3 дня","price":"19 900 ₽"},{"name":"Бизнес","best":true,"what":"Лендинг под бренд клиента: дизайн, продающие тексты, SEO-база под Яндекс, Schema.org, превью для мессенджеров, логотип-надпись при необходимости, скорость 90+","days":"5 дней","price":"39 900 ₽"},{"name":"Бизнес + Запись","best":false,"what":"Всё из «Бизнес» + онлайн-запись (приложение на телефон) + уведомления владельцу в Telegram (без личных данных клиентов в сообщениях — по 152-ФЗ) + согласие и политика ПД. Первые 3 месяца сопровождения «Бизнес» — бесплатно","days":"7–10 дней","price":"59 900 ₽"}],"support":[{"name":"Базовое","price":"1 990 ₽/мес"},{"name":"Бизнес","price":"3 990 ₽/мес"},{"name":"Сайт по подписке","price":"0 ₽ старт + 4 990 ₽/мес"}],"creatives":[],"showcase":{"name":"витрина.html","caption":"Витрина дизайнов целиком — откройте файл в браузере телефона."},"adminCode":"1234"};
 var BOTS = {
-  salon: { name: 'Запись · ' + SALON.name, acc: '#9c5566', who: ["Клиент барбершопа","Владелец барбершопа"],
+  salon: { name: 'Запись · ' + SALON.name, acc: '#d6a350', ink: '#16181d', txt: '#8b6a34', who: ["Клиент барбершопа","Владелец барбершопа"],
     lead: 'Клиент записывается прямо в Telegram — услуга, мастер, день, время. Владелец получает запись и подтверждает одной кнопкой. Клиенту — подтверждение, напоминания накануне и за 2 часа (с кнопками «Приду», «Перенести», «Не смогу»), после визита — просьба оценить: довольных бот зовёт оставить отзыв на карте, недовольных — передаёт администратору.',
     n1: 'Нажмите «Начать», затем кнопки под сообщениями. Номер отправится демо-номером.',
     n2: 'Имя и телефон клиента не уходят владельцу в Telegram (152-ФЗ) — они в панели записи. Кнопки ниже перематывают время, чтобы увидеть напоминания и отзыв.',
     chips: [['/today', 'Записи на сегодня'], ['/week', 'На неделю'], ['/stats', 'Итоги'], ['@eve', '⏩ Накануне вечером'], ['@remind', '⏩ За 2 часа'], ['@after', '⏩ После визита']],
     how: [['Сделаем', 'Бот с вашими услугами, мастерами, ценами и часами — из того же сайта, что и онлайн-запись.'], ['Подключите', 'Вы создаёте бота в BotFather за 2 минуты, ключ вставляете на одноразовой страничке.'], ['Работает', 'Записи и переносы — в Telegram, подтверждение одной кнопкой, напоминания снижают неявки, оценки после визита приводят отзывы на карты.']],
     make: function (store, now) { return createSalonBot({ config: SALON, store: store, now: now }); } },
-  studio: { name: STUDIO.brand, acc: '#c2410c', who: ['Владелец бизнеса', 'Мы (студия)'],
+  studio: { name: STUDIO.brand, acc: '#c2410c', ink: '#ffffff', txt: '#c2410c', who: ['Владелец бизнеса', 'Мы (студия)'],
     lead: 'Наш бот для рекламы и визиток: показывает дизайны и цены, задаёт три вопроса и собирает заявку на бесплатное демо. Заявка сразу приходит нам.',
     n1: 'Нажмите «Начать» — и «Хочу демо».', n2: 'Сюда приходят заявки и вопросы. Ответ уходит клиенту в его чат.',
     chips: [['/leads', 'Последние заявки']],
@@ -488,7 +488,7 @@ function start() {
   DB = load(cur); DB.data = DB.data || {}; DB.chats = DB.chats || {}; DB.kb = DB.kb || {};
   bot = BOTS[cur].make(store(), now);
   if (!DB.data.owner) { Promise.resolve(bot.onMessage({ chat: 'owner', text: '/admin 1234' })).then(function (o) { push('owner', { from: 'sys', text: 'Владелец подключился командой /admin' }); deliver(o); }); }
-  document.documentElement.style.setProperty('--acc', BOTS[cur].acc);
+  document.documentElement.style.setProperty('--acc', BOTS[cur].acc); document.documentElement.style.setProperty('--acc-ink', BOTS[cur].ink); document.documentElement.style.setProperty('--acc-t', BOTS[cur].txt);
   document.querySelectorAll('.tabs [data-bot]').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.bot === cur)); });
   document.getElementById('lead').textContent = BOTS[cur].lead;
   document.getElementById('w1').textContent = BOTS[cur].who[0]; document.getElementById('w2').textContent = BOTS[cur].who[1];
