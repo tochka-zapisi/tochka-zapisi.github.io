@@ -27,6 +27,9 @@ section{padding:clamp(56px,8vw,96px) 0;border-top:1px solid var(--line)}
 .part{background:var(--sf);border:1px solid var(--line);display:flex;flex-direction:column}
 .shot{background:var(--bg2);padding:22px 22px 0;display:flex;justify-content:center;overflow:hidden;aspect-ratio:4/4.2}
 .shot img{width:min(230px,100%);height:auto;border:6px solid #000;border-bottom:0;border-radius:26px 26px 0 0;box-shadow:0 20px 50px -20px rgba(0,0,0,.5);object-fit:cover;object-position:top}
+.tour-in{display:grid;gap:32px;align-items:center}.tour-t p{color:var(--muted);max-width:30em;margin:-8px 0 26px;font-size:clamp(17px,2vw,19px)}
+.tour-v{display:block;width:min(320px,100%);height:auto;aspect-ratio:9/16;justify-self:center;border-radius:18px;background:var(--bg2);box-shadow:0 24px 60px -24px rgba(0,0,0,.55)}
+@media(min-width:860px){.tour-in{grid-template-columns:1fr 340px;gap:56px}}
 .part div.t{padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
 .part h3{font:400 26px/1.15 var(--fh);margin:0}.part p{margin:0;color:var(--muted);font-size:16px}
 .part a.go{margin-top:auto;padding-top:10px;font:600 13px/1 var(--fb);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--acc);display:inline-flex;gap:8px;min-height:44px;align-items:center}
@@ -62,17 +65,21 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--acc);outline-offset:3
   <div class="btns"><a class="btn main" href="./">Открыть ваш сайт</a><a class="btn line" href="https://t.me/opiumxxxxl" target="_blank" rel="noopener">Обсудить в Telegram</a></div>
 </div>
 
+<section><div class="w tour-in">
+  <div class="tour-t"><h2>Ваш сайт на телефоне</h2><p>Меньше 20 секунд: так клиент листает сайт «GS-Auto» и записывается — без звонка и переписки.</p><a class="btn line" href="zapis/">Попробовать самому</a></div>
+  <video class="tour-v" controls muted playsinline preload="none" poster="assets/offer/tour.webp" width="1080" height="1920" aria-label="Видео: сайт «GS-Auto» на телефоне"><source src="assets/offer/tour.mp4" type="video/mp4"></video>
+</div></section>
 <section><div class="w">
   <h2>Что уже готово</h2>
   <div class="parts">
     <article class="part"><a class="shot" href="./" tabindex="-1" aria-hidden="true"><img src="assets/offer/site.webp" alt="" width="520" height="1126" loading="lazy"></a>
       <div class="t"><h3>Ваш сайт</h3><p>Услуги и цены, отзывы, адрес и кнопки связи. Открывается за секунду с телефона, готов к поиску в Яндексе.</p><a class="go" href="./">Открыть<span aria-hidden="true">→</span></a></div></article>
     <article class="part"><a class="shot" href="zapis/" tabindex="-1" aria-hidden="true"><img src="assets/offer/zapis.webp" alt="" width="520" height="1126" loading="lazy"></a>
-      <div class="t"><h3>Онлайн-запись</h3><p>Клиент сам выбирает услугу, мастера и свободное время — без звонков и переписки. Вам — уведомление в Telegram.</p><a class="go" href="zapis/">Открыть<span aria-hidden="true">→</span></a></div></article>
+      <div class="t"><h3>Онлайн-запись</h3><p>Клиент сам выбирает услугу, свободное время и указывает машину — без звонков и переписки. Вам — уведомление в Telegram.</p><a class="go" href="zapis/">Открыть<span aria-hidden="true">→</span></a></div></article>
     <article class="part"><a class="shot" href="bot.html" tabindex="-1" aria-hidden="true"><img src="assets/offer/bot.webp" alt="" width="520" height="1126" loading="lazy"></a>
       <div class="t"><h3>Telegram-бот</h3><p>Запись прямо в Telegram, напоминания накануне и за 2 часа, перенос в два нажатия, после визита — просьба оставить отзыв на карте.</p><a class="go" href="bot.html">Открыть<span aria-hidden="true">→</span></a></div></article>
     <article class="part"><a class="shot" href="app/" tabindex="-1" aria-hidden="true"><img src="assets/offer/app.webp" alt="" width="520" height="1126" loading="lazy"></a>
-      <div class="t"><h3>Приложение для ваших клиентов</h3><p>Иконка на телефоне клиента: запись, бонусная карта с QR-кодом, подарочные сертификаты, «записаться снова».</p><a class="go" href="app/">Открыть<span aria-hidden="true">→</span></a></div></article>
+      <div class="t"><h3>Приложение для ваших клиентов</h3><p>Иконка на телефоне клиента: его машины в гараже, история работ, статус ремонта по этапам, смета на согласование, бонусная карта с QR-кодом.</p><a class="go" href="app/">Открыть<span aria-hidden="true">→</span></a></div></article>
   </div>
 </div></section>
 

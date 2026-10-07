@@ -28,6 +28,17 @@
        стили пишутся прямо в нужный элемент, а не переменной на весь блок (иначе браузер пересчитывает всё внутри). */
     var hero = document.querySelector('.hero');
     var heroImg = hero && hero.querySelector('.hero-bg img');
+    /* фоновое видео (hero.video): только если движение можно, без экономии трафика, на экране от 768 px
+       (data-mobile — и на телефоне); играет, пока первый экран виден; до начала и вместо — фото */
+    var heroVid = hero && hero.querySelector('.hero-video[data-src]');
+    var conn = navigator.connection || {};
+    if (heroVid && !still && !conn.saveData && !/(^|-)2g$/.test(conn.effectiveType || '') && (heroVid.hasAttribute('data-mobile') || matchMedia('(min-width: 768px)').matches)) {
+      heroVid.addEventListener('playing', function () { heroVid.classList.add('on'); }, { once: true });
+      heroVid.src = heroVid.getAttribute('data-src');
+      var playVid = function () { var p = heroVid.play(); if (p && p.catch) p.catch(function () {}); };
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (l) { if (l[0].isIntersecting) playVid(); else heroVid.pause(); }).observe(hero);
+      else playVid();
+    } else heroVid = null;
     var heroIn = hero && hero.querySelector('.hero-in');
     var bar = top.querySelector('.progress');
     var root = document.documentElement, tick = false, max = 1, hh = 1, scrolled = null, heroDone = false;
@@ -42,6 +53,7 @@
         if (y < hh) {
           heroDone = false;
           if (heroImg) heroImg.style.translate = '0 ' + (y * 0.32).toFixed(1) + 'px';
+          if (heroVid) heroVid.style.translate = heroImg.style.translate;
           if (heroIn) { heroIn.style.opacity = Math.max(0, 1 - y / (hh * 0.75)).toFixed(3); heroIn.style.translate = '0 ' + (y * -0.08).toFixed(1) + 'px'; }
         } else if (!heroDone) { heroDone = true; if (heroIn) heroIn.style.opacity = '0'; }
       }
@@ -96,6 +108,64 @@
           if (k < 1) requestAnimationFrame(step);
         })(t0);
       }, 1000);
+    });
+  }
+
+  /* Стиль «Табло»: сегодняшний день, прошедшие занятия, ближайшее занятие; на телефоне — вкладки по дням */
+  var board = document.querySelector('[data-board]');
+  if (board) {
+    var days = board.querySelectorAll('.t-day'), tabs = document.querySelectorAll('.t-tabs button');
+    var now = new Date(), today = now.getDay(), mins = now.getHours() * 60 + now.getMinutes();
+    var toMin = function (t) { var m = String(t).match(/(\d{1,2})[:.](\d{2})/); return m ? +m[1] * 60 + +m[2] : 0; };
+    var show = function (d) {
+      days.forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-d') === String(d)); });
+      tabs.forEach(function (t) { t.setAttribute('aria-selected', t.getAttribute('data-d') === String(d) ? 'true' : 'false'); });
+    };
+    tabs.forEach(function (t) {
+      if (t.getAttribute('data-d') === String(today)) t.classList.add('today');
+      t.addEventListener('click', function () { show(t.getAttribute('data-d')); });
+    });
+    var todayCol = board.querySelector('.t-day[data-d="' + today + '"]');
+    if (todayCol) todayCol.classList.add('today');
+    show(today);
+    /* ближайшее занятие: сегодня позже текущего времени, иначе первое в следующие дни */
+    var names = ['воскресенье', 'понедельник', 'вторник', 'среду', 'четверг', 'пятницу', 'субботу'];
+    var next = null, when = '';
+    for (var k = 0; k < 7 && !next; k++) {
+      var d = (today + k) % 7, col = board.querySelector('.t-day[data-d="' + d + '"]');
+      if (!col) continue;
+      var items = col.querySelectorAll('li');
+      for (var i = 0; i < items.length; i++) {
+        var t = toMin(items[i].getAttribute('data-t'));
+        if (k === 0 && t <= mins) { items[i].classList.add('past'); continue; }
+        if (!next) { next = items[i]; when = k === 0 ? 'сегодня' : k === 1 ? 'завтра' : 'в ' + names[d]; }
+      }
+    }
+    var label = document.querySelector('[data-next]');
+    if (next && label) {
+      next.classList.add('next');
+      label.textContent = 'Ближайшее: ' + when + ' в ' + next.getAttribute('data-t') + ' — ' + next.querySelector('b').textContent;
+      label.hidden = false;
+    }
+  }
+
+  /* Стиль «Лист»: «Кто у вас?» — оставляет в ценах и среди врачей только подходящее */
+  var sw = document.querySelector('[data-pets-switch]');
+  if (sw) {
+    var lists = document.querySelectorAll('[data-pets-list]'), empty = document.querySelector('.l-empty');
+    sw.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-pet]'); if (!btn) return;
+      var pet = btn.getAttribute('data-pet');
+      sw.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+      lists.forEach(function (list) {
+        var shown = 0;
+        list.querySelectorAll(':scope > li').forEach(function (li) {
+          var p = li.getAttribute('data-pets'), ok = !pet || !p || (' ' + p + ' ').indexOf(' ' + pet + ' ') > -1;
+          li.hidden = !ok; li.classList.remove('is-in');
+          if (ok) { shown++; void li.offsetWidth; li.classList.add('is-in'); }
+        });
+        if (empty && list.classList.contains('l-menu')) empty.hidden = shown > 0;
+      });
     });
   }
 
