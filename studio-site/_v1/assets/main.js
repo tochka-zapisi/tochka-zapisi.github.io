@@ -27,7 +27,7 @@
     $('#sum').textContent = fmt(sum);
     const biz = ($('#biz').value || '').trim();
     const text = 'Здравствуйте! Хочу бесплатное демо.\nБизнес: ' + niche() + (biz ? ' — ' + biz : '') + '\nНужно: ' + plan.value + (extras.length ? ', ' + extras.map(x => x.value).join(', ') : '') + '\nОриентир по цене: от ' + fmt(sum);
-    $('#sendWa').href = 'https://wa.me/79130364962?text=' + encodeURIComponent(text);
+    $('#sendWa').href = 'https://wa.me/79333399483?text=' + encodeURIComponent(text);
     return text;
   }
   $('#niche').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; $$('#niche button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); calc(); });
