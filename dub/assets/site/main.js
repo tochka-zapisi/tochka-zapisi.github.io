@@ -28,6 +28,17 @@
        стили пишутся прямо в нужный элемент, а не переменной на весь блок (иначе браузер пересчитывает всё внутри). */
     var hero = document.querySelector('.hero');
     var heroImg = hero && hero.querySelector('.hero-bg img');
+    /* фоновое видео (hero.video): только если движение можно, без экономии трафика, на экране от 768 px
+       (data-mobile — и на телефоне); играет, пока первый экран виден; до начала и вместо — фото */
+    var heroVid = hero && hero.querySelector('.hero-video[data-src]');
+    var conn = navigator.connection || {};
+    if (heroVid && !still && !conn.saveData && !/(^|-)2g$/.test(conn.effectiveType || '') && (heroVid.hasAttribute('data-mobile') || matchMedia('(min-width: 768px)').matches)) {
+      heroVid.addEventListener('playing', function () { heroVid.classList.add('on'); }, { once: true });
+      heroVid.src = heroVid.getAttribute('data-src');
+      var playVid = function () { var p = heroVid.play(); if (p && p.catch) p.catch(function () {}); };
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (l) { if (l[0].isIntersecting) playVid(); else heroVid.pause(); }).observe(hero);
+      else playVid();
+    } else heroVid = null;
     var heroIn = hero && hero.querySelector('.hero-in');
     var bar = top.querySelector('.progress');
     var root = document.documentElement, tick = false, max = 1, hh = 1, scrolled = null, heroDone = false;
@@ -42,6 +53,7 @@
         if (y < hh) {
           heroDone = false;
           if (heroImg) heroImg.style.translate = '0 ' + (y * 0.32).toFixed(1) + 'px';
+          if (heroVid) heroVid.style.translate = heroImg.style.translate;
           if (heroIn) { heroIn.style.opacity = Math.max(0, 1 - y / (hh * 0.75)).toFixed(3); heroIn.style.translate = '0 ' + (y * -0.08).toFixed(1) + 'px'; }
         } else if (!heroDone) { heroDone = true; if (heroIn) heroIn.style.opacity = '0'; }
       }
