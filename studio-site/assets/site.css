@@ -242,6 +242,7 @@ legend .mono { width: 26px; height: 26px; border-radius: 50%; border: 1.5px soli
 .check .btn { width: 100%; }
 .btn-w { --bg: var(--ink); --fg: var(--paper); }
 .check-n { font-size: 13px; color: var(--muted); line-height: 1.4; }
+.check-tel { display: block; text-align: center; color: inherit; opacity: .85; text-decoration: underline; text-underline-offset: 3px; padding: 14px 0 4px; min-height: 44px; }
 .check-n.ok { color: var(--ink); }
 .care { margin-top: 90px; display: grid; grid-template-columns: .5fr 1.5fr; gap: 32px; }
 .care h3 { font-size: 26px; }
