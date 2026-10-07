@@ -1,0 +1,32 @@
+{
+ "hero": {
+  "src": "assets/img/real/mb-cluster-dark.webp",
+  "w": 1600,
+  "h": 1131
+ },
+ "night": {
+  "src": "assets/img/real/mb-s-night.webp",
+  "w": 1100,
+  "h": 851
+ },
+ "cams": {
+  "src": "assets/img/real/mb-camshafts.webp",
+  "w": 1100,
+  "h": 1100
+ },
+ "key": {
+  "src": "assets/img/real/mb-key-ecu.webp",
+  "w": 1000,
+  "h": 1000
+ },
+ "hood": {
+  "src": "assets/img/real/mb-under-hood.webp",
+  "w": 1000,
+  "h": 853
+ },
+ "box": {
+  "src": "assets/img/real/mb-box.webp",
+  "w": 1600,
+  "h": 900
+ }
+}

@@ -57,7 +57,8 @@
 
   function seed() {
     const t = new Date(), day = n => dstr(new Date(t.getFullYear(), t.getMonth(), t.getDate() + n));
-    const cars = [
+    /* машины демо-клиента: app.cars в site.json (например, только Mercedes у профильного сервиса), иначе — обычные */
+    const cars = A.cars || [
       { id: 'c1', make: 'Toyota', model: 'Camry', year: 2018, plate: 'К 777 КК 124', mileage: 86400, toEvery: 10000, lastTo: 78000 },
       { id: 'c2', make: 'BMW', model: 'X5', year: 2020, plate: 'М 001 ММ 124', mileage: 41200, toEvery: 10000, lastTo: 40000 }
     ];

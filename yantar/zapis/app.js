@@ -229,7 +229,9 @@
     const base = new Date(); let h = '';
     for (let i = 0; i < HORIZON; i++) {
       const d = new Date(base.getFullYear(), base.getMonth(), base.getDate() + i), s = dstr(d), open = dayOpen(d.getDay());
-      h += '<button type="button" class="day" data-d="' + s + '" ' + (open ? '' : 'disabled') + ' aria-pressed="' + (st.sel.date === s) + '"><small>' + (i === 0 ? 'Сегодня' : WD[d.getDay()]) + '</small><strong>' + d.getDate() + '</strong><small>' + MON[d.getMonth()] + '</small></button>';
+      /* сколько окон свободно у выбранной услуги (и преподавателя): мало — «ещё N», ноль — «мест нет» */
+      const svc = selSvc(), free = open && svc ? timesFor(svc, s, st.sel.master).filter(x => x.ok).length : -1;
+      h += '<button type="button" class="day" data-d="' + s + '" ' + (open && free !== 0 ? '' : 'disabled') + ' aria-pressed="' + (st.sel.date === s) + '"><small>' + (i === 0 ? 'Сегодня' : WD[d.getDay()]) + '</small><strong>' + d.getDate() + '</strong><small>' + MON[d.getMonth()] + '</small>' + (open && free === 0 ? '<em class="dl">мест нет</em>' : free > 0 && free <= 3 ? '<em class="dl few">ещё ' + free + '</em>' : '') + '</button>';
     }
     $('#dayStrip').innerHTML = h;
   }
@@ -305,11 +307,17 @@
     const blob = new Blob([icsFor(b)], { type: 'text/calendar;charset=utf-8' }), a = document.createElement('a');
     a.href = URL.createObjectURL(blob); a.download = 'zapis.ics'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
   }
+  /* «сегодня», «завтра», «через 3 дня» — бирка в подтверждении записи */
+  function untilTag(date) {
+    const n = Math.round((parseD(date) - parseD(dstr(new Date()))) / 864e5);
+    const t = n <= 0 ? 'сегодня' : n === 1 ? 'завтра' : n === 2 ? 'послезавтра' : 'через ' + n + ' ' + (n % 10 === 1 && n % 100 !== 11 ? 'день' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 'дня' : 'дней');
+    return '<span class="until">' + t + '</span>';
+  }
   let lastBooking = null;
   function showDone(b) {
     lastBooking = b.created || b;
     $('#p4').innerHTML = '<div class="check">' + svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>', 'stroke-width="2.6"') + '</div><h2>Запись отправлена</h2><p class="note">' + esc(cfg().name) + ' получит заявку и подтвердит её. Статус будет во вкладке «Мои записи».</p>' +
-      '<dl class="ticket"><div class="kv"><dt>Когда</dt><dd class="big">' + esc(fmtD(b.date)) + ', ' + esc(b.time) + '</dd></div><div class="perf"></div>' +
+      '<dl class="ticket"><div class="kv"><dt>Когда' + untilTag(b.date) + '</dt><dd class="big">' + esc(fmtD(b.date)) + ', ' + esc(b.time) + '</dd></div><div class="perf"></div>' +
       '<div class="kv"><dt>Услуга</dt><dd>' + esc(b.serviceName) + ' · ' + esc(money(b.price, b.priceFrom)) + '</dd></div>' +
       (b.masterName ? '<div class="kv"><dt>Преподаватель</dt><dd>' + esc(b.masterName) + '</dd></div>' : '') +
       (cfg().address ? '<div class="kv"><dt>Адрес</dt><dd>' + esc(cfg().address) + '</dd></div>' : '') + '</dl>' +
@@ -507,7 +515,7 @@
       try { navigator.clipboard.writeText(v).then(ok, () => { window.prompt('Скопируйте ссылку:', v); }); } catch (x) { window.prompt('Скопируйте ссылку:', v); }
     }
     else if (t.id === 'csvBtn') downloadClients();
-    else if (t.classList.contains('mst')) { buzz(); st.sel.master = t.dataset.m; renderMasters(); renderTimes(); renderCta(); }
+    else if (t.classList.contains('mst')) { buzz(); st.sel.master = t.dataset.m; renderMasters(); renderDays(); renderTimes(); renderCta(); }
     else if (t.classList.contains('day')) { buzz(); st.sel.date = t.dataset.d; st.sel.time = null; renderDays(); renderTimes(); renderCta(); }
     else if (t.classList.contains('time')) { buzz(); st.sel.time = Number(t.dataset.m); renderTimes(); renderCta(); }
     else if (t.id === 'ctaNext') { if (st.step === 3) submitBooking(); else go(st.step + 1); }

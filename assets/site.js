@@ -118,6 +118,12 @@
     chs.forEach(c => io.observe(c));
   }
 
+  /* ——— живые экраны: прокрутка страниц в рамках устройств идёт, только пока блок виден ——— */
+  if (!calm && 'IntersectionObserver' in window) {
+    const ioL = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('play', e.isIntersecting)), { threshold: .15 });
+    $$('.card, #stage').forEach(el => ioL.observe(el));
+  }
+
   /* ——— работы: превью за курсором ——— */
   const prev = $('#preview');
   let px = 0, py = 0, tx = 0, ty = 0;
@@ -141,6 +147,7 @@
   /* ——— прокрутка: шапка, лента, шаги, финал, панель на телефоне ——— */
   const topEl = $('#top'), strip = $('#strip'), work = $('#work'), steps = $('#steps'), sdot = $('#stepsDot'), fin = $('#fin'), finDot = $('#finDot'), dock = $('#dock'), start = $('#start'), price = $('#price');
   const vis = r => r.bottom > -100 && r.top < innerHeight + 100;
+  const deck = $('#deck'), cards = deck ? $$('.card', deck) : [];
   let stripW = 0, lastS = {};
   const set = (el, k, v) => { if (lastS[k] !== v) { lastS[k] = v; el.style.setProperty(k.split('|')[0], v); } };
   function frame() {
@@ -159,6 +166,11 @@
       set(fin, '--o', clamp((p - .45) / .25, 0, 1).toFixed(3));
     }
     if (dock && rp) dock.classList.toggle('on', sy > H * .8 && !(rp.top < H && rp.bottom > 0));
+    /* колода кейса: карточка уходит назад, когда следующая ложится сверху (только на широком экране) */
+    if (cards.length && !calm && innerWidth > 1080) {
+      const rd = deck.getBoundingClientRect();
+      if (vis(rd)) cards.forEach((c, i) => { const n = cards[i + 1]; if (!n) return; const t = n.getBoundingClientRect().top, top0 = 96 + i * 16; set(c, '--k|c' + i, clamp((H - t) / (H - top0 - 16), 0, 1).toFixed(3)); });
+    }
   }
   addEventListener('resize', () => { stripW = 0; });
   let ticking = false;
@@ -275,4 +287,60 @@
   }));
   copyBtn.addEventListener('click', async () => { copyBtn.textContent = (await copy(NUM)) ? 'Номер скопирован' : NUM; });
   dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+})();
+
+/* мини-приложение: чат → нажатие → приложение выезжает → «Записаться»; переключатель Telegram / MAX. Только когда блок на экране */
+(() => {
+  const sc = document.getElementById('miniScene'); if (!sc) return;
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const app = document.getElementById('mcApp');
+  sc.querySelectorAll('.mini-sw button').forEach(b => b.addEventListener('click', () => {
+    sc.querySelectorAll('.mini-sw button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    const max = b.dataset.m === 'MAX'; sc.classList.toggle('max', max);
+    app.textContent = 'бот в\u00a0' + b.dataset.m + ' · демо';
+  }));
+  if (calm) { sc.classList.add('open'); return; }
+  const steps = [[900, 'tap1'], [1200, 'open'], [2300, 'tap2'], [600, 'z'], [3200, ''], [900, 'reset']];
+  let i = 0, t = 0, vis = false;
+  function step() {
+    const [wait, cls] = steps[i];
+    t = setTimeout(() => {
+      if (cls === 'reset') sc.classList.remove('open', 'z', 'tap1', 'tap2');
+      else if (cls) { if (cls.startsWith('tap')) { sc.classList.remove(cls); void sc.offsetWidth; } sc.classList.add(cls); }
+      i = (i + 1) % steps.length; if (vis) step();
+    }, wait);
+  }
+  new IntersectionObserver(es => es.forEach(e => { vis = e.isIntersecting; clearTimeout(t); if (vis) step(); }), { threshold: .35 }).observe(sc);
+})();
+
+/* окупаемость: чек × клиенты → месяц, когда сумма за месяцы перекроет цену пакета; «Выбрать» ставит пакет в заявку */
+(() => {
+  const ch = document.getElementById('pChart'); if (!ch) return;
+  const $ = id => document.getElementById(id), rub = n => Math.round(n).toLocaleString('ru-RU') + '\u00a0₽';
+  const months = k => k % 10 === 1 && k % 100 !== 11 ? 'месяц' : k % 10 >= 2 && k % 10 <= 4 && (k % 100 < 12 || k % 100 > 14) ? 'месяца' : 'месяцев';
+  const clients = k => k % 10 === 1 && k % 100 !== 11 ? 'клиент' : k % 10 >= 2 && k % 10 <= 4 && (k % 100 < 12 || k % 100 > 14) ? 'клиента' : 'клиентов';
+  ch.insertAdjacentHTML('beforeend', Array.from({ length: 12 }, (_, i) => '<div class="pay-m"><b></b><span>' + (i + 1) + '</span></div>').join(''));
+  const cols = [...ch.querySelectorAll('.pay-m')];
+  const pk = () => document.querySelector('#pPack [aria-pressed="true"]');
+  function fill(r) { r.style.setProperty('--v', (r.value - r.min) / (r.max - r.min) * 100 + '%'); }
+  function calc() {
+    const c = +$('pCheck').value, n = +$('pNew').value, b = pk(), price = +b.dataset.p, m = c * n;
+    fill($('pCheck')); fill($('pNew'));
+    $('pCheckV').textContent = rub(c); $('pNewV').textContent = n;
+    const w = n / 4.3; $('pWeek').textContent = w < 1 ? '≈ 1 в\u00a0' + (Math.round(4.3 / n) > 1 ? Math.round(4.3 / n) + '\u00a0недели' : 'неделю') : '≈ ' + Math.round(w) + ' в\u00a0неделю';
+    const k = Math.ceil(price / m);
+    const when = $('pWhen'); when.classList.toggle('bad', k > 12);
+    when.textContent = k <= 1 ? 'в\u00a0первый месяц' : k > 12 ? 'больше чем за\u00a0год' : 'за\u00a0' + k + '\u00a0' + months(k);
+    $('pSub').textContent = 'Новые клиенты приносят ' + rub(m) + ' в\u00a0месяц\u00a0— ' + rub(m * 12) + ' за\u00a0год.';
+    const top = Math.max(price * 1.25, m * 12);
+    cols.forEach((col, i) => { const h = m * (i + 1) / top * 100; col.style.setProperty('--h', h + '%'); col.classList.toggle('ok', i + 1 >= k); col.classList.toggle('hit', i + 1 === k); });
+    $('pLine').style.setProperty('--y', price / top);
+    const one = Math.ceil(price / c);
+    $('pNeed').innerHTML = k <= 1 ? 'Пакет окупается уже в&nbsp;первый месяц.' : 'Чтобы окупить за&nbsp;первый месяц, нужно <b>' + one + '&nbsp;' + clients(one) + '</b> со&nbsp;средним чеком ' + rub(c) + '.' + (k > 12 ? (b.dataset.n === 'Старт' ? ' Или возьмите сайт по&nbsp;подписке: 0&nbsp;₽ на&nbsp;старте.' : ' Начните со&nbsp;«Старт» или сайта по&nbsp;подписке.') : '');
+    $('pGo').lastChild.textContent = 'Выбрать «' + b.dataset.n + '»';
+  }
+  $('pPack').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; $('pPack').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); calc(); });
+  $('payForm').addEventListener('input', calc);
+  $('pGo').addEventListener('click', () => { const r = document.querySelector('#plan input[value="' + pk().dataset.n + '"]'); if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); } });
+  calc();
 })();

@@ -158,6 +158,8 @@ p { margin: 0; }
 .foot-in { display: grid; gap: 20px; }
 .foot b { color: var(--ink); font: 700 18px/1.2 var(--font-head); display: block; margin-bottom: 6px; }
 .foot .legal { margin-top: 6px; }
+/* пометка для рекламы медуслуг (38-ФЗ, ст. 24) — заметно, не мелким шрифтом */
+.med-warn { margin: 14px 0 0; font-size: 15px; font-weight: 600; line-height: 1.4; text-transform: none; letter-spacing: 0; color: inherit; grid-column: 1 / -1; flex-basis: 100%; }
 .foot-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
 .foot a { color: var(--muted); min-height: 32px; display: inline-flex; align-items: center; }
 
@@ -173,7 +175,7 @@ p { margin: 0; }
 
 /* Документы (политика) */
 .doc { max-width: 760px; padding-top: 40px; padding-bottom: 80px; }
-.doc h1 { font-size: clamp(30px, 6vw, 44px); margin-bottom: 20px; }
+.doc h1 { font-size: clamp(22px, 6vw, 44px); margin-bottom: 20px; hyphens: auto; overflow-wrap: break-word; } /* «Конфиденциальности» широким шрифтом не влезала в 375 */
 .doc h2 { font-size: 20px; margin: 32px 0 10px; }
 .doc p, .doc li { color: var(--muted); margin-bottom: 10px; }
 .doc a { color: var(--accent); }

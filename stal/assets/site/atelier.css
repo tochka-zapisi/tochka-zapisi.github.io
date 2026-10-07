@@ -58,6 +58,10 @@
     linear-gradient(90deg, color-mix(in srgb, var(--bg) 78%, transparent) 0%, transparent 70%),
     linear-gradient(180deg, color-mix(in srgb, var(--bg) 62%, transparent) 0%, transparent 24%); }
 [data-style="atelier"] .hero-bg picture { display: contents; }
+/* hero.video: лежит поверх фото, проявляется, когда пошло воспроизведение (класс on ставит main.js) */
+[data-style="atelier"] .hero-bg video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--focus, 60% 40%); transform: scale(1.04); opacity: 0; transition: opacity 1.4s var(--ease); pointer-events: none; }
+[data-style="atelier"] .hero-bg video.on { opacity: 1; }
+[data-style="atelier"] .hero-bg.flip video { scale: -1 1; }
 [data-style="atelier"] .hero-bg.flip img { scale: -1 1; } /* hero.flip: зеркальное фото — чтобы текст слева не лёг на главный предмет */
 [data-style="atelier"] .hero-bg-empty { background: radial-gradient(80% 60% at 70% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent), var(--bg); }
 [data-style="atelier"] .hero-in { display: block; width: 100%; padding-top: 130px; padding-bottom: 40px; }
@@ -85,7 +89,7 @@
 [data-style="atelier"] .meta-cell dt { font: var(--label); letter-spacing: .26em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
 [data-style="atelier"] .meta-cell dd { margin: 0; font-size: 15px; line-height: 1.45; }
 [data-style="atelier"] .meta-cell small { display: block; color: var(--muted); font-size: 13.5px; margin-top: 3px; }
-[data-style="atelier"] .meta-cell a { text-decoration: none; display: inline-block; padding: 14px 6px; margin: -14px -6px; }
+[data-style="atelier"] .meta-cell a { text-decoration: none; display: inline-block; padding: 14px 6px; margin: -14px -6px; min-width: 44px; } /* короткое «MAX» — тоже 44px под палец */
 [data-style="atelier"] .meta-cell small a { text-decoration: underline; text-decoration-color: var(--hair-2); text-underline-offset: 3px; }
 [data-style="atelier"] .meta-cell a:hover { color: var(--accent); }
 [data-style="atelier"] .meta-big { font: 400 34px/1 var(--font-head); letter-spacing: -.02em; vertical-align: -3px; font-variant-numeric: lining-nums; }
@@ -327,3 +331,5 @@
 
 /* Знак клиента в шапке (site.brand.mark) — по своим пропорциям, без скругления */
 [data-style="atelier"] .logo-mark { width: auto; height: 30px; border-radius: 0; }
+/* длинные названия (9+ букв, «MB-garage») на узком телефоне не обрезаются: разрядка меньше */
+@media (max-width: 420px) { [data-style="atelier"] .logo { letter-spacing: .14em; gap: 10px; } [data-style="atelier"] .logo-mark { height: 24px; } }

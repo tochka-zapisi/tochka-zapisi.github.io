@@ -8,7 +8,7 @@
 /* шапка */
 .f-top { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 90%, transparent); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
 .f-top-in { display: flex; align-items: center; gap: 28px; min-height: 64px; }
-.f-logo { margin-right: auto; font: var(--hw, 500) 24px/1 var(--font-head); letter-spacing: .01em; text-decoration: none; }
+.f-logo { margin-right: auto; font: var(--hw, 500) 24px/1 var(--font-head); letter-spacing: .01em; text-decoration: none; padding-block: 10px; margin-block: -10px; } /* 44 px под палец, вёрстка не сдвигается */
 .f-nav, .f-tel { display: none; }
 .f-nav a, .f-tel { color: var(--muted); text-decoration: none; font-size: 15px; transition: color .2s; }
 .f-nav a:hover, .f-tel:hover { color: var(--ink); }
@@ -22,7 +22,7 @@
 .f-hero h1 { font-size: var(--h1, clamp(46px, 9vw, 112px)); line-height: var(--h1lh, .95); font-weight: var(--h1w, var(--hw, 500)); max-width: var(--h1max, 11ch); }
 .f-lead { margin-top: 26px; max-width: 32em; font-size: 18px; color: var(--muted); }
 .f-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 30px; margin-top: 34px; }
-.f-link { font-weight: 500; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.f-link { display: inline-block; padding-block: 8px; margin-block: -8px; font-weight: 500; text-decoration-thickness: 1px; text-underline-offset: 6px; }
 .f-link:hover { color: var(--accent); }
 .f-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 18px 32px; margin: 44px 0 0; padding-top: 22px; border-top: 1px solid var(--line); }
 .f-facts dt { color: var(--muted); font-size: 13px; margin-bottom: 4px; }
