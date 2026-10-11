@@ -6,7 +6,7 @@
 <meta property="og:image" content="https://tochka-zapisi.github.io/kvartira/og.jpg"><meta property="og:type" content="website">
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <style>
-:root{--bg:#12100e;--bg2:#181512;--sf:#1d1915;--sf2:#26211b;--ink:#efe7d8;--muted:#a89c8a;--acc:#7a2333;--acct:#c9a66b;--line:rgba(238,233,225,.14);--fh:"Alumni Sans",Georgia,serif;--fb:"Onest",system-ui,sans-serif;color-scheme:dark}
+:root{--bg:#0b0b0a;--bg2:#141412;--sf:#161614;--sf2:#1d1d1b;--ink:#ece7df;--muted:#8e8a83;--acc:#ece7df;--acct:#ece7df;--line:rgba(238,233,225,.14);--fh:"Oswald",Georgia,serif;--fb:"Onest",system-ui,sans-serif;color-scheme:dark}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--fb)}
 a{color:inherit}img{max-width:100%;display:block}
 .w{max-width:1120px;margin:0 auto;padding:0 20px}
@@ -20,8 +20,8 @@ h2{font-size:clamp(30px,4.6vw,50px);margin-bottom:28px}
 .lead{font-size:clamp(18px,2.2vw,21px);color:var(--muted);max-width:36em;margin:24px 0 34px}
 .btns{display:flex;flex-wrap:wrap;gap:12px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 28px;font:600 14px/1 var(--fb);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border:1px solid var(--acc);transition:background .2s,color .2s}
-.btn.main{background:var(--acc);color:#fff}.btn.main:hover{filter:brightness(1.08)}
-.btn.line{color:var(--ink)}.btn.line:hover{background:var(--acc);color:#fff}
+.btn.main{background:var(--acc);color:#111}.btn.main:hover{filter:brightness(1.08)}
+.btn.line{color:var(--ink)}.btn.line:hover{background:var(--acc);color:#111}
 section{padding:clamp(56px,8vw,96px) 0;border-top:1px solid var(--line)}
 .parts{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
 .part{background:var(--sf);border:1px solid var(--line);display:flex;flex-direction:column}
@@ -39,7 +39,7 @@ section{padding:clamp(56px,8vw,96px) 0;border-top:1px solid var(--line)}
 .why li::before{content:counter(w,decimal-leading-zero);font:400 28px/1 var(--fh);color:var(--acct)}
 .plans{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .plan{border:1px solid var(--line);background:var(--sf);padding:28px 26px;display:flex;flex-direction:column;gap:12px;position:relative}
-.plan.best{border-color:var(--acc)}.plan .tag{position:absolute;top:-12px;left:24px;background:var(--acc);color:#fff;font:600 13px/1 var(--fb);letter-spacing:.14em;text-transform:uppercase;padding:7px 10px}
+.plan.best{border-color:var(--acc)}.plan .tag{position:absolute;top:-12px;left:24px;background:var(--acc);color:#111;font:600 13px/1 var(--fb);letter-spacing:.14em;text-transform:uppercase;padding:7px 10px}
 .plan h3{font:500 15px/1.3 var(--fb);letter-spacing:.14em;text-transform:uppercase;margin:0;color:var(--muted)}
 .plan .p{font:400 clamp(30px,4vw,40px)/1.1 var(--fh)}.plan small{color:var(--muted);font-size:14px}
 .plan ul{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:8px;font-size:16px}.plan li{padding-left:22px;position:relative}.plan li::before{content:"";position:absolute;left:0;top:.7em;width:10px;height:1px;background:var(--acc)}
@@ -49,10 +49,10 @@ section{padding:clamp(56px,8vw,96px) 0;border-top:1px solid var(--line)}
 .terms{margin:34px 0 0;padding:0;list-style:none;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));font-size:15px;color:var(--muted)}
 .terms li{border-left:1px solid var(--acc);padding-left:14px}
 .cta{background:var(--sf2)}.cta h2{max-width:16em}.cta p{color:var(--muted);max-width:36em;margin:-10px 0 30px}
-.who{display:flex;align-items:center;gap:16px;margin-top:34px;color:var(--muted);font-size:15px}.who i{width:48px;height:48px;border-radius:50%;background:var(--acc);display:grid;place-items:center;font:400 22px/1 var(--fh);color:#fff;font-style:normal}
+.who{display:flex;align-items:center;gap:16px;margin-top:34px;color:var(--muted);font-size:15px}.who i{width:48px;height:48px;border-radius:50%;background:var(--acc);display:grid;place-items:center;font:400 22px/1 var(--fh);color:#111;font-style:normal}
 footer{padding:28px 0 90px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
 .bar{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--sf);border-top:1px solid var(--line);z-index:5}
-.bar a{flex:1;min-height:56px;display:flex;align-items:center;justify-content:center;font:600 13px/1 var(--fb);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-left:1px solid var(--line)}.bar a:first-child{border-left:0}.bar a.m{background:var(--acc);color:#fff}
+.bar a{flex:1;min-height:56px;display:flex;align-items:center;justify-content:center;font:600 13px/1 var(--fb);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-left:1px solid var(--line)}.bar a:first-child{border-left:0}.bar a.m{background:var(--acc);color:#111}
 @media(min-width:860px){.bar{display:none}footer{padding-bottom:28px}}
 a:focus-visible,.btn:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}</style></head><body>
@@ -67,7 +67,7 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--acc);outline-offset:3
 
 <section><div class="w tour-in">
   <div class="tour-t"><h2>Ваш сайт на телефоне</h2><p>Меньше 20 секунд: так клиент листает сайт «The Квартира» и записывается — без звонка и переписки.</p><a class="btn line" href="zapis/">Попробовать самому</a></div>
-  <video class="tour-v" controls muted playsinline preload="none" poster="assets/offer/tour.webp" width="1080" height="1920" aria-label="Видео: сайт «The Квартира» на телефоне"><source src="assets/offer/tour.mp4" type="video/mp4"></video>
+  <video class="tour-v" controls muted playsinline preload="none" poster="assets/offer/tour-kvartirnik-2.webp" width="1080" height="1920" aria-label="Видео: сайт «The Квартира» на телефоне"><source src="assets/offer/tour-kvartirnik-2.mp4" type="video/mp4"></video>
 </div></section>
 <section><div class="w">
   <h2>Что уже готово</h2>

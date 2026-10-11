@@ -99,8 +99,9 @@
     const v = $('#view');
     v.innerHTML = st.tab === 'home' ? home() : st.tab === 'book' ? book() : st.tab === 'bonus' ? bonus() : profile();
     v.className = 'view'; void v.offsetWidth; v.className = 'view';
-    $('#tabs').innerHTML = [['home', 'home', 'Главная'], ['book', 'plus', 'Запись'], ['bonus', 'star', 'Бонусы'], ['profile', 'user', 'Профиль']].map(([k, ic, t]) =>
-      '<button type="button" data-tab="' + k + '"' + (st.tab === k ? ' aria-current="page"' : '') + (k === 'book' ? ' class="main"' : '') + '><span>' + svg(ic, k === 'book' ? 2.4 : 1.9) + '</span><span>' + t + '</span></button>').join('');
+    /* «Запись» — ровно посередине панели (просьба владельца студии, 11.10.2026): две вкладки слева, две справа; «Подарок» открывает сертификат */
+    $('#tabs').innerHTML = [['home', 'home', 'Главная'], ['bonus', 'star', 'Бонусы'], ['book', 'plus', 'Запись'], ['cert', 'gift', 'Подарок'], ['profile', 'user', 'Профиль']].map(([k, ic, t]) =>
+      '<button type="button" ' + (k === 'cert' ? 'data-act="cert"' : 'data-tab="' + k + '"') + (st.tab === k ? ' aria-current="page"' : '') + (k === 'book' ? ' class="main"' : '') + '><span>' + svg(ic, k === 'book' ? 2.4 : 1.9) + '</span><span>' + t + '</span></button>').join('');
   }
   function sheet(html) { $('#sheet').innerHTML = '<div class="panel" role="dialog" aria-modal="true"><div class="grab"></div>' + html + '</div>'; $('#sheet').hidden = false; }
   function closeSheet() { $('#sheet').hidden = true; $('#sheet').innerHTML = ''; }

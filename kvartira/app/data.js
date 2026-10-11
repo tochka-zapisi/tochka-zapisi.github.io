@@ -42,133 +42,220 @@ window.APP = {
    "name": "Мужская стрижка",
    "duration": 60,
    "price": 1400,
-   "from": true
+   "from": true,
+   "tiers": {
+    "b": 1400,
+    "s": 1500,
+    "br": 1700
+   }
   },
   {
    "id": "s2",
    "name": "Под машинку с фейдом",
    "duration": 60,
    "price": 1200,
-   "from": true
+   "from": true,
+   "tiers": {
+    "b": 1200,
+    "s": 1300,
+    "br": 1500
+   }
   },
   {
    "id": "s3",
    "name": "Под машинку, до 3 насадок",
    "duration": 30,
    "price": 1100,
-   "from": true
+   "from": true,
+   "tiers": {
+    "b": 1100,
+    "s": 1200,
+    "br": 1400
+   }
   },
   {
    "id": "s4",
    "name": "Удлинённая стрижка ножницами",
    "duration": 60,
    "price": 1500,
-   "from": true
+   "from": true,
+   "tiers": {
+    "b": 1500,
+    "s": 1600,
+    "br": 1800
+   }
   },
   {
    "id": "s5",
    "name": "Под одну насадку",
    "duration": 30,
    "price": 500,
-   "from": false
+   "from": false,
+   "tiers": {
+    "b": 500,
+    "s": 500,
+    "br": 500
+   }
   },
   {
    "id": "s6",
    "name": "Детская стрижка, 5–7 лет",
    "duration": 60,
    "price": 1200,
-   "from": true
+   "from": true,
+   "tiers": {
+    "b": 1200,
+    "s": 1300,
+    "br": 1400
+   }
   },
   {
    "id": "s7",
    "name": "Бритьё головы",
    "duration": 60,
    "price": 1400,
-   "from": true
+   "from": true,
+   "tiers": {
+    "s": 1400,
+    "br": 1600
+   }
   },
   {
    "id": "s8",
    "name": "Камуфляж седины",
    "duration": 30,
    "price": 1200,
-   "from": true
+   "from": true,
+   "tiers": {
+    "b": 1200,
+    "s": 1400,
+    "br": 1500
+   }
   },
   {
    "id": "s9",
    "name": "Коррекция бороды",
    "duration": 30,
    "price": 1100,
-   "from": true
+   "from": true,
+   "tiers": {
+    "b": 1100,
+    "s": 1200,
+    "br": 1300
+   }
   },
   {
    "id": "s10",
    "name": "Королевское бритьё",
    "duration": 60,
    "price": 1300,
-   "from": true
+   "from": true,
+   "tiers": {
+    "s": 1300,
+    "br": 1400
+   }
   },
   {
    "id": "s11",
    "name": "Камуфляж бороды",
    "duration": 30,
    "price": 1200,
-   "from": true
+   "from": true,
+   "tiers": {
+    "s": 1200,
+    "br": 1300
+   }
   },
   {
    "id": "s12",
    "name": "Борода под одну насадку",
    "duration": 30,
    "price": 500,
-   "from": true
+   "from": true,
+   "tiers": {
+    "b": 500,
+    "s": 500,
+    "br": 600
+   }
   },
   {
    "id": "s13",
    "name": "Оформление бороды ваксингом",
    "duration": 60,
    "price": 1800,
-   "from": false
+   "from": false,
+   "tiers": {
+    "br": 1800
+   }
   },
   {
    "id": "s14",
    "name": "Стрижка + борода",
    "duration": 90,
    "price": 2100,
-   "from": true
+   "from": true,
+   "tiers": {
+    "b": 2100,
+    "s": 2300,
+    "br": 2500
+   }
   },
   {
    "id": "s15",
    "name": "Стрижка + королевское бритьё",
    "duration": 90,
    "price": 2400,
-   "from": true
+   "from": true,
+   "tiers": {
+    "s": 2400,
+    "br": 2600
+   }
   },
   {
    "id": "s16",
    "name": "Стрижка + борода ваксингом",
    "duration": 90,
    "price": 2600,
-   "from": false
+   "from": false,
+   "tiers": {
+    "br": 2600
+   }
   },
   {
    "id": "s17",
    "name": "Окантовка",
    "duration": 30,
    "price": 600,
-   "from": true
+   "from": true,
+   "tiers": {
+    "b": 600,
+    "s": 600,
+    "br": 700
+   }
   },
   {
    "id": "s18",
    "name": "Ваксинг: нос, уши, брови",
    "duration": 30,
    "price": 200,
-   "from": false
+   "from": false,
+   "tiers": {
+    "b": 200,
+    "s": 200,
+    "br": 200
+   }
   },
   {
    "id": "s19",
    "name": "Биозавивка",
    "duration": 120,
    "price": 5500,
-   "from": false
+   "from": false,
+   "tiers": {
+    "b": 5500,
+    "s": 5500,
+    "br": 5500
+   }
   }
  ],
  "masters": [
@@ -197,7 +284,8 @@ window.APP = {
     "s18",
     "s19"
    ],
-   "days": null
+   "days": null,
+   "tier": "br"
   },
   {
    "id": "m2",
@@ -224,7 +312,8 @@ window.APP = {
     "s18",
     "s19"
    ],
-   "days": null
+   "days": null,
+   "tier": "br"
   },
   {
    "id": "m3",
@@ -249,7 +338,8 @@ window.APP = {
     "s18",
     "s19"
    ],
-   "days": null
+   "days": null,
+   "tier": "s"
   },
   {
    "id": "m4",
@@ -270,7 +360,8 @@ window.APP = {
     "s18",
     "s19"
    ],
-   "days": null
+   "days": null,
+   "tier": "b"
   }
  ],
  "photos": [

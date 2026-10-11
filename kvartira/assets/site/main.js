@@ -173,8 +173,12 @@
      снимки на бечёвке качаются от прокрутки, ролик в телефоне играет, только пока виден */
   var door = document.querySelector('[data-door]');
   if (door) {
-    var openDoor = function () { door.classList.add('a-open'); };
-    if (still) openDoor(); else requestAnimationFrame(function () { setTimeout(openDoor, 380); });
+    var opened = false, openDoor = function () { if (!opened) { opened = true; door.classList.add('a-open'); } };
+    /* «Премьера»: створки раздвигаются, когда кадр уже готов (decode), — без рывка на медленной сети; не дольше 1,2 с */
+    var shot = door.querySelector('.pr-shot img');
+    if (still) openDoor();
+    else if (shot && shot.decode) { shot.decode().then(function () { requestAnimationFrame(function () { setTimeout(openDoor, 120); }); }, openDoor); setTimeout(openDoor, 1200); }
+    else requestAnimationFrame(function () { setTimeout(openDoor, 380); });
     var sign = door.querySelector('[data-sign]');
     if (sign) {
       var wk = {}; try { wk = JSON.parse(sign.getAttribute('data-hours') || '{}'); } catch (e) { /* без часов */ }
@@ -231,6 +235,31 @@
       vel += Math.max(-1.2, Math.min(1.2, dy * 0.025));
       if (!run) { run = true; requestAnimationFrame(swing); }
     }, { passive: true });
+  }
+  /* «Премьера»: параллакс — кадр первого экрана уходит медленнее прокрутки, фото в «Кадрах» сдвигаются внутри рамки;
+     считаются только видимые элементы, одно чтение и одна запись за кадр */
+  var parEls = [].slice.call(document.querySelectorAll('[data-par], [data-par-in]'));
+  if (parEls.length && !still && 'IntersectionObserver' in window) {
+    var parOn = [], parTick = false;
+    var parIO = new IntersectionObserver(function (l) {
+      l.forEach(function (e) { var i = parOn.indexOf(e.target); if (e.isIntersecting && i < 0) parOn.push(e.target); else if (!e.isIntersecting && i > -1) parOn.splice(i, 1); });
+      parRun();
+    });
+    parEls.forEach(function (el) { parIO.observe(el); });
+    var parRun = function () {
+      if (parTick) return; parTick = true;
+      requestAnimationFrame(function () {
+        parTick = false;
+        var vh = window.innerHeight, y = window.scrollY;
+        var vals = parOn.map(function (el) {
+          if (el.hasAttribute('data-par')) return 'translate3d(0,' + (y * 0.28).toFixed(1) + 'px,0)';
+          var r = el.getBoundingClientRect(), k = Math.max(-0.6, Math.min(0.6, ((r.top + r.height / 2) - vh / 2) / vh));
+          return 'translate3d(0,' + (k * -6).toFixed(2) + '%,0) scale(1.1)';
+        });
+        parOn.forEach(function (el, i) { el.style.transform = vals[i]; });
+      });
+    };
+    window.addEventListener('scroll', parRun, { passive: true });
   }
   var vid = document.querySelector('[data-video]');
   if (vid) {
