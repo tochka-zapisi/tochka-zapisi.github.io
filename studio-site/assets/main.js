@@ -22,7 +22,8 @@
   const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
   const niche = () => ($('#niche [aria-pressed="true"]') || {}).textContent || '';
   function calc() {
-    const plan = $('#plan input:checked'), extras = $$('#extra input:checked');
+    /* в «Всё вместе» бот и приложение уже входят — не считаем их второй раз */
+    const plan = $('#plan input:checked'), extras = $$('#extra input:checked').filter(x => plan.value !== 'Всё вместе' || !/Бот|Приложение/.test(x.value));
     const sum = (+plan.dataset.p || 0) + extras.reduce((a, x) => a + (+x.dataset.p || 0), 0);
     $('#sum').textContent = fmt(sum);
     const biz = ($('#biz').value || '').trim();
