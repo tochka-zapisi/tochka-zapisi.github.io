@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Квартира — приложение</title>
+<meta name="description" content="Запись, бонусы и подарочные сертификаты салона — в одном приложении.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#12100e">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="The Квартира">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="styles.css">
+<style>:root{--accent:#7a2333;--accent-ink:#fff;--bg:#12100e;--surface:#1d1915;--surface-2:#26211b;--ink:#efe7d8;--muted:#a89c8a;--gold:color-mix(in srgb, #7a2333 55%, #fff);--f-display:"Alumni Sans", Georgia, serif;--f-body:"Onest", system-ui, -apple-system, "Segoe UI", sans-serif;--wd:800}</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="splash" id="splash" aria-hidden="true"><b></b><small></small><i></i></div>
+  <main class="view" id="view"></main>
+  <nav class="tabs" id="tabs" aria-label="Разделы"></nav>
+  <div class="sheet" id="sheet" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</div>
+<script src="data.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="app.js"></script>
+<script src="tg.js"></script>
+</body>
+</html>
