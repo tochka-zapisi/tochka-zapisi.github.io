@@ -123,18 +123,8 @@
   /* билет «выдаётся» — поворачивается и ложится ровно по мере прокрутки */
   if ($('.kv-ticket')) G.fromTo('.kv-ticket', { rotate: -4, scale: .94 }, { rotate: 0, scale: 1, ease: 'none', scrollTrigger: { trigger: '.kv-ticket-sec', start: 'top bottom', end: 'top 30%', scrub: true } });
 
-  /* курсор с подписью и магнитные кнопки — только мышь */
+  /* магнитные кнопки — только мышь (свой курсор-круг убран по просьбе владельца 11.10.2026: закрывал обзор) */
   if (fine) {
-    var cr = $('.kv-cursor'), dot = cr && cr.firstElementChild;
-    if (cr) {
-      var cx = G.quickTo(cr, 'x', { duration: 0.35, ease: 'power3' }), cy = G.quickTo(cr, 'y', { duration: 0.35, ease: 'power3' });
-      addEventListener('pointermove', function (e) {
-        cx(e.clientX); cy(e.clientY);
-        var z = e.target.closest && e.target.closest('[data-cur]');
-        var label = z && !e.target.closest('a, button') ? z.getAttribute('data-cur') : '';
-        cr.classList.toggle('is-big', !!label); dot.textContent = label;
-      }, { passive: true });
-    }
     $$('.btn-main').forEach(function (b) {
       b.addEventListener('pointermove', function (e) { var r = b.getBoundingClientRect(); G.to(b, { x: (e.clientX - r.left - r.width / 2) * 0.25, y: (e.clientY - r.top - r.height / 2) * 0.3, duration: 0.4 }); });
       b.addEventListener('pointerleave', function () { G.to(b, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, .4)' }); });

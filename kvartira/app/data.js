@@ -401,17 +401,17 @@ window.APP = {
   "referral": 500,
   "levels": [
    {
-    "name": "Silver",
+    "name": "Демо",
     "from": 0,
     "rate": 5
    },
    {
-    "name": "Gold",
+    "name": "Золотой диск",
     "from": 5,
     "rate": 7
    },
    {
-    "name": "Platinum",
+    "name": "Платиновый диск",
     "from": 12,
     "rate": 10
    }
@@ -429,9 +429,11 @@ window.APP = {
   "placeTo": "в барбершоп",
   "placeBy": "барбершопом",
   "demoName": "Артём",
-  "s1": "Фирменный",
+  "s1": "Пластинка",
   "toLabel": "Имя получателя",
-  "toExample": "Саша"
+  "toExample": "Саша",
+  "s2": "Билет",
+  "s3": "Кассета"
  },
  "hero": "assets/img/real/kv-komanda-kvartira.webp",
  "mark": "",

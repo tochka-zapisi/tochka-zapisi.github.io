@@ -238,7 +238,7 @@
   function certSheet() {
     sheet('<h2 class="h1">Подарочный сертификат</h2><div id="certPrev">' + certCard(cert) + '</div>' +
       '<p class="lbl">Сумма</p><div class="chips">' + [2000, 3000, 5000, 10000].map(v => '<button class="chip" style="padding:6px 16px" type="button" data-sum="' + v + '" aria-pressed="' + (cert.sum === v) + '">' + rub(v) + '</button>').join('') + '</div>' +
-      '<p class="lbl">Оформление</p><div class="styles3">' + [['s1', W.s1], ['s2', 'Ночь'], ['s3', 'Золото']].map(([k, t]) => '<button type="button" class="cert ' + k + '" style="aspect-ratio:1;padding:0" data-style="' + k + '" aria-pressed="' + (cert.style === k) + '" aria-label="' + t + '"></button>').join('') + '</div>' +
+      '<p class="lbl">Оформление</p><div class="styles3">' + [['s1', W.s1], ['s2', W.s2 || 'Ночь'], ['s3', W.s3 || 'Золото']].map(([k, t]) => '<button type="button" class="cert ' + k + '" style="aspect-ratio:1;padding:0" data-style="' + k + '" aria-pressed="' + (cert.style === k) + '" aria-label="' + t + '"></button>').join('') + '</div>' +
       '<p class="lbl">Кому и пожелание</p><div style="display:grid;gap:10px"><label class="field">' + W.toLabel + '<input id="cTo" maxlength="30" value="' + esc(cert.to) + '" placeholder="Например, ' + W.toExample + '"></label><label class="field">Пожелание<textarea id="cMsg" maxlength="120" placeholder="С днём рождения!">' + esc(cert.msg) + '</textarea></label></div>' +
       '<button class="btn primary block" type="button" data-act="buy-cert" style="margin-top:16px">Оформить за ' + rub(cert.sum) + '</button><p style="color:var(--muted);font-size:12.5px;text-align:center;margin-top:8px">Демо: оплата картой или по СБП подключается при запуске</p>');
   }

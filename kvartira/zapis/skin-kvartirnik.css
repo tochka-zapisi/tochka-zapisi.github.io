@@ -1,0 +1,54 @@
+/* Оформление онлайн-записи под стиль сайта «Квартирник» (сайт как пластинка). Подключает tools/booking.mjs, если у сайта
+   theme.style = "kvartirnik" (<html data-skin="kvartirnik">); шрифты сайта он же докладывает в assets/fonts.
+   Услуги — трек-лист (A1, A2…), мастера — «состав», итог записи — билет с корешком и штрихкодом. Только поверх styles.css. */
+:root[data-skin="kvartirnik"] {
+  --kv-head: "Oswald", "Arial Narrow", sans-serif; --kv-mono: "IBM Plex Mono", ui-monospace, monospace; --kv-ital: "Cormorant", Georgia, serif;
+  --kv-paper: #ece7df; --kv-vinyl: #0b0b0a; --kv-signal: #3d5afe;
+}
+/* заголовки — узкий гротеск капсом; подписи — моно */
+:root[data-skin="kvartirnik"] .hero h1, :root[data-skin="kvartirnik"] .step-h h2, :root[data-skin="kvartirnik"] .done h2 { font-family: var(--kv-head); font-weight: 500; text-transform: uppercase; letter-spacing: 0; line-height: .98; }
+:root[data-skin="kvartirnik"] .hero h1 { font-size: 46px; }
+:root[data-skin="kvartirnik"] .step-h h2 { font-size: 34px; }
+:root[data-skin="kvartirnik"] .topbar .ttl { font-family: var(--kv-head); letter-spacing: .1em; }
+:root[data-skin="kvartirnik"] .step-h small, :root[data-skin="kvartirnik"] .kv dt, :root[data-skin="kvartirnik"] .day small, :root[data-skin="kvartirnik"] .mst small { font-family: var(--kv-mono); font-weight: 400; }
+:root[data-skin="kvartirnik"] .hero-sub { font-family: var(--kv-ital); font-style: italic; font-size: 18px; color: rgba(255, 255, 255, .75); }
+
+/* услуги — трек-лист: номер A1, A2… вместо значка */
+:root[data-skin="kvartirnik"] .svc-list { counter-reset: trk; }
+:root[data-skin="kvartirnik"] .svc { counter-increment: trk; }
+:root[data-skin="kvartirnik"] .svc .ic { border: 0; border-radius: 0; width: 44px; justify-items: start; color: var(--muted); }
+:root[data-skin="kvartirnik"] .svc .ic svg { display: none; }
+:root[data-skin="kvartirnik"] .svc .ic::before { content: "A" counter(trk); font: 400 12px/1 var(--kv-mono); letter-spacing: .06em; }
+:root[data-skin="kvartirnik"] .svc[aria-pressed="true"] .ic { color: var(--kv-signal); }
+:root[data-skin="kvartirnik"] .svc b { font-family: var(--kv-head); font-weight: 500; font-size: 19px; text-transform: uppercase; letter-spacing: .01em; }
+:root[data-skin="kvartirnik"] .svc .price, :root[data-skin="kvartirnik"] .svc .dur { font-family: var(--kv-mono); font-variant-numeric: tabular-nums; }
+
+/* дни и время — моно, выбранное — бумага */
+:root[data-skin="kvartirnik"] .day strong { font-family: var(--kv-head); font-weight: 500; }
+:root[data-skin="kvartirnik"] .day, :root[data-skin="kvartirnik"] .chip, :root[data-skin="kvartirnik"] .mst { border-radius: 0; }
+:root[data-skin="kvartirnik"] .chip { font-family: var(--kv-mono); font-weight: 500; }
+:root[data-skin="kvartirnik"] .day[aria-pressed="true"], :root[data-skin="kvartirnik"] .chip[aria-pressed="true"], :root[data-skin="kvartirnik"] .mst[aria-pressed="true"] { background: var(--kv-paper); border-color: var(--kv-paper); color: var(--kv-vinyl); }
+
+/* мастера — «состав»: аватар — маленькая пластинка */
+:root[data-skin="kvartirnik"] .mst b { font-family: var(--kv-head); font-weight: 500; font-size: 16px; text-transform: uppercase; }
+:root[data-skin="kvartirnik"] .mst .av { border: 0; color: var(--kv-paper); font-family: var(--kv-head);
+  background: radial-gradient(circle closest-side, var(--kv-vinyl) 0 0, #2a2a27 0 44%, transparent 45%), repeating-radial-gradient(circle, #0e0e0d 0 1.2px, #1f1f1d 1.4px 2.4px); }
+:root[data-skin="kvartirnik"] .mst[aria-pressed="true"] .av { background: radial-gradient(circle closest-side, var(--kv-signal) 0 44%, transparent 45%), repeating-radial-gradient(circle, #0e0e0d 0 1.2px, #1f1f1d 1.4px 2.4px); color: #fff; }
+
+/* кнопки */
+:root[data-skin="kvartirnik"] .btn { border-radius: 0; font-family: var(--kv-mono); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; font-size: 13px; }
+
+/* итог — билет: бумага, линия отрыва, вырезы, корешок со штрихкодом */
+:root[data-skin="kvartirnik"] .check { border-color: var(--kv-signal); color: var(--kv-signal); }
+:root[data-skin="kvartirnik"] .ticket { border: 0; border-radius: 0; background: var(--kv-paper); color: var(--kv-vinyl); padding: 22px 22px 70px; overflow: hidden; }
+:root[data-skin="kvartirnik"] .ticket::before { content: "Билет · вход по записи"; display: block; margin-bottom: 14px; font: 400 11px/1 var(--kv-mono); letter-spacing: .16em; text-transform: uppercase; color: color-mix(in srgb, var(--kv-vinyl) 70%, transparent); }
+:root[data-skin="kvartirnik"] .ticket::after { content: ""; position: absolute; left: 22px; right: 22px; bottom: 18px; height: 34px;
+  background: repeating-linear-gradient(90deg, var(--kv-vinyl) 0 2px, transparent 2px 4px, var(--kv-vinyl) 4px 7px, transparent 7px 9px, var(--kv-vinyl) 9px 10px, transparent 10px 14px); }
+:root[data-skin="kvartirnik"] .ticket .perf { border-top: 2px dashed color-mix(in srgb, var(--kv-vinyl) 35%, transparent); margin: 14px -22px; position: relative; }
+:root[data-skin="kvartirnik"] .ticket .perf::before, :root[data-skin="kvartirnik"] .ticket .perf::after { content: ""; position: absolute; top: -12px; width: 22px; height: 22px; border-radius: 50%; background: var(--bg); left: -11px; }
+:root[data-skin="kvartirnik"] .ticket .perf::after { left: auto; right: -11px; }
+:root[data-skin="kvartirnik"] .ticket .kv dt { color: color-mix(in srgb, var(--kv-vinyl) 65%, transparent); }
+:root[data-skin="kvartirnik"] .ticket .kv dd.big { font-family: var(--kv-head); font-weight: 500; font-size: 28px; text-transform: uppercase; }
+/* время — квадратные ячейки моно */
+:root[data-skin="kvartirnik"] .time { border-radius: 0; font-family: var(--kv-mono); font-weight: 500; }
+:root[data-skin="kvartirnik"] .time[aria-pressed="true"] { background: var(--kv-paper); border-color: var(--kv-paper); color: var(--kv-vinyl); }
