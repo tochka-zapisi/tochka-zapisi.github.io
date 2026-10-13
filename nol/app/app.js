@@ -117,16 +117,77 @@
     if (window.qrcode) { var q = qrcode(0, 'M'); q.addData(code); q.make(); var box = $('[data-qr]'); box.insertAdjacentHTML('afterbegin', q.createSvgTag({ cellSize: 6, margin: 0, scalable: true })); }
   };
 
+  /* подарочные карты: три материала — дерево (вывеска), крафт (меню), полночь (неон); имя и пожелание — сразу на карте */
+  var GIFT = { to: '', from: '', wish: '' };
+  var MAT = ['wood', 'kraft', 'neon'], MATN = { wood: 'Дерево', kraft: 'Крафт', neon: 'Полночь' };
+  var till = function () { var x = new Date(); x.setMonth(x.getMonth() + 6); return x.getDate() + '.' + String(x.getMonth() + 1).padStart(2, '0') + '.' + x.getFullYear(); };
+  function giftFace(n, i, back) {
+    var m = MAT[i % MAT.length], code = 'W00D ' + String(n).slice(0, 4).padStart(4, '0') + ' ' + String(2026 + i * 1111).slice(-4);
+    var art = m === 'neon' ? rings('g-rings')
+      : m === 'kraft' ? '<svg class="g-stamp" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="gs' + i + (back ? 'b' : '') + '" d="M50 50m-36 0a36 36 0 1 1 72 0a36 36 0 1 1-72 0"/></defs><circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="1.2"/><text font-size="10.5" letter-spacing="2.4" fill="currentColor"><textPath href="#gs' + i + (back ? 'b' : '') + '">ПОДАРОК · ' + esc(A.brand.toUpperCase()) + ' · ПОДАРОК ·</textPath></text><text x="50" y="57" text-anchor="middle" font-size="20" font-weight="800" fill="currentColor">00</text></svg>'
+      : '<span class="g-word" aria-hidden="true">W00D</span>';
+    var front = '<div class="gf gf-front">' + art +
+      '<span class="g-top"><b>' + esc(A.brand) + '</b><span>Подарочная карта</span></span>' +
+      '<span class="g-sum">' + rub(n) + '</span>' +
+      '<span class="g-wish" data-g-wish>' + esc(GIFT.wish) + '</span>' +
+      '<span class="g-bot"><span class="g-to" data-g-to>' + (GIFT.to ? 'Для: ' + esc(GIFT.to) : 'Вечер в баре ' + esc(A.name)) + '</span><span class="g-code">' + code + '</span></span></div>';
+    if (!back) return front;
+    return front + '<div class="gf gf-back"><span class="g-top"><b>' + esc(A.brand) + '</b><span>' + rub(n) + '</span></span><span class="g-qr" data-g-qr></span>' +
+      '<span class="g-bot"><span>' + code + '</span><span>действует до ' + till() + '</span></span></div>';
+  }
+  /* наклон и блик за пальцем (не при «меньше движения») */
+  function tilt(el) {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    el.addEventListener('pointermove', function (e) {
+      var r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      el.style.setProperty('--rx', ((0.5 - y) * 12).toFixed(2) + 'deg'); el.style.setProperty('--ry', ((x - 0.5) * 14).toFixed(2) + 'deg');
+      el.style.setProperty('--mx', (x * 100).toFixed(1) + '%'); el.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+    });
+    el.addEventListener('pointerleave', function () { el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); });
+  }
   R.more = function () {
-    var c = R.more.c || A.certs[1];
+    var cur = R.more.i == null ? 1 : R.more.i;
     $('#more').innerHTML = '<h1 class="h">Ещё</h1>' +
-      '<p class="h2">Подарочный сертификат <span class="demo">демо</span></p><div class="certs">' + A.certs.map(function (n) { return '<button type="button" class="cert" data-c="' + n + '" aria-pressed="' + (n === c) + '"><span>' + esc(A.brand) + '</span><b>' + rub(n) + '</b><span>на вечер в баре</span></button>'; }).join('') + '</div>' +
-      '<button type="button" class="btn btn-wide" style="margin-top:12px" data-gift>Подарить сертификат на ' + rub(c) + '</button>' +
+      '<p class="h2">Подарочные карты <span class="demo">демо</span></p><p class="small" style="margin:-4px 0 14px">Листайте — у каждой карты свой материал. Проведите по карте пальцем.</p>' +
+      '<div class="gifts" data-gifts>' + A.certs.map(function (n, i) { return '<div class="gift-slot"><div class="gift g-' + MAT[i % MAT.length] + '" data-gift-card="' + i + '">' + giftFace(n, i) + '</div><p class="g-name">' + MATN[MAT[i % MAT.length]] + '</p></div>'; }).join('') + '</div>' +
+      '<div class="g-dots" aria-hidden="true">' + A.certs.map(function (n, i) { return '<i' + (i === cur ? ' class="on"' : '') + '></i>'; }).join('') + '</div>' +
+      '<div class="g-form"><label class="field"><span class="small">Кому</span><input data-gi="to" maxlength="18" placeholder="Например, Анне" value="' + esc(GIFT.to) + '"></label>' +
+      '<label class="field"><span class="small">Пожелание на карте</span><input data-gi="wish" maxlength="40" placeholder="С днём рождения! Встречаемся в 00" value="' + esc(GIFT.wish) + '"></label>' +
+      '<label class="field"><span class="small">От кого</span><input data-gi="from" maxlength="24" placeholder="Ваше имя" value="' + esc(GIFT.from || me.name) + '"></label></div>' +
+      '<button type="button" class="btn btn-neon btn-wide" style="margin-top:14px" data-gift>Подарить карту на ' + rub(A.certs[cur]) + '</button>' +
+      '<p class="small" style="margin-top:8px">Карта приходит получателю в мессенджер, действует 6 месяцев, тратится частями.</p>' +
       '<p class="h2">Бар</p><div class="list"><a href="' + A.tel + '"><span>Телефон</span><span>' + esc(A.phone) + '</span></a><div><span>Адрес</span><span>' + esc(A.city + ', ' + A.address) + '</span></div><div><span>Часы</span><span>' + esc(A.hoursText) + '</span></div>' +
       '<a href="' + A.map + '" target="_blank" rel="noopener"><span>Как добраться</span><span>2ГИС →</span></a><a href="' + A.vk + '" target="_blank" rel="noopener"><span>Афиша и фото</span><span>ВКонтакте →</span></a><a href="../"><span>Сайт бара</span><span>→</span></a></div>' +
       '<p class="small" style="margin-top:24px">Демо-версия приложения для владельца бара. Установить на телефон: «Поделиться» → «На экран „Домой“».</p>';
-    d.querySelectorAll('#more [data-c]').forEach(function (b) { b.onclick = function () { R.more.c = +b.dataset.c; R.more(); }; });
-    $('#more [data-gift]').onclick = function () { sheet('<h3>Сертификат на ' + rub(c) + '</h3><p>В рабочей версии — оплата картой или СБП, сертификат с QR приходит в мессенджер, его можно переслать другу. Бар видит продажу сразу.</p>'); };
+    var box = $('#more [data-gifts]'), dots = d.querySelectorAll('#more .g-dots i'), btn = $('#more [data-gift]');
+    d.querySelectorAll('#more [data-gift-card]').forEach(tilt);
+    /* выбрана та карта, что в центре ленты */
+    var pickCur = function () {
+      var c = box.scrollLeft + box.clientWidth / 2, best = 0, dist = 1e9;
+      box.querySelectorAll('.gift-slot').forEach(function (sl, i) { var mid = sl.offsetLeft + sl.offsetWidth / 2, k = Math.abs(mid - c); if (k < dist) { dist = k; best = i; } });
+      if (best !== R.more.i) { R.more.i = best; dots.forEach(function (x, i) { x.classList.toggle('on', i === best); }); btn.textContent = 'Подарить карту на ' + rub(A.certs[best]); }
+    };
+    var tk = 0; box.addEventListener('scroll', function () { cancelAnimationFrame(tk); tk = requestAnimationFrame(pickCur); }, { passive: true });
+    var slot = box.querySelectorAll('.gift-slot')[cur]; if (slot) box.scrollLeft = slot.offsetLeft - (box.clientWidth - slot.offsetWidth) / 2;
+    R.more.i = cur;
+    /* имя и пожелание — сразу на всех картах */
+    d.querySelectorAll('#more [data-gi]').forEach(function (inp) {
+      inp.addEventListener('input', function () {
+        GIFT[inp.dataset.gi] = inp.value.trim();
+        d.querySelectorAll('#more [data-g-to]').forEach(function (x) { x.textContent = GIFT.to ? 'Для: ' + GIFT.to : 'Вечер в баре ' + A.name; });
+        d.querySelectorAll('#more [data-g-wish]').forEach(function (x) { x.textContent = GIFT.wish; });
+      });
+    });
+    btn.onclick = function () {
+      var i = R.more.i, n = A.certs[i];
+      sheet('<p class="small" style="font-family:Martian Mono,monospace;letter-spacing:.1em;color:inherit">ПОДАРОЧНАЯ КАРТА · ' + MATN[MAT[i % MAT.length]].toUpperCase() + '</p>' +
+        '<div class="gift-flip"><div class="gift g-' + MAT[i % MAT.length] + '" data-flip>' + giftFace(n, i, true) + '</div></div>' +
+        '<h3>' + rub(n) + (GIFT.to ? ' — для ' + esc(GIFT.to) : '') + '</h3><p>' + (GIFT.from ? 'От: ' + esc(GIFT.from) + '. ' : '') + 'После оплаты картой или СБП карта с QR уходит получателю: показать официанту и списать частями.</p>' +
+        '<div class="g-send"><button type="button" class="btn" data-send>Отправить в MAX</button><button type="button" class="btn" data-send>В Telegram</button></div>');
+      var q = $('[data-g-qr]'); if (q && window.qrcode) { var g = qrcode(0, 'M'); g.addData('GIFT-' + n + '-' + Date.now().toString(36)); g.make(); q.innerHTML = g.createSvgTag({ cellSize: 4, margin: 0, scalable: true }); }
+      setTimeout(function () { var f = $('[data-flip]'); if (f) f.classList.add('flipped'); }, 700);
+      d.querySelectorAll('[data-send]').forEach(function (b) { b.onclick = function () { b.textContent = 'Отправлено ✓'; b.disabled = true; }; });
+    };
   };
 
   /* ---------- навигация ---------- */

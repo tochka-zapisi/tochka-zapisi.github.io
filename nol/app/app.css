@@ -153,3 +153,65 @@ a { color: inherit; }
 .sheet-in h3 { font: 800 24px/1.1 "Unbounded", sans-serif; margin: 0 0 8px; }
 .sheet-in .btn { background: var(--kraft-ink); color: var(--kraft); border-color: var(--kraft-ink); margin-top: 14px; }
 @keyframes up { from { transform: translateY(100%); } }
+
+/* ---------- подарочные карты (дерево · крафт · полночь) ---------- */
+.gifts { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -16px; padding: 10px 16px 6px; scrollbar-width: none; perspective: 900px; }
+.gifts::-webkit-scrollbar { display: none; }
+.gift-slot { flex: 0 0 84%; scroll-snap-align: center; }
+.gift-slot:first-child { margin-left: 4%; } .gift-slot:last-child { margin-right: 4%; }
+.g-name { margin: 10px 0 0; text-align: center; font: 500 12px/1 "Martian Mono", monospace; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.gift { --rx: 0deg; --ry: 0deg; --mx: 30%; --my: 20%; position: relative; aspect-ratio: 1.586; border-radius: 20px; transform: rotateX(var(--rx)) rotateY(var(--ry)); transform-style: preserve-3d;
+  transition: transform .25s ease-out; box-shadow: 0 26px 40px -22px rgba(0,0,0,.9), 0 2px 0 rgba(255,255,255,.06) inset; touch-action: pan-x pan-y; }
+.gf { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; padding: 16px 18px; display: grid; grid-template-rows: auto 1fr auto auto; }
+/* блик за пальцем */
+.gf::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,.28), rgba(255,255,255,0) 45%); mix-blend-mode: soft-light; }
+.g-top { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font: 500 11px/1 "Martian Mono", monospace; letter-spacing: .14em; text-transform: uppercase; }
+.g-top b { font: 800 14px/1 "Unbounded", sans-serif; letter-spacing: .02em; }
+.g-sum { position: relative; z-index: 1; align-self: end; font: 800 clamp(30px, 9.5vw, 40px)/1 "Unbounded", sans-serif; letter-spacing: -.02em; white-space: nowrap; }
+.g-wish { position: relative; z-index: 1; min-height: 1.3em; margin-top: 6px; font-size: 13px; font-style: italic; opacity: .85; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.g-bot { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 10px; margin-top: 8px; font: 500 11px/1.2 "Martian Mono", monospace; letter-spacing: .08em; }
+.g-to { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-transform: uppercase; }
+.g-code { white-space: nowrap; opacity: .75; }
+
+/* дерево: волокна, тиснёное W00D — как вывеска бара */
+.g-wood .gf { color: #f4e6cf; background:
+  repeating-linear-gradient(97deg, rgba(0,0,0,0) 0 7px, rgba(0,0,0,.07) 7px 8px, rgba(0,0,0,0) 8px 15px, rgba(255,230,190,.05) 15px 16px),
+  repeating-radial-gradient(ellipse 140% 30% at 20% 130%, rgba(0,0,0,.0) 0 10px, rgba(0,0,0,.09) 10px 12px),
+  linear-gradient(160deg, #8a5a33 0%, #6b4426 40%, #4a2e18 100%); }
+.g-word { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -46%); font: 800 clamp(64px, 21vw, 92px)/1 "Unbounded", sans-serif; letter-spacing: -.04em; color: rgba(0,0,0,.11);
+  text-shadow: 0 1px 0 rgba(255,225,180,.12), 0 -1px 0 rgba(0,0,0,.2); white-space: nowrap; pointer-events: none; }
+
+/* крафт: бумага меню, печать, перфорация */
+.g-kraft .gf { color: var(--kraft-ink); background: radial-gradient(circle at 15% 10%, rgba(255,255,255,.35), transparent 45%), radial-gradient(circle at 90% 100%, rgba(80,60,30,.18), transparent 55%), var(--kraft); }
+.g-kraft .gf-front::before { content: ""; position: absolute; top: 10px; bottom: 10px; right: 19%; border-left: 2px dashed rgba(79,65,38,.3); }
+.g-stamp { position: absolute; right: 9%; top: 20%; width: 32%; color: #a1362b; opacity: .82; transform: rotate(-14deg); mix-blend-mode: multiply; }
+.g-kraft .g-sum { color: #2f2614; }
+
+/* полночь: чёрное стекло и неоновые кольца */
+.g-neon .gf { color: #fff; background: radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--neon-2) 45%, transparent), transparent 55%), radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--neon) 40%, transparent), transparent 55%), linear-gradient(160deg, #15101c, #050406); }
+.g-neon .gf-front::before { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.08) 45%, transparent 60%); }
+.g-rings { position: absolute; right: -8%; top: 8%; width: 66%; height: auto; filter: drop-shadow(0 0 8px var(--neon)); }
+.g-rings .ring { fill: none; stroke-width: 5; }
+.g-neon .g-sum { text-shadow: 0 0 18px color-mix(in srgb, var(--neon) 65%, transparent); }
+
+.g-dots { display: flex; justify-content: center; gap: 6px; margin: 12px 0 18px; }
+.g-dots i { width: 6px; height: 6px; border-radius: 99px; background: color-mix(in srgb, var(--cream) 25%, transparent); transition: width .25s, background .25s; }
+.g-dots i.on { width: 20px; background: var(--neon); }
+.g-form { display: grid; gap: 10px; }
+
+/* переворот карты в окне «Подарить»: лицевая → оборот с QR */
+/* переворот без 3D (в Firefox 3D с наложением бликов не рисуется): карта сжимается к ребру, на середине меняется сторона */
+.gift-flip { margin: 14px 0 16px; }
+.gift-flip .gift { transform: none; transform-style: flat; }
+.gift-flip .gift.flipped { animation: g-flip .8s cubic-bezier(.45,0,.25,1); }
+@keyframes g-flip { 0% { transform: scaleX(1); } 50% { transform: scaleX(0) skewY(-4deg); } 100% { transform: scaleX(1); } }
+.gf-back { grid-template-rows: auto 1fr auto; justify-items: center; visibility: hidden; }
+.gift-flip .gift.flipped .gf-back { visibility: visible; transition: visibility 0s .4s; }
+.gift-flip .gift.flipped .gf-front { visibility: hidden; transition: visibility 0s .4s; }
+.gf-back .g-top, .gf-back .g-bot { width: 100%; }
+.g-qr { align-self: center; width: 46%; aspect-ratio: 1; padding: 8px; border-radius: 12px; background: #fff; }
+.g-qr svg { display: block; width: 100%; height: 100%; }
+.g-send { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.g-send .btn { margin-top: 0 !important; }
+@media (prefers-reduced-motion: reduce) { .gift, .gift-flip .gift { transition: none; } }
+.gf-back .g-bot span { white-space: nowrap; }
