@@ -278,11 +278,12 @@ button { font: inherit; color: inherit; }
 .devs { display: grid; gap: 28px; margin-top: 34px; }
 @media (min-width: 768px) { .devs { grid-template-columns: repeat(2, minmax(0, 320px)); gap: 48px; } }
 .dev { display: grid; gap: 8px; text-decoration: none; justify-items: start; }
-.dev-frame { position: relative; display: block; width: min(300px, 78vw); aspect-ratio: 9 / 19.5; border-radius: 46px; padding: 11px; background: linear-gradient(145deg, #2b2a2e, #0e0d10);
+/* рамка iPhone 17 Pro: экран 402×874, «островок» сверху, без логотипов */
+.dev-frame { position: relative; display: block; width: min(300px, 78vw); aspect-ratio: 402 / 874; box-sizing: content-box; border-radius: 48px; padding: 10px; background: linear-gradient(145deg, #2b2a2e, #0e0d10);
   box-shadow: inset 0 0 0 1.5px #3c3b40, 0 40px 70px -30px rgba(0,0,0,.9), 0 0 50px -20px var(--neon); transition: transform .4s ease; }
 .dev:hover .dev-frame { transform: translateY(-6px) rotate(-1deg); }
-.dev-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 36px; }
-.dev-notch { position: absolute; top: 20px; left: 50%; width: 30%; height: 22px; margin-left: -15%; border-radius: 20px; background: #000; z-index: 1; }
+.dev-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 39px; }
+.dev-notch { position: absolute; top: 18px; left: 50%; width: 31%; height: 26px; margin-left: -15.5%; border-radius: 20px; background: #000; z-index: 1; }
 .dev b { font: 600 18px/1.2 "Unbounded", sans-serif; margin-top: 10px; }
 .dev > span:last-child { color: var(--muted); font-size: 15px; max-width: 30ch; }
 /* страховка: если скрипт не загрузился, заставка уходит сама */

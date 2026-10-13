@@ -1,5 +1,5 @@
 /* офлайн-кэш приложения: оболочка и данные; версия подставляется при сборке */
-const V = 'wood-mv700p2n', FILES = ['./', 'index.html', 'app.css', 'app.js', 'data.js', 'vendor/qrcode.js', 'manifest.webmanifest'];
+const V = 'wood-mv70f9pj', FILES = ['./', 'index.html', 'app.css', 'app.js', 'data.js', 'vendor/qrcode.js', 'manifest.webmanifest'];
 self.addEventListener('install', e => e.waitUntil(caches.open(V).then(c => c.addAll(FILES)).then(() => self.skipWaiting())));
 self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch', e => {

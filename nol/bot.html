@@ -29,9 +29,11 @@ h1 span{color:var(--neon);text-shadow:0 0 16px color-mix(in srgb,var(--neon) 60%
 .stage{display:grid;gap:28px;justify-content:center}
 @media(min-width:860px){.stage{grid-template-columns:repeat(2,minmax(0,380px))}}
 .who{font:500 13px/1 "Martian Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px 8px}
-.phone{background:linear-gradient(145deg,#2b2a2e,#0e0d10);border-radius:46px;padding:11px;box-shadow:inset 0 0 0 1.5px #3c3b40,0 40px 70px -30px #000,0 0 60px -30px var(--neon);width:min(380px,100%)}
-.scr{border-radius:36px;overflow:hidden;background:#0f0e12;height:min(720px,80vh);display:flex;flex-direction:column}
-.top{display:flex;align-items:center;gap:12px;background:#17151b;padding:16px 16px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.phone{position:relative;background:linear-gradient(145deg,#2b2a2e,#0e0d10);border-radius:52px;padding:11px;box-shadow:inset 0 0 0 1.5px #3c3b40,0 40px 70px -30px #000,0 0 60px -30px var(--neon);width:min(392px,100%,calc(84vh * 402 / 874 + 22px))}
+/* рамка iPhone 17 Pro: экран 402×874, «островок» сверху */
+.scr{border-radius:42px;overflow:hidden;background:#0f0e12;aspect-ratio:402/874;display:flex;flex-direction:column}
+.phone::before{content:"";position:absolute;top:22px;left:50%;width:31%;height:30px;margin-left:-15.5%;border-radius:20px;background:#000;z-index:2}
+.top{display:flex;align-items:center;gap:12px;background:#17151b;padding:52px 16px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
 .av{width:42px;height:42px;border-radius:50%;background:#050406;display:grid;place-items:center;flex:none;border:1px solid color-mix(in srgb,var(--neon) 50%,transparent)}
 .av svg{width:30px}.av .ring{fill:none;stroke-width:9;stroke:var(--neon)}.av .r2{stroke:var(--neon-2)}
 .top b{display:block;font-size:15px;line-height:1.2}.top small{color:var(--muted);font-size:13px}
