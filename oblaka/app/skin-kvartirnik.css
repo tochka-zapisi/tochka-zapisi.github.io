@@ -1,0 +1,106 @@
+/* Оформление приложения под стиль сайта «Квартирник» (сайт как пластинка). Подключает tools/clientapp.mjs, если у сайта
+   theme.style = "kvartirnik" (<html data-skin="kvartirnik">). Только поверх styles.css — разметка та же.
+   Ближайшая запись — билет; «Запись» в панели — крутящаяся пластинка; бонусная карта — пластинка, «яблоко» в цвет уровня
+   (Демо → Золотой диск → Платиновый диск); сертификаты: s1 «Пластинка» в конверте, s2 «Билет», s3 «Кассета». */
+:root[data-skin="kvartirnik"] {
+  --r: 2px; --r-sm: 2px; --signal: #3d5afe; --paper: #ece7df; --vinyl: #0b0b0a;
+  --f-mono: "IBM Plex Mono", ui-monospace, monospace; --f-ital: "Cormorant", Georgia, serif;
+  --grooves: repeating-radial-gradient(circle at 50% 50%, #0e0e0d 0 1.3px, #1c1c1a 1.5px 2.6px);
+}
+:root[data-skin="kvartirnik"] body { background: var(--bg); }
+
+/* типографика: узкий гротеск капсом, курсив антиквы для имени, моно — подписи */
+:root[data-skin="kvartirnik"] .head small, :root[data-skin="kvartirnik"] .lbl, :root[data-skin="kvartirnik"] .next small { font-family: var(--f-mono); font-weight: 400; letter-spacing: .16em; text-transform: uppercase; font-size: 11.5px; }
+:root[data-skin="kvartirnik"] .head b { font-family: var(--f-ital); font-style: italic; font-weight: 500; font-size: 32px; }
+:root[data-skin="kvartirnik"] .h1 { text-transform: uppercase; font-weight: 500; letter-spacing: -.005em; font-size: 34px; line-height: .98; }
+:root[data-skin="kvartirnik"] h2, :root[data-skin="kvartirnik"] .sec > h2, :root[data-skin="kvartirnik"] .sec-h { text-transform: uppercase; }
+
+/* кнопки, карточки, чипы — без скруглений, моно капсом */
+:root[data-skin="kvartirnik"] .btn { border-radius: 0; font-family: var(--f-mono); font-weight: 500; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
+:root[data-skin="kvartirnik"] .btn.primary { background: var(--paper); color: var(--vinyl); }
+:root[data-skin="kvartirnik"] .card { border-radius: 0; box-shadow: none; border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); }
+:root[data-skin="kvartirnik"] .chip { border-radius: 0; font-family: var(--f-mono); font-weight: 500; letter-spacing: .04em; }
+:root[data-skin="kvartirnik"] .chip .mini { border-radius: 0; }
+:root[data-skin="kvartirnik"] .chip[aria-pressed="true"] { background: var(--paper); border-color: var(--paper); color: var(--vinyl); }
+:root[data-skin="kvartirnik"] .field input, :root[data-skin="kvartirnik"] .field textarea { border-radius: 0; }
+:root[data-skin="kvartirnik"] .sheet, :root[data-skin="kvartirnik"] .sheet-in { border-radius: 0; }
+:root[data-skin="kvartirnik"] .promo { border-radius: 0; }
+:root[data-skin="kvartirnik"] .promo b { text-transform: uppercase; font-weight: 500; }
+:root[data-skin="kvartirnik"] .promo .tag { border-radius: 0; font-family: var(--f-mono); font-weight: 500; background: var(--paper); }
+
+/* ближайшая запись — билет: перфорация справа, корешок со штрихкодом, вырезы */
+:root[data-skin="kvartirnik"] .next { border-radius: 0; background: var(--paper); color: var(--vinyl); padding-right: 64px;
+  -webkit-mask: radial-gradient(circle at calc(100% - 46px) 0, transparent 9px, #000 9.5px) top / 100% 51% no-repeat, radial-gradient(circle at calc(100% - 46px) 100%, transparent 9px, #000 9.5px) bottom / 100% 51% no-repeat;
+          mask: radial-gradient(circle at calc(100% - 46px) 0, transparent 9px, #000 9.5px) top / 100% 51% no-repeat, radial-gradient(circle at calc(100% - 46px) 100%, transparent 9px, #000 9.5px) bottom / 100% 51% no-repeat; }
+:root[data-skin="kvartirnik"] .next::after { inset: 14px 12px 14px auto; width: 22px; height: auto; border-radius: 0; background: repeating-linear-gradient(0deg, var(--vinyl) 0 2px, transparent 2px 4px, var(--vinyl) 4px 7px, transparent 7px 9px, var(--vinyl) 9px 10px, transparent 10px 14px); }
+:root[data-skin="kvartirnik"] .next::before { content: ""; position: absolute; top: 12px; bottom: 12px; right: 46px; border-left: 2px dashed color-mix(in srgb, var(--vinyl) 35%, transparent); }
+:root[data-skin="kvartirnik"] .next small { color: color-mix(in srgb, var(--vinyl) 62%, transparent); }
+:root[data-skin="kvartirnik"] .next .when { text-transform: uppercase; font-weight: 500; font-size: 38px; line-height: .95; }
+:root[data-skin="kvartirnik"] .next p { color: color-mix(in srgb, var(--vinyl) 75%, transparent); }
+:root[data-skin="kvartirnik"] .next .in { border-radius: 0; background: var(--vinyl); color: var(--paper); font-family: var(--f-mono); font-weight: 500; }
+:root[data-skin="kvartirnik"] .next .btn.light, :root[data-skin="kvartirnik"] .next .btn.white { background: var(--vinyl); color: var(--paper); }
+:root[data-skin="kvartirnik"] .next .btn { font-size: 11.5px; letter-spacing: .06em; padding: 0 14px; }
+
+/* бонусы на главной — маленькая пластинка вместо звезды */
+:root[data-skin="kvartirnik"] .bonus-mini .ic { border-radius: 50%; background: radial-gradient(circle closest-side, var(--signal) 0 40%, var(--vinyl) 41% 45%, transparent 46%), var(--grooves); }
+:root[data-skin="kvartirnik"] .bonus-mini .ic svg { display: none; }
+:root[data-skin="kvartirnik"] .bonus-mini b { font-family: var(--f-display); text-transform: uppercase; font-weight: 500; }
+
+/* нижняя панель: «Запись» — пластинка с синим «яблоком», медленно крутится */
+:root[data-skin="kvartirnik"] .tabs { background: var(--vinyl); border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); }
+:root[data-skin="kvartirnik"] .tabs button { font-family: var(--f-mono); font-weight: 400; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; }
+:root[data-skin="kvartirnik"] .tabs [aria-current="page"] { color: var(--paper); }
+:root[data-skin="kvartirnik"] .tabs .main span:first-child { width: 56px; height: 56px; margin-top: -24px; color: #fff; box-shadow: 0 10px 24px -8px rgba(0,0,0,.9), 0 0 0 1px #2a2a27;
+  background: radial-gradient(circle closest-side, #fff 0 5%, var(--signal) 5.5% 46%, var(--vinyl) 47% 50%, transparent 51%), var(--grooves); animation: kvSpin 6s linear infinite; }
+@keyframes kvSpin { to { transform: rotate(360deg); } }
+
+/* бонусная карта — пластинка: диск выезжает справа, «яблоко» в цвет уровня */
+:root[data-skin="kvartirnik"] .loyal { --lab: var(--paper); border-radius: 0; background: #121211; box-shadow: inset 0 0 0 1px #262624; }
+:root[data-skin="kvartirnik"] .loyal.lv2 { --lab: #c9a35a; }
+:root[data-skin="kvartirnik"] .loyal.lv3 { --lab: #d6dbe1; }
+:root[data-skin="kvartirnik"] .loyal::before { left: auto; right: -42%; top: 50%; bottom: auto; width: 96%; height: auto; aspect-ratio: 1; transform: translateY(-50%); border: 0;
+  background: radial-gradient(circle closest-side, #121211 0 5%, var(--lab) 5.5% 34%, var(--vinyl) 34.5% 37%, transparent 37.5%), var(--grooves); animation: kvSpin 14s linear infinite; }
+:root[data-skin="kvartirnik"] .loyal::after { content: none; }
+:root[data-skin="kvartirnik"] .loyal .sheen { display: none; }
+:root[data-skin="kvartirnik"] .loyal .lvl { border-radius: 0; background: var(--lab); color: var(--vinyl); font-family: var(--f-mono); font-weight: 500; letter-spacing: .12em; }
+:root[data-skin="kvartirnik"] .loyal .brand { font-family: var(--f-display); text-transform: uppercase; letter-spacing: .08em; }
+:root[data-skin="kvartirnik"] .loyal .bal { font-weight: 500; font-size: 64px; }
+:root[data-skin="kvartirnik"] .loyal small { color: #a7a39b; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .06em; }
+:root[data-skin="kvartirnik"] .loyal .qr { border-radius: 0; position: relative; z-index: 2; }
+
+/* сертификаты */
+:root[data-skin="kvartirnik"] .cert { border-radius: 0; isolation: isolate; }
+:root[data-skin="kvartirnik"] .cert > * { position: relative; z-index: 2; }
+:root[data-skin="kvartirnik"] .cert .b { font-family: var(--f-display); font-weight: 500; letter-spacing: .1em; }
+:root[data-skin="kvartirnik"] .cert .sum { font-weight: 500; font-size: 52px; }
+:root[data-skin="kvartirnik"] .cert .code { font-family: var(--f-mono); }
+:root[data-skin="kvartirnik"] .cert .to { font-family: var(--f-ital); font-style: italic; font-size: 17px; }
+/* s1 «Пластинка»: бумажный конверт, из него выезжает диск */
+:root[data-skin="kvartirnik"] .cert.s1 { background: linear-gradient(90deg, var(--paper) 0 64%, #d9d3c9 64% 64.4%, var(--paper) 64.4%); color: var(--vinyl); }
+:root[data-skin="kvartirnik"] .cert.s1::before { content: ""; position: absolute; z-index: 1; inset: 8px; border: 1px solid rgba(11, 11, 10, .18); }
+:root[data-skin="kvartirnik"] .cert.s1::after { right: -30%; top: 50%; width: 74%; height: auto; aspect-ratio: 1; transform: translateY(-50%); border: 0; z-index: 0;
+  background: radial-gradient(circle closest-side, var(--paper) 0 4%, var(--signal) 4.5% 33%, var(--vinyl) 33.5% 36%, transparent 36.5%), var(--grooves); box-shadow: -14px 0 30px -10px rgba(0,0,0,.35); }
+/* s2 «Билет»: чёрный билет, синий корешок со штрихкодом, вырезы на линии отрыва */
+:root[data-skin="kvartirnik"] .cert.s2 { background: linear-gradient(90deg, #121211 0 74%, var(--signal) 74%); color: var(--paper);
+  -webkit-mask: radial-gradient(circle at 74% 0, transparent 10px, #000 10.5px) top / 100% 51% no-repeat, radial-gradient(circle at 74% 100%, transparent 10px, #000 10.5px) bottom / 100% 51% no-repeat;
+          mask: radial-gradient(circle at 74% 0, transparent 10px, #000 10.5px) top / 100% 51% no-repeat, radial-gradient(circle at 74% 100%, transparent 10px, #000 10.5px) bottom / 100% 51% no-repeat; }
+:root[data-skin="kvartirnik"] .cert.s2::after { right: 7%; left: auto; top: 14%; bottom: 14%; width: 12%; height: auto; border: 0; border-radius: 0; z-index: 1;
+  background: repeating-linear-gradient(0deg, #fff 0 2px, transparent 2px 4px, #fff 4px 7px, transparent 7px 9px, #fff 9px 10px, transparent 10px 14px); opacity: .9; }
+:root[data-skin="kvartirnik"] .cert.s2::before { content: ""; position: absolute; z-index: 1; top: 10%; bottom: 10%; left: 74%; border-left: 2px dashed rgba(236, 231, 223, .35); }
+:root[data-skin="kvartirnik"] .cert.s2 > div:first-child { padding-right: 27%; }
+/* s3 «Кассета»: корпус, окно с двумя бобинами, наклейка с синей полосой */
+:root[data-skin="kvartirnik"] .cert.s3 { background: linear-gradient(180deg, transparent 0 8%, var(--paper) 8% 50%, transparent 50%) 50% 0 / 86% 100% no-repeat, linear-gradient(180deg, transparent 0 43%, var(--signal) 43% 46%, transparent 46%) 50% 0 / 86% 100% no-repeat, #232321; color: var(--vinyl); }
+:root[data-skin="kvartirnik"] .cert.s3::after { left: 34%; right: 34%; top: 20%; width: auto; height: 19%; border-radius: 40px; border: 0; z-index: 1;
+  background: radial-gradient(circle at 22% 50%, #f4f1ec 0 9%, #3b3a37 9.5% 30%, transparent 31%), radial-gradient(circle at 78% 50%, #f4f1ec 0 9%, #3b3a37 9.5% 22%, transparent 23%), #0b0b0a; }
+:root[data-skin="kvartirnik"] .cert.s3::before { content: ""; position: absolute; z-index: 1; left: 22%; right: 22%; bottom: 0; height: 13%; background: #1a1a18; clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%); }
+:root[data-skin="kvartirnik"] .cert.s3 > div:first-child { padding: 1% 5% 0; }
+:root[data-skin="kvartirnik"] .cert.s3 .b { font-size: 13px; }
+:root[data-skin="kvartirnik"] .cert.s3 .code { font-size: 11px; }
+:root[data-skin="kvartirnik"] .cert.s3 > div:last-child { color: var(--paper); padding-bottom: 6%; }
+:root[data-skin="kvartirnik"] .cert.s3 .sum { font-size: 40px; }
+/* выбор оформления — квадратные образцы */
+:root[data-skin="kvartirnik"] .styles3 button { border-radius: 0; width: 64px; height: 64px; }
+:root[data-skin="kvartirnik"] .styles3 button.s3 .b, :root[data-skin="kvartirnik"] .styles3 button .b { display: none; }
+
+@media (prefers-reduced-motion: reduce) { :root[data-skin="kvartirnik"] .tabs .main span:first-child, :root[data-skin="kvartirnik"] .loyal::before { animation: none; } }
+:root[data-skin="kvartirnik"] .cert.s1 .code { color: var(--paper); }
