@@ -43,224 +43,256 @@ window.APP = {
    "name": "СПА для двоих «Гармония для двоих»",
    "duration": 90,
    "price": 4900,
-   "from": false
+   "from": false,
+   "term": "75 мин"
   },
   {
    "id": "s2",
    "name": "СПА для двоих «Облачное удовольствие»",
    "duration": 90,
    "price": 5000,
-   "from": false
+   "from": false,
+   "term": "85 мин"
   },
   {
    "id": "s3",
    "name": "СПА для двоих «В облаках»",
    "duration": 120,
    "price": 6400,
-   "from": false
+   "from": false,
+   "term": "95 мин"
   },
   {
    "id": "s4",
    "name": "СПА для двоих «Нам хорошо»",
    "duration": 120,
    "price": 7300,
-   "from": false
+   "from": false,
+   "term": "110 мин"
   },
   {
    "id": "s5",
    "name": "СПА для двоих «Уютный вечер в облаках»",
    "duration": 150,
    "price": 8400,
-   "from": false
+   "from": false,
+   "term": "125 мин"
   },
   {
    "id": "s6",
    "name": "СПА для двоих «Блаженство в облаках»",
    "duration": 150,
    "price": 8500,
-   "from": false
+   "from": false,
+   "term": "125 мин"
   },
   {
    "id": "s7",
    "name": "СПА для двоих «Роскошное время»",
    "duration": 180,
    "price": 12600,
-   "from": false
+   "from": false,
+   "term": "180 мин"
   },
   {
    "id": "s8",
    "name": "Общий (проминающий) массаж тела",
    "duration": 60,
    "price": 2450,
-   "from": false
+   "from": false,
+   "term": "60 мин"
   },
   {
    "id": "s9",
    "name": "Релаксирующий массаж тела",
    "duration": 60,
    "price": 2150,
-   "from": false
+   "from": false,
+   "term": "60 мин"
   },
   {
    "id": "s10",
    "name": "Общий массаж + лицо и голова",
    "duration": 120,
    "price": 4550,
-   "from": false
+   "from": false,
+   "term": "120 мин"
   },
   {
    "id": "s11",
    "name": "Массаж с горячими камнями",
    "duration": 60,
    "price": 2450,
-   "from": false
+   "from": false,
+   "term": "60 мин"
   },
   {
    "id": "s12",
    "name": "Медовый массаж тела",
    "duration": 60,
    "price": 2550,
-   "from": false
+   "from": false,
+   "term": "60 мин"
   },
   {
    "id": "s13",
    "name": "Спортивный массаж тела",
    "duration": 60,
    "price": 2550,
-   "from": false
+   "from": false,
+   "term": "60 мин"
   },
   {
    "id": "s14",
    "name": "Лимфодренажный массаж",
    "duration": 60,
    "price": 2550,
-   "from": false
+   "from": false,
+   "term": "60 мин"
   },
   {
    "id": "s15",
    "name": "Антицеллюлитный массаж (ручной)",
    "duration": 60,
    "price": 2550,
-   "from": false
+   "from": false,
+   "term": "60 мин"
   },
   {
    "id": "s16",
    "name": "Комплексный массаж лица и тела",
    "duration": 90,
    "price": 3250,
-   "from": false
+   "from": false,
+   "term": "90 мин"
   },
   {
    "id": "s17",
    "name": "Массаж лица и головы",
    "duration": 60,
    "price": 2450,
-   "from": false
+   "from": false,
+   "term": "60 мин"
   },
   {
    "id": "s18",
    "name": "Спина + шейно-воротниковая зона",
    "duration": 60,
    "price": 2450,
-   "from": false
+   "from": false,
+   "term": "60 мин"
   },
   {
    "id": "s19",
    "name": "Массаж спины",
    "duration": 60,
    "price": 1800,
-   "from": false
+   "from": false,
+   "term": "45 мин"
   },
   {
    "id": "s20",
    "name": "Массаж шейно-воротниковой зоны",
    "duration": 30,
    "price": 1250,
-   "from": false
+   "from": false,
+   "term": "30 мин"
   },
   {
    "id": "s21",
    "name": "Массаж ног",
    "duration": 30,
    "price": 1250,
-   "from": false
+   "from": false,
+   "term": "30 мин"
   },
   {
    "id": "s22",
    "name": "Бережный массаж для беременных",
    "duration": 60,
    "price": 2650,
-   "from": false
+   "from": false,
+   "term": "60 мин"
   },
   {
    "id": "s23",
    "name": "Кедровая фитобочка",
    "duration": 30,
    "price": 750,
-   "from": false
+   "from": false,
+   "term": "20 мин"
   },
   {
    "id": "s24",
    "name": "Финская сауна",
    "duration": 30,
    "price": 750,
-   "from": false
+   "from": false,
+   "term": "20 мин"
   },
   {
    "id": "s25",
    "name": "Скрабирование тела",
    "duration": 30,
    "price": 1050,
-   "from": false
+   "from": false,
+   "term": "20 мин"
   },
   {
    "id": "s26",
    "name": "Обёртывание, горячее или холодное",
    "duration": 30,
    "price": 1050,
-   "from": false
+   "from": false,
+   "term": "25 мин"
   },
   {
    "id": "s27",
    "name": "Массаж головы «экспресс»",
    "duration": 30,
    "price": 450,
-   "from": false
+   "from": false,
+   "term": "15 мин"
   },
   {
    "id": "s28",
    "name": "Массаж лица «экспресс»",
    "duration": 30,
    "price": 450,
-   "from": false
+   "from": false,
+   "term": "15 мин"
   },
   {
    "id": "s29",
    "name": "Тканевая маска для лица",
    "duration": 30,
    "price": 450,
-   "from": false
+   "from": false,
+   "term": "10 мин"
   },
   {
    "id": "s30",
    "name": "Массаж с домашним мёдом",
    "duration": 30,
    "price": 350,
-   "from": false
+   "from": false,
+   "term": "15 мин"
   },
   {
    "id": "s31",
    "name": "Баттер для тела вместо масла",
    "duration": 30,
    "price": 250,
-   "from": false
+   "from": false,
+   "term": "5 мин"
   },
   {
    "id": "s32",
    "name": "Банки во время массажа",
    "duration": 30,
    "price": 150,
-   "from": false
+   "from": false,
+   "term": "5 мин"
   }
  ],
  "masters": [

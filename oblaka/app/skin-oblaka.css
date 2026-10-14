@@ -86,3 +86,10 @@
 /* выбор оформления — квадратные образцы */
 :root[data-skin="oblaka"] .styles3 button { border-radius: 0; width: 64px; height: 64px; }
 :root[data-skin="oblaka"] .styles3 button .b { display: none; }
+
+/* 15.10.2026, правка после показа: острые углы везде (были скругления у дней, времени, услуг, мастеров — разнобой с кнопками);
+   выбранный день — как выбранное время (бумага), а не коричневая заливка */
+:root[data-skin="oblaka"] .app *:not(.pulse):not(.badge):not(.sw):not(.av):not(.dot):not(.ring):not(.ring span):not(.tabs .main span:first-child) { border-radius: 0 !important; }
+:root[data-skin="oblaka"] .day[aria-pressed="true"], :root[data-skin="oblaka"] .time[aria-pressed="true"], :root[data-skin="oblaka"] .chip[aria-pressed="true"] { background: var(--paper); border-color: var(--paper); color: #151215; }
+:root[data-skin="oblaka"] .day[aria-pressed="true"] small { color: rgba(21, 18, 21, .6); }
+:root[data-skin="oblaka"] .day, :root[data-skin="oblaka"] .time, :root[data-skin="oblaka"] .opt { border-width: 1px; }
