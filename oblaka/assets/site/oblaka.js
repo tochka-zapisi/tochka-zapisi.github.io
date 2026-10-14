@@ -54,7 +54,7 @@
   $$('[data-words]').forEach(function (el) { io.observe(el); });
   /* первый экран — сразу после прелоадера */
   var heroH = $('.ob-hero h1');
-  if (heroH) setTimeout(function () { heroH.classList.add('is-in'); }, seen ? 80 : 1500);
+  if (heroH) setTimeout(function () { heroH.classList.add('is-in'); }, root.classList.contains('ob-intro') ? 2100 : 80); /* заголовок поднимается, когда свет раскрылся */
 
   /* плавная прокрутка */
   var lenis = null;
