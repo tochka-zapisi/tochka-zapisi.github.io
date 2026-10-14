@@ -311,3 +311,41 @@ input.plate-in::placeholder { color: #000 !important; opacity: .3 !important; }
 .hrow input[type="time"]:focus { border-bottom-color: var(--ink); outline: none; }
 .hrow:has(.dchk input:not(:checked)) input[type="time"] { opacity: .35; }
 .hrow .dash { color: var(--muted); }
+
+/* ===== Компьютер и планшет: запись во весь экран, а не «телефон посреди экрана» (решение владельца, 15.10.2026) =====
+   Планшет (700–1023): одна колонка во всю ширину до 820 px, без рамки телефона.
+   Компьютер (от 1024): слева — карточка бизнеса (липкая), справа — шаги записи; разделы — вкладками сверху, итог — внизу правой колонки. */
+@media (min-width: 700px) {
+  .stage { padding-block: 0 !important; }
+  .app, .app.wide { border-radius: 0 !important; box-shadow: none !important; border: 0 !important; }
+  .app { max-width: 820px; }
+  .times { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .sheet { align-items: center; justify-content: center; }
+  .sheet .panel { max-width: 520px; border-radius: var(--r); }
+}
+@media (min-width: 1024px) {
+  .app, .app.wide { max-width: none; --side: max(40px, calc((100% - 1320px) / 2 + 40px)); }
+  .topbar { order: 0; padding-inline: var(--side); }
+  .tabbar { order: 1; justify-content: flex-start; gap: 6px; padding: 0 var(--side); border-top: 0; border-bottom: 1px solid var(--line-soft); }
+  .tab { flex: none; grid-auto-flow: column; align-items: center; gap: 9px; padding: 15px 16px 14px; font-size: 11px; }
+  .tab svg { width: 18px; height: 18px; }
+  .tab[aria-current="page"]::before { top: auto; bottom: -1px; left: 16px; right: 16px; width: auto; }
+  .dot { position: static; margin-left: 2px; }
+  .scroll { order: 2; }
+  .cta { order: 3; padding: 16px var(--side) 16px calc(var(--side) + 456px); }
+  .scroll > section { max-width: 1320px; margin-inline: auto; padding: 28px 40px 48px; }
+  .scroll > section#vBook { display: grid; grid-template-columns: 400px minmax(0, 1fr); column-gap: 56px; align-items: start; padding: 32px 40px 56px; }
+  #vBook > * { grid-column: 2; }
+  #vBook > .hero { grid-column: 1; grid-row: 1 / span 9; position: sticky; top: 24px; margin: 0; border: 1px solid var(--line-soft); border-radius: var(--r); }
+  #vBook > .hero[hidden] { display: block !important; } /* на компьютере карточка бизнеса видна на всех шагах */
+  #vBook > .soon { width: 100%; margin: 0 0 24px; }
+  #vBook > .prog { margin: 6px 0 28px; }
+  #vBook .pane { padding: 0; }
+  .step-h h2 { font-size: 40px; }
+  .svc-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; }
+  .svc[aria-pressed="true"] { margin-inline: 0; width: 100%; padding-inline: 12px; }
+  .days, .masters { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 0; }
+  .times { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  .done { max-width: 620px; }
+  .toasts { left: auto; right: var(--side); width: 380px; }
+}

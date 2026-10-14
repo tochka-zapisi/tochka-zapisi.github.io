@@ -1,0 +1,155 @@
+/* Основа «стиля записи»: шапка как у сайта вместо шапки приложения (её строит base.js). Цвета и шрифты задаёт стиль (svet.css, oblaka.css…). */
+.z-on .topbar, .z-on #installBtn, [data-stil] .topbar { display: none !important; }
+/* пока стиль не подставил свои блоки — содержимое скрыто (без «прыжков»); если скрипт не сработал — само проявится через 1,2 с */
+.z-wait #scroll, .z-wait .cta { visibility: hidden; animation: zShow 0s 1.2s forwards; }
+@keyframes zShow { to { visibility: visible; } }
+.z-head { position: relative; z-index: 5; flex: none; border-bottom: 1px solid var(--line-soft); background: var(--z-head-bg, var(--bg)); padding-top: env(safe-area-inset-top, 0px); }
+.z-head-in { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "logo now home" "nav nav nav"; align-items: center; column-gap: 14px; padding: 12px 20px 0; }
+.z-logo { grid-area: logo; display: flex; align-items: center; color: var(--ink); text-decoration: none; min-width: 0; }
+.z-logo svg { height: var(--z-logo-h, 22px); width: auto; display: block; }
+.z-logo > span { font-family: var(--f-display); font-size: 20px; }
+.z-now { grid-area: now; min-width: 0; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.z-tel { display: none; }
+.z-home { grid-area: home; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border: 1px solid var(--line); color: var(--ink); text-decoration: none; font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; white-space: nowrap; }
+.z-home::before { content: "←"; letter-spacing: 0; font-size: 14px; }
+.z-head #backBtn { grid-area: logo; justify-self: start; position: absolute; left: 12px; top: calc(10px + env(safe-area-inset-top, 0px)); width: 40px; height: 40px; border-radius: 0; z-index: 2; background: var(--z-head-bg, var(--bg)); }
+/* вкладки «Запись · Мои записи · Владелец» — строкой разделов, как меню сайта */
+.z-head .tabbar { grid-area: nav; order: 0; display: flex; gap: 22px; padding: 6px 0 0; margin: 8px 0 0; background: none; backdrop-filter: none; -webkit-backdrop-filter: none; border: 0; overflow-x: auto; scrollbar-width: none; }
+.z-head .tabbar::-webkit-scrollbar { display: none; }
+.z-head .tab { flex: none; display: inline-flex; grid-auto-flow: column; align-items: center; gap: 6px; padding: 8px 0 11px; font-size: 10.5px; letter-spacing: .18em; color: var(--muted); }
+.z-head .tab svg { display: none; }
+.z-head .tab[aria-current="page"] { color: var(--ink); }
+.z-head .tab[aria-current="page"]::before { top: auto; bottom: -1px; left: 0; right: 0; width: auto; height: 1px; }
+.z-head .dot { position: static; min-width: 16px; height: 16px; font-size: 9.5px; margin-left: 2px; }
+/* на шагах 2–3 на телефоне вместо логотипа — «Назад» рядом с логотипом */
+.z-on .z-head #backBtn:not([hidden]) ~ .z-logo { margin-left: 50px; }
+@media (min-width: 1024px) {
+  .z-head-in { grid-template-columns: auto auto minmax(0, 1fr) auto auto; grid-template-areas: "logo now nav tel home"; column-gap: 28px; padding: 0 var(--side); min-height: 76px; }
+  .z-head .tabbar { justify-content: center; margin: 0; padding: 0; height: 100%; }
+  .z-head .tab { padding: 0; height: 76px; }
+  .z-tel { display: block; grid-area: tel; color: var(--ink); text-decoration: none; font-size: 13px; letter-spacing: .06em; white-space: nowrap; }
+  /* «Назад» на компьютере — слева от логотипа, в поле страницы; на узком компьютере логотип чуть сдвигается */
+  .z-head #backBtn { left: max(8px, calc(var(--side) - 56px)); top: 50%; margin-top: -20px; }
+  .z-on .z-head #backBtn:not([hidden]) ~ .z-logo { margin-left: max(0px, calc(64px - var(--side))); }
+  .z-logo svg { height: var(--z-logo-h-d, var(--z-logo-h, 26px)); }
+}
+@media (max-width: 559px) { .z-now { visibility: hidden; } }
+
+/* Стиль записи «Облака» (SPA, вечер): запись — программа вечера, как сайт: бумага заката → сумерки → ночь.
+   Шаг 1 — закат (бумага), шаг 2 — сумерки, шаг 3 и итог — ночь; слева «Ваш вечер» с фото комнаты, строки проявляются по мере выбора;
+   итог — приглашение «с … до …» на бумаге посреди ночи. Поверх skin-oblaka.css (шрифты, ночная палитра). */
+:root[data-stil="oblaka"] {
+  --bg: #f1ebe3; --page: #f1ebe3; --surface: #f7f2ec; --surface-2: #e9e0d6; --ink: #231d22; --muted: #6e6268;
+  --line: rgba(35, 29, 34, .16); --line-soft: rgba(35, 29, 34, .09); --accent: #231d22; --accent-ink: #f1ebe3; --accent-soft: rgba(176, 138, 91, .14);
+  --glass: rgba(241, 235, 227, .95); --signal: #8a6a44; --z-sel: #231d22; --z-sel-ink: #f1ebe3; --z-brass: #8a6a44; --z-head-bg: var(--bg);
+  --f-body: "Manrope", system-ui, sans-serif; --f-display: var(--ob-head); --z-logo-h: 17px; --z-logo-h-d: 19px; color-scheme: light;
+}
+:root[data-stil="oblaka"][data-tab="book"][data-step="2"] { --bg: #e5d6ca; --page: #e5d6ca; --surface: #ece0d6; --surface-2: #dccbbe; --glass: rgba(229, 214, 202, .95); --line: rgba(35, 29, 34, .18); }
+:root[data-stil="oblaka"][data-tab="book"][data-step="3"], :root[data-stil="oblaka"][data-tab="book"][data-step="done"] {
+  --bg: #151215; --page: #151215; --surface: #1d181c; --surface-2: #241e23; --ink: #f1ebe3; --muted: rgba(241, 235, 227, .62);
+  --line: rgba(241, 235, 227, .15); --line-soft: rgba(241, 235, 227, .08); --accent: #f1ebe3; --accent-ink: #151215; --accent-soft: rgba(210, 180, 138, .14);
+  --glass: rgba(21, 18, 21, .95); --signal: #d2b48a; --z-sel: #f1ebe3; --z-sel-ink: #151215; --z-brass: #d2b48a; color-scheme: dark;
+}
+:root[data-stil="oblaka"] body, :root[data-stil="oblaka"] .app, :root[data-stil="oblaka"] .z-head, :root[data-stil="oblaka"] .cta, :root[data-stil="oblaka"] .hero { transition: background-color 1.2s ease, color 1.2s ease, border-color 1.2s ease; }
+:root[data-stil="oblaka"] body { background: var(--page); font-family: var(--f-body); }
+:root[data-stil="oblaka"] .app { background: var(--bg); color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { :root[data-stil="oblaka"] body, :root[data-stil="oblaka"] .app, :root[data-stil="oblaka"] .z-head, :root[data-stil="oblaka"] .cta, :root[data-stil="oblaka"] .hero { transition: none; } }
+
+/* шапка как у сайта: логотип, «часы вечера» */
+:root[data-stil="oblaka"] .z-now { font-size: 11px; letter-spacing: .2em; color: var(--muted); }
+:root[data-stil="oblaka"] .z-now b { font-family: var(--ob-head); font-weight: 400; font-size: 17px; letter-spacing: .02em; text-transform: none; color: var(--ink); margin-right: 8px; }
+:root[data-stil="oblaka"] .z-home { border-color: var(--line); }
+:root[data-stil="oblaka"] .z-head .tab[aria-current="page"]::before { background: var(--ink); }
+:root[data-stil="oblaka"] .z-head .dot { background: var(--z-brass); color: var(--bg); }
+
+/* карточка студии: бумага, заголовок сайта антиквой с курсивом */
+:root[data-stil="oblaka"] .hero { background: transparent; color: var(--ink); padding: 24px 20px 8px; margin-bottom: 14px; }
+:root[data-stil="oblaka"] .hero::after { background: var(--line); }
+:root[data-stil="oblaka"] .hero h1#shopName { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+:root[data-stil="oblaka"] .hero-sub { display: none; }
+:root[data-stil="oblaka"] .live { color: var(--muted); letter-spacing: .14em; }
+:root[data-stil="oblaka"] .live i { background: var(--z-brass); box-shadow: 0 0 0 3px rgba(176, 138, 91, .2); }
+:root[data-stil="oblaka"] .demo-tag { color: var(--muted); border-color: var(--line); }
+:root[data-stil="oblaka"] .z-photo { margin: 18px 0 0; height: 190px; background: var(--surface-2) var(--z-photo) center 62% / cover no-repeat; position: relative; }
+:root[data-stil="oblaka"] .z-photo::after { content: ""; position: absolute; inset: 8px; border: 1px solid rgba(241, 235, 227, .45); pointer-events: none; }
+:root[data-stil="oblaka"] .z-title { font-family: var(--ob-head); font-weight: 300; font-size: 50px; line-height: .95; letter-spacing: -.015em; margin: 22px 0 10px; }
+:root[data-stil="oblaka"] .z-title em, :root[data-stil="oblaka"] .step-h h2 em, :root[data-stil="oblaka"] .done h2 em { font-style: italic; }
+:root[data-stil="oblaka"] .z-lead { font-size: 14px; line-height: 1.6; color: var(--muted); max-width: 28em; }
+:root[data-stil="oblaka"] .z-plate { margin-top: 12px; font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+:root[data-stil="oblaka"] .team-t span { color: var(--muted); }
+:root[data-stil="oblaka"] .hero-sub b, :root[data-stil="oblaka"] .linkish { color: var(--ink); }
+:root[data-stil="oblaka"] .avs .av { border-color: var(--bg); }
+:root[data-stil="oblaka"] .ha { color: var(--ink); border-color: var(--line); border-radius: 0; font-weight: 500; letter-spacing: .14em; font-size: 11px; }
+:root[data-stil="oblaka"] .z-eve { display: none; }
+
+/* шаги — часы вечера; заголовки — антиква с курсивом */
+:root[data-stil="oblaka"] .prog { gap: 12px; margin: 6px 20px 26px; }
+:root[data-stil="oblaka"] .prog span { height: auto; background: none; border-top: 1px solid var(--line); padding-top: 9px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+:root[data-stil="oblaka"] .prog span b { font-family: var(--ob-head); font-weight: 400; font-size: 15px; letter-spacing: .02em; text-transform: none; margin-right: 6px; }
+:root[data-stil="oblaka"] .prog span.on { background: none; color: var(--ink); border-top: 1px solid var(--ink); }
+:root[data-stil="oblaka"] .step-h small { display: none; }
+:root[data-stil="oblaka"] .step-h h2 { font-size: 42px; letter-spacing: -.015em; }
+:root[data-stil="oblaka"] .part { color: var(--z-brass); letter-spacing: .2em; }
+:root[data-stil="oblaka"] label.f, :root[data-stil="oblaka"] .kv dt { color: var(--z-brass); }
+
+@media (max-width: 559px) { :root[data-stil="oblaka"] .prog { gap: 8px; } :root[data-stil="oblaka"] .prog span { letter-spacing: .08em; font-size: 9.5px; } :root[data-stil="oblaka"] .prog span b { font-size: 13px; margin-right: 4px; } }
+/* меню программ — строки, как прайс на сайте; выбранная — латунная черта и тёплый тон */
+:root[data-stil="oblaka"] .svc .ic { color: var(--z-brass); border-color: var(--line); }
+:root[data-stil="oblaka"] .svc[aria-pressed="true"] { background: var(--accent-soft); box-shadow: inset 2px 0 0 var(--z-brass); color: var(--ink); margin-inline: -20px; padding-inline: 24px; width: calc(100% + 40px); }
+:root[data-stil="oblaka"] .svc[aria-pressed="true"] .ic { color: var(--z-brass); border-color: var(--z-brass); }
+:root[data-stil="oblaka"] .svc[aria-pressed="true"] .dur { color: var(--muted); opacity: 1; }
+@media (hover: hover) { :root[data-stil="oblaka"] .svc:not([aria-pressed="true"]):hover { background: rgba(176, 138, 91, .07); } }
+:root[data-stil="oblaka"] .soon { border-color: var(--line); }
+:root[data-stil="oblaka"] .soon .ic { color: var(--z-brass); }
+
+/* выбранное — «чернила» на бумаге (на закате и в сумерках) и «бумага» ночью */
+:root[data-stil="oblaka"] .day[aria-pressed="true"], :root[data-stil="oblaka"] .chip[aria-pressed="true"], :root[data-stil="oblaka"] .mst[aria-pressed="true"], :root[data-stil="oblaka"] .time[aria-pressed="true"] { background: var(--z-sel); border-color: var(--z-sel); color: var(--z-sel-ink); }
+:root[data-stil="oblaka"] .mst .av { border-color: var(--z-brass); color: var(--z-brass); }
+:root[data-stil="oblaka"] .mst[aria-pressed="true"] .av { background: var(--z-sel-ink); color: var(--z-sel); border-color: transparent; }
+:root[data-stil="oblaka"] .day .dl.few { color: var(--z-brass); }
+:root[data-stil="oblaka"] .recap { border-color: var(--line); }
+:root[data-stil="oblaka"] .recap .ic { color: var(--z-brass); }
+:root[data-stil="oblaka"] .recap b { font-family: var(--ob-head); font-weight: 400; font-size: 20px; }
+:root[data-stil="oblaka"] .consent input { accent-color: var(--z-brass); }
+:root[data-stil="oblaka"] .cta .sum b { font-family: var(--ob-head); font-weight: 400; font-size: 22px; }
+
+/* итог — приглашение посреди ночи */
+:root[data-stil="oblaka"] .done .check { width: 64px; height: 64px; border-color: var(--z-brass); }
+:root[data-stil="oblaka"] .done h2 { font-size: 46px; margin-bottom: 10px; }
+:root[data-stil="oblaka"] .done .note { max-width: 30em; margin-inline: auto; }
+:root[data-stil="oblaka"] .ticket { margin-top: 30px; padding: 38px 28px 30px; box-shadow: 0 30px 80px -30px rgba(210, 180, 138, .35); }
+:root[data-stil="oblaka"] .ticket::before { content: none; }
+:root[data-stil="oblaka"] .z-inv { text-align: center; margin-bottom: 18px; }
+:root[data-stil="oblaka"] .z-inv small { display: block; font-size: 10.5px; font-weight: 500; letter-spacing: .26em; text-transform: uppercase; color: #8a6a44; }
+:root[data-stil="oblaka"] .z-inv b { display: block; font-family: var(--ob-head); font-weight: 300; font-size: 44px; line-height: 1; margin: 14px 0 6px; }
+:root[data-stil="oblaka"] .z-inv b em { font-style: italic; }
+:root[data-stil="oblaka"] .z-inv span { font-family: var(--ob-head); font-style: italic; font-size: 20px; color: rgba(21, 18, 21, .7); }
+:root[data-stil="oblaka"] .ticket .kv:first-child { display: none; }
+:root[data-stil="oblaka"] .ticket .perf { margin: 0 0 18px; }
+:root[data-stil="oblaka"] .ticket .kv dd { font-size: 15px; }
+:root[data-stil="oblaka"] .ticket .until { background: #151215; color: #f1ebe3; border-radius: 0; }
+
+/* компьютер: слева — «Ваш вечер» с фото комнаты, справа — шаги */
+@media (min-width: 1024px) {
+  :root[data-stil="oblaka"] .scroll > section#vBook { grid-template-columns: 420px minmax(0, 1fr); column-gap: 72px; padding-top: 36px; }
+  :root[data-stil="oblaka"] .cta { padding-left: calc(var(--side) + 492px); }
+  :root[data-stil="oblaka"] #vBook > .hero { border: 0; padding: 0; margin: 0; background: transparent; }
+  :root[data-stil="oblaka"] #vBook > .hero::after { display: none; }
+  :root[data-stil="oblaka"] .z-photo { height: clamp(200px, 28vh, 300px); margin-top: 16px; }
+  :root[data-stil="oblaka"] .z-title { font-size: 58px; margin-top: 26px; }
+  :root[data-stil="oblaka"] .z-lead { display: none; }
+  :root[data-stil="oblaka"] .z-eve { display: block; margin-top: 22px; border-top: 1px solid var(--line); }
+  :root[data-stil="oblaka"] .team { display: none; }
+  :root[data-stil="oblaka"] .hero-actions { margin-top: 18px; }
+  :root[data-stil="oblaka"] .step-h h2 { font-size: 56px; }
+  :root[data-stil="oblaka"] #vBook > .prog { margin: 0 0 34px; }
+  :root[data-stil="oblaka"] .svc[aria-pressed="true"] { margin-inline: 0; width: 100%; padding-inline: 10px; }
+  :root[data-stil="oblaka"] .done { max-width: 600px; }
+  :root[data-stil="oblaka"] .done h2 { font-size: 60px; }
+}
+/* «Ваш вечер»: время слева, как на сайте; пока не выбрано — бледно */
+:root[data-stil="oblaka"] .z-eve > div { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line-soft); }
+:root[data-stil="oblaka"] .z-eve dt { font-size: 10px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--z-brass); }
+:root[data-stil="oblaka"] .z-eve dd { margin: 0; font-family: var(--ob-head); font-size: 20px; line-height: 1.25; color: var(--muted); opacity: .6; transition: opacity .6s, color .6s; overflow-wrap: anywhere; }
+:root[data-stil="oblaka"] .z-eve .on dd { color: var(--ink); opacity: 1; }
+:root[data-stil="oblaka"] .z-eve dd small { display: block; font-family: var(--f-body); font-size: 12px; color: var(--muted); }

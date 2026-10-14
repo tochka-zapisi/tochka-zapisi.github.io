@@ -593,6 +593,8 @@
   /* ---------- запуск ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => { /* офлайн необязателен */ });
   try { const m = new URLSearchParams(location.search).get('m'); if (m && masterById(m)) st.only = m; } catch (e) { /* без ссылки на мастера */ }
+  /* ?s=<название услуги> — с сайта сразу на нужную услугу (кнопка «Выбрать» у программы) */
+  try { const q = new URLSearchParams(location.search).get('s'); const hit = q && S.services.find(x => x.name === q); if (hit) st.sel.svc = hit.id; } catch (e) { /* без ссылки на услугу */ }
   prefill();
   S.subscribe(onData);
   onData();

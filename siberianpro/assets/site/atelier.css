@@ -1,0 +1,335 @@
+/* Стиль «Ателье» — строгий премиальный вид поверх style.css (подключается, когда theme.style = "atelier" или preset «atelier-…»).
+   Принципы: острые углы, тонкие линии вместо карточек, крупная антиква в заголовках и мелкие разрежённые подписи, фото на весь экран,
+   один акцент, неспешное появление. Цвета, акцент и шрифты — те же переменные, что в style.css (из site.json). */
+[data-style="atelier"] {
+  --r-s: 0px; --r: 0px; --r-l: 0px; --wrap: 1280px; --gut: 22px; --top-h: 68px;
+  --ease: cubic-bezier(.22, .8, .2, 1);
+  --hair: color-mix(in srgb, var(--ink) 13%, transparent);
+  --hair-2: color-mix(in srgb, var(--ink) 28%, transparent);
+  --label: 500 13px/1.2 var(--font-body);
+}
+[data-style="atelier"] body { font-size: 16.5px; line-height: 1.7; font-weight: 400; padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+[data-style="atelier"] ::selection { background: var(--accent); color: var(--on-accent); }
+[data-style="atelier"] h1, [data-style="atelier"] h2, [data-style="atelier"] h3 { font-weight: 400; letter-spacing: -.018em; line-height: 1.04; }
+[data-style="atelier"][data-italic] h1 em, [data-style="atelier"][data-italic] h2 em { font-style: italic; }
+[data-style="atelier"] h1 em { font-style: normal; color: var(--accent); }
+[data-style="atelier"][data-italic] h1 em { font-style: italic; }
+
+/* лёгкая зернистость — «бумага» вместо плоской заливки */
+[data-style="atelier"] body::before { content: ""; position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: .028; transform: translateZ(0); /* статичный слой без смешивания цветов — не пересчитывается при прокрутке */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+[data-style="atelier"][data-theme="light"] body::before { opacity: .05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+/* кнопки: острые, разрежённые заглавные */
+[data-style="atelier"] .btn { border-radius: 0; min-height: 54px; padding: 0 32px; font: 600 13px/1 var(--font-body); letter-spacing: .2em; text-transform: uppercase; border: 1px solid var(--hair-2); transition: background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease), transform .2s; }
+[data-style="atelier"] .btn:hover { border-color: var(--ink); }
+[data-style="atelier"] .btn-main { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+[data-style="atelier"] .btn-main:hover { background: transparent; color: var(--accent); border-color: var(--accent); filter: none; }
+[data-style="atelier"] .btn-sm { min-height: 44px; padding: 0 22px; font-size: 13px; }
+[data-style="atelier"] .link-arrow { display: inline-flex; align-items: center; gap: 14px; min-height: 44px; font: 600 13px/1 var(--font-body); letter-spacing: .2em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid var(--hair-2); padding: 0 0 4px; transition: border-color .3s, gap .3s var(--ease); }
+[data-style="atelier"] .link-arrow:hover { border-color: var(--accent); gap: 20px; }
+[data-style="atelier"] .link-arrow .ic { width: 18px; height: 18px; stroke-width: 1.5; color: var(--accent); }
+
+/* демо-полоса — тихая */
+[data-style="atelier"] .demo { background: var(--bg-2); color: var(--muted); border-bottom: 1px solid var(--hair); font: 500 13px/1.4 var(--font-body); letter-spacing: .12em; text-transform: uppercase; padding: 9px var(--gut); }
+
+/* шапка: прозрачная над фото, при прокрутке — матовое стекло */
+[data-style="atelier"] .top { background: transparent; border-bottom: 1px solid transparent; backdrop-filter: none; -webkit-backdrop-filter: none; transition: background .4s var(--ease), border-color .4s; }
+[data-style="atelier"] .top.is-scrolled { background: color-mix(in srgb, var(--bg) 95%, transparent); border-bottom-color: var(--hair); } /* плотный фон вместо размытия — размытие пересчитывается на каждом кадре прокрутки */
+[data-style="atelier"] .top-in { min-height: var(--top-h); gap: 28px; }
+[data-style="atelier"] .logo { font: 500 13px/1 var(--font-body); letter-spacing: .34em; text-transform: uppercase; gap: 16px; }
+[data-style="atelier"] .logo small { display: none; font: 500 13px/1 var(--font-body); letter-spacing: .24em; color: var(--muted); padding-left: 16px; border-left: 1px solid var(--hair-2); }
+[data-style="atelier"] .top-nav { gap: 34px; }
+[data-style="atelier"] .top-nav a { font: var(--label); letter-spacing: .22em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 70%, transparent); position: relative; padding: 14px 0; transition: color .25s; }
+[data-style="atelier"] .top-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 6px; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: 0 50%; transition: transform .45s var(--ease); }
+[data-style="atelier"] .top-nav a:hover { color: var(--ink); }
+[data-style="atelier"] .top-nav a:hover::after { transform: scaleX(1); }
+[data-style="atelier"] .top-tel { font: 500 14px/1 var(--font-body); letter-spacing: .06em; font-variant-numeric: lining-nums tabular-nums; }
+
+/* первый экран: фото на весь экран, текст внизу слева, строка фактов */
+[data-style="atelier"] .hero { position: relative; min-height: max(620px, calc(100svh - var(--demo-h, 0px))); display: flex; flex-direction: column; justify-content: flex-end; padding: 0; overflow: hidden; isolation: isolate; margin-top: calc(var(--top-h) * -1); }
+[data-style="atelier"] .hero::before { display: none; }
+[data-style="atelier"] .hero-bg { position: absolute; inset: 0; z-index: -1; background: var(--bg-2); }
+[data-style="atelier"] .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: var(--focus, 60% 40%); transform: scale(1.07); animation: ateliers-zoom 3.2s var(--ease) .05s both; }
+[data-style="atelier"] .hero-bg::after { content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(0deg, var(--bg) 4%, color-mix(in srgb, var(--bg) 72%, transparent) 36%, transparent 78%),
+    linear-gradient(90deg, color-mix(in srgb, var(--bg) 78%, transparent) 0%, transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 62%, transparent) 0%, transparent 24%); }
+[data-style="atelier"] .hero-bg picture { display: contents; }
+/* hero.video: лежит поверх фото, проявляется, когда пошло воспроизведение (класс on ставит main.js) */
+[data-style="atelier"] .hero-bg video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--focus, 60% 40%); transform: scale(1.04); opacity: 0; transition: opacity 1.4s var(--ease); pointer-events: none; }
+[data-style="atelier"] .hero-bg video.on { opacity: 1; }
+[data-style="atelier"] .hero-bg.flip video { scale: -1 1; }
+[data-style="atelier"] .hero-bg.flip img { scale: -1 1; } /* hero.flip: зеркальное фото — чтобы текст слева не лёг на главный предмет */
+[data-style="atelier"] .hero-bg-empty { background: radial-gradient(80% 60% at 70% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent), var(--bg); }
+[data-style="atelier"] .hero-in { display: block; width: 100%; padding-top: 130px; padding-bottom: 40px; }
+[data-style="atelier"] .hero-meta .wrap { width: 100%; }
+[data-style="atelier"]:has(.demo) { --demo-h: 52px; }
+[data-style="atelier"] .hero-text { min-width: 0; max-width: 980px; }
+[data-style="atelier"] .eyebrow { font: var(--label); letter-spacing: .3em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 74%, transparent); gap: 18px; }
+[data-style="atelier"] .eyebrow::before { width: 44px; height: 1px; border-radius: 0; background: var(--accent); }
+[data-style="atelier"] .hero h1 { font-size: clamp(44px, 12vw, 120px); margin: 22px 0 22px; max-width: 13.5em; line-height: 1; }
+[data-style="atelier"] .lead { font-size: clamp(16.5px, 1.6vw, 19px); line-height: 1.65; max-width: 33em; color: color-mix(in srgb, var(--ink) 76%, transparent); }
+[data-style="atelier"] .hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 22px 34px; margin: 34px 0 0; }
+[data-style="atelier"] .hero-cta .btn { flex: 0 0 auto; }
+@keyframes ateliers-zoom { from { transform: scale(1.14); opacity: .4; } to { transform: scale(1.04); opacity: 1; } }
+@keyframes ateliers-rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+[data-style="atelier"] .hero-text > * { animation: ateliers-rise 1.1s var(--ease) both; }
+[data-style="atelier"] .hero-text > :nth-child(1) { animation-delay: .25s; }
+[data-style="atelier"] .hero-text > :nth-child(2) { animation-delay: .4s; }
+[data-style="atelier"] .hero-text > :nth-child(3) { animation-delay: .6s; }
+[data-style="atelier"] .hero-text > :nth-child(4) { animation-delay: .78s; }
+[data-style="atelier"] .hero-meta { border-top: 1px solid var(--hair-2); background: linear-gradient(color-mix(in srgb, var(--bg) 70%, transparent), color-mix(in srgb, var(--bg) 88%, transparent)); animation: ateliers-rise 1.1s var(--ease) .95s both; }
+[data-style="atelier"] .hero-meta dl { display: grid; grid-template-columns: 1fr 1fr; margin: 0; }
+[data-style="atelier"] .meta-cell { padding: 20px 4px 20px 0; border-bottom: 1px solid var(--hair); min-width: 0; }
+[data-style="atelier"] .meta-cell:nth-child(even) { padding-left: 18px; border-left: 1px solid var(--hair); }
+[data-style="atelier"] .meta-cell:nth-last-child(-n+2) { border-bottom: 0; }
+[data-style="atelier"] .meta-cell dt { font: var(--label); letter-spacing: .26em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+[data-style="atelier"] .meta-cell dd { margin: 0; font-size: 15px; line-height: 1.45; }
+[data-style="atelier"] .meta-cell small { display: block; color: var(--muted); font-size: 13.5px; margin-top: 3px; }
+[data-style="atelier"] .meta-cell a { text-decoration: none; display: inline-block; padding: 14px 6px; margin: -14px -6px; min-width: 44px; } /* короткое «MAX» — тоже 44px под палец */
+[data-style="atelier"] .meta-cell small a { text-decoration: underline; text-decoration-color: var(--hair-2); text-underline-offset: 3px; }
+[data-style="atelier"] .meta-cell a:hover { color: var(--accent); }
+[data-style="atelier"] .meta-big { font: 400 34px/1 var(--font-head); letter-spacing: -.02em; vertical-align: -3px; font-variant-numeric: lining-nums; }
+[data-style="atelier"] .stars { font-size: 13px; letter-spacing: 3px; }
+
+/* разделы: номер, линия, подпись, крупный заголовок */
+[data-style="atelier"] .sec { padding: clamp(64px, 9vw, 124px) 0; }
+[data-style="atelier"] .sec-tight { padding-bottom: clamp(48px, 7vw, 90px); }
+[data-style="atelier"] .sec-alt { background: var(--bg-2); border-block: 1px solid var(--hair); }
+[data-style="atelier"] .sec-head { max-width: none; margin-bottom: clamp(36px, 6vw, 76px); display: grid; gap: 20px; }
+[data-style="atelier"] .kicker { display: flex; align-items: center; gap: 16px; font: var(--label); letter-spacing: .3em; text-transform: uppercase; color: var(--accent); margin: 0; }
+[data-style="atelier"] .kicker .num { color: var(--muted); font-variant-numeric: lining-nums tabular-nums; }
+[data-style="atelier"] .kicker i { width: 56px; height: 1px; background: var(--hair-2); }
+[data-style="atelier"] .sec h2 { font-size: clamp(34px, 5.6vw, 78px); max-width: 15em; }
+[data-style="atelier"] .sec-sub { color: var(--muted); font-size: 17px; max-width: 34em; margin: 0; }
+[data-style="atelier"] .sec-cta { margin-top: clamp(32px, 5vw, 56px); display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* прайс — как меню ресторана: название, пунктир, цена */
+[data-style="atelier"] .prices { border-top: 1px solid var(--hair-2); display: grid; column-gap: clamp(40px, 6vw, 100px); }
+[data-style="atelier"] .price { display: grid; grid-template-columns: minmax(0, auto) minmax(18px, 1fr) auto; align-items: baseline; column-gap: 16px; padding: 24px 0; border-bottom: 1px solid var(--hair); transition: border-color .4s, background .4s; }
+[data-style="atelier"] .p-name { font: 400 clamp(21px, 2.2vw, 28px)/1.2 var(--font-head); letter-spacing: -.01em; transition: color .3s; }
+[data-style="atelier"] .p-note { font-size: 14.5px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+[data-style="atelier"] .p-dots { align-self: end; border-bottom: 1px dotted var(--hair-2); margin-bottom: .55em; min-width: 12px; }
+[data-style="atelier"] .p-val { font: 500 clamp(17px, 1.7vw, 21px)/1.2 var(--font-body); letter-spacing: .01em; font-variant-numeric: lining-nums tabular-nums; }
+[data-style="atelier"] .p-time { font: var(--label); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+[data-style="atelier"] .price:hover { border-color: var(--accent); }
+[data-style="atelier"] .price:hover .p-name { color: var(--accent); }
+
+/* работы: неровная сетка, медленное приближение */
+[data-style="atelier"] .gallery { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(8px, 1.4vw, 20px); }
+[data-style="atelier"] .gallery figure { margin: 0; border-radius: 0; position: relative; overflow: hidden; background: var(--surface); grid-column: span 12; aspect-ratio: 4 / 3; }
+[data-style="atelier"] .gallery figure:first-child { aspect-ratio: 16 / 10; }
+[data-style="atelier"] .gallery img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.6s var(--ease), filter .8s; filter: saturate(.92) contrast(1.02); }
+[data-style="atelier"] .gallery figure:hover img { transform: scale(1.06); filter: saturate(1.05) contrast(1.04); }
+[data-style="atelier"] .gallery figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 48px 22px 18px; font: var(--label); letter-spacing: .22em; text-transform: uppercase; color: #fff; background: linear-gradient(transparent, rgba(0, 0, 0, .72)); }
+
+/* почему мы: крупные контурные цифры, линия сверху */
+[data-style="atelier"] .why { display: grid; gap: 0 clamp(28px, 3vw, 56px); }
+[data-style="atelier"] .why li { background: none; border: 0; border-top: 1px solid var(--hair-2); border-radius: 0; padding: 30px 0 38px; }
+[data-style="atelier"] .why-n { font: 400 clamp(56px, 6vw, 88px)/1 var(--font-head); color: transparent; -webkit-text-stroke: 1px var(--accent); margin-bottom: 22px; letter-spacing: -.02em; }
+[data-style="atelier"] .why h3 { font: 400 clamp(22px, 2vw, 28px)/1.2 var(--font-head); margin-bottom: 12px; }
+[data-style="atelier"] .why p { color: var(--muted); font-size: 16px; }
+
+/* шаги */
+[data-style="atelier"] .steps li::before { width: 46px; height: 46px; border-radius: 0; background: none; border: 1px solid var(--accent); color: var(--accent); font: 500 14px/1 var(--font-body); letter-spacing: .1em; content: counter(s, decimal-leading-zero); }
+[data-style="atelier"] .steps li:not(:last-child)::after { background: var(--hair-2); width: 1px; left: 22px; top: 54px; }
+[data-style="atelier"] .steps b { font: 400 clamp(20px, 1.8vw, 24px)/1.25 var(--font-head); }
+[data-style="atelier"] .steps p { font-size: 15.5px; }
+
+/* отзывы: одна большая цитата и две малые */
+[data-style="atelier"] .reviews { display: grid; gap: 0; }
+[data-style="atelier"] .review { background: none; border: 0; border-top: 1px solid var(--hair); border-radius: 0; padding: 30px 0; gap: 16px; }
+[data-style="atelier"] .review:first-child { border-top: 0; padding-top: 0; }
+[data-style="atelier"] .review p { font-size: 17px; line-height: 1.65; }
+[data-style="atelier"] .review:first-child p { font: 400 clamp(25px, 3vw, 42px)/1.22 var(--font-head); letter-spacing: -.012em; }
+[data-style="atelier"] .review:first-child::before { content: "\201C"; font: 400 clamp(90px, 10vw, 140px)/.6 var(--font-head); color: var(--accent); display: block; height: .45em; margin-bottom: 6px; }
+[data-style="atelier"] .review footer { font: var(--label); letter-spacing: .16em; text-transform: uppercase; }
+[data-style="atelier"] .review footer b { font-size: 13px; letter-spacing: .2em; margin-bottom: 4px; }
+[data-style="atelier"] .more { font: 600 13px/1 var(--font-body); letter-spacing: .2em; text-transform: uppercase; gap: 14px; margin-top: 34px; }
+[data-style="atelier"] .more .ic { width: 18px; height: 18px; stroke-width: 1.5; }
+
+/* вопросы */
+[data-style="atelier"] .faq { border-top: 1px solid var(--hair-2); max-width: none; }
+[data-style="atelier"] .faq summary { padding: 26px 0; font: 400 clamp(20px, 2vw, 27px)/1.3 var(--font-head); letter-spacing: -.008em; }
+[data-style="atelier"] .faq summary::after { content: ""; width: 14px; height: 14px; flex: none; background: linear-gradient(var(--accent), var(--accent)) center / 100% 1px no-repeat, linear-gradient(var(--accent), var(--accent)) center / 1px 100% no-repeat; transition: transform .45s var(--ease); font: 0/0 serif; }
+[data-style="atelier"] .faq details[open] summary::after { transform: rotate(135deg); }
+[data-style="atelier"] .faq details p { font-size: 16.5px; padding-bottom: 28px; }
+
+/* контакты и карта */
+[data-style="atelier"] .c-list { gap: 0; }
+[data-style="atelier"] .c-list > div { padding: 22px 0; border-bottom: 1px solid var(--hair); }
+[data-style="atelier"] .c-list > div:first-child { border-top: 1px solid var(--hair-2); }
+[data-style="atelier"] .c-list dt { font: var(--label); letter-spacing: .26em; margin-bottom: 10px; }
+[data-style="atelier"] .c-list dt .ic { stroke-width: 1.5; width: 16px; height: 16px; }
+[data-style="atelier"] .c-list dd { font-size: 19px; }
+[data-style="atelier"] .c-list a { transition: color .25s; }
+[data-style="atelier"] .c-list a:hover { color: var(--accent); }
+[data-style="atelier"] .c-btns { margin-top: 30px; gap: 12px; }
+[data-style="atelier"] .map { border-radius: 0; border: 1px solid var(--hair-2); min-height: 380px; background-color: var(--surface); background-image: linear-gradient(var(--hair) 1px, transparent 1px), linear-gradient(90deg, var(--hair) 1px, transparent 1px); background-size: 44px 44px; }
+[data-style="atelier"] .map-pin { width: 60px; height: 60px; background: none; color: var(--accent); border: 1px solid var(--accent); box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 12%, transparent), 0 0 0 22px color-mix(in srgb, var(--accent) 6%, transparent); }
+[data-style="atelier"] .map-pin { margin-bottom: 20px; }
+[data-style="atelier"] .map-pin .ic { stroke-width: 1.5; }
+[data-style="atelier"] .map-addr { font: 400 22px/1.3 var(--font-head); }
+[data-style="atelier"][data-theme="dark"] .map iframe { filter: invert(.92) hue-rotate(180deg) grayscale(.85) contrast(.92); }
+[data-style="atelier"][data-theme="light"] .map iframe { filter: grayscale(.9) contrast(1.02); }
+
+/* подвал: большое название контуром */
+[data-style="atelier"] .foot { border-top: 1px solid var(--hair); padding: clamp(48px, 7vw, 90px) 0 36px; overflow: hidden; }
+[data-style="atelier"] .foot-mark { font: 400 clamp(54px, 15.5vw, 240px)/.92 var(--font-head); letter-spacing: -.03em; white-space: nowrap; color: transparent; -webkit-text-stroke: 1px var(--hair-2); user-select: none; margin: 0 0 clamp(32px, 5vw, 64px); text-transform: uppercase; }
+[data-style="atelier"] .foot b { font: 400 22px/1.2 var(--font-head); }
+[data-style="atelier"] .foot a { transition: color .25s; min-width: 44px; }
+[data-style="atelier"] .foot a:hover { color: var(--accent); }
+
+/* нижняя панель на телефоне */
+[data-style="atelier"] .dock { gap: 0; padding: 0 0 env(safe-area-inset-bottom); background: color-mix(in srgb, var(--bg) 97%, transparent); backdrop-filter: none; -webkit-backdrop-filter: none; border-top: 1px solid var(--hair-2); }
+[data-style="atelier"] .dock a { border-radius: 0; border: 0; border-right: 1px solid var(--hair); min-height: 58px; font: 600 13px/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; }
+[data-style="atelier"] .dock a:last-child { border-right: 0; }
+[data-style="atelier"] .dock .dock-main { background: var(--accent); color: var(--on-accent); }
+[data-style="atelier"] .cookie { border-radius: 0; }
+
+/* политика и другие страницы документов */
+[data-style="atelier"] .doc h1 { font-size: clamp(28px, 7.4vw, 56px); overflow-wrap: break-word; hyphens: auto; }
+
+/* появление при прокрутке (включается только с JS: класс .js ставится в <head>) */
+.js [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 1s var(--ease), transform 1s var(--ease); transition-delay: calc(var(--i, 0) * 80ms); }
+.js [data-reveal].in { opacity: 1; transform: none; }
+
+@media (min-width: 600px) {
+  [data-style="atelier"] .logo small { display: inline; }
+  [data-style="atelier"] .hero-meta dl { grid-template-columns: repeat(4, 1fr); }
+  [data-style="atelier"] .meta-cell { padding: 24px 22px; border-bottom: 0; border-left: 1px solid var(--hair); }
+  [data-style="atelier"] .meta-cell:first-child { padding-left: 0; border-left: 0; }
+  [data-style="atelier"] .meta-cell:nth-child(even) { padding-left: 22px; }
+  [data-style="atelier"] .why { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 900px) {
+  [data-style="atelier"] { --gut: 40px; --top-h: 84px; --label: 500 12px/1.2 var(--font-body); }
+  [data-style="atelier"] .btn, [data-style="atelier"] .link-arrow, [data-style="atelier"] .more { font-size: 12.5px; }
+  [data-style="atelier"] .btn-sm { font-size: 11.5px; }
+  [data-style="atelier"] .demo { font-size: 11px; }
+  [data-style="atelier"] .review footer b { font-size: 12.5px; }
+  [data-style="atelier"] body { padding-bottom: 0; }
+  [data-style="atelier"]:has(.demo) { --demo-h: 34px; }
+  [data-style="atelier"] .hero-in { padding-top: 160px; padding-bottom: 56px; }
+  [data-style="atelier"] .hero h1 { font-size: clamp(64px, 8.4vw, 124px); }
+  [data-style="atelier"] .sec-head { grid-template-columns: 1fr 1fr; align-items: end; column-gap: 72px; }
+  [data-style="atelier"] .sec-head .kicker { grid-column: 1 / -1; }
+  [data-style="atelier"] .sec-head h2 { grid-column: 1 / -1; }
+  [data-style="atelier"] .sec-head:has(.sec-sub) h2 { grid-column: 1; }
+  [data-style="atelier"] .sec-head .sec-sub { grid-column: 2; padding-bottom: 10px; }
+  [data-style="atelier"] .contacts .sec-head { grid-template-columns: 1fr; }
+  [data-style="atelier"] .prices { grid-template-columns: 1fr 1fr; }
+  [data-style="atelier"] .price { padding: 28px 0; }
+  [data-style="atelier"] .gallery figure:first-child { grid-column: span 7; grid-row: span 2; aspect-ratio: auto; }
+  [data-style="atelier"] .gallery figure:nth-child(2), [data-style="atelier"] .gallery figure:nth-child(3) { grid-column: span 5; aspect-ratio: 5 / 3.4; }
+  [data-style="atelier"] .gallery figure:nth-child(4) { grid-column: span 12; aspect-ratio: 21 / 8; }
+  [data-style="atelier"] .gallery-2 figure { grid-column: span 6 !important; aspect-ratio: 4 / 5 !important; grid-row: auto !important; }
+  [data-style="atelier"] .why { grid-template-columns: repeat(var(--n, 4), 1fr); }
+  [data-style="atelier"] .steps { gap: 36px; }
+  [data-style="atelier"] .steps li:not(:last-child)::after { left: 62px; right: -18px; top: 23px; bottom: auto; width: auto; height: 1px; }
+  [data-style="atelier"] .reviews { grid-template-columns: 1.3fr 1fr; grid-template-rows: auto auto; column-gap: clamp(40px, 6vw, 96px); }
+  [data-style="atelier"] .review:first-child { grid-row: 1 / span 2; }
+  [data-style="atelier"] .review:nth-child(2) { padding-top: 0; border-top: 0; }
+  [data-style="atelier"] .contacts { grid-template-columns: 1fr 1.15fr; gap: clamp(48px, 7vw, 110px); }
+  [data-style="atelier"] .map { min-height: 520px; }
+  [data-style="atelier"] .foot-in { align-items: end; }
+}
+@media (min-width: 1280px) { [data-style="atelier"] .p-val { font-size: 22px; } }
+@media (max-width: 899px) { [data-style="atelier"] .p-dots { display: none; } [data-style="atelier"] .price { grid-template-columns: minmax(0, 1fr) auto; } }
+
+/* ===== Движение и отклик — «дорогое» ощущение. Всё на transform/opacity/clip-path (не тормозит), при reduce-motion — выключено (внизу) ===== */
+
+/* заголовки по словам: слово поднимается из-под невидимой линии */
+[data-style="atelier"] .split .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .07em .1em 0; margin: 0 -.07em -.1em 0; }
+[data-style="atelier"] .split .w > span { display: inline-block; }
+.js[data-style="atelier"] .sec-head .split .w > span { transform: translateY(108%); transition: transform 1.15s var(--ease) calc(var(--w, 0) * 55ms + .12s); }
+.js[data-style="atelier"] .sec-head.in .split .w > span { transform: none; }
+[data-style="atelier"] .hero-text > h1.split { animation: none; }
+@keyframes ateliers-word { from { transform: translateY(108%); } to { transform: none; } }
+.js[data-style="atelier"] .hero h1.split .w > span { animation: ateliers-word 1.25s var(--ease) both; animation-delay: calc(var(--w, 0) * 70ms + .3s); }
+/* линия в подписи раздела прорисовывается */
+.js[data-style="atelier"] .sec-head .kicker i { transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.2s var(--ease) .1s; }
+.js[data-style="atelier"] .sec-head.in .kicker i { transform: none; }
+
+/* полоса прогресса прокрутки — тонкая линия акцента под шапкой */
+[data-style="atelier"] .top { position: sticky; }
+[data-style="atelier"] .top .progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--accent); transform: scaleX(0); will-change: transform; transform-origin: 0 50%; pointer-events: none; opacity: 0; transition: opacity .4s; }
+[data-style="atelier"] .top.is-scrolled .progress { opacity: 1; }
+
+/* первый экран: фото уходит медленнее страницы (параллакс), текст тает; мягкий свет за курсором */
+[data-style="atelier"] .hero-bg img { will-change: transform; } /* сдвиг при прокрутке (параллакс) пишет main.js прямо в style.translate */
+
+[data-style="atelier"] .hero-light { position: absolute; left: 0; top: 0; width: 1040px; height: 1040px; margin: -520px 0 0 -520px; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .8s var(--ease); will-change: transform;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 15%, transparent), transparent); }
+[data-style="atelier"][data-theme="light"] .hero-light { background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 10%, transparent), transparent); }
+[data-style="atelier"] .hero.lit .hero-light { opacity: 1; } /* двигает main.js через transform — без перерисовки */
+
+/* кнопки: заливка «шторкой» слева направо и лёгкое притяжение к курсору (притяжение — main.js, только мышь) */
+[data-style="atelier"] .btn { position: relative; overflow: hidden; isolation: isolate; transition: color .45s var(--ease), border-color .45s var(--ease), translate .5s var(--ease); }
+[data-style="atelier"] .btn::before { content: ""; position: absolute; inset: -1px; z-index: -1; background: var(--ink); transform: scaleX(0); transform-origin: 100% 50%; transition: transform .55s var(--ease); }
+[data-style="atelier"] .btn:hover::before { transform: scaleX(1); transform-origin: 0 50%; }
+[data-style="atelier"] .btn:hover { color: var(--bg); border-color: var(--ink); }
+[data-style="atelier"] .btn-main:hover { background: var(--accent); color: var(--bg); border-color: var(--ink); }
+[data-style="atelier"] .btn .ic { position: relative; }
+[data-style="atelier"] .btn.magnet { transition: color .45s var(--ease), border-color .45s var(--ease), translate .18s linear; }
+[data-style="atelier"] .dock a { position: relative; }
+
+/* бегущая строка услуг: крупная антиква, через одну — контуром */
+[data-style="atelier"] .marquee { overflow: hidden; border-bottom: 1px solid var(--hair); padding: clamp(22px, 3.4vw, 40px) 0; user-select: none; }
+[data-style="atelier"] .mq-track { display: flex; width: max-content; animation: ateliers-mq var(--mq-dur, 46s) linear infinite; }
+[data-style="atelier"] .marquee:hover .mq-track, [data-style="atelier"] .marquee.off .mq-track { animation-play-state: paused; }
+[data-style="atelier"] .mq-track { will-change: transform; }
+[data-style="atelier"] .mq-row { display: flex; align-items: center; flex: none; }
+[data-style="atelier"] .mq-row span { font: 400 clamp(34px, 6.4vw, 92px)/1 var(--font-head); letter-spacing: -.02em; white-space: nowrap; padding: 0 .1em; }
+[data-style="atelier"][data-italic] .mq-row span.o { font-style: italic; }
+[data-style="atelier"] .mq-row span.o { color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--ink) 55%, transparent); }
+[data-style="atelier"] .mq-row i { width: .34em; height: .34em; flex: none; margin: 0 clamp(20px, 3vw, 44px); border: 1px solid var(--accent); transform: rotate(45deg); font-size: clamp(34px, 6.4vw, 92px); }
+@keyframes ateliers-mq { to { transform: translateX(-50%); } }
+
+/* фото работ: открываются шторкой снизу вверх, снимок внутри «оседает» */
+.js[data-style="atelier"] .gallery figure[data-reveal] { opacity: 1; transform: none; clip-path: inset(100% 0 0 0); transition: clip-path 1.4s var(--ease) calc(var(--i, 0) * 130ms); }
+.js[data-style="atelier"] .gallery figure[data-reveal] img { scale: 1.22; transition: scale 1.8s var(--ease) calc(var(--i, 0) * 130ms), transform 1.6s var(--ease), filter .8s; }
+.js[data-style="atelier"] .gallery figure[data-reveal].in { clip-path: inset(0 0 0 0); }
+.js[data-style="atelier"] .gallery figure[data-reveal].in img { scale: 1; }
+[data-style="atelier"] .gallery figcaption { transition: padding-bottom .6s var(--ease); }
+[data-style="atelier"] .gallery figure:hover figcaption { padding-bottom: 24px; }
+
+/* прайс: при наведении линия акцента пробегает слева направо */
+[data-style="atelier"] .price { position: relative; }
+[data-style="atelier"] .price::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: 100% 50%; transition: transform .7s var(--ease); }
+[data-style="atelier"] .price:hover::after { transform: scaleX(1); transform-origin: 0 50%; }
+[data-style="atelier"] .price:hover { border-color: var(--hair); }
+[data-style="atelier"] .p-dots { transition: border-color .5s; }
+[data-style="atelier"] .price:hover .p-dots { border-color: var(--accent); }
+
+/* «почему мы»: контурная цифра заливается при наведении; шаги — линия-связка прорисовывается */
+[data-style="atelier"] .why-n { transition: color .6s var(--ease); }
+[data-style="atelier"] .why li:hover .why-n { color: var(--accent); }
+.js[data-style="atelier"] .steps li[data-reveal]:not(:last-child)::after { scale: 0; transform-origin: 0 0; transition: scale 1.3s var(--ease) calc(var(--i, 0) * 80ms + .35s); }
+.js[data-style="atelier"] .steps li[data-reveal].in:not(:last-child)::after { scale: 1; }
+
+/* подвал: по большому названию один раз проходит блик */
+[data-style="atelier"] .foot-mark { background: linear-gradient(100deg, transparent 38%, color-mix(in srgb, var(--accent) 85%, transparent) 50%, transparent 62%) 160% 0 / 260% 100% no-repeat; -webkit-background-clip: text; background-clip: text; }
+.js[data-style="atelier"] .foot-mark[data-reveal] { transform: none; transition: opacity 1.2s var(--ease), background-position 2.6s var(--ease) .3s; }
+.js[data-style="atelier"] .foot-mark[data-reveal].in { background-position: -60% 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] { opacity: 1; transform: none; }
+  [data-style="atelier"] .hero-text > *, [data-style="atelier"] .hero-meta, [data-style="atelier"] .hero-bg img { animation: none !important; }
+  [data-style="atelier"] .hero-bg img { transform: none; translate: none; }
+  .js[data-style="atelier"] .split .w > span { transform: none !important; animation: none !important; }
+  .js[data-style="atelier"] .sec-head .kicker i { transform: none; }
+  .js[data-style="atelier"] .gallery figure[data-reveal] { clip-path: none; }
+  .js[data-style="atelier"] .gallery figure[data-reveal] img { scale: 1; }
+  .js[data-style="atelier"] .steps li[data-reveal]:not(:last-child)::after { scale: 1; }
+  [data-style="atelier"] .mq-track { animation: none !important; }
+  [data-style="atelier"] .hero-light { display: none; }
+}
+
+/* Знак клиента в шапке (site.brand.mark) — по своим пропорциям, без скругления */
+[data-style="atelier"] .logo-mark { width: auto; height: 30px; border-radius: 0; }
+/* длинные названия (9+ букв, «MB-garage») на узком телефоне не обрезаются: разрядка меньше */
+@media (max-width: 420px) { [data-style="atelier"] .logo { letter-spacing: .14em; gap: 10px; } [data-style="atelier"] .logo-mark { height: 24px; } }
