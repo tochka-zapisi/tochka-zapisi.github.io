@@ -1,5 +1,8 @@
 <!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Баланс — предложение студии «Точка записи»</title><meta name="robots" content="noindex,nofollow">
+<meta property="og:title" content="Сайт для «Баланс» — набросок">
+<meta property="og:description" content="Как «Баланс» может выглядеть с онлайн-записью и приложением. Студия «Точка записи», Красноярск.">
+<meta property="og:image" content="https://tochka-zapisi.github.io/v/balans/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="../база-премьера/assets/fonts/fonts.css">
 <style>
 :root{--bg:#0a0a09;--bg2:#111110;--sf:#161614;--ink:#ebe7df;--mu:#8e8a83;--ln:#2a2926}
@@ -9,7 +12,11 @@ a{color:inherit}.w{max-width:1120px;margin:0 auto;padding:0 20px}
 h1,h2{font-family:Spectral,Georgia,serif;font-weight:200;letter-spacing:-.01em;line-height:1.02}
 h1{font-size:clamp(44px,9vw,104px);margin:18px 0 22px}h2{font-size:clamp(34px,5.4vw,60px);margin:10px 0 18px}
 section{padding:72px 0;border-top:1px solid var(--ln)}
-.top{padding-top:28px;padding-bottom:64px}.lead{max-width:640px;color:#cfcac2;font-size:19px}
+.top{padding-top:28px;padding-bottom:64px}.hero{display:grid;gap:40px;align-items:center}@media(min-width:900px){.hero{grid-template-columns:1.25fr 1fr}.hero h1{font-size:clamp(44px,5.2vw,72px)}}
+.inc{display:grid;gap:10px 28px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));list-style:none;padding:0;margin-top:26px}.inc li{padding:12px 0 12px 28px;border-bottom:1px solid var(--ln);position:relative;font-size:16px}.inc li::before{content:"";position:absolute;left:4px;top:21px;width:10px;height:1px;background:var(--ink)}
+.calc{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:26px}.calc label{display:grid;gap:6px;font-size:14px;color:var(--mu)}.calc input{min-height:52px;background:var(--bg2);border:1px solid var(--ln);color:var(--ink);font:300 26px Spectral,serif;padding:0 14px;width:100%}
+.res{margin-top:22px;padding:22px;border:1px solid var(--ln);background:var(--bg2);font-size:17px}.res b{font:300 40px/1.1 Spectral,serif;display:block;margin:6px 0}
+details.q{border-bottom:1px solid var(--ln);padding:16px 0}details.q summary{cursor:pointer;font-size:17px;min-height:28px}details.q p{color:#cfcac2;margin-top:10px;max-width:720px}.lead{max-width:640px;color:#cfcac2;font-size:19px}
 .stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:34px}.stats b{display:block;font:300 40px/1 Spectral,serif}.stats span{font-size:14px;color:var(--mu)}
 .ph{margin:0;text-align:center}.ph figcaption{margin-top:14px;font-size:14px;color:var(--mu)}
 .ph-f{position:relative;width:min(300px,78vw);margin:0 auto;padding:9px;border-radius:44px;background:linear-gradient(145deg,#3a3936,#151513);box-shadow:0 0 0 1px #4a4844 inset,0 30px 80px -30px #000}
@@ -31,15 +38,19 @@ ol.f li::before{content:"0" counter(f);font:300 30px/1 Spectral,serif;color:var(
 .mono-av{width:120px;height:120px;border:1px solid var(--ln);display:grid;place-items:center;font:200 64px Spectral,serif;color:var(--mu)}.note{font-size:13px;color:var(--mu);margin-top:40px}
 footer{padding:40px 0 60px;border-top:1px solid var(--ln);font-size:14px;color:var(--mu)}
 </style></head><body>
-<header class="w top">
+<header class="w top hero">
+  <div>
   <p class="mono">Для Баланс · Маерчака, 10</p>
   <h1>Баланс. Сайт, запись и приложение в одном стиле</h1>
-  <p class="lead">Мы студия «Точка записи» из Красноярска. Собрали для вас набросок: как студия «Баланс» может выглядеть в интернете. Это займёт пару минут, ничего не нужно устанавливать.</p>
+  <p class="lead">Мы студия «Точка записи» из Красноярска. Собрали для вас набросок: как «Баланс» может выглядеть в интернете — с вашим названием, адресом и рейтингом. Это пара минут, ничего не нужно устанавливать.</p>
   <div class="stats"><div><b>4,6</b><span>рейтинг в 2ГИС</span></div><div><b>190</b><span>оценок клиентов</span></div></div>
+  <div class="cta"><a class="btn p" href="#start">Хочу такой сайт</a><a class="btn" href="#site">Смотреть набросок</a></div>
+  </div>
+  <figure class="ph"><div class="ph-f"><img src="img/site.webp" alt="Ваш сайт на телефоне" width="402" height="874"><i></i></div><figcaption>Ваш сайт на телефоне</figcaption></figure>
 </header>
-<section><div class="w">
+<section id="site"><div class="w">
   <p class="mono">01 · Ваш сайт</p><h2>Так «Баланс» может выглядеть с телефона и компьютера</h2>
-  <div class="duo"><div class="mac"><div class="mac-s"><img src="img/desk.webp" alt="Сайт Баланс на ноутбуке" width="1512" height="982"></div><div class="mac-b"></div></div><figure class="ph"><div class="ph-f"><img src="img/site.webp" alt="Первый экран на телефоне" width="402" height="874"><i></i></div><figcaption>Первый экран на телефоне</figcaption></figure></div>
+  <div class="mac"><div class="mac-s"><img src="img/desk.webp" alt="Сайт Баланс на ноутбуке" width="1512" height="982"></div><div class="mac-b"></div></div>
   <p class="note">Набросок на основе нашей работы: тексты, фото и цены будут ваши. Стиль подбираем под интерьер и характер места.</p>
 </div></section>
 <section><div class="w">
@@ -55,7 +66,18 @@ footer{padding:40px 0 60px;border-top:1px solid var(--ln);font-size:14px;color:v
   <ol class="f"><li><span>В карточке 2ГИС нет онлайн-записи: записаться можно только звонком, а люди чаще выбирают вечером, когда трубку уже не берут.</span></li><li><span>Сайт есть — покажем, как он может выглядеть в современном оформлении и с записью в два касания.</span></li><li><span>Рейтинг 4,6 стоит показать на сайте сразу, на первом экране: это лучший довод для нового клиента.</span></li></ol>
 </div></section>
 <section><div class="w">
-  <p class="mono">04 · Сколько стоит</p><h2>Фиксированная цена, срок от 3 дней</h2>
+  <p class="mono">04 · Что входит</p><h2>Всё, чтобы клиент нашёл вас и записался</h2>
+  <ul class="inc"><li>Сайт под ваш стиль: фото, услуги, цены</li><li>Удобно с телефона — открывается за секунду</li><li>Рейтинг и отзывы из 2ГИС на первом экране</li><li>Мастера или специалисты с фото</li><li>Карта, адрес и как добраться</li><li>Кнопки звонка, MAX, Telegram и WhatsApp</li><li>Настройка под поиск Яндекса</li><li>Онлайн-запись с уведомлением вам</li><li>Яндекс Метрика: сколько людей пришло и откуда</li><li>Политика и согласие по закону 152-ФЗ</li><li>Домен, хостинг и SSL — берём на себя</li><li>Правки после запуска</li></ul>
+</div></section>
+<section><div class="w">
+  <p class="mono">05 · Посчитайте сами</p><h2>Когда это окупается</h2>
+  <p class="lead">Поставьте свой средний чек и сколько новых записей в месяц принесёт сайт. Это не обещание, а простая арифметика — цифры ваши.</p>
+  <div class="calc"><label>Средний чек, ₽<input id="ck" type="number" inputmode="numeric" value="2000" min="0" step="100"></label><label>Новых записей в месяц<input id="nw" type="number" inputmode="numeric" value="4" min="0"></label></div>
+  <div class="res" id="res"></div>
+  <script>(()=>{const f=n=>Math.round(n).toLocaleString('ru-RU'),ck=document.getElementById('ck'),nw=document.getElementById('nw'),r=document.getElementById('res');const go=()=>{const m=(+ck.value||0)*(+nw.value||0);r.innerHTML='Выручка от новых записей: <b>'+f(m)+' ₽ в месяц</b>'+(m>0?'Сайт по подписке (4 990 ₽ в месяц) окупается с '+Math.max(1,Math.ceil(4990/(+ck.value||1)))+'-й записи, сайт с записью за 59 900 ₽ — примерно за '+Math.max(1,Math.ceil(59900/m))+' мес.':'');};ck.oninput=nw.oninput=go;go();})();</script>
+</div></section>
+<section><div class="w">
+  <p class="mono">06 · Сколько стоит</p><h2>Фиксированная цена, срок от 3 дней</h2>
   <div class="price">
     <div><span class="mono">Сайт</span><b>39 900 ₽</b><p>Сайт под ваш бренд, тексты, Яндекс, скорость. 5 дней.</p></div>
     <div><span class="mono">Сайт + запись</span><b>59 900 ₽</b><p>Плюс онлайн-запись и уведомления. 3 месяца сопровождения в подарок.</p></div>
@@ -64,14 +86,18 @@ footer{padding:40px 0 60px;border-top:1px solid var(--ln);font-size:14px;color:v
   <p class="note">Или сайт по подписке: 0 ₽ за разработку и 4 990 ₽ в месяц. Готовое демо с вашими фото и ценами покажем до оплаты.</p>
 </div></section>
 <section><div class="w">
-  <p class="mono">05 · Кто делает</p>
+  <p class="mono">07 · Частые вопросы</p><h2>Коротко о главном</h2>
+  <details class="q"><summary>У нас уже есть YCLIENTS или DIKIDI. Что с ним?</summary><p>Оставляем: встроим вашу запись в сайт, чтобы человек видел ваши фото и отзывы, а записывался туда же. Ничего переносить не нужно.</p></details><details class="q"><summary>Что нужно от меня?</summary><p>Около 15 минут: ответить на 5 вопросов, прислать фото и прайс. Тексты, дизайн, настройку и публикацию делаем мы.</p></details><details class="q"><summary>Сколько ждать?</summary><p>Демо с вашими данными — 2 дня, бесплатно. Готовый сайт — от 3 до 7 дней после «да».</p></details><details class="q"><summary>А если не понравится?</summary><p>Демо ни к чему не обязывает: не подошло — просто скажите, вы ничего не должны.</p></details><details class="q"><summary>Кому принадлежит сайт?</summary><p>Вам: домен оформляем на вас, все файлы и доступы передаём.</p></details>
+</div></section>
+<section><div class="w">
+  <p class="mono">08 · Кто делает</p>
   <div class="who"><div class="mono-av">Р</div>
   <div><h2>Руслан, студия «Точка записи»</h2>
   <p class="lead">Делаю сайты, онлайн-запись и приложения для бизнеса Красноярска. Вы общаетесь напрямую с тем, кто делает, без менеджеров. Работаю официально как самозанятый — чек на каждую оплату.</p>
   <div class="cta"><a class="btn" href="https://tochka-zapisi.github.io/" target="_blank" rel="noopener">Сайт студии и другие работы</a></div></div></div>
 </div></section>
-<section><div class="w">
-  <p class="mono">06 · Как начнём</p><h2>Ответьте одним словом</h2>
+<section id="start"><div class="w">
+  <p class="mono">09 · Как начнём</p><h2>Ответьте одним словом</h2>
   <ol class="f"><li><span>Напишите «интересно» — зададим 5 вопросов о ценах, мастерах и фото.</span></li><li><span>За 2 дня соберём демо с вашими данными, бесплатно.</span></li><li><span>Понравится — запускаем. Нет — вы ничего не должны.</span></li></ol>
   <div class="cta"><a class="btn p" href="https://t.me/opiumxxxxl">Написать в Telegram</a><a class="btn" href="https://wa.me/79130364962">WhatsApp</a><a class="btn" href="tel:+79130364962">+7 913 036-49-62</a></div>
 </div></section>
