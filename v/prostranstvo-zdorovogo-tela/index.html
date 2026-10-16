@@ -74,16 +74,16 @@ footer{padding:40px 0 60px;border-top:1px solid var(--ln);font-size:14px;color:v
   <p class="lead">Поставьте свой средний чек и сколько новых записей в месяц принесёт сайт. Это не обещание, а простая арифметика — цифры ваши.</p>
   <div class="calc"><label>Средний чек, ₽<input id="ck" type="number" inputmode="numeric" value="2000" min="0" step="100"></label><label>Новых записей в месяц<input id="nw" type="number" inputmode="numeric" value="4" min="0"></label></div>
   <div class="res" id="res"></div>
-  <script>(()=>{const f=n=>Math.round(n).toLocaleString('ru-RU'),ck=document.getElementById('ck'),nw=document.getElementById('nw'),r=document.getElementById('res');const go=()=>{const m=(+ck.value||0)*(+nw.value||0);r.innerHTML='Выручка от новых записей: <b>'+f(m)+' ₽ в месяц</b>'+(m>0?'Сайт по подписке (4 990 ₽ в месяц) окупается с '+Math.max(1,Math.ceil(4990/(+ck.value||1)))+'-й записи, сайт с записью за 59 900 ₽ — примерно за '+Math.max(1,Math.ceil(59900/m))+' мес.':'');};ck.oninput=nw.oninput=go;go();})();</script>
+  <script>(()=>{const f=n=>Math.round(n).toLocaleString('ru-RU'),ck=document.getElementById('ck'),nw=document.getElementById('nw'),r=document.getElementById('res');const go=()=>{const m=(+ck.value||0)*(+nw.value||0);r.innerHTML='Выручка от новых записей: <b>'+f(m)+' ₽ в месяц</b>'+(m>0?'Сайт по подписке (4 900 ₽ в месяц) окупается с '+Math.max(1,Math.ceil(4900/(+ck.value||1)))+'-й записи, сайт с записью за 48 900 ₽ — примерно за '+Math.max(1,Math.ceil(48900/m))+' мес.':'');};ck.oninput=nw.oninput=go;go();})();</script>
 </div></section>
 <section><div class="w">
   <p class="mono">06 · Сколько стоит</p><h2>Фиксированная цена, срок от 3 дней</h2>
   <div class="price">
-    <div><span class="mono">Сайт</span><b>39 900 ₽</b><p>Сайт под ваш бренд, тексты, Яндекс, скорость. 5 дней.</p></div>
-    <div><span class="mono">Сайт + запись</span><b>59 900 ₽</b><p>Плюс онлайн-запись и уведомления. 3 месяца сопровождения в подарок.</p></div>
-    <div><span class="mono">Всё вместе</span><b>89 900 ₽</b><p>Сайт, запись, приложение и бот. 3 месяца сопровождения в подарок.</p></div>
+    <div><span class="mono">Сайт</span><b>31 900 ₽</b><p>Сайт под ваш бренд, тексты, Яндекс, скорость. 5 дней.</p></div>
+    <div><span class="mono">Сайт + запись</span><b>48 900 ₽</b><p>Плюс онлайн-запись и уведомления. 3 месяца сопровождения в подарок.</p></div>
+    <div><span class="mono">Всё вместе</span><b>71 900 ₽</b><p>Сайт, запись, приложение и бот. 3 месяца сопровождения в подарок.</p></div>
   </div>
-  <p class="note">Или сайт по подписке: 0 ₽ за разработку и 4 990 ₽ в месяц. Готовое демо с вашими фото и ценами покажем до оплаты.</p>
+  <p class="note">Или сайт по подписке: 0 ₽ за разработку и 4 900 ₽ в месяц. Готовое демо с вашими фото и ценами покажем до оплаты.</p>
 </div></section>
 <section><div class="w">
   <p class="mono">07 · Частые вопросы</p><h2>Коротко о главном</h2>
