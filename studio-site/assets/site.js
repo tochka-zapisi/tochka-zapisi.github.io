@@ -249,7 +249,7 @@
     const sum = (+plan.dataset.p || 0) + extras.reduce((a, x) => a + (+x.dataset.p || 0), 0);
     $('#sum').textContent = fmt(sum);
     const biz = ($('#biz').value || '').trim();
-    const rows = [['Бизнес', niche() + (biz ? ' — ' + biz : '')], ['Пакет «' + plan.value + '»', fmt(+plan.dataset.p)]].concat(extras.map(x => [x.value, +x.dataset.p ? fmt(+x.dataset.p) : 'после демо'])).concat([['Демо', '0 ₽']]);
+    const rows = [['Бизнес', niche() + (biz ? ' — ' + biz : '')], ['Пакет «' + plan.value + '»', fmt(+plan.dataset.p)]].concat(extras.map(x => [x.value, +x.dataset.p ? fmt(+x.dataset.p) : (x.dataset.t || 'после демо')])).concat([['Демо', '0 ₽']]);
     const keys = rows.map(r => r[0]).join('|');
     lines.innerHTML = rows.map(r => `<li${keys !== prevKeys && !prevKeys.split('|').includes(r[0]) ? ' class="in"' : ''}><span>${esc(r[0])}</span><span>${esc(r[1])}</span></li>`).join('');
     prevKeys = keys;
@@ -344,3 +344,6 @@
   $('pGo').addEventListener('click', () => { const r = document.querySelector('#plan input[value="' + pk().dataset.n + '"]'); if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); } });
   calc();
 })();
+
+// Кнопка блока «Реклама» выбирает пакет «Сайт + клиенты»
+document.querySelectorAll("[data-ads]").forEach(a => a.addEventListener("click", () => { const r = document.querySelector("#plan input[value=\"Сайт + клиенты\"]"); if (r) { r.checked = true; r.dispatchEvent(new Event("change", { bubbles: true })); } }));
