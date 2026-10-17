@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Бронь столика — бар-ресторан Арка, Красноярск</title>
+<meta name="description" content="Забронируйте столик — бар-ресторан Арка: дата, время, гости, зона зала и предзаказ блюд к приходу.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../assets/site/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#07090c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Бронь столика — бар-ресторан Арка, Красноярск">
+<meta property="og:description" content="Забронируйте столик — бар-ресторан Арка: дата, время, гости, зона зала и предзаказ блюд к приходу.">
+<meta property="og:url" content="https://tochka-zapisi.github.io/arka/">
+<meta property="og:image" content="https://tochka-zapisi.github.io/arka/og.jpg">
+<link rel="canonical" href="https://tochka-zapisi.github.io/arka/">
+<link rel="preload" href="../assets/fonts/golos-text-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/golos-text-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/martian-mono-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/martian-mono-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/unbounded-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/unbounded-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site/style.css">
+<style>:root{--bg:#07090c;--bg-2:#0d1218;--surface:#111820;--surface-2:#18212b;--ink:#efe9df;--night:#07090c;--night-2:#0d1218;--wood:#1c2833;--wood-2:#2a3a48;--kraft:#e6dccb;--kraft-ink:#33302a;--cream:#efe9df;--muted:#97a0a8;--neon:#f2b45a;--neon-2:#5fa8d3}</style>
+</head>
+<body class="page-bron">
+<a class="skip" href="#main">К содержанию</a>
+<header class="top" data-top>
+  <a class="logo" href="../" aria-label="Арка — на главную">Арка <small>бар-ресторан</small></a>
+  <span class="clock" aria-hidden="true"><span data-clock>18:00</span></span>
+  <span class="status" data-status data-open="17:00" data-close="02:00"><i></i><b>каждый день с 17:00 до 02:00</b></span>
+  <a class="btn btn-s" href="../bron/">Бронь</a>
+</header>
+<main id="main" class="wrap bron">
+  <p class="time" aria-hidden="true" data-bron-time>18:00</p>
+  <h1 class="h2">Бронь столика</h1>
+  <p class="text">Без звонка: выберите вечер, время и место — администратор подтвердит бронь в мессенджере.</p>
+  <form class="bform" data-bron novalidate>
+    <fieldset><legend>Вечер</legend><div class="chips" data-days role="radiogroup" aria-label="Дата"></div></fieldset>
+    <fieldset><legend>Время</legend><div class="chips chips-t" data-slots role="radiogroup" aria-label="Время"></div></fieldset>
+    <fieldset><legend>Гостей</legend>
+      <div class="step"><button type="button" data-g="-1" aria-label="Меньше гостей">−</button><output data-guests aria-live="polite">2</output><button type="button" data-g="1" aria-label="Больше гостей">+</button></div>
+    </fieldset>
+    <fieldset><legend>Где сесть</legend><div class="zones" data-zones role="radiogroup" aria-label="Зона зала"></div><p class="small">Зоны зала — для примера: в рабочей версии сделаем по вашему залу и столам.</p></fieldset>
+    <fieldset><legend>Повод</legend><div class="chips" data-reasons></div></fieldset>
+    <fieldset class="pre"><legend>Предзаказ к приходу <span class="small">— по желанию</span></legend>
+      <p class="small">Кухня начнёт готовить к вашему времени — ничего не придётся ждать.</p>
+      <div class="pre-list" data-pre></div>
+    </fieldset>
+    <fieldset><legend>Контакты</legend>
+      <label class="field"><span>Имя</span><input name="name" autocomplete="given-name" required></label>
+      <label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7" required></label>
+      <label class="check"><input type="checkbox" name="ok" required> <span>Согласен на обработку данных для брони — <a href="../privacy.html" target="_blank">политика</a></span></label>
+    </fieldset>
+    <div class="summary" data-summary aria-live="polite"></div>
+    <button class="btn btn-wide" type="submit">Забронировать</button>
+    <p class="err" data-err role="alert"></p>
+  </form>
+  <div class="ticket" data-ticket hidden tabindex="-1"></div>
+  <details class="admin" data-admin>
+    <summary>Как это видит администратор</summary>
+    <p class="small">Каждая бронь сразу приходит администратору в MAX или Telegram с кнопками «Подтвердить» и «Перезвонить». Ниже — брони, сделанные в этом браузере (демо).</p>
+    <div data-admin-list></div>
+  </details>
+</main>
+<script>window.BRON={"name":"Арка","phone":"+7 391 200-00-00","tel":"tel:+73912000000","open":"17:00","close":"02:00","slots":{"from":"17:00","to":"01:00","step":30},"zones":[{"id":"window","name":"У окна с видом на мост","seats":"2–4","max":4},{"id":"sofa","name":"Диван в зале","seats":"2–6","max":6},{"id":"terrace","name":"Терраса у реки","seats":"2–10","max":10},{"id":"hall","name":"Банкет — весь зал","seats":"от 15","max":60}],"reasons":["Просто ужин","День рождения","Свидание","С друзьями","Корпоратив"],"preorder":[["Рибай сибирский",1890],["Муксун на гриле",1190],["Сет у реки",2490],["Бургер «Арка»",690],["Строганина из муксуна",790],["Рыбная тарелка",1290],["Медовик с облепихой",390]]}</script>
+<script src="../assets/site/bron.js" defer></script>
+</body>
+</html>
