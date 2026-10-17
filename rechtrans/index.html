@@ -112,7 +112,9 @@ h2 em{font-style:normal;color:var(--brass2)}
 .vac button:hover{background:var(--brass);color:var(--night)}
 .vform{display:grid;gap:12px;margin-top:20px;max-width:560px}
 .vform input:not([type=checkbox]){background:var(--night2);border:1px solid var(--rule);color:var(--ivory);font:500 16px var(--sans);padding:12px 14px;min-height:50px;width:100%}
-@media(max-width:860px){.trust{grid-template-columns:1fr 1fr}.trust div:nth-child(3){padding-left:0;border-left:0}.vac td:nth-child(2){display:none}}footer{padding:40px 6vw 90px 110px;color:var(--mute);font-size:14px}
+@media(max-width:860px){.trust{grid-template-columns:1fr 1fr}.trust div:nth-child(3){padding-left:0;border-left:0}.vac td:nth-child(2){display:none}}.photo img{filter:grayscale(1) sepia(.35) contrast(1.1) brightness(.85)}
+.mark-big{font:500 clamp(64px,13vw,200px)/.85 var(--serif);letter-spacing:.04em;color:transparent;-webkit-text-stroke:1px var(--brass);opacity:.45;white-space:nowrap;overflow:hidden;user-select:none;margin-bottom:24px}
+.leg:first-of-type{background:radial-gradient(ellipse at 80% 20%,rgba(184,149,90,.09),transparent 55%)}footer{padding:40px 6vw 90px 110px;color:var(--mute);font-size:14px}
 @media(max-width:860px){footer{padding-left:34px}}
 .demo-badge{position:fixed;right:12px;bottom:12px;z-index:30;background:var(--brass);color:var(--night);font:600 11px var(--mono);padding:6px 10px;letter-spacing:.12em}
 
@@ -128,6 +130,7 @@ h2 em{font-style:normal;color:var(--brass2)}
 .rv{opacity:0;transform:translateY(20px);transition:opacity 1s,transform 1s}
 .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+body:after{content:'';position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 </style>
 </head>
 <body>
@@ -221,7 +224,7 @@ h2 em{font-style:normal;color:var(--brass2)}
   </div>
 </section>
 </main>
-<footer>Демо-сайт для «РечТрансЛогистик». Цены и сроки — пример. Студия «Точка записи»</footer>
+<footer><div class="mark-big" aria-hidden="true">РЕЧТРАНС</div>Демо-сайт для «РечТрансЛогистик». Цены и сроки — пример. Студия «Точка записи»</footer>
 <div class="demo-badge">ДЕМО</div>
 
 <script>

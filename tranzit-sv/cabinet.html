@@ -13,7 +13,7 @@
 <link rel="preload" href="assets/fonts/jetbrains-mono-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <style>
-:root{--deep:#0a141b;--water:#13293a;--line:#24435a;--paper:#eef1ef;--mist:#9fb3bf;--buoy:#ff5a1f;--ok:#7fd1a8;--mono:"JetBrains Mono",ui-monospace,monospace;--sans:"Golos Text",system-ui,sans-serif}
+:root{--deep:#0a141b;--water:#13293a;--line:#24435a;--paper:#eef1ef;--mist:#9fb3bf;--buoy:#c24a33;--ok:#7fd1a8;--mono:"JetBrains Mono",ui-monospace,monospace;--sans:"Golos Text",system-ui,sans-serif}
 *{box-sizing:border-box;margin:0}
 body{background:var(--deep);color:var(--paper);font:400 16px/1.5 var(--sans);-webkit-font-smoothing:antialiased;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:80px 80px;background-attachment:fixed}
 body:before{content:"";position:fixed;inset:0;background:rgba(10,20,27,.93);z-index:-1}
@@ -101,6 +101,7 @@ tr:hover td{background:var(--water)}
 .scroll{overflow-x:auto}
 .demo-badge{position:fixed;left:12px;bottom:12px;z-index:30;background:var(--buoy);color:#fff;font:600 12px var(--mono);padding:6px 10px;letter-spacing:.06em}
 @media(max-width:860px){.kpis,.meta{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr}.steps div{border-right:0;border-bottom:1px solid var(--line)}.extra{grid-template-columns:1fr}.extra figure{border-right:0;min-height:220px}.who span{display:none}.track .p small{display:none}.track .p.lab small{display:block}}
+body:after{content:'';position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 </style>
 </head>
 <body>
@@ -183,7 +184,7 @@ function card(s){
   <div class="river"><div class="track">
     <div class="done" style="width:${pct(pos)}%"></div>
     ${ports.map((p,i)=>`<i class="p ${p[1]<=pos?'pass':''} ${i===0||i===ports.length-1?'lab':''}" style="left:${pct(p[1])}%"><small>${p[0]}</small></i>`).join('')}
-    ${done?'':`<svg class="boat" style="left:${pct(pos)}%" viewBox="0 0 28 18"><path d="M1 10h26l-4 7H5z" fill="#ff5a1f"/><rect x="10" y="3" width="8" height="7" fill="#eef1ef"/></svg>`}
+    ${done?'':`<svg class="boat" style="left:${pct(pos)}%" viewBox="0 0 28 18"><path d="M1 10h26l-4 7H5z" fill="#c24a33"/><rect x="10" y="3" width="8" height="7" fill="#eef1ef"/></svg>`}
   </div></div>
   <div class="meta">
     <div><span class="mono">Судно</span><b>${s.ves}</b></div>
