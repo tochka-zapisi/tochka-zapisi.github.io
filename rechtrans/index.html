@@ -1,0 +1,282 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>РечТрансЛогистик — речные перевозки до Дудинки (демо)</title>
+<meta name="description" content="РечТрансЛогистик, Красноярск: речные грузоперевозки по Енисею до Дудинки и дальше. Расчёт перевозки, заявка, отслеживание груза. Демо-сайт студии «Точка записи».">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website"><meta property="og:title" content="РечТрансЛогистик — рейс до Дудинки"><meta property="og:image" content="https://tochka-zapisi.github.io/rechtrans/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://tochka-zapisi.github.io/rechtrans/index.html">
+<link rel="preload" href="assets/fonts/cormorant-garamond-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/golos-text-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/jetbrains-mono-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/manrope-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<script>try{if(!sessionStorage.getItem('rtl-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro')}catch(e){}</script>
+<style>
+/* Образ: лоция Енисея. Прокрутка страницы — рейс вниз по реке, от Красноярска до Дудинки.
+   Ночь на реке, латунь приборов, слоновая кость лоции */
+:root{--night:#0b1620;--night2:#102230;--rule:#22384a;--ivory:#ece5d6;--mute:#93a3ae;--brass:#b8955a;--brass2:#d8bd8a;
+--serif:"Cormorant Garamond",Georgia,serif;--sans:"Manrope",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0}[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--night);color:var(--ivory);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.mono{font:500 11.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--brass);color:var(--night);border:0;padding:16px 26px;font:600 15px var(--sans);letter-spacing:.04em;text-decoration:none;cursor:pointer;min-height:50px;transition:background .25s}
+.btn:hover{background:var(--brass2)}
+.btn.line{background:transparent;color:var(--ivory);border:1px solid var(--brass)}
+header{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;height:68px;padding:0 28px;background:linear-gradient(var(--night),rgba(11,22,32,.6) 70%,transparent)}
+.logo{text-decoration:none;font:600 22px var(--serif);letter-spacing:.12em}
+.logo small{display:block;font:500 9.5px var(--mono);letter-spacing:.3em;color:var(--brass)}
+.km{font:500 13px var(--mono);color:var(--brass2);letter-spacing:.1em}
+
+/* лента реки слева: судно идёт вниз по мере прокрутки */
+.rail{position:fixed;left:28px;top:96px;bottom:40px;width:2px;background:var(--rule);z-index:25}
+.rail .run{position:absolute;left:0;top:0;width:2px;background:var(--brass);height:0}
+.rail .boat{position:absolute;left:-7px;width:16px;height:16px;border:2px solid var(--brass2);background:var(--night);transform:rotate(45deg);top:0}
+.rail .pt{position:absolute;left:-4px;width:10px;height:10px;border-radius:50%;background:var(--night);border:1.5px solid var(--mute)}
+.rail .pt.on{background:var(--brass);border-color:var(--brass)}
+.rail .pt span{position:absolute;left:20px;top:-6px;font:500 10.5px var(--mono);letter-spacing:.12em;color:var(--mute);white-space:nowrap;text-transform:uppercase;opacity:0;transition:opacity .3s}
+.rail .pt.cur span{opacity:1;color:var(--brass2)}
+main{padding-left:110px}
+@media(max-width:860px){header{background:var(--night);border-bottom:1px solid var(--rule);height:60px}.km{display:none}header .btn{padding:8px 12px!important;font-size:13px}.rail{left:12px;top:80px}.rail .pt span{display:none}main{padding-left:34px}header{padding:0 16px}}
+
+.leg{min-height:100vh;padding:120px 6vw 100px 0;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--rule);position:relative}
+.leg .port{display:flex;gap:18px;align-items:baseline;margin-bottom:26px}
+.leg .port b{font:500 13px var(--mono);color:var(--brass);letter-spacing:.16em}
+.leg .port i{font-style:normal;font:13px var(--mono);color:var(--mute)}
+h1{font:500 clamp(44px,7vw,100px)/.98 var(--serif);letter-spacing:-.01em;max-width:1000px}
+h1 em{font-style:normal;color:var(--brass2)}
+h2{font:500 clamp(36px,5vw,68px)/1 var(--serif);max-width:860px}
+h2 em{font-style:normal;color:var(--brass2)}
+.lead{font-size:19px;color:#c9c3b6;max-width:600px;margin-top:26px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
+.coord{position:absolute;right:6vw;bottom:40px;font:12px/1.8 var(--mono);color:var(--mute);text-align:right}
+@media(max-width:860px){.coord{display:none}.leg{padding:110px 16px 80px 0}}
+
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:48px;border-top:1px solid var(--rule)}
+.svc div{padding:30px 28px 30px 0;border-bottom:1px solid var(--rule)}
+.svc div+div{padding-left:28px;border-left:1px solid var(--rule)}
+.svc div:nth-child(4){padding-left:0;border-left:0}
+.svc b{display:block;font:500 26px var(--serif);margin:10px 0 8px}
+.svc p{color:var(--mute);font-size:15px}
+@media(max-width:860px){.svc{grid-template-columns:1fr}.svc div,.svc div+div{padding:24px 0;border-left:0}}
+
+/* калькулятор: прибор */
+.inst{display:grid;grid-template-columns:1fr 1fr;margin-top:44px;border:1px solid var(--brass)}
+.inst .f{padding:32px;display:grid;gap:18px;border-right:1px solid var(--rule)}
+.inst label{display:block;font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.inst select,.inst input{width:100%;background:var(--night2);border:1px solid var(--rule);color:var(--ivory);font:500 17px var(--sans);padding:13px 14px;min-height:50px}
+.inst select:focus,.inst input:focus{outline:1px solid var(--brass2)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{background:transparent;border:1px solid var(--rule);color:var(--ivory);font:500 14px var(--sans);padding:9px 12px;cursor:pointer;min-height:42px}
+.chips button[aria-pressed=true]{border-color:var(--brass);color:var(--night);background:var(--brass)}
+.inst .r{padding:32px;display:flex;flex-direction:column;align-items:center;text-align:center;background:radial-gradient(circle at 50% 40%,var(--night2),var(--night))}
+.dial{width:220px;height:220px;max-width:70vw;max-height:70vw}
+.sum{font:500 clamp(30px,3.6vw,44px)/1.1 var(--serif);color:var(--brass2);margin-top:8px}
+.eta{font:13px var(--mono);color:var(--mute);margin:6px 0 20px}
+.warn{font-size:13px;color:var(--mute);margin-top:16px;max-width:340px}
+.warn.hot{color:var(--brass2)}
+@media(max-width:860px){.inst{grid-template-columns:1fr}.inst .f{border-right:0;border-bottom:1px solid var(--rule);padding:20px}.inst .r{padding:24px}}
+
+.photo{margin-top:44px;display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:end}
+.photo figure{margin:0;aspect-ratio:4/3;overflow:hidden;border:1px solid var(--rule)}
+.photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(.35) contrast(1.05) brightness(.9)}
+.photo p{color:var(--mute);font-size:15px}
+.ph{border:1px dashed var(--brass);padding:18px;font:12.5px var(--mono);color:var(--brass2);margin-top:16px}
+@media(max-width:860px){.photo{grid-template-columns:1fr}}
+
+.order{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:40px}
+.order form{display:grid;gap:14px}
+.order input,.order textarea{width:100%;background:var(--night2);border:1px solid var(--rule);color:var(--ivory);font:500 17px var(--sans);padding:13px 14px;min-height:52px}
+.order textarea{min-height:100px}
+.agree{display:flex;gap:10px;font-size:14px;color:var(--mute)}
+.agree input{width:22px;height:22px;min-height:22px;flex:none}
+.done{display:none;border:1px solid var(--brass);padding:24px}
+.done.show{display:block}
+.done pre{white-space:pre-wrap;font:13px/1.6 var(--mono);background:var(--night2);padding:14px;margin:12px 0;color:#c9c3b6}
+@media(max-width:860px){.order{grid-template-columns:1fr}}
+.trust{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--brass);margin-top:56px;max-width:1000px}
+.trust div{padding:18px 18px 0 0}
+.trust div+div{padding-left:18px;border-left:1px solid var(--rule)}
+.trust b{display:block;font:500 21px var(--serif);margin:4px 0}
+.trust p{font-size:14px;color:var(--mute)}
+.vac{width:100%;border-collapse:collapse;margin-top:28px;border-top:1px solid var(--brass)}
+.vac td{padding:16px 12px 16px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.vac td b{font:500 22px var(--serif)}
+.vac td:nth-child(2){color:var(--mute);font-size:15px}
+.vac td:last-child{text-align:right}
+.vac button{background:none;border:1px solid var(--brass);color:var(--ivory);font:600 14px var(--sans);padding:10px 14px;cursor:pointer;min-height:44px}
+.vac button:hover{background:var(--brass);color:var(--night)}
+.vform{display:grid;gap:12px;margin-top:20px;max-width:560px}
+.vform input:not([type=checkbox]){background:var(--night2);border:1px solid var(--rule);color:var(--ivory);font:500 16px var(--sans);padding:12px 14px;min-height:50px;width:100%}
+@media(max-width:860px){.trust{grid-template-columns:1fr 1fr}.trust div:nth-child(3){padding-left:0;border-left:0}.vac td:nth-child(2){display:none}}footer{padding:40px 6vw 90px 110px;color:var(--mute);font-size:14px}
+@media(max-width:860px){footer{padding-left:34px}}
+.demo-badge{position:fixed;right:12px;bottom:12px;z-index:30;background:var(--brass);color:var(--night);font:600 11px var(--mono);padding:6px 10px;letter-spacing:.12em}
+
+/* заставка: латунный компас доворачивает на север — «курс проложен» */
+#intro{display:none}
+.intro #intro{display:flex;position:fixed;inset:0;z-index:100;background:var(--night);align-items:center;justify-content:center;flex-direction:column;gap:22px;cursor:pointer;animation:out .6s 2.7s forwards}
+#intro svg{width:150px;height:150px}
+#intro .needle{transform-origin:75px 75px;animation:seek 2.2s cubic-bezier(.3,1.4,.5,1) forwards}
+#intro p{font:500 12px var(--mono);letter-spacing:.3em;color:var(--brass2);opacity:0;animation:fade .5s 1.9s forwards}
+@keyframes seek{0%{transform:rotate(140deg)}100%{transform:rotate(0)}}
+@keyframes fade{to{opacity:1}}
+@keyframes out{to{opacity:0;visibility:hidden}}
+.rv{opacity:0;transform:translateY(20px);transition:opacity 1s,transform 1s}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="intro" aria-hidden="true"><svg viewBox="0 0 150 150"><circle cx="75" cy="75" r="70" fill="none" stroke="#b8955a"/><circle cx="75" cy="75" r="56" fill="none" stroke="#22384a"/><text x="75" y="20" fill="#d8bd8a" font-family="JetBrains Mono" font-size="11" text-anchor="middle">С</text><g class="needle"><path d="M75 22 L82 75 L75 128 L68 75Z" fill="none" stroke="#d8bd8a"/><path d="M75 22 L82 75 L68 75Z" fill="#b8955a"/></g></svg><p>КУРС ПРОЛОЖЕН · ЕНИСЕЙ</p></div>
+
+<header><a class="logo" href="#">РЕЧТРАНС<small>ЛОГИСТИК · КРАСНОЯРСК</small></a><span class="km" id="km">0 КМ · КРАСНОЯРСК</span><a class="btn line" href="cabinet.html" style="padding:10px 16px;min-height:42px">Где мой груз</a></header>
+<div class="rail" id="rail" aria-hidden="true"><div class="run" id="run"></div><div class="boat" id="boat"></div></div>
+
+<main>
+<section class="leg" data-port="Красноярск" data-km="0">
+  <div class="port"><b>КРАСНОЯРСК</b><i>0 км · отход</i></div>
+  <h1>Рейс до&nbsp;<em>Дудинки</em> начинается здесь</h1>
+  <p class="lead">Речные грузоперевозки по Енисею — от причала в Красноярске до Таймыра. Прокрутите страницу: вы пройдёте наш маршрут.</p>
+  <div class="cta"><a class="btn" href="#raschet">Рассчитать перевозку</a><a class="btn line" href="#zayavka">Оставить заявку</a></div>
+  <div class="trust"><div><span class="mono">I</span><b>Договор и ставка</b><p>Цена фиксируется при бронировании</p></div><div><span class="mono">II</span><b>Страхование</b><p>Груз застрахован по запросу</p></div><div><span class="mono">III</span><b>Экипажи Енисея</b><p>Знают фарватер до залива</p></div><div><span class="mono">IV</span><b>Документы онлайн</b><p>Подпись через ЭДО</p></div></div>
+  <div class="coord">56°00′ с.ш. 92°52′ в.д.<br>ул. Авиаторов, 33</div>
+</section>
+
+<section class="leg" data-port="Лесосибирск" data-km="300">
+  <div class="port"><b>ЛЕСОСИБИРСК</b><i>300 км</i></div>
+  <h2 class="rv">Что берём на&nbsp;борт</h2>
+  <div class="svc rv">
+    <div><span class="mono">I</span><b>Техника</b><p>Самосвалы, спецтехника, буровые — с креплением по схеме.</p></div>
+    <div><span class="mono">II</span><b>Генеральные грузы</b><p>Металл, трубы, лес, стройматериалы.</p></div>
+    <div><span class="mono">III</span><b>Северный завоз</b><p>Продукты и снабжение для посёлков Севера.</p></div>
+    <div><span class="mono">IV</span><b>Контейнеры</b><p>20 и 40 футов от склада до порта.</p></div>
+    <div><span class="mono">V</span><b>Негабарит</b><p>Модули, конструкции, оборудование.</p></div>
+    <div><span class="mono">VI</span><b>На берег</b><p>Выгрузка там, где нет причала.</p></div>
+  </div>
+  <p class="mono rv" style="margin-top:18px">Перечень уточним с вами</p>
+</section>
+
+<section class="leg" id="raschet" data-port="Туруханск" data-km="1360">
+  <div class="port"><b>ТУРУХАНСК</b><i>1 360 км</i></div>
+  <h2 class="rv">Сколько стоит <em>рейс</em> вашего груза</h2>
+  <div class="inst rv">
+    <div class="f">
+      <div class="two"><div><label for="from">Погрузка</label><select id="from"></select></div><div><label for="to">Выгрузка</label><select id="to"></select></div></div>
+      <div><label>Груз</label><div class="chips" id="types"></div></div>
+      <div class="two"><div><label for="w">Масса, т</label><input id="w" type="number" inputmode="decimal" value="20" min="0.5" step="0.5"></div><div><label for="v">Объём, м³</label><input id="v" type="number" inputmode="decimal" value="40" min="1"></div></div>
+      <div><label for="d">Отправка</label><input id="d" type="date"></div>
+    </div>
+    <div class="r" aria-live="polite">
+      <svg class="dial" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="100" fill="none" stroke="#22384a" stroke-width="2"/><circle id="arc" cx="110" cy="110" r="100" fill="none" stroke="#b8955a" stroke-width="2" stroke-dasharray="628" stroke-dashoffset="628" transform="rotate(-90 110 110)" style="transition:stroke-dashoffset .8s"/><text x="110" y="104" text-anchor="middle" fill="#ece5d6" font-family="Cormorant Garamond" font-size="40" id="dkm">0</text><text x="110" y="130" text-anchor="middle" fill="#93a3ae" font-family="JetBrains Mono" font-size="11" letter-spacing="2">КМ ПО РЕКЕ</text></svg>
+      <div class="sum" id="sum">—</div>
+      <div class="eta" id="eta"></div>
+      <a class="btn" href="#zayavka">Забронировать место</a>
+      <div class="warn" id="warn"></div>
+    </div>
+  </div>
+</section>
+
+<section class="leg" data-port="Игарка" data-km="1740">
+  <div class="port"><b>ИГАРКА</b><i>1 740 км</i></div>
+  <h2 class="rv">Флот, люди и <em>вакансии</em></h2>
+  <div class="photo rv">
+    <figure><img src="assets/img/a-tugboat-pushing-a-long--0gYLST-.webp" alt="Толкач ведёт баржи по реке" loading="lazy"></figure>
+    <div><p>Экипажи, которые знают Енисей от Красноярска до залива: фарватер, перекаты, погоду в низовьях. Груз ведут люди, а не диспетчерская программа.</p>
+    <div class="ph">Здесь — ваши суда и экипажи. Фото из рейсов сделаем сами или обработаем ваши.</div></div>
+  </div>
+  <div id="vakansii" class="rv" style="margin-top:64px">
+    <span class="mono">Вакансии · экипажи на навигацию</span>
+    <table class="vac"><tbody>
+      <tr><td><b>Капитан-механик</b></td><td>Диплом капитана-механика, опыт на Енисее</td><td><button data-v="Капитан-механик">Откликнуться</button></td></tr>
+      <tr><td><b>Помощник капитана</b></td><td>Диплом судоводителя</td><td><button data-v="Помощник капитана">Откликнуться</button></td></tr>
+      <tr><td><b>Моторист-рулевой</b></td><td>Свидетельство, допуск к СЭУ</td><td><button data-v="Моторист-рулевой">Откликнуться</button></td></tr>
+      <tr><td><b>Матрос, повар судовой</b></td><td>Медкомиссия; обучение на борту</td><td><button data-v="Матрос / повар">Откликнуться</button></td></tr>
+    </tbody></table>
+    <form class="vform" id="vform" hidden><span class="mono">Отклик: <b id="vname"></b></span><input id="vfio" placeholder="Имя и фамилия" autocomplete="name"><input id="vtel" type="tel" placeholder="Телефон" autocomplete="tel"><input id="vdip" placeholder="Диплом / свидетельство, стаж"><label class="agree"><input type="checkbox" id="vok"> Согласен на обработку персональных данных</label><button class="btn">Отправить отклик</button><p id="vdone" hidden>Отклик принят — отдел кадров позвонит в течение двух дней.</p></form>
+    <p class="mono" style="margin-top:16px">Зарплаты и условия укажете вы · Уже в экипаже? <a href="cabinet.html#crew">Приложение экипажа</a></p>
+  </div>
+</section>
+
+<section class="leg" id="zayavka" data-port="Дудинка" data-km="1990">
+  <div class="port"><b>ДУДИНКА</b><i>1 990 км · прибытие</i></div>
+  <h2 class="rv">Ваш груз — <em>следующим рейсом</em></h2>
+  <div class="order">
+    <div class="rv"><p class="lead" style="margin-top:0">Ответим в течение рабочего дня: ставка, дата отхода, судно.</p><p class="mono" style="margin-top:22px">Офис: Красноярск, ул. Авиаторов, 33</p><p class="mono" style="margin-top:8px">Телефон и мессенджеры менеджера подключим при запуске</p></div>
+    <div>
+      <form id="form" novalidate>
+        <input id="calcline" readonly aria-label="Расчёт">
+        <input id="org" placeholder="Компания" autocomplete="organization">
+        <input id="name" placeholder="Ваше имя" autocomplete="name">
+        <input id="phone" type="tel" placeholder="Телефон" autocomplete="tel">
+        <textarea id="note" placeholder="Что за груз, куда, нужна ли выгрузка на берег"></textarea>
+        <label class="agree"><input type="checkbox" id="ok"> Согласен на обработку персональных данных</label>
+        <button class="btn">Отправить заявку</button>
+      </form>
+      <div class="done" id="done"><b style="font:500 26px var(--serif)">Заявка принята</b><p style="color:var(--mute)">Так она придёт менеджеру в MAX или Telegram:</p><pre id="msg"></pre><button class="btn line" type="button" id="again">Новая заявка</button></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer>Демо-сайт для «РечТрансЛогистик». Цены и сроки — пример. Студия «Точка записи»</footer>
+<div class="demo-badge">ДЕМО</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const PORTS=[["Красноярск",0],["Лесосибирск",300],["Енисейск",340],["Подкаменная Тунгуска",1000],["Туруханск",1360],["Игарка",1740],["Дудинка",1990],["Диксон",2380]];
+const TYPES=[["Генеральный",1],["Контейнер",1.15],["Техника",1.35],["Негабарит",1.7],["Северный завоз",.95]];
+let type=0;
+
+// лента реки: точки портов по секциям, судно и счётчик км идут за прокруткой
+const legs=[...document.querySelectorAll('.leg')],rail=$('#rail');
+const pts=legs.map((l,i)=>{const p=document.createElement('div');p.className='pt';p.style.top=(i/(legs.length-1)*100)+'%';p.innerHTML=`<span>${l.dataset.port}</span>`;rail.appendChild(p);return p});
+function onScroll(){
+  const max=document.documentElement.scrollHeight-innerHeight,k=Math.min(1,Math.max(0,scrollY/max));
+  $('#run').style.height=k*100+'%';$('#boat').style.top=`calc(${k*100}% - 8px)`;
+  const f=k*(legs.length-1),i=Math.floor(f),a=+legs[i].dataset.km,b=+(legs[i+1]||legs[i]).dataset.km;
+  const km=Math.round(a+(b-a)*(f-i)),near=Math.round(f);
+  $('#km').textContent=`${km.toLocaleString('ru-RU')} КМ · ${legs[near].dataset.port.toUpperCase()}`;
+  pts.forEach((p,j)=>{p.classList.toggle('on',j<=f+.01);p.classList.toggle('cur',j===near)});
+}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+// калькулятор
+PORTS.forEach(([n],i)=>{$('#from').add(new Option(n,i));$('#to').add(new Option(n,i))});$('#to').value=6;
+TYPES.forEach(([n],i)=>{const b=document.createElement('button');b.type='button';b.textContent=n;b.setAttribute('aria-pressed',i===0);b.onclick=()=>{type=i;[...$('#types').children].forEach((x,j)=>x.setAttribute('aria-pressed',j===i));calc()};$('#types').appendChild(b)});
+const now=new Date(),y=now.getFullYear();let open=new Date(y,4,15),close=new Date(y,9,10);if(now>close){open=new Date(y+1,4,15);close=new Date(y+1,9,10)}
+$('#d').valueAsDate=now<open?open:now;
+const rub=n=>(Math.round(n/1000)*1000).toLocaleString('ru-RU')+' ₽';
+function calc(){
+  const a=+$('#from').value,b=+$('#to').value,km=Math.abs(PORTS[b][1]-PORTS[a][1]);
+  $('#dkm').textContent=km.toLocaleString('ru-RU');$('#arc').style.strokeDashoffset=628-628*Math.min(1,km/2380);
+  if(!km){$('#sum').textContent='—';$('#eta').textContent='Выберите разные порты';return}
+  const w=Math.max(.5,+$('#w').value||0),v=Math.max(1,+$('#v').value||0),pay=Math.max(w,v/2.5);
+  const s=Math.max(45000,pay*km*1.9*TYPES[type][1]),days=Math.ceil(km/(b>a?260:180))+2;
+  $('#sum').textContent=rub(s*.9)+' – '+rub(s*1.1);$('#eta').textContent=`В ПУТИ ≈ ${days} СУТ · ${TYPES[type][0].toUpperCase()} · ${pay.toFixed(1)} Т`;
+  const d=$('#d').valueAsDate,left=d?Math.ceil((close-d)/864e5):99,wn=$('#warn');
+  if(d&&(d>close||d<open)){wn.className='warn hot';wn.textContent='Навигация закрыта — поставим на первый рейс следующего сезона.'}
+  else if(left<days+7){wn.className='warn hot';wn.textContent=`До закрытия навигации ${left} дн. — бронируйте сейчас.`}
+  else{wn.className='warn';wn.textContent='Ставки — пример. В рабочей версии — ваши тарифы.'}
+  $('#calcline').value=`${PORTS[a][0]} → ${PORTS[b][0]}, ${TYPES[type][0].toLowerCase()}, ${w} т / ${v} м³, ${$('#sum').textContent}`;
+}
+['#from','#to','#w','#v','#d'].forEach(s=>$(s).addEventListener('input',calc));calc();
+
+$('#form').onsubmit=e=>{e.preventDefault();if(!$('#name').value.trim()||!$('#phone').value.trim()){$('#name').focus();return}if(!$('#ok').checked){$('#ok').focus();return}
+  $('#msg').textContent=`⚓ Заявка с сайта РечТрансЛогистик\n${$('#calcline').value}\nКомпания: ${$('#org').value||'—'}\nКонтакт: ${$('#name').value}, ${$('#phone').value}\nГруз: ${$('#note').value||'—'}`;$('#form').style.display='none';$('#done').classList.add('show')};
+$('#again').onclick=()=>{$('#form').style.display='';$('#done').classList.remove('show')};
+
+const vf=$('#vform');
+document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{vf.hidden=false;$('#vname').textContent=b.dataset.v;$('#vdone').hidden=true;vf.scrollIntoView({behavior:'smooth',block:'center'})});
+vf.onsubmit=e=>{e.preventDefault();if(!$('#vfio').value.trim()||!$('#vtel').value.trim()){$('#vfio').focus();return}if(!$('#vok').checked){$('#vok').focus();return}$('#vdone').hidden=false};
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+if(document.documentElement.classList.contains('intro')){
+  try{sessionStorage.setItem('rtl-intro','1')}catch(e){}
+  const end=()=>document.documentElement.classList.remove('intro');$('#intro').onclick=end;setTimeout(end,3300);
+}
+</script>
+</body>
+</html>
