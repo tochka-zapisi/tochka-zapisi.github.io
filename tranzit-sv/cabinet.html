@@ -1,0 +1,263 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кабинет клиента — Транзит-СВ (демо)</title>
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website"><meta property="og:title" content="Транзит-СВ — грузоперевозки по Енисею"><meta property="og:image" content="https://tochka-zapisi.github.io/tranzit-sv/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://tochka-zapisi.github.io/tranzit-sv/cabinet.html">
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg"><meta name="theme-color" content="#14243a"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preload" href="assets/fonts/golos-text-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/ibm-plex-mono-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/ibm-plex-sans-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/jetbrains-mono-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--deep:#0a141b;--water:#13293a;--line:#24435a;--paper:#eef1ef;--mist:#9fb3bf;--buoy:#ff5a1f;--ok:#7fd1a8;--mono:"JetBrains Mono",ui-monospace,monospace;--sans:"Golos Text",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+body{background:var(--deep);color:var(--paper);font:400 16px/1.5 var(--sans);-webkit-font-smoothing:antialiased;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:80px 80px;background-attachment:fixed}
+body:before{content:"";position:fixed;inset:0;background:rgba(10,20,27,.93);z-index:-1}
+a{color:inherit}
+.mono{font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;font-size:11.5px;color:var(--mist)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--line);background:rgba(10,20,27,.9);position:sticky;top:0;z-index:10;backdrop-filter:blur(8px)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px}
+.logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:19px;text-decoration:none;letter-spacing:.04em}
+.mark{display:flex;gap:5px;align-items:flex-end;height:24px}.mark i{display:block;width:6px;background:var(--buoy)}.mark i:first-child{height:14px}.mark i:last-child{height:24px}
+.who{text-align:right;font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--buoy);color:#fff;border:0;padding:13px 20px;font:600 15px var(--sans);cursor:pointer;text-decoration:none;min-height:46px}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--paper)}
+.btn.ghost:hover{border-color:var(--paper)}
+/* вход */
+#login{min-height:calc(100vh - 64px);display:grid;place-items:center;padding:40px 20px}
+.lbox{width:100%;max-width:440px;border:1px solid var(--line);background:var(--deep);padding:34px}
+.lbox h1{font-size:28px;margin:10px 0 8px}
+.lbox p{color:var(--mist);font-size:15px}
+.lbox input{width:100%;margin:20px 0 12px;font:600 18px var(--mono);background:var(--water);border:1px solid var(--line);color:#fff;padding:14px;min-height:52px;letter-spacing:.05em}
+.lbox .btn{width:100%}
+.lbox .or{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--mist);font-size:13px}
+.lbox .or:before,.lbox .or:after{content:"";flex:1;height:1px;background:var(--line)}
+#err{color:var(--buoy);font-size:14px;min-height:20px}
+/* кабинет */
+#app{display:none;padding:34px 0 80px}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:30px;overflow-x:auto}
+.tabs button{background:none;border:0;color:var(--mist);font:500 15px var(--sans);padding:14px 20px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;min-height:48px}
+.tabs button[aria-selected=true]{color:#fff;border-color:var(--buoy)}
+.pane{display:none}.pane.on{display:block}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:28px}
+.kpis div{background:var(--deep);padding:20px}
+.kpis b{display:block;font:600 28px var(--mono);color:#fff;margin-top:6px}
+.card{border:1px solid var(--line);background:var(--deep);margin-bottom:20px}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:22px 24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.card h2{font-size:22px;margin-top:6px}
+.badge{display:inline-block;white-space:nowrap;font:600 12px var(--mono);letter-spacing:.06em;padding:6px 10px;border:1px solid var(--buoy);color:var(--buoy);text-transform:uppercase}
+.badge.ok{border-color:var(--ok);color:var(--ok)}
+.badge.wait{border-color:var(--mist);color:var(--mist)}
+/* лента реки */
+.river{padding:26px 24px 12px}
+.track{position:relative;height:56px;margin:0 8px}
+.track:before{content:"";position:absolute;left:0;right:0;top:26px;height:2px;background:var(--line)}
+.track .done{position:absolute;left:0;top:26px;height:2px;background:var(--buoy)}
+.track .p{position:absolute;top:21px;width:12px;height:12px;margin-left:-6px;background:var(--deep);border:2px solid var(--mist)}
+.track .p.pass{background:var(--buoy);border-color:var(--buoy)}
+.track .p small{position:absolute;top:18px;left:50%;transform:translateX(-50%);font:11px var(--mono);color:var(--mist);white-space:nowrap}
+.track .boat{position:absolute;top:0;margin-left:-14px;width:28px;height:18px;transition:left 1.2s cubic-bezier(.4,0,.2,1)}
+.track .boat:after{content:"";position:absolute;left:13px;top:18px;width:2px;height:8px;background:var(--buoy)}
+.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);margin-top:18px}
+.meta div{background:var(--deep);padding:16px 24px}
+.meta b{display:block;font-weight:600;margin-top:4px}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line)}
+.steps div{padding:16px 18px;border-right:1px solid var(--line);font-size:14px;color:var(--mist)}
+.steps div:last-child{border:0}
+.steps div.pass{color:#fff}
+.steps div.pass:before{content:"✓ ";color:var(--ok)}
+.steps div.now{color:#fff;background:var(--water)}
+.steps div.now:before{content:"● ";color:var(--buoy)}
+.steps small{display:block;font:11.5px var(--mono);color:var(--mist);margin-top:4px}
+.extra{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.extra figure{margin:0;position:relative;border-right:1px solid var(--line);min-height:200px}
+.extra img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.7);position:absolute;inset:0}
+.extra figcaption{position:absolute;left:12px;bottom:10px;background:rgba(10,20,27,.85);padding:6px 10px}
+.extra .acts{padding:22px 24px;display:flex;flex-direction:column;gap:12px}
+.extra .acts p{color:var(--mist);font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font:600 11.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mist);text-align:left;padding:12px 16px;border-bottom:1px solid var(--line)}
+td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.num{font-family:var(--mono)}
+tr:hover td{background:var(--water)}
+.cap{height:6px;background:var(--line);width:120px;display:inline-block;vertical-align:middle;margin-right:8px}
+.cap i{display:block;height:100%;background:var(--buoy)}
+.link{background:none;border:0;color:var(--paper);text-decoration:underline;cursor:pointer;font:inherit;padding:8px 0}
+.sw{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid var(--line);gap:16px}
+.sw p{color:var(--mist);font-size:14px}
+.tg{position:relative;width:52px;height:30px;flex:none}
+.tg input{opacity:0;width:100%;height:100%;position:absolute;cursor:pointer;margin:0;z-index:1}
+.tg span{position:absolute;inset:0;background:var(--line);transition:.2s}
+.tg span:after{content:"";position:absolute;left:4px;top:4px;width:22px;height:22px;background:var(--mist);transition:.2s}
+.tg input:checked+span{background:var(--buoy)}
+.tg input:checked+span:after{transform:translateX(22px);background:#fff}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--paper);color:var(--deep);padding:14px 20px;font-weight:600;transition:transform .3s;z-index:50;max-width:90vw}
+.toast.on{transform:translateX(-50%)}
+.scroll{overflow-x:auto}
+.demo-badge{position:fixed;left:12px;bottom:12px;z-index:30;background:var(--buoy);color:#fff;font:600 12px var(--mono);padding:6px 10px;letter-spacing:.06em}
+@media(max-width:860px){.kpis,.meta{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr}.steps div{border-right:0;border-bottom:1px solid var(--line)}.extra{grid-template-columns:1fr}.extra figure{border-right:0;min-height:220px}.who span{display:none}.track .p small{display:none}.track .p.lab small{display:block}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="index.html">ТРАНЗИТ-СВ</a>
+  <div class="who" id="who"><a class="btn ghost" href="index.html">На сайт</a></div>
+</div></header>
+
+<section id="login">
+  <div class="lbox">
+    <div class="mono">Где мой груз</div>
+    <h1>Отслеживание и кабинет</h1>
+    <p>Введите номер перевозки из договора или накладной — покажем, где сейчас судно и когда оно будет в порту.</p>
+    <input id="num" placeholder="ТС-0148" autocomplete="off" aria-label="Номер перевозки">
+    <div id="err"></div>
+    <button class="btn" id="go">Найти груз</button>
+    <div class="or">или</div>
+    <button class="btn ghost" id="demo" style="width:100%">Войти как демо-клиент</button>
+    <button class="btn ghost" id="crew" style="width:100%;margin-top:10px">Вход для экипажа</button>
+    <a class="btn ghost" href="index.html#vakansii" style="width:100%;margin-top:10px">Вакансии — работа на флоте</a>
+    <p class="mono" style="margin-top:18px">Демо: попробуйте номер ТС-0148</p>
+  </div>
+</section>
+
+<main id="app"><div class="wrap">
+  <div class="kpis">
+    <div><span class="mono">В пути</span><b id="k1">2</b></div>
+    <div><span class="mono">Тонн за сезон</span><b>1 240</b></div>
+    <div><span class="mono">К подписи</span><b id="k3">2</b></div>
+    <div><span class="mono">До закрытия навигации</span><b id="k4">—</b></div>
+  </div>
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-p="gruzy">Грузы</button>
+    <button role="tab" aria-selected="false" data-p="docs">Документы</button>
+    <button role="tab" aria-selected="false" data-p="reisy">Рейсы и места</button>
+    <button role="tab" aria-selected="false" data-p="notify">Уведомления</button>
+  </div>
+  <div class="pane on" id="gruzy"></div>
+  <div class="pane" id="docs"><div class="card scroll"><table>
+    <thead><tr><th>Документ</th><th>Перевозка</th><th>Дата</th><th>Статус</th><th></th></tr></thead>
+    <tbody id="docrows"></tbody></table></div>
+    <p class="mono">Подписание через ЭДО (Диадок / СБИС) — без бумаги и курьеров</p></div>
+  <div class="pane" id="reisy"><div class="card scroll"><table>
+    <thead><tr><th>Рейс</th><th>Маршрут</th><th>Отход</th><th>Судно</th><th>Свободно</th><th></th></tr></thead>
+    <tbody id="trips"></tbody></table></div></div>
+  <div class="pane" id="notify"><div class="card">
+    <div class="sw"><div><b>Погрузка завершена</b><p>Фото крепления груза и номер судна</p></div><label class="tg"><input type="checkbox" checked aria-label="Погрузка завершена"><span></span></label></div>
+    <div class="sw"><div><b>Судно прошло порт</b><p>Каждый крупный порт по пути: Лесосибирск, Туруханск, Игарка</p></div><label class="tg"><input type="checkbox" checked aria-label="Судно прошло порт"><span></span></label></div>
+    <div class="sw"><div><b>Прибытие через 24 часа</b><p>Чтобы подготовить технику и людей к выгрузке</p></div><label class="tg"><input type="checkbox" checked aria-label="Прибытие через 24 часа"><span></span></label></div>
+    <div class="sw"><div><b>Документы к подписи</b><p>Счёт, акт, накладная</p></div><label class="tg"><input type="checkbox" checked aria-label="Документы к подписи"><span></span></label></div>
+    <div class="sw"><div><b>Куда присылать</b><p>MAX · Telegram · e-mail</p></div><span class="mono">MAX</span></div>
+  </div></div>
+</div></main>
+
+<div class="toast" id="toast"></div>
+<div class="demo-badge">ДЕМО</div>
+
+<script>
+const PORTS=[["Красноярск",0],["Лесосибирск",300],["Туруханск",1360],["Игарка",1740],["Дудинка",1990],["Диксон",2380]];
+const MAX=2380;
+// Вымышленные перевозки клиента
+const SHIP=[
+ {n:"ТС-0148",what:"2 самосвала КАМАЗ-6520 + запчасти",t:"38 т",to:"Дудинка",km:1520,ves:"Толкач «Курейка» + баржа Б-14",eta:"через 3 сут",step:2,img:"assets/img/a-tugboat-pushing-a-long--0gYLST-.webp"},
+ {n:"ТС-0153",what:"Контейнер 40' — продукты длительного хранения",t:"24 т",to:"Игарка",km:300,ves:"Сухогруз «Ангара»",eta:"через 6 сут",step:2,img:"assets/img/a-large-red-boat-floating-v8WaaaPv.webp"},
+ {n:"ТС-0131",what:"Металлопрокат, трубы 219 мм",t:"112 т",to:"Туруханск",km:1360,ves:"Баржа Б-09",eta:"выдан 02.09",step:5,img:"assets/img/a-cargo-barge-carrying-coal-icFSj-S2.webp"}
+];
+const STEPS=["Принят на площадке","Погружен и закреплён","В пути","Прибыл в порт","Выдан"];
+const $=s=>document.querySelector(s);
+const toast=t=>{const e=$('#toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2600)};
+
+function card(s){
+  const end=PORTS.find(p=>p[0]===s.to)[1];
+  const pos=Math.min(s.km,end);
+  const ports=PORTS.filter(p=>p[1]<=end);
+  const pct=k=>(k/end*100).toFixed(1);
+  const done=s.step===5;
+  return `<article class="card">
+  <div class="top"><div><span class="mono">${s.n} · ${s.t}</span><h2>${s.what}</h2></div>
+  <span class="badge ${done?'ok':''}">${done?'Выдан':'В пути · '+s.eta}</span></div>
+  <div class="river"><div class="track">
+    <div class="done" style="width:${pct(pos)}%"></div>
+    ${ports.map((p,i)=>`<i class="p ${p[1]<=pos?'pass':''} ${i===0||i===ports.length-1?'lab':''}" style="left:${pct(p[1])}%"><small>${p[0]}</small></i>`).join('')}
+    ${done?'':`<svg class="boat" style="left:${pct(pos)}%" viewBox="0 0 28 18"><path d="M1 10h26l-4 7H5z" fill="#ff5a1f"/><rect x="10" y="3" width="8" height="7" fill="#eef1ef"/></svg>`}
+  </div></div>
+  <div class="meta">
+    <div><span class="mono">Судно</span><b>${s.ves}</b></div>
+    <div><span class="mono">Сейчас</span><b>${done?s.to:pos+' км от Красноярска'}</b></div>
+    <div><span class="mono">Пункт выдачи</span><b>${s.to}, причал № 3</b></div>
+    <div><span class="mono">Прибытие</span><b>${s.eta}</b></div>
+  </div>
+  <div class="steps">${STEPS.map((t,i)=>`<div class="${i<s.step?'pass':i===s.step?'now':''}">${t}<small>${i<s.step?['24.08','26.08','27.08','—','—'][i]:i===s.step?'сейчас':'ожидается'}</small></div>`).join('')}</div>
+  <div class="extra">
+    <figure><img src="${s.img}" alt="Фото груза на судне" loading="lazy"><figcaption class="mono">Фотоотчёт погрузки · 26.08</figcaption></figure>
+    <div class="acts"><span class="mono">Действия</span>
+      <button class="btn ghost" onclick="toast('Ссылка на отслеживание скопирована — можно отправить снабженцу')">Поделиться отслеживанием</button>
+      <button class="btn ghost" onclick="toast('Заявка создана по образцу ${s.n} — проверьте даты')">Повторить перевозку</button>
+      <button class="btn ghost" onclick="toast('Менеджер Ольга получила вопрос по ${s.n}')">Написать менеджеру</button>
+      <p>Ответственный менеджер: Ольга, +7 391 200-00-01 (демо)</p></div>
+  </div></article>`;
+}
+$('#gruzy').innerHTML=SHIP.map(card).join('');
+
+const DOCS=[["Счёт № 412","ТС-0153","28.08","К оплате"],["Акт № 377","ТС-0131","03.09","К подписи"],["Транспортная накладная","ТС-0148","26.08","Подписано"],["Договор перевозки 2026","все","12.05","Подписано"],["Счёт-фактура № 377","ТС-0131","03.09","К подписи"]];
+$('#docrows').innerHTML=DOCS.map(d=>`<tr><td>${d[0]}</td><td class="num">${d[1]}</td><td class="num">${d[2]}</td><td><span class="badge ${d[3]==='Подписано'?'ok':d[3]==='К оплате'?'':'wait'}">${d[3]}</span></td><td><button class="link" onclick="toast('${d[3]==='К подписи'?'Документ отправлен на подпись в ЭДО':'PDF скачан (демо)'}')">${d[3]==='К подписи'?'Подписать':'PDF'}</button></td></tr>`).join('');
+
+const TRIPS=[["Р-41","Красноярск → Дудинка","05.09","Толкач «Курейка»",30],["Р-42","Красноярск → Игарка","09.09","Сухогруз «Ангара»",55],["Р-43","Красноярск → Диксон","14.09","Сухогруз «Енисей»",12],["Р-44","Красноярск → Дудинка","21.09","Толкач «Нижняя Тунгуска»",80]];
+$('#trips').innerHTML=TRIPS.map(t=>`<tr><td class="num">${t[0]}</td><td>${t[1]}</td><td class="num">${t[2]}</td><td>${t[3]}</td><td><span class="cap"><i style="width:${100-t[4]}%"></i></span><span class="num">${t[4]}%</span></td><td><button class="link" onclick="toast('Место на рейсе ${t[0]} забронировано на 48 часов')">Забронировать</button></td></tr>`).join('');
+
+// вкладки
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id===b.dataset.p))});
+document.querySelectorAll('.tg input').forEach(i=>i.onchange=()=>toast(i.checked?'Уведомление включено':'Уведомление выключено'));
+
+// навигация
+const now=new Date(),close=new Date(now.getFullYear(),9,10);
+$('#k4').textContent=now<close?Math.ceil((close-now)/864e5)+' дн.':'закрыта';
+
+// вход: по номеру — только эта перевозка, демо — весь кабинет
+function open(only){
+  $('#login').style.display='none';$('#app').style.display='block';
+  if(only){$('#gruzy').innerHTML=card(only);document.querySelector('.tabs').style.display='none';document.querySelector('.kpis').style.display='none';
+    $('#who').innerHTML='<a class="btn ghost" href="cabinet.html">Войти в кабинет</a>'}
+  else $('#who').innerHTML='<span class="mono">ООО «Северстрой» · демо</span>';
+}
+$('#go').onclick=()=>{const v=$('#num').value.trim().toUpperCase().replace(/\s/g,'').replace(/^(\d)/,'ТС-$1');const s=SHIP.find(x=>x.n===v||x.n.replace('-','')===v);if(s)open(s);else $('#err').textContent='Номер не найден. Проверьте договор или напишите менеджеру.'};
+$('#num').onkeydown=e=>{if(e.key==='Enter')$('#go').click()};
+$('#demo').onclick=()=>open();
+// приложение экипажа: рейс, вахта, документы допуска, вакансии внутри флота
+function openCrew(){
+  $('#login').style.display='none';$('#app').style.display='block';
+  $('#who').innerHTML='<span class="mono">Иванов С. · моторист-рулевой · демо</span>';
+  document.querySelector('.kpis').innerHTML=`<div><span class="mono">Судно</span><b style="font-size:20px">«Курейка»</b></div><div><span class="mono">Рейс</span><b>Р-41</b></div><div><span class="mono">Вахта</span><b>08–12</b></div><div><span class="mono">До конца контракта</span><b>23 дн.</b></div>`;
+  const tabs=document.querySelector('.tabs');
+  tabs.innerHTML=['Мой рейс','Вахты','Документы','Вакансии флота'].map((n,i)=>`<button role="tab" aria-selected="${i===0}" data-p="c${i}">${n}</button>`).join('');
+  document.querySelectorAll('.pane').forEach(p=>p.remove());
+  const w=document.querySelector('#app .wrap');
+  w.insertAdjacentHTML('beforeend',`
+  <div class="pane on" id="c0">${card(SHIP[0])}
+    <div class="card"><div class="sw"><div><b>Приказ на рейс Р-41</b><p>Отход 05.09, 06:00, причал № 2. Явка на борт до 04:00</p></div><button class="link" onclick="toast('Ознакомлен — отметка ушла капитану')">Ознакомлен</button></div>
+    <div class="sw"><div><b>Сообщить о неисправности</b><p>Фото + описание сразу уходят механику и на берег</p></div><button class="link" onclick="toast('Заявка механику создана')">Сообщить</button></div></div></div>
+  <div class="pane" id="c1"><div class="card scroll"><table><thead><tr><th>Дата</th><th>Вахта</th><th>Пост</th><th>Где судно</th></tr></thead><tbody>
+    ${['05.09','06.09','07.09','08.09','09.09'].map((d,i)=>`<tr><td class="num">${d}</td><td class="num">08–12 · 20–24</td><td>${i%2?'Рулевой':'Машинное отделение'}</td><td>${['Красноярск','Лесосибирск','Подкаменная Тунгуска','Туруханск','Игарка'][i]}</td></tr>`).join('')}
+  </tbody></table></div><button class="btn ghost" onclick="toast('Запрос на обмен вахтой отправлен капитану')">Попросить обмен вахтой</button></div>
+  <div class="pane" id="c2"><div class="card scroll"><table><thead><tr><th>Документ</th><th>Действует до</th><th>Статус</th></tr></thead><tbody>
+    <tr><td>Диплом моториста-рулевого</td><td class="num">03.2030</td><td><span class="badge ok">В порядке</span></td></tr>
+    <tr><td>Медкомиссия</td><td class="num">11.2026</td><td><span class="badge">Через 26 дн.</span></td></tr>
+    <tr><td>Удостоверение по охране труда</td><td class="num">05.2028</td><td><span class="badge ok">В порядке</span></td></tr>
+    <tr><td>Расчётный листок, август</td><td class="num">—</td><td><button class="link" onclick="toast('PDF скачан (демо)')">PDF</button></td></tr>
+  </tbody></table></div><button class="btn ghost" onclick="toast('Запись на медкомиссию: отдел кадров пришлёт время')">Записаться на медкомиссию</button></div>
+  <div class="pane" id="c3"><div class="card">
+    <div class="sw"><div><b>Старший моторист · сухогруз «Ангара»</b><p>Сезон 2027 · перевод внутри флота · от 135 000 ₽</p></div><button class="link" onclick="toast('Заявка на перевод отправлена в отдел кадров')">Подать заявку</button></div>
+    <div class="sw"><div><b>Капитан-механик · толкач «Нижняя Тунгуска»</b><p>Сезон 2027 · нужен диплом капитана-механика</p></div><button class="link" onclick="toast('Заявка на перевод отправлена в отдел кадров')">Подать заявку</button></div>
+    <div class="sw"><div><b>Порекомендовать знакомого</b><p>Премия 15 000 ₽, если он отработает навигацию</p></div><button class="link" onclick="toast('Ссылка на вакансии скопирована — отправьте знакомому')">Поделиться</button></div>
+  </div><p class="mono">Вакансии и суммы условные — демо</p></div>`);
+  tabs.querySelectorAll('button').forEach(b=>b.onclick=()=>{tabs.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected',x===b));document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id===b.dataset.p))});
+}
+$('#crew').onclick=openCrew;
+const h=decodeURIComponent(location.hash.slice(1));if(h==='crew')openCrew();else if(h){$('#num').value=h;$('#go').click()}
+</script>
+</body>
+</html>
