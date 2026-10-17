@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Заказ торта — кондитерская Глазурь, Красноярск</title>
+<meta name="description" content="Забронируйте столик — кондитерская Глазурь: дата, время, гости, зона зала и предзаказ блюд к приходу.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../assets/site/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#140c09">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Заказ торта — кондитерская Глазурь, Красноярск">
+<meta property="og:description" content="Забронируйте столик — кондитерская Глазурь: дата, время, гости, зона зала и предзаказ блюд к приходу.">
+<meta property="og:url" content="https://tochka-zapisi.github.io/glazur/">
+<meta property="og:image" content="https://tochka-zapisi.github.io/glazur/og.jpg">
+<link rel="canonical" href="https://tochka-zapisi.github.io/glazur/">
+<link rel="preload" href="../assets/fonts/golos-text-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/golos-text-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/martian-mono-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/martian-mono-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/unbounded-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/unbounded-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site/style.css">
+<style>:root{--bg:#140c09;--bg-2:#1d130e;--surface:#241811;--surface-2:#2e1f16;--ink:#f6ece1;--night:#140c09;--night-2:#1d130e;--wood:#3a2418;--wood-2:#583626;--kraft:#f4e8da;--kraft-ink:#4a3022;--cream:#f6ece1;--muted:#b09c8d;--neon:#efb3a4;--neon-2:#dcb57e}</style>
+</head>
+<body class="page-bron">
+<a class="skip" href="#main">К содержанию</a>
+<header class="top" data-top>
+  <a class="logo" href="../" aria-label="Глазурь — на главную">Глазурь <small>кондитерская</small></a>
+  <span class="clock" aria-hidden="true"><span data-clock>18:00</span></span>
+  <span class="status" data-status data-open="09:00" data-close="21:00"><i></i><b>каждый день с 9:00 до 21:00</b></span>
+  <a class="btn btn-s" href="../bron/">Бронь</a>
+</header>
+<main id="main" class="wrap bron">
+  <p class="time" aria-hidden="true" data-bron-time>18:00</p>
+  <h1 class="h2">Заказ торта</h1>
+  <p class="text">Без звонка: выберите день, торт и число гостей — кондитер подтвердит заказ и предоплату в мессенджере.</p>
+  <form class="bform" data-bron novalidate>
+    <fieldset><legend>День получения</legend><div class="chips" data-days role="radiogroup" aria-label="Дата"></div></fieldset>
+    <fieldset><legend>Во сколько забрать</legend><div class="chips chips-t" data-slots role="radiogroup" aria-label="Время"></div></fieldset>
+    <fieldset><legend>Сколько гостей</legend>
+      <div class="step"><button type="button" data-g="-1" aria-label="Меньше гостей">−</button><output data-guests aria-live="polite">2</output><button type="button" data-g="1" aria-label="Больше гостей">+</button></div>
+    </fieldset>
+    <fieldset><legend>Торт</legend><div class="zones" data-zones role="radiogroup" aria-label="Зона зала"></div><p class="small">Начинку и надпись уточнит кондитер. Виды тортов — для примера: в рабочей версии сделаем по вашему прайсу.</p></fieldset>
+    <fieldset><legend>Повод</legend><div class="chips" data-reasons></div></fieldset>
+    <fieldset class="pre"><legend>Добавить к заказу <span class="small">— по желанию</span></legend>
+      <p class="small">Упакуем вместе с тортом — заберёте всё сразу.</p>
+      <div class="pre-list" data-pre></div>
+    </fieldset>
+    <fieldset><legend>Контакты</legend>
+      <label class="field"><span>Имя</span><input name="name" autocomplete="given-name" required></label>
+      <label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7" required></label>
+      <label class="check"><input type="checkbox" name="ok" required> <span>Согласен на обработку данных для заказа — <a href="../privacy.html" target="_blank">политика</a></span></label>
+    </fieldset>
+    <div class="summary" data-summary aria-live="polite"></div>
+    <button class="btn btn-wide" type="submit">Заказать</button>
+    <p class="err" data-err role="alert"></p>
+  </form>
+  <div class="ticket" data-ticket hidden tabindex="-1"></div>
+  <details class="admin" data-admin>
+    <summary>Как это видит кондитер</summary>
+    <p class="small">Каждый заказ сразу приходит кондитеру в MAX или Telegram с кнопками «Подтвердить» и «Перезвонить». Ниже — заказы, сделанные в этом браузере (демо).</p>
+    <div data-admin-list></div>
+  </details>
+</main>
+<script>window.BRON={"name":"Глазурь","phone":"+7 391 200-00-07","tel":"tel:+73912000007","open":"09:00","close":"21:00","slots":{"from":"10:00","to":"20:00","step":60},"zones":[{"id":"bento","name":"Бенто-торт","seats":"1–2","max":2},{"id":"sofa","name":"Торт 1,5 кг","seats":"до 8","max":8},{"id":"big","name":"Торт 3 кг","seats":"до 16","max":16},{"id":"hall","name":"Ярусный торт","seats":"от 15","max":60}],"reasons":["День рождения","Свадьба","Детский праздник","Юбилей","Просто так"],"preorder":[["Набор капкейков 6 шт.",1190],["Макарон, набор 6 шт.",540],["Корзинка с ягодами",240],["Эклер ванильный",190],["Павлова",320]]}</script>
+<script src="../assets/site/bron.js" defer></script>
+</body>
+</html>

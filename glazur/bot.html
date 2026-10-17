@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Бот брони — кондитерская Глазурь</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Демо бота брони столиков в MAX и Telegram: гость бронирует в переписке, администратор подтверждает одной кнопкой.">
+<link rel="icon" href="assets/site/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/golos-text-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/golos-text-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/martian-mono-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/martian-mono-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/unbounded-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/unbounded-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+:root{--bg:#140c09;--bg-2:#1d130e;--surface:#241811;--surface-2:#2e1f16;--ink:#f6ece1;--night:#140c09;--night-2:#1d130e;--wood:#3a2418;--wood-2:#583626;--kraft:#f4e8da;--kraft-ink:#4a3022;--cream:#f6ece1;--muted:#b09c8d;--neon:#efb3a4;--neon-2:#dcb57e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--night);color:var(--cream);font:16px/1.45 "Golos Text",system-ui,sans-serif}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 16px 56px}
+.back{display:inline-flex;min-height:44px;align-items:center;color:var(--muted);text-decoration:none;font-size:14px}
+h1{font:800 clamp(28px,6vw,52px)/1.05 "Unbounded",sans-serif;margin:8px 0 10px;letter-spacing:-.01em}
+h1 span{color:var(--neon);text-shadow:0 0 16px color-mix(in srgb,var(--neon) 60%,transparent)}
+.lead{color:color-mix(in srgb,var(--cream) 82%,transparent);max-width:44em;margin:0 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+.chips span{font:500 13px/1 "Martian Mono",monospace;letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--cream) 22%,transparent);color:var(--muted)}
+.stage{display:grid;gap:28px;justify-content:center}
+@media(min-width:860px){.stage{grid-template-columns:repeat(2,minmax(0,380px))}}
+.who{font:500 13px/1 "Martian Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px 8px}
+.phone{position:relative;background:linear-gradient(145deg,#2b2a2e,#0e0d10);border-radius:52px;padding:11px;box-shadow:inset 0 0 0 1.5px #3c3b40,0 40px 70px -30px #000,0 0 60px -30px var(--neon);width:min(392px,100%,calc(84vh * 402 / 874 + 22px))}
+/* рамка iPhone 17 Pro: экран 402×874, «островок» сверху */
+.scr{border-radius:42px;overflow:hidden;background:#0f0e12;aspect-ratio:402/874;display:flex;flex-direction:column}
+.phone::before{content:"";position:absolute;top:22px;left:50%;width:31%;height:30px;margin-left:-15.5%;border-radius:20px;background:#000;z-index:2}
+.top{display:flex;align-items:center;gap:12px;background:#17151b;padding:52px 16px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.av{width:42px;height:42px;border-radius:50%;background:#050406;display:grid;place-items:center;flex:none;border:1px solid color-mix(in srgb,var(--neon) 50%,transparent)}
+.av svg{width:30px}.av .ring{fill:none;stroke-width:9;stroke:var(--neon)}.av .r2{stroke:var(--neon-2)}
+.top b{display:block;font-size:15px;line-height:1.2}.top small{color:var(--muted);font-size:13px}
+.msgs{flex:1;overflow-y:auto;padding:14px 10px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth;
+  background:radial-gradient(circle at 80% 10%,color-mix(in srgb,var(--neon) 10%,transparent),transparent 40%),radial-gradient(circle at 10% 90%,color-mix(in srgb,var(--neon-2) 10%,transparent),transparent 45%)}
+.m{max-width:86%;padding:9px 12px;border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px;line-height:1.42;animation:pop .25s ease}
+.m.bot{background:#211e26;align-self:flex-start;border-bottom-left-radius:5px}
+.m.me{background:color-mix(in srgb,var(--neon) 30%,#1d1424);align-self:flex-end;border-bottom-right-radius:5px}
+.m.sys{align-self:center;background:rgba(255,255,255,.08);color:var(--muted);font:500 13px/1.3 "Martian Mono",monospace;border-radius:999px;padding:6px 12px}
+.m img{display:block;width:100%;border-radius:11px;margin:-3px 0 8px}
+.m b{color:#fff}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}}
+.kb{align-self:flex-start;width:86%;display:grid;gap:5px;margin-top:-3px}
+.kb .r{display:flex;gap:5px}
+.kb button,.kb a{flex:1;font:inherit;font-size:14px;font-weight:600;background:rgba(255,255,255,.07);color:var(--cream);border:1px solid rgba(255,255,255,.08);border-radius:11px;padding:10px 6px;cursor:pointer;text-align:center;text-decoration:none;min-height:42px}
+.kb button:hover,.kb a:hover{background:rgba(255,255,255,.13)}
+.kb button:disabled{opacity:.35;cursor:default}
+.kb .main{background:var(--neon);color:#12051a;border-color:var(--neon)}
+.foot{padding:10px;background:#17151b;border-top:1px solid rgba(255,255,255,.06)}
+.foot button{width:100%;font:inherit;font-weight:700;border:0;border-radius:999px;background:var(--neon);color:#12051a;padding:12px;cursor:pointer;min-height:46px}
+.foot p{margin:0;text-align:center;color:var(--muted);font-size:13px;padding:12px}
+.note{color:var(--muted);font-size:14px;max-width:46em;margin:28px auto 0;text-align:center}
+.again{display:block;margin:16px auto 0;font:inherit;font-weight:600;border:1px solid color-mix(in srgb,var(--cream) 35%,transparent);background:transparent;color:var(--cream);border-radius:999px;padding:12px 22px;cursor:pointer;min-height:46px}
+:focus-visible{outline:2px solid var(--neon);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="./">← на сайт бара</a>
+  <h1>Бот брони <span>Глазурь</span></h1>
+  <p class="lead">Гость заказарует стол прямо в переписке — администратор подтверждает одной кнопкой. Бот сам напоминает за 2 часа и наутро просит оценить вечер. Работает в MAX и Telegram.</p>
+  <div class="chips"><span>MAX</span><span>Telegram</span><span>Нажимайте кнопки в телефоне гостя</span></div>
+  <div class="stage">
+    <div><p class="who">Гость бара</p><div class="phone"><div class="scr"><div class="top"><span class="av"><svg class="rings drip " viewBox="0 0 220 120" aria-hidden="true"><path class="deck" d="M10 22 H210"/><path class="ring r1" d="M10 30 C30 30 30 62 42 62 C54 62 50 30 72 30 C90 30 88 84 100 84 C112 84 108 30 130 30 C148 30 146 54 158 54 C170 54 168 30 190 30 C200 30 204 36 210 30"/><path class="ring r2" d="M24 112 H196"/><circle class="lamp" style="--i:0" cx="42" cy="74" r="3.6"/><circle class="lamp" style="--i:1" cx="100" cy="97" r="4.2"/><circle class="lamp" style="--i:2" cx="158" cy="66" r="3.4"/><circle class="lamp" style="--i:3" cx="71" cy="44" r="2.2"/><circle class="lamp" style="--i:4" cx="129" cy="48" r="2.4"/></svg></span><div><b>Глазурь · бронь</b><small>бот</small></div></div><div class="msgs" id="g"></div><div class="foot" id="gf"><button type="button" data-start>Начать</button></div></div></div></div>
+    <div><p class="who">Администратор бара</p><div class="phone"><div class="scr"><div class="top"><span class="av"><svg class="rings drip " viewBox="0 0 220 120" aria-hidden="true"><path class="deck" d="M10 22 H210"/><path class="ring r1" d="M10 30 C30 30 30 62 42 62 C54 62 50 30 72 30 C90 30 88 84 100 84 C112 84 108 30 130 30 C148 30 146 54 158 54 C170 54 168 30 190 30 C200 30 204 36 210 30"/><path class="ring r2" d="M24 112 H196"/><circle class="lamp" style="--i:0" cx="42" cy="74" r="3.6"/><circle class="lamp" style="--i:1" cx="100" cy="97" r="4.2"/><circle class="lamp" style="--i:2" cx="158" cy="66" r="3.4"/><circle class="lamp" style="--i:3" cx="71" cy="44" r="2.2"/><circle class="lamp" style="--i:4" cx="129" cy="48" r="2.4"/></svg></span><div><b>Глазурь · брони</b><small>для администратора</small></div></div><div class="msgs" id="a"><div class="m sys">Здесь появятся новые заказы</div></div><div class="foot"><p>Брони, напоминания, отзывы — в одном чате</p></div></div></div></div>
+  </div>
+  <button type="button" class="again" data-again hidden>Пройти ещё раз</button>
+  <p class="note">Демо-версия: всё работает в браузере, ничего никуда не отправляется. В рабочей версии бот подключается к вашему MAX или Telegram, а брони с сайта и из приложения приходят в тот же чат администратора.</p>
+</div>
+<script>window.BOT={"name":"Глазурь","address":"ул. Сладкая, 7 (демо)","city":"Красноярск","hours":"09:00–21:00","phone":"+7 391 200-00-07","tel":"tel:+73912000007","map":"https://2gis.ru/krasnoyarsk","reviews":"https://2gis.ru/krasnoyarsk","site":"./","img":"assets/img/hero-480.webp","hits":[["Набор капкейков 6 шт.","1 190 ₽"],["Макарон, набор 6 шт.","540 ₽"],["Корзинка с ягодами","240 ₽"],["Эклер ванильный","190 ₽"]]}</script>
+<script>
+(function () {
+  var C = window.BOT, d = document, G = d.getElementById('g'), A = d.getElementById('a'), gf = d.getElementById('gf');
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var wait = function (ms) { return new Promise(function (r) { setTimeout(r, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : ms); }); };
+  var WD = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'], MO = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+  var S = {};
+  function msg(box, cls, html) { var m = d.createElement('div'); m.className = 'm ' + cls; m.innerHTML = html; box.appendChild(m); box.scrollTop = box.scrollHeight; return m; }
+  function kb(box, rows) {
+    var k = d.createElement('div'); k.className = 'kb';
+    rows.forEach(function (row) {
+      var r = d.createElement('div'); r.className = 'r';
+      row.forEach(function (b) {
+        var el = d.createElement(b.href ? 'a' : 'button');
+        if (b.href) { el.href = b.href; el.target = '_blank'; el.rel = 'noopener'; } else el.type = 'button';
+        if (b.main) el.className = 'main';
+        el.textContent = b.t;
+        if (b.go) el.onclick = function () { k.querySelectorAll('button').forEach(function (x) { x.disabled = true; }); if (!b.silent) msg(box, 'me', esc(b.t)); b.go(); };
+        r.appendChild(el);
+      });
+      k.appendChild(r);
+    });
+    box.appendChild(k); box.scrollTop = box.scrollHeight;
+  }
+  async function bot(box, html, rows, ms) { await wait(ms == null ? 550 : ms); msg(box, 'bot', html); if (rows) kb(box, rows); }
+
+  function start() {
+    gf.hidden = true; msg(G, 'me', '/start');
+    bot(G, '<img src="' + C.img + '" alt="">Здравствуйте! Это бот кондитерской <b>' + esc(C.name) + '</b> — ' + esc(C.address) + '.\nОткрыты ' + esc(C.hours) + '. Чем помочь?', [
+      [{ t: 'Заказать торт', main: true, go: day }],
+      [{ t: 'Меню', go: menu }, { t: 'Самовывоз −20 %', go: pickup }],
+      [{ t: 'Как добраться', go: route }]
+    ]);
+  }
+  function home() { kb(G, [[{ t: 'Заказать торт', main: true, go: day }], [{ t: 'Меню', go: menu }, { t: 'Как добраться', go: route }]]); }
+  function menu() { bot(G, '<b>Хиты кухни</b>\n' + C.hits.map(function (h) { return '• ' + esc(h[0]) + ' — ' + h[1]; }).join('\n') + '\n\nДобавьте десерты к торту — упакуем вместе.', [[{ t: 'Полное меню на сайте', href: C.site + '#menu' }], [{ t: 'Заказать торт', main: true, go: day }]]); }
+  function pickup() { bot(G, 'Скидка 20 % на самовывоз с кухни. Позвоните — заказ будет готов к вашему приходу.', [[{ t: 'Позвонить: ' + C.phone, href: C.tel }]]).then(home); }
+  function route() { bot(G, esc(C.city + ', ' + C.address) + '\nОткрыты ' + esc(C.hours) + '.', [[{ t: 'Открыть в 2ГИС', href: C.map }]]).then(home); }
+  function day() {
+    var n = new Date(), base = new Date(n); if (n.getHours() < 2) base.setDate(base.getDate() - 1);
+    var ds = [0, 1, 2, 3].map(function (i) { var x = new Date(base); x.setDate(base.getDate() + i); return x; });
+    var lab = function (x, i) { return (i === 0 ? 'сегодня' : i === 1 ? 'завтра' : WD[x.getDay()]) + ', ' + x.getDate() + ' ' + MO[x.getMonth()]; };
+    /* поздно вечером или ночью сегодняшние брони уже не принимаем — начинаем с завтра */
+    var from = n.getHours() >= 23 || n.getHours() < 2 ? 1 : 0;
+    var btn = function (i) { var t = lab(ds[i], i); return { t: t[0].toUpperCase() + t.slice(1), go: function () { S.day = t; time(); } }; };
+    bot(G, 'На какой день?', [[btn(from), btn(from + 1)], [btn(from + 2)]]);
+  }
+  function time() { bot(G, 'Во сколько?', [['19:00', '20:00', '21:00'].map(function (t) { return { t: t, go: function () { S.time = t; guests(); } }; }), ['22:00', '23:00', '00:00'].map(function (t) { return { t: t, go: function () { S.time = t; guests(); } }; })]); }
+  function guests() {
+    bot(G, 'Сколько вас будет?', [[{ t: '2', go: function () { S.g = 2; S.zone = 'диван в зале'; pre(); } }, { t: '3–4', go: function () { S.g = 4; S.zone = 'диван в зале'; pre(); } }, { t: '5–8', go: function () { S.g = 7; S.zone = 'большой торт'; pre(); } }],
+      [{ t: 'Банкет, от 15', go: function () { S.g = 15; S.zone = 'банкет — весь зал'; pre(); } }]]);
+  }
+  function pre() {
+    S.pre = [];
+    bot(G, 'Заказать блюда к приходу? Кухня начнёт готовить к ' + S.time + ' — ничего не придётся ждать.', [
+      C.hits.slice(0, 2).map(function (h) { return { t: h[0], go: function () { S.pre.push(h[0]); more(); } }; }),
+      [{ t: 'Без предзаказа', go: phone }]]);
+  }
+  function more() { bot(G, 'Добавил: ' + esc(S.pre.join(', ')) + '. Что-то ещё?', [C.hits.slice(2, 4).filter(function (h) { return S.pre.indexOf(h[0]) < 0; }).map(function (h) { return { t: h[0], go: function () { S.pre.push(h[0]); phone(); } }; }), [{ t: 'Хватит, дальше', go: phone }]]); }
+  function phone() { bot(G, 'Отправьте номер — кондитер подтвердит заказ и, если что, перезвонит.', [[{ t: '📱 Поделиться номером', main: true, silent: true, go: function () { msg(G, 'me', '📱 Руслан, +7 900 000-00-00'); send(); } }]]); }
+  async function send() {
+    S.num = String(42 + Math.floor(Math.random() * 30)).padStart(4, '0');
+    var sum = '<b>Заказ № ' + S.num + '</b>\n' + esc(S.day) + ' · ' + S.time + '\n' + S.g + ' гост. · ' + esc(S.zone) + (S.pre.length ? '\nК приходу: ' + esc(S.pre.join(', ')) : '');
+    await bot(G, sum + '\n\nОтправил администратору — подтверждение придёт сюда в течение 15 минут.');
+    await wait(700);
+    msg(A, 'bot', '🆕 ' + sum + '\nГость: Руслан, +7 900 000-00-00\nИсточник: бот MAX');
+    kb(A, [[{ t: '✅ Подтвердить', main: true, go: confirm }, { t: 'Перезвонить', href: 'tel:+79000000000' }], [{ t: 'Нет мест — предложить другое время', go: other }]]);
+  }
+  function other() { bot(G, 'На ' + S.time + ' мест нет 😔 Свободно на ' + (S.time === '22:00' ? '21:00' : '22:00') + ' — подойдёт?', [[{ t: 'Подойдёт', go: confirm }, { t: 'Выбрать другой день', go: day }]]); }
+  async function confirm() {
+    msg(A, 'sys', 'Заказ № ' + S.num + ' подтверждена');
+    if (S.pre.length) msg(A, 'bot', '👨‍🍳 Кухне: к ' + S.time + ' — ' + esc(S.pre.join(', ')) + ' (заказ № ' + S.num + ')');
+    await bot(G, '✅ <b>Заказ подтверждён!</b>\nЖдём вас ' + esc(S.day) + ' в ' + S.time + '. Торт будет готов.', null, 800);
+    await wait(900); msg(G, 'sys', 'за 2 часа до выдачи');
+    await bot(G, 'Напоминаем: сегодня в ' + S.time + ' торт будет готов к ' + esc(C.name) + '. Всё в силе?', [[{ t: 'Буду', main: true, go: async function () { msg(A, 'bot', '👍 Гость заказа № ' + S.num + ' подтвердил: придёт'); await bot(G, 'Отлично, до встречи!'); after(); } }, { t: 'Опоздаю на 30 мин', go: async function () { msg(A, 'bot', '⏱ Заказ № ' + S.num + ': гость опоздает на 30 минут'); await bot(G, 'Хорошо, торт будет ждать.'); after(); } }], [{ t: 'Отменить заказ', go: async function () { msg(A, 'bot', '❌ Заказ № ' + S.num + ' отменён гостем'); await bot(G, 'Заказ отменён. Будем рады в другой раз!'); end(); } }]], 600);
+  }
+  async function after() {
+    await wait(1100); msg(G, 'sys', 'на следующий день, 13:00');
+    await bot(G, 'Как вам торт? Нам важно ваше мнение', [['1', '2', '3', '4', '5'].map(function (n) { return { t: n + '★', go: async function () {
+      msg(A, 'bot', '⭐ Оценка заказа (заказ № ' + S.num + '): ' + n + ' из 5');
+      if (+n >= 4) await bot(G, 'Рады, что понравилось! Расскажете другим? Отзыв в 2ГИС помогает кондитерской больше всего.', [[{ t: 'Оставить отзыв в 2ГИС', href: C.reviews }]]);
+      else { await bot(G, 'Простите, что не всё понравилось. Напишите, что пошло не так, — администратор ответит лично.'); msg(A, 'bot', '⚠️ Низкая оценка — свяжитесь с гостем: +7 900 000-00-00'); }
+      end();
+    } }; })], 600);
+  }
+  function end() { d.querySelector('[data-again]').hidden = false; }
+  d.querySelector('[data-start]').onclick = start;
+  d.querySelector('[data-again]').onclick = function () { G.innerHTML = ''; A.innerHTML = '<div class="m sys">Здесь появятся новые заказы</div>'; gf.hidden = false; this.hidden = true; };
+})();
+</script>
+</body>
+</html>
