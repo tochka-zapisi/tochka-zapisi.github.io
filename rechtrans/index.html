@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Речтранслогистик — речные перевозки до Дудинки (демо)</title>
-<meta name="description" content="Речтранслогистик, Красноярск: речные грузоперевозки по Енисею до Дудинки и дальше. Расчёт перевозки, заявка, отслеживание груза. Демо-сайт студии «Точка записи».">
+<title>РечТрансЛогистик — речные перевозки до Дудинки (демо)</title>
+<meta name="description" content="РечТрансЛогистик, Красноярск: речные грузоперевозки по Енисею до Дудинки и дальше. Расчёт перевозки, заявка, отслеживание груза. Демо-сайт студии «Точка записи».">
 <meta name="robots" content="noindex">
-<meta property="og:type" content="website"><meta property="og:title" content="Речтранслогистик — рейс до Дудинки"><meta property="og:image" content="https://tochka-zapisi.github.io/rechtrans/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://tochka-zapisi.github.io/rechtrans/index.html">
+<meta property="og:type" content="website"><meta property="og:title" content="РечТрансЛогистик — рейс до Дудинки"><meta property="og:image" content="https://tochka-zapisi.github.io/rechtrans/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://tochka-zapisi.github.io/rechtrans/index.html">
 <link rel="preload" href="assets/fonts/cormorant-garamond-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/golos-text-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/jetbrains-mono-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
@@ -224,7 +224,7 @@ body:after{content:'';position:fixed;inset:0;pointer-events:none;z-index:90;opac
   </div>
 </section>
 </main>
-<footer><div class="mark-big" aria-hidden="true">РЕЧТРАНСЛОГИСТИК</div>Демо-сайт для «Речтранслогистик». Цены и сроки — пример. Студия «Точка записи»</footer>
+<footer><div class="mark-big" aria-hidden="true">РЕЧТРАНСЛОГИСТИК</div>Демо-сайт для «РечТрансЛогистик». Цены и сроки — пример. Студия «Точка записи»</footer>
 <div class="demo-badge">ДЕМО</div>
 
 <script>
@@ -268,7 +268,7 @@ function calc(){
 ['#from','#to','#w','#v','#d'].forEach(s=>$(s).addEventListener('input',calc));calc();
 
 $('#form').onsubmit=e=>{e.preventDefault();if(!$('#name').value.trim()||!$('#phone').value.trim()){$('#name').focus();return}if(!$('#ok').checked){$('#ok').focus();return}
-  $('#msg').textContent=`⚓ Заявка с сайта Речтранслогистик\n${$('#calcline').value}\nКомпания: ${$('#org').value||'—'}\nКонтакт: ${$('#name').value}, ${$('#phone').value}\nГруз: ${$('#note').value||'—'}`;$('#form').style.display='none';$('#done').classList.add('show')};
+  $('#msg').textContent=`⚓ Заявка с сайта РечТрансЛогистик\n${$('#calcline').value}\nКомпания: ${$('#org').value||'—'}\nКонтакт: ${$('#name').value}, ${$('#phone').value}\nГруз: ${$('#note').value||'—'}`;$('#form').style.display='none';$('#done').classList.add('show')};
 $('#again').onclick=()=>{$('#form').style.display='';$('#done').classList.remove('show')};
 
 const vf=$('#vform');
