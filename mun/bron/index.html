@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Бронь столика — бар Moon, Красноярск</title>
+<meta name="description" content="Забронируйте столик — бар Moon: дата, время, гости, зона зала и предзаказ блюд к приходу.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../assets/site/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#07090f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Бронь столика — бар Moon, Красноярск">
+<meta property="og:description" content="Забронируйте столик — бар Moon: дата, время, гости, зона зала и предзаказ блюд к приходу.">
+<meta property="og:url" content="https://tochka-zapisi.github.io/moon/">
+<meta property="og:image" content="https://tochka-zapisi.github.io/moon/og.jpg">
+<link rel="canonical" href="https://tochka-zapisi.github.io/moon/">
+<link rel="preload" href="../assets/fonts/golos-text-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/golos-text-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/martian-mono-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/martian-mono-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/unbounded-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/unbounded-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site/style.css">
+<style>:root{--bg:#07090f;--bg-2:#0d111b;--surface:#121828;--surface-2:#1a2236;--ink:#e8ecf6;--night:#07090f;--night-2:#0d111b;--wood:#1b2440;--wood-2:#2a3760;--kraft:#d9dce6;--kraft-ink:#2b3350;--cream:#eef1f8;--muted:#8f9ab3;--neon:#9fb8ff;--neon-2:#f2d58a}</style>
+</head>
+<body class="page-bron">
+<a class="skip" href="#main">К содержанию</a>
+<header class="top" data-top>
+  <a class="logo" href="../" aria-label="Moon — на главную">M<span class="oo">00</span>N <small>бар</small></a>
+  <span class="clock" aria-hidden="true"><span data-clock>18:00</span></span>
+  <span class="status" data-status data-open="18:00" data-close="02:00"><i></i><b>каждый день с 18:00 до 02:00</b></span>
+  <a class="btn btn-s" href="../bron/">Бронь</a>
+</header>
+<main id="main" class="wrap bron">
+  <p class="time" aria-hidden="true" data-bron-time>18:00</p>
+  <h1 class="h2">Бронь столика</h1>
+  <p class="text">Без звонка: выберите вечер, время и место — администратор подтвердит бронь в мессенджере.</p>
+  <form class="bform" data-bron novalidate>
+    <fieldset><legend>Вечер</legend><div class="chips" data-days role="radiogroup" aria-label="Дата"></div></fieldset>
+    <fieldset><legend>Время</legend><div class="chips chips-t" data-slots role="radiogroup" aria-label="Время"></div></fieldset>
+    <fieldset><legend>Гостей</legend>
+      <div class="step"><button type="button" data-g="-1" aria-label="Меньше гостей">−</button><output data-guests aria-live="polite">2</output><button type="button" data-g="1" aria-label="Больше гостей">+</button></div>
+    </fieldset>
+    <fieldset><legend>Где сесть</legend><div class="zones" data-zones role="radiogroup" aria-label="Зона зала"></div><p class="small">Зоны зала — для примера: в рабочей версии сделаем по вашему залу и столам.</p></fieldset>
+    <fieldset><legend>Повод</legend><div class="chips" data-reasons></div></fieldset>
+    <fieldset class="pre"><legend>Предзаказ к приходу <span class="small">— по желанию</span></legend>
+      <p class="small">Кухня начнёт готовить к вашему времени — ничего не придётся ждать.</p>
+      <div class="pre-list" data-pre></div>
+    </fieldset>
+    <fieldset><legend>Контакты</legend>
+      <label class="field"><span>Имя</span><input name="name" autocomplete="given-name" required></label>
+      <label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7" required></label>
+      <label class="check"><input type="checkbox" name="ok" required> <span>Даю <a href="../consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a></span></label>
+      <p class="small consent-note">Как мы храним и защищаем данные — в <a href="../privacy.html" target="_blank" rel="noopener">политике конфиденциальности</a>.</p>
+    </fieldset>
+    <div class="summary" data-summary aria-live="polite"></div>
+    <button class="btn btn-wide" type="submit">Забронировать</button>
+    <p class="err" data-err role="alert"></p>
+  </form>
+  <div class="ticket" data-ticket hidden tabindex="-1"></div>
+  <details class="admin" data-admin>
+    <summary>Как это видит администратор</summary>
+    <p class="small">Каждая бронь сразу приходит администратору в MAX или Telegram с кнопками «Подтвердить» и «Перезвонить». Ниже — брони, сделанные в этом браузере (демо).</p>
+    <div data-admin-list></div>
+  </details>
+</main>
+<script>window.BRON={"name":"Moon","phone":"+7 391 200-00-00","tel":"tel:+73912000000","open":"18:00","close":"02:00","slots":{"from":"18:00","to":"01:00","step":30},"zones":[{"id":"bar","name":"У барной стойки","seats":"1–3","max":3},{"id":"sofa","name":"Диван у окна","seats":"2–6","max":6},{"id":"big","name":"Большой стол","seats":"6–12","max":12},{"id":"hall","name":"Банкет — весь зал","seats":"от 15","max":50}],"reasons":["Просто отдохнуть","День рождения","Свидание","С друзьями","Корпоратив"],"preorder":[["Moon бургер",590],["Лунный",520],["Филадельфия",490],["Карбонара",490],["Тарелка «Полночь»",1490],["Сет роллов «Полнолуние»",1990],["Сырная тарелка",890]]}</script>
+<script src="../assets/site/bron.js" defer></script>
+</body>
+</html>

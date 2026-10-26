@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Moon — приложение для гостей</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#07090f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="../assets/site/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preload" href="../assets/fonts/golos-text-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/golos-text-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/martian-mono-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/martian-mono-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/unbounded-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/unbounded-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="app.css">
+<style>:root{--bg:#07090f;--bg-2:#0d111b;--surface:#121828;--surface-2:#1a2236;--ink:#e8ecf6;--night:#07090f;--night-2:#0d111b;--wood:#1b2440;--wood-2:#2a3760;--kraft:#d9dce6;--kraft-ink:#2b3350;--cream:#eef1f8;--muted:#8f9ab3;--neon:#9fb8ff;--neon-2:#f2d58a}</style>
+</head>
+<body>
+<div class="splash" data-splash aria-hidden="true"><svg class="rings " viewBox="0 0 220 120" aria-hidden="true"><ellipse class="ring r1" cx="60" cy="60" rx="46" ry="52"/><ellipse class="ring r2" cx="160" cy="60" rx="46" ry="52"/></svg><p>бар до полуночи и дольше · Красноярск</p></div>
+<header class="bar">
+  <p class="bar-logo">M<span>00</span>N</p>
+  <span class="bar-st" data-st><i></i><b></b></span>
+</header>
+<main class="screens">
+  <section class="scr" id="home" data-scr></section>
+  <section class="scr" id="menu" data-scr hidden></section>
+  <section class="scr" id="book" data-scr hidden></section>
+  <section class="scr" id="card" data-scr hidden></section>
+  <section class="scr" id="more" data-scr hidden></section>
+</main>
+<nav class="tabs" aria-label="Разделы">
+  <button type="button" data-tab="home" aria-current="page"><svg viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></svg><span>Главная</span></button>
+  <button type="button" data-tab="menu"><svg viewBox="0 0 24 24"><path d="M6 3v8a3 3 0 0 0 3 3v7M9 3v8M12 3v8M17 3c-2 2-2 6 0 8v10"/></svg><span>Меню</span></button>
+  <button type="button" data-tab="book" class="tab-main"><svg viewBox="0 0 24 24"><ellipse cx="8" cy="12" rx="5" ry="6"/><ellipse cx="16" cy="12" rx="5" ry="6"/></svg><span>Бронь</span></button>
+  <button type="button" data-tab="card"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg><span>Карта</span></button>
+  <button type="button" data-tab="more"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg><span>Ещё</span></button>
+</nav>
+<div class="sheet" data-sheet hidden><div class="sheet-in" role="dialog" aria-modal="true" aria-label="Сообщение" tabindex="-1"></div></div>
+<script src="vendor/qrcode.js" defer></script>
+<script src="data.js" defer></script>
+<script src="app.js" defer></script>
+</body>
+</html>
