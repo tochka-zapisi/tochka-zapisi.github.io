@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Бот записи для мастера в MAX — Точка записи</title>
+<meta name="description" content="Бот записи в MAX для частного мастера: клиенты записываются сами, напоминания, перенос, отзывы на картах. Без сайта и ИП. 2 900 ₽ настройка, 900 ₽ в месяц, первый месяц бесплатно.">
+<meta name="theme-color" content="#f3f3ef">
+<link rel="canonical" href="https://tochka-zapisi.github.io/master.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Клиенты записываются сами — бот записи для мастера в MAX">
+<meta property="og:description" content="Без сайта и ИП. Первый месяц бесплатно, дальше 900 ₽ в месяц.">
+<meta property="og:image" content="https://tochka-zapisi.github.io/og.jpg">
+<meta property="og:url" content="https://tochka-zapisi.github.io/master.html">
+<meta property="og:locale" content="ru_RU">
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/geologica-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Бот записи в MAX для частного мастера",
+  "provider": { "@type": "ProfessionalService", "name": "Точка записи", "url": "https://tochka-zapisi.github.io/", "telephone": "+7 913 036-49-62" },
+  "areaServed": "RU",
+  "offers": [
+    { "@type": "Offer", "name": "Настройка бота", "price": "2900", "priceCurrency": "RUB" },
+    { "@type": "Offer", "name": "Бот записи, в месяц (первый месяц бесплатно)", "price": "900", "priceCurrency": "RUB" }
+  ]
+}
+</script>
+<style>
+.top { background: rgba(243, 243, 239, .92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.ms-hero { padding-top: 140px; padding-bottom: 80px; display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
+.ms-hero h1 { font-size: clamp(40px, 6vw, 88px); line-height: .98; letter-spacing: -.045em; max-width: 13ch; }
+.ms-hero .lead { font-size: clamp(18px, 1.7vw, 22px); line-height: 1.45; max-width: 40ch; margin-top: 24px; }
+.ms-txt { display: grid; gap: 0; }
+.ms-cta { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; margin-top: 32px; }
+.ms-price { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+.ms-price span { font: 500 13px/1 var(--m); text-transform: uppercase; letter-spacing: .03em; padding: 10px 12px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line); background: #fff; }
+.ms-price span.on { background: var(--ink); color: var(--paper); box-shadow: none; }
+/* телефон: форма нынешнего флагмана, без логотипов */
+.ms-phone { justify-self: center; width: min(330px, 86vw); aspect-ratio: 402 / 874; border-radius: 52px; background: #111; padding: 12px; box-shadow: 0 40px 80px -30px rgba(0,0,0,.45), inset 0 0 0 2px #2a2a2e; position: relative; }
+.ms-phone::before { content: ''; position: absolute; top: 22px; left: 50%; width: 92px; height: 26px; margin-left: -46px; border-radius: 20px; background: #000; z-index: 2; }
+.ms-scr { height: 100%; border-radius: 41px; overflow: hidden; background: #eef1fb; display: flex; flex-direction: column; }
+.ms-bar { background: #fff; padding: 52px 16px 12px; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #e3e6f0; }
+.ms-av { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #4d6bff, #9b4dff); color: #fff; display: grid; place-items: center; font-weight: 700; flex: none; }
+.ms-bar b { display: block; font-size: 14px; line-height: 1.2; }
+.ms-bar small { color: #6b7180; font-size: 12px; }
+.ms-chat { flex: 1; padding: 12px 10px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.35; overflow: hidden; }
+.ms-m { max-width: 86%; padding: 7px 10px; border-radius: 14px 14px 14px 4px; background: #fff; box-shadow: 0 1px 1px rgba(0,0,0,.06); opacity: 0; transform: translateY(6px); animation: msin .4s var(--ease) forwards; }
+.ms-m.me { align-self: flex-end; background: #dfe5ff; border-radius: 14px 14px 4px 14px; }
+.ms-kb { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; max-width: 86%; opacity: 0; animation: msin .4s var(--ease) forwards; }
+.ms-kb span { background: #fff; color: #3f4fd8; font-weight: 600; text-align: center; padding: 7px 4px; border-radius: 9px; font-size: 12px; }
+.ms-kb span.on { background: #3f4fd8; color: #fff; }
+@keyframes msin { to { opacity: 1; transform: none; } }
+.ms-sec { padding: 90px 0; }
+.ms-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.ms-card { background: var(--paper-2); border-radius: 20px; padding: 26px 22px; display: grid; gap: 12px; align-content: start; }
+.ms-card .mono { color: var(--dot-ink); }
+.ms-card h3 { font-size: 22px; letter-spacing: -.02em; }
+.ms-card p { color: #3a3b3f; font-size: 15.5px; }
+.ms-math { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); margin-top: 32px; }
+.ms-math div { padding: 24px 24px 0 0; }
+.ms-math b { display: block; font-size: clamp(34px, 4vw, 56px); letter-spacing: -.04em; line-height: 1; }
+.ms-math span { color: var(--muted); font-size: 15px; display: block; margin-top: 10px; max-width: 26ch; }
+.ms-dark { background: var(--night); color: var(--paper); }
+.ms-dark .label { color: var(--night-muted); }
+.ms-dark .note { color: var(--night-muted); }
+.ms-two { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.ms-pl { list-style: none; margin: 0; padding: 0; }
+.ms-pl li { display: grid; grid-template-columns: 1fr auto; gap: 16px; padding: 20px 0; border-top: 1px solid var(--night-line); align-items: baseline; }
+.ms-pl li span { color: var(--night-muted); display: block; font-size: 15px; margin-top: 4px; }
+.ms-pl b.p { font-size: 24px; white-space: nowrap; }
+.ms-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.ms-steps li { border-top: 2px solid var(--ink); padding-top: 18px; display: grid; gap: 8px; }
+.ms-steps .mono { color: var(--dot-ink); }
+.ms-steps h3 { font-size: 22px; }
+.ms-steps p { color: var(--muted); }
+.ms-fin { padding: 110px 0 130px; background: var(--paper-2); }
+.ms-fin h2 { font-size: clamp(32px, 4.6vw, 64px); max-width: 17ch; margin: 18px 0 30px; }
+@media (max-width: 1080px) { .ms-grid { grid-template-columns: 1fr 1fr; } .ms-two { grid-template-columns: 1fr; gap: 40px; } .ms-hero { grid-template-columns: 1fr; padding-top: 120px; } }
+@media (max-width: 640px) { .ms-hero { padding-top: 100px; padding-bottom: 50px; gap: 40px; } .ms-grid, .ms-steps, .ms-math { grid-template-columns: 1fr; } .ms-sec { padding: 64px 0; } .nav { display: none; } }
+@media (prefers-reduced-motion: reduce) { .ms-m, .ms-kb { animation: none; opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="top" id="top">
+  <div class="wrap top-in">
+    <a class="logo" href="./" aria-label="Точка записи — на главную">Точка записи<i></i></a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#what">Что умеет</a><a href="#prices">Цена</a><a href="#faq">Вопросы</a><a href="./">Сайты и&nbsp;запись</a>
+    </nav>
+    <a class="btn btn-s" href="#go">Попробовать</a>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="wrap ms-hero">
+  <div class="ms-txt">
+    
+    <h1 style="margin-top:20px">Клиенты записываются сами. Вы&nbsp;работаете.</h1>
+    <p class="lead">Бот в&nbsp;MAX принимает записи, пока у&nbsp;вас клиент в&nbsp;кресле: услуга, день, время&nbsp;— и&nbsp;запись с&nbsp;именем и&nbsp;номером у&nbsp;вас. Напоминает клиенту накануне, даёт перенести без переписки и&nbsp;после визита просит отзыв на&nbsp;картах.</p>
+    <div class="ms-price"><span class="on">Первый месяц бесплатно</span><span>Настройка 2&nbsp;900&nbsp;₽</span><span>Дальше 900&nbsp;₽/мес</span></div>
+    <div class="ms-cta">
+      <a class="btn" href="#go"><i></i>Хочу бота</a>
+      <a class="link" href="#what">Что умеет →</a>
+    </div>
+  </div>
+  <div class="ms-phone" role="img" aria-label="Пример: клиентка записывается к мастеру маникюра в боте MAX">
+    <div class="ms-scr">
+      <div class="ms-bar"><span class="ms-av">Н</span><div><b>Запись · Ника, маникюр</b><small>бот · MAX</small></div></div>
+      <div class="ms-chat" aria-hidden="true">
+        <div class="ms-m" style="animation-delay:.3s">Здравствуйте! Это Ника — мастер маникюра на Взлётке. Здесь можно записаться ко мне за минуту.</div>
+        <div class="ms-kb" style="animation-delay:.9s"><span class="on">Маникюр + гель-лак · 2 000 ₽</span><span>Педикюр · 2 600 ₽</span></div>
+        <div class="ms-m" style="animation-delay:1.5s">Выберите день:</div>
+        <div class="ms-kb" style="animation-delay:1.9s"><span>Вт, 21 окт</span><span class="on">Ср, 22 окт</span><span>Чт, 23 окт</span><span>Пт, 24 окт</span></div>
+        <div class="ms-kb" style="animation-delay:2.5s"><span>11:00</span><span class="on">13:30</span><span>16:00</span><span>18:30</span></div>
+        <div class="ms-m me" style="animation-delay:3.1s">📱 Контакт: Ольга</div>
+        <div class="ms-m" style="animation-delay:3.7s">Запись отправлена ✓<br>Ср, 22 окт в 13:30<br>Мастер подтвердит — сообщение придёт сюда.</div>
+        <div class="ms-m" style="animation-delay:4.5s">Напоминаем: завтра в 13:30. Всё в силе?</div>
+        <div class="ms-kb" style="animation-delay:4.9s"><span class="on">Приду ✓</span><span>Перенести</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ms-sec" id="what" aria-labelledby="what-h">
+  <div class="wrap">
+    <div class="sec-head">
+      
+      <h2 id="what-h">Администратор, который не&nbsp;спит и&nbsp;не&nbsp;забывает.</h2>
+    </div>
+    <div class="ms-grid">
+      <article class="ms-card"><span class="mono">01 · запись</span><h3>Сам принимает записи</h3><p>Ваши услуги, цены и&nbsp;часы. Клиент видит только свободное время и&nbsp;записывается в&nbsp;3&nbsp;нажатия&nbsp;— даже ночью.</p></article>
+      <article class="ms-card"><span class="mono">02 · вам</span><h3>Запись&nbsp;— в&nbsp;ваш MAX</h3><p>Имя, номер, услуга и&nbsp;время. Подтверждаете одной кнопкой. Утром&nbsp;— список на&nbsp;день.</p></article>
+      <article class="ms-card"><span class="mono">03 · неявки</span><h3>Напоминает и&nbsp;переносит</h3><p>Накануне вечером и&nbsp;за&nbsp;2&nbsp;часа: «Приду», «Перенести», «Не&nbsp;смогу». Освободившееся окно снова видно другим.</p></article>
+      <article class="ms-card"><span class="mono">04 · отзывы</span><h3>Просит отзыв</h3><p>После визита&nbsp;— оценка. Довольных зовёт на&nbsp;Яндекс Карты или 2ГИС, недовольные пишут вам лично.</p></article>
+    </div>
+    <div class="ms-math" aria-label="Окупаемость">
+      <div><b>900&nbsp;₽</b><span>в&nbsp;месяц стоит бот после бесплатного месяца</span></div>
+      <div><b>1&nbsp;запись</b><span>которую вы не&nbsp;потеряли из-за пропущенного звонка или неявки, уже дороже</span></div>
+      <div><b>0&nbsp;₽</b><span>первый месяц: проверяете на&nbsp;своих клиентах, потом решаете</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="ms-sec" aria-labelledby="steps-h">
+  <div class="wrap">
+    <div class="sec-head">
+      
+      <h2 id="steps-h">Два дня&nbsp;— и&nbsp;ссылка на&nbsp;запись у&nbsp;вас.</h2>
+    </div>
+    <ol class="ms-steps">
+      <li><span class="mono">День 1</span><h3>Присылаете услуги</h3><p>Список услуг с&nbsp;ценами и&nbsp;временем, ваши рабочие часы, район. Можно фото прайса.</p></li>
+      <li><span class="mono">День 1</span><h3>Регистрируетесь в&nbsp;MAX</h3><p>Профиль самозанятого в&nbsp;MAX для бизнеса через Госуслуги&nbsp;— минут 10, подскажем каждый шаг. Пароли нам не&nbsp;нужны.</p></li>
+      <li><span class="mono">День 2</span><h3>Бот работает</h3><p>Ссылка для соцсетей и&nbsp;мессенджеров, QR-код на&nbsp;зеркало. Месяц бесплатно&nbsp;— дальше 900&nbsp;₽.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="ms-sec ms-dark" id="prices" aria-labelledby="prices-h">
+  <div class="wrap ms-two">
+    <div class="sec-head">
+      
+      <h2 id="prices-h">Первый месяц бесплатно. Без договоров на&nbsp;год.</h2>
+      <p class="note">Работаем как самозанятые: чек на&nbsp;каждую оплату. Отключить можно в&nbsp;любой месяц.</p>
+    </div>
+    <ul class="ms-pl">
+      <li><div>Настройка бота<span>ваши услуги, цены, часы, приветствие от&nbsp;вашего имени, QR-код</span></div><b class="p">2&nbsp;900&nbsp;₽</b></li>
+      <li><div>Первый месяц<span>бот работает полностью, платить не&nbsp;нужно</span></div><b class="p">0&nbsp;₽</b></li>
+      <li><div>Дальше&nbsp;— каждый месяц<span>работа бота, правки услуг и&nbsp;цен, помощь по&nbsp;сообщению</span></div><b class="p">900&nbsp;₽</b></li>
+      <li><div>Нужна ещё страница с&nbsp;записью по&nbsp;ссылке?<span>тариф «Мастер»: страница в&nbsp;вашем стиле для тех, кто не&nbsp;в&nbsp;MAX</span></div><b class="p">+ от&nbsp;590&nbsp;₽</b></li>
+    </ul>
+  </div>
+</section>
+
+<section class="faq wrap" id="faq" aria-labelledby="faq-h">
+  <div class="sec-head">
+    
+    <h2 id="faq-h">Коротко о&nbsp;главном.</h2>
+  </div>
+  <div class="faq-l">
+    <details><summary>Мне нужен ИП или сайт?</summary><p>Нет. С&nbsp;июня 2026 года MAX подключает ботов самозанятым&nbsp;— регистрация через Госуслуги. Сайт не&nbsp;нужен: ссылку на&nbsp;бота ставите в&nbsp;профиль ВК, Авито, карточку на&nbsp;картах.</p></details>
+    <details><summary>А&nbsp;если у&nbsp;клиента нет MAX?</summary><p>У&nbsp;большинства он&nbsp;уже есть. Для остальных можно добавить страницу с&nbsp;записью по&nbsp;ссылке (тариф «Мастер»)&nbsp;— записи попадут в&nbsp;то&nbsp;же расписание.</p></details>
+    <details><summary>Где хранятся имена и&nbsp;телефоны клиентов?</summary><p>В&nbsp;России: в&nbsp;MAX и&nbsp;на&nbsp;нашем сервере в&nbsp;РФ. Перед номером бот показывает согласие на&nbsp;обработку данных&nbsp;— как требует закон.</p></details>
+    <details><summary>А&nbsp;в&nbsp;Telegram можно?</summary><p>Можно, но&nbsp;по&nbsp;закону о&nbsp;персональных данных имя и&nbsp;номер клиента туда мы&nbsp;не&nbsp;присылаем&nbsp;— серверы Telegram за&nbsp;границей. Поэтому для мастера удобнее MAX.</p></details>
+    <details><summary>Сколько времени это займёт у&nbsp;меня?</summary><p>Минут 20: прислать услуги и&nbsp;часы и&nbsp;пройти регистрацию в&nbsp;MAX. Остальное делаем мы.</p></details>
+    <details><summary>Что если не&nbsp;понравится?</summary><p>Первый месяц бесплатно. Не&nbsp;подошло&nbsp;— просто не&nbsp;продлеваете, бот отключаем.</p></details>
+  </div>
+</section>
+
+<section class="ms-fin" id="go" aria-labelledby="go-h">
+  <div class="wrap">
+    
+    <h2 id="go-h">Пришлите список услуг&nbsp;— через 2&nbsp;дня бот примет первую запись.</h2>
+    <div class="ms-cta">
+      <a class="btn btn-k" href="https://t.me/opiumxxxxl?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B1%D0%BE%D1%82%D0%B0%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B8%20%D0%B2%20MAX%20%D0%B4%D0%BB%D1%8F%20%D0%BC%D0%B0%D1%81%D1%82%D0%B5%D1%80%D0%B0%2C%20%D0%BF%D0%B5%D1%80%D0%B2%D1%8B%D0%B9%20%D0%BC%D0%B5%D1%81%D1%8F%D1%86%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D0%BE.%20%D0%9C%D0%BE%D0%B8%20%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B8%3A%20"><i></i>Написать в&nbsp;Telegram</a>
+      <a class="btn btn-o" href="tel:+79130364962">Позвонить или MAX: +7&nbsp;913&nbsp;036-49-62</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <a class="logo" href="./">Точка записи<i></i></a>
+    <p>Сайты с&nbsp;онлайн-записью, боты, приложения и&nbsp;реклама для&nbsp;местного бизнеса. Красноярск · вся Россия. Умаров Руслан&nbsp;— <a href="tel:+79130364962">+7&nbsp;913&nbsp;036-49-62</a>.</p>
+    <p class="small">© 2026 Точка записи. Пример на&nbsp;странице&nbsp;— вымышленный мастер. Сайт не&nbsp;собирает персональные данные. <a href="privacy.html">Политика</a>.</p>
+  </div>
+</footer>
+</body>
+</html>

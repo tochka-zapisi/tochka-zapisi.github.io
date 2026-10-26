@@ -19,6 +19,7 @@
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/geologica-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/jetbrains-mono-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<script>/* заставка «Неделя заполняется»: один раз за визит, не при «меньше движения»; без скрипта её нет */try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!sessionStorage.getItem('tz-intro')){document.documentElement.classList.add('intro');sessionStorage.setItem('tz-intro','1')}}catch(e){}</script>
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="assets/site.css">
 <script type="application/ld+json">
@@ -37,15 +38,25 @@
 </script>
 </head>
 <body>
+<div class="iv" id="iv" aria-hidden="true">
+  <div class="iv-wk">
+    <p class="iv-d"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></p>
+    <div class="iv-g"><i class="b" style="--l:0ms;--t:1580ms"></i><i class="b" style="--l:45ms;--t:1714ms"></i><i style="--l:90ms"></i><i style="--l:135ms"></i><i style="--l:180ms"></i><i class="b" style="--l:225ms;--t:524ms"></i><i class="b" style="--l:270ms;--t:1343ms"></i><i class="b" style="--l:0ms;--t:965ms"></i><i class="b" style="--l:45ms;--t:839ms"></i><i style="--l:90ms"></i><i class="b" style="--l:135ms;--t:1293ms"></i><i style="--l:180ms"></i><i style="--l:225ms"></i><i class="b" style="--l:270ms;--t:771ms"></i><i style="--l:0ms"></i><i class="b" style="--l:45ms;--t:1190ms"></i><i class="b" style="--l:90ms;--t:1670ms"></i><i style="--l:135ms"></i><i class="b" style="--l:180ms;--t:1392ms"></i><i class="me" style="--l:225ms"><b></b></i><i class="b" style="--l:270ms;--t:1242ms"></i><i class="b" style="--l:0ms;--t:1081ms"></i><i class="b" style="--l:45ms;--t:1136ms"></i><i style="--l:90ms"></i><i class="b" style="--l:135ms;--t:617ms"></i><i class="b" style="--l:180ms;--t:1800ms"></i><i class="b" style="--l:225ms;--t:1534ms"></i><i class="b" style="--l:270ms;--t:1024ms"></i><i class="b" style="--l:0ms;--t:1757ms"></i><i style="--l:45ms"></i><i style="--l:90ms"></i><i style="--l:135ms"></i><i class="b" style="--l:180ms;--t:1488ms"></i><i style="--l:225ms"></i><i class="b" style="--l:270ms;--t:1440ms"></i><i style="--l:0ms"></i><i style="--l:45ms"></i><i style="--l:90ms"></i><i class="b" style="--l:135ms;--t:903ms"></i><i class="b" style="--l:180ms;--t:698ms"></i><i class="b" style="--l:225ms;--t:1625ms"></i><i style="--l:270ms"></i></div>
+    <p class="iv-f"><span>Записей за&nbsp;ночь: <b id="ivN">0</b></span><span class="iv-l">Точка записи<i></i></span></p>
+  </div>
+</div>
+<script>(function(){var h=document.documentElement;if(!h.classList.contains('intro'))return;var n=document.getElementById('ivN'),k=0,t=[],done=function(){if(!h.classList.contains('intro')||h.classList.contains('intro-out'))return;h.classList.add('intro-out');document.dispatchEvent(new Event('tz-intro-done'));setTimeout(function(){h.classList.remove('intro','intro-out','intro-go')},420);t.forEach(clearTimeout)};
+[].forEach.call(document.querySelectorAll('.iv-g .b'),function(c){t.push(setTimeout(function(){n.textContent=++k},parseInt(c.style.getPropertyValue('--t'))+120))});
+t.push(setTimeout(function(){h.classList.add('intro-go')},2150));t.push(setTimeout(done,2900));
+['pointerdown','keydown','wheel','touchstart'].forEach(function(e){addEventListener(e,done,{once:true,passive:true})})})();</script>
 <a class="skip" href="#main">К содержанию</a>
-<div class="cur" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 
 <header class="top" id="top">
   <div class="wrap top-in">
     <a class="logo" href="./" aria-label="Точка записи — в начало">Точка записи<i></i></a>
     <nav class="nav" aria-label="Разделы">
-      <a href="#day">Зачем</a><a href="#product">Что делаем</a><a href="#ads">Реклама</a><a href="#work">Работы</a><a href="#price">Цены</a><a href="#faq">Вопросы</a>
+      <a href="#day">Зачем</a><a href="#product">Что делаем</a><a href="#ads">Реклама</a><a href="#work">Работы</a><a href="#price">Цены</a><a href="#faq">Вопросы</a><a href="master.html">Мастерам</a>
     </nav>
     <span class="now mono" aria-hidden="true">Красноярск <b id="now">--:--</b></span>
     <a class="btn btn-s" href="#price">Демо бесплатно</a>
@@ -55,10 +66,10 @@
 <main id="main">
 
 <!-- 1. Первый экран -->
-<section class="hero wrap">
+<section class="hero hero-show wrap">
   <div class="hero-txt">
     <p class="label">Студия сайтов и приложений · Красноярск → вся Россия</p>
-    <h1>Сайт, который <span class="mark">записывает</span> клиентов. <span class="lt">Даже ночью</span><span class="pt" aria-hidden="true"></span></h1>
+    <h1>Сайт, который <span class="mark">записывает</span> клиентов. <span class="lt">Даже ночью<span class="pt" aria-hidden="true"></span></span></h1>
     <p class="lead">Для автосервисов, барбершопов и&nbsp;салонов: продающий сайт, онлайн-запись, Telegram-бот и&nbsp;приложение для&nbsp;ваших клиентов. Ваш будущий сайт покажем бесплатно&nbsp;— за&nbsp;1&nbsp;день, до&nbsp;оплаты.</p>
     <div class="cta">
       <a class="btn" href="#price"><i></i>Получить демо бесплатно</a>
@@ -72,29 +83,32 @@
     </dl>
   </div>
 
-  <div class="board" id="board">
-    <div class="board-top">
-      <span class="mono">График записи · неделя</span>
-      <span class="live mono"><i></i>онлайн 24/7</span>
-    </div>
-    <div class="board-grid" id="grid" aria-hidden="true"></div>
-    <div class="board-foot">
-      <span class="mono">Записей: <b id="bCount">0</b></span>
-      <span class="mono">из них ночью: <b id="bNight">0</b></span>
-    </div>
-    <p class="board-hint">Пример. Нажмите на&nbsp;свободную клетку&nbsp;— так записывается ваш клиент.</p>
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="hero-dev" id="heroDev">
+    <div class="hd-lt dv-lt"><div class="dv-lt-lid"><div class="dv-scr hd-reel" id="reel">
+      <div class="hd-s dv-live is-cur" data-href="vinil/" data-cap="Винил · барбершоп · стиль «Квартирник»"><img src="assets/work/pf/vinil-lt.webp" data-live="assets/work/live/vinil-lt.webp" width="1200" height="779" alt="Демо-сайт барбершопа «Винил» на ноутбуке" fetchpriority="high"></div>
+      <div class="hd-s dv-live" data-href="tiho/" data-cap="Тихо · массаж и SPA · стиль «Облака»"><img src="assets/work/pf/tiho-lt.webp" data-live="assets/work/live/tiho-lt.webp" width="1200" height="779" alt="Демо-сайт студии массажа «Тихо»" loading="lazy"></div>
+      <div class="hd-s dv-live" data-href="blik/" data-cap="Блик · детейлинг · стиль «Свет»"><img src="assets/work/pf/blik-lt.webp" data-live="assets/work/live/blik-lt.webp" width="1200" height="779" alt="Демо-сайт детейлинга «Блик»" loading="lazy"></div>
+      <div class="hd-s dv-live" data-href="myata/" data-cap="Мята · ветклиника · стиль «Лист»"><img src="assets/work/pf/myata-lt.webp" data-live="assets/work/live/myata-lt.webp" width="1200" height="779" alt="Демо-сайт ветклиники «Мята»" loading="lazy"></div>
+      <div class="hd-s dv-live" data-href="mun/" data-cap="Moon · бар · стиль «Полночь»"><img src="assets/work/pf/mun-lt.webp" data-live="assets/work/live/mun-lt.webp" width="1200" height="779" alt="Демо-сайт бара Moon" loading="lazy"></div>
+      <div class="hd-s dv-live" data-href="granit/" data-cap="Гранит · юридическое бюро · стиль «Бланк»"><img src="assets/work/pf/granit-lt.webp" data-live="assets/work/live/granit-lt.webp" width="1200" height="779" alt="Демо-сайт юридического бюро «Гранит»" loading="lazy"></div>
+    </div></div><i class="dv-lt-base"></i></div>
+    <div class="hd-ph dv-ph"><div class="dv-ph-b"><div class="dv-scr hd-app">
+      <p class="app-h"><b>Записи</b><span class="live"><i></i>онлайн 24/7</span></p>
+      <div class="board-grid" id="grid" aria-hidden="true"></div>
+      <div class="board-foot"><span>Записей: <b id="bCount">0</b></span><span>ночью: <b id="bNight">0</b></span></div>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div></div></div>
+    <p class="hd-foot"><a class="hd-cap" id="reelCap" href="vinil/"><span id="reelTxt">Винил · барбершоп · стиль «Квартирник»</span> <span aria-hidden="true">→</span></a><span class="board-hint">В&nbsp;телефоне&nbsp;— приложение владельца. Нажмите на&nbsp;свободную клетку: так записывается ваш клиент.</span></p>
   </div>
 </section>
 
 <!-- 2. Боль -->
 <section class="pain wrap" aria-labelledby="pain-h">
-  <p class="label">Почему бизнес теряет клиентов</p>
   <h2 id="pain-h" class="sr">Почему бизнес теряет клиентов</h2>
   <ol class="pain-list">
-    <li data-r><span class="mono">01</span><p><b>Звонок не&nbsp;дошёл&nbsp;— клиент ушёл.</b> Мастер занят, трубку не&nbsp;взяли, вечером закрыто. Он&nbsp;набирает следующий номер в&nbsp;картах.</p></li>
-    <li data-r><span class="mono">02</span><p><b>Визитка не&nbsp;продаёт.</b> Страница на&nbsp;карте не&nbsp;показывает свободное время и&nbsp;не&nbsp;записывает. Человек сравнивает&nbsp;— и&nbsp;выбирает того, у&nbsp;кого проще.</p></li>
-    <li data-r><span class="mono">03</span><p><b>Клиент приходит один раз.</b> Без напоминаний и&nbsp;бонусов он&nbsp;забывает о&nbsp;вас. А&nbsp;деньги приносит тот, кто возвращается.</p></li>
+    <li data-r><p><b>Звонок не&nbsp;дошёл&nbsp;— клиент ушёл.</b> Мастер занят, трубку не&nbsp;взяли, вечером закрыто. Он&nbsp;набирает следующий номер в&nbsp;картах.</p></li>
+    <li data-r><p><b>Визитка не&nbsp;продаёт.</b> Страница на&nbsp;карте не&nbsp;показывает свободное время и&nbsp;не&nbsp;записывает. Человек сравнивает&nbsp;— и&nbsp;выбирает того, у&nbsp;кого проще.</p></li>
+    <li data-r><p><b>Клиент приходит один раз.</b> Без напоминаний и&nbsp;бонусов он&nbsp;забывает о&nbsp;вас. А&nbsp;деньги приносит тот, кто возвращается.</p></li>
   </ol>
 </section>
 
@@ -103,7 +117,6 @@
   <div class="day-pin">
     <div class="wrap day-in">
       <div class="day-head">
-        <p class="label">Один день сервиса · пример</p>
         <h2 id="day-h">Пока вы работаете, телефон теряет клиентов. Запись&nbsp;— нет.</h2>
       </div>
       <div class="day-main">
@@ -125,34 +138,33 @@
 <!-- 4. Что делаем -->
 <section class="product wrap" id="product" aria-labelledby="prod-h">
   <div class="sec-head">
-    <p class="label">Что вы получаете</p>
-    <h2 id="prod-h">Не&nbsp;просто сайт&nbsp;— система, которая записывает клиентов.</h2>
+    <h2 id="prod-h">К&nbsp;сайту сразу подключены запись и&nbsp;напоминания.</h2>
   </div>
   <div class="prod">
     <div class="chapters">
       <article class="ch" data-i="0">
-        <span class="mono">01 · Сайт</span>
+        <span class="mono">Сайт</span>
         <h3>Продаёт с&nbsp;первого экрана</h3>
-        <div class="ch-img dv-ph"><div class="dv-ph-b"><div class="dv-scr"><img src="assets/work/sm/stal-phone.webp" width="600" height="1298" alt="Сайт барбершопа «Сталь» на телефоне" loading="lazy"></div></div></div>
+        <div class="ch-img dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/sm/stal-phone.webp" data-live="assets/work/live/stal-ph.webp" width="600" height="1298" alt="Сайт барбершопа «Сталь» на телефоне" loading="lazy"></div></div></div>
         <ul><li>Дизайн под ваш бренд, продающие тексты, цены и&nbsp;отзывы</li><li>Быстрый на&nbsp;телефоне, SEO под Яндекс, карта, кнопки мессенджеров</li><li>Политика и&nbsp;согласие по&nbsp;152-ФЗ, превью ссылки для&nbsp;мессенджеров</li></ul>
         <a class="link" href="stal/">Открыть демо-сайт →</a>
       </article>
       <article class="ch" data-i="1">
-        <span class="mono">02 · Онлайн-запись</span>
+        <span class="mono">Онлайн-запись</span>
         <h3>Клиент записывается сам&nbsp;— за&nbsp;минуту</h3>
-        <div class="ch-img dv-ph"><div class="dv-ph-b"><div class="dv-scr"><img src="assets/work/sm/latun-zapis.webp" width="600" height="1298" alt="Онлайн-запись барбершопа «Латунь»: выбор услуги и времени" loading="lazy"></div></div></div>
+        <div class="ch-img dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/sm/latun-zapis.webp" data-live="assets/work/live/latun-zapis-ph.webp" width="600" height="1298" alt="Онлайн-запись барбершопа «Латунь»: выбор услуги и времени" loading="lazy"></div></div></div>
         <ul><li>Услуга, мастер, день и&nbsp;время&nbsp;— только свободные окна</li><li>Вы видите записи сразу, клиент получает подтверждение</li><li>Работает круглые сутки&nbsp;— без администратора</li></ul>
         <a class="link" href="latun/zapis/">Попробовать запись →</a>
       </article>
       <article class="ch" data-i="2">
-        <span class="mono">03 · Приложение для клиентов</span>
+        <span class="mono">Приложение для клиентов</span>
         <h3>Ваша иконка на&nbsp;телефоне клиента</h3>
-        <div class="ch-img dv-ph"><div class="dv-ph-b"><div class="dv-scr"><img src="assets/work/sm/stal-app.webp" width="600" height="1298" alt="Приложение барбершопа «Сталь» для клиентов" loading="lazy"></div></div></div>
+        <div class="ch-img dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/sm/stal-app.webp" data-live="assets/work/live/stal-app-ph.webp" width="600" height="1298" alt="Приложение барбершопа «Сталь» для клиентов" loading="lazy"></div></div></div>
         <ul><li>Запись в&nbsp;два нажатия, бонусная карта с&nbsp;QR, подарочные сертификаты</li><li>Для автосервиса: статус ремонта, смета с&nbsp;кнопкой «Согласовать», гараж и&nbsp;история</li><li>Без App&nbsp;Store и&nbsp;Google&nbsp;Play&nbsp;— ставится по&nbsp;ссылке</li></ul>
         <a class="link" href="shinomontazh/app/">Открыть приложение →</a>
       </article>
       <article class="ch" data-i="3">
-        <span class="mono">04 · Telegram-бот</span>
+        <span class="mono">Telegram-бот</span>
         <h3>Запись и&nbsp;напоминания в&nbsp;Telegram</h3>
         <div class="ch-img ch-wide dv-lt"><div class="dv-lt-lid"><div class="dv-scr"><img src="assets/work/sm/stal-bot.webp" width="1280" height="800" alt="Демо Telegram-бота записи" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
         <ul><li>Запись кнопками, перенос и&nbsp;отмена, напоминание накануне</li><li>После визита&nbsp;— просьба об&nbsp;оценке и&nbsp;отзыве на&nbsp;картах</li><li>Вам&nbsp;— уведомление о&nbsp;каждой записи</li></ul>
@@ -161,10 +173,10 @@
     </div>
     <div class="stage" id="stage" aria-hidden="true">
       <figure class="fig f-lt"><div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/live/stal-lt.webp" width="960" height="2100" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div></figure>
-      <figure class="fig f-ph"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr"><img src="assets/work/latun-zapis.webp" width="780" height="1688" alt="" loading="lazy"></div></div></div></figure>
-      <figure class="fig f-ph"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr"><img src="assets/work/stal-app.webp" width="780" height="1688" alt="" loading="lazy"></div></div></div></figure>
+      <figure class="fig f-ph"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/latun-zapis.webp" data-live="assets/work/live/latun-zapis-ph.webp" width="780" height="1688" alt="" loading="lazy"></div></div></div></figure>
+      <figure class="fig f-ph"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/stal-app.webp" data-live="assets/work/live/stal-app-ph.webp" width="780" height="1688" alt="" loading="lazy"></div></div></div></figure>
       <figure class="fig f-lt"><div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr"><img src="assets/work/stal-bot.webp" width="1280" height="800" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div></figure>
-      <div class="stage-n mono" id="stageN">01 / 04</div>
+      <div class="stage-n" id="stageN">1 из 4</div>
     </div>
   </div>
 </section>
@@ -173,7 +185,6 @@
 <section class="mini" id="mini" aria-labelledby="mini-h">
   <div class="wrap mini-in">
     <div class="mini-text">
-      <p class="label">Мини-приложение</p>
       <h2 id="mini-h">Приложение открывается прямо в&nbsp;Telegram и&nbsp;MAX.</h2>
       <p class="mini-lead">Клиенту ничего не&nbsp;нужно скачивать. Одно нажатие в&nbsp;чате с&nbsp;вашим ботом&nbsp;— и&nbsp;запись, бонусы и&nbsp;история визитов уже на&nbsp;экране.</p>
       <ul class="mini-l">
@@ -210,7 +221,6 @@
 <section class="ads" id="ads" aria-labelledby="ads-h">
   <div class="wrap ads-in">
     <div class="ads-text">
-      <p class="label">Реклама и&nbsp;карты</p>
       <h2 id="ads-h">Приведём клиентов&nbsp;— и&nbsp;покажем, сколько записалось.</h2>
       <p class="ads-lead">Сайт, запись и&nbsp;реклама в&nbsp;одних руках. Поэтому в&nbsp;отчёте не&nbsp;«клики», а&nbsp;записи и&nbsp;цена одного клиента.</p>
       <ol class="ads-flow mono" aria-label="Путь клиента">
@@ -245,10 +255,135 @@
 <section class="work" id="work" aria-labelledby="work-h">
   <div class="wrap">
     <div class="sec-head">
-      <p class="label">Работы</p>
       <h2 id="work-h">Каждый проект&nbsp;— свой характер.</h2>
       <p class="note">Демо-проекты студии с&nbsp;вымышленными названиями: так мы показываем стиль и&nbsp;возможности, не&nbsp;раскрывая данные клиентов. Всё открывается и&nbsp;работает. Повторов нет: у&nbsp;каждого проекта свой дизайн.</p>
     </div>
+  </div>
+
+  <div class="wrap">
+    <!-- портфолио:начало -->
+    <div class="pf-head">
+      <p class="label w-sub">15 работ из&nbsp;30+ концептов студии</p>
+      <div class="pf-f" id="pfF" role="group" aria-label="Показать работы по нише">
+        <button type="button" data-f="all" aria-pressed="true">Все</button>
+        <button type="button" data-f="barber" aria-pressed="false">Барбершопы</button>
+        <button type="button" data-f="beauty" aria-pressed="false">Красота и SPA</button>
+        <button type="button" data-f="auto" aria-pressed="false">Авто</button>
+        <button type="button" data-f="food" aria-pressed="false">Бары и кафе</button>
+        <button type="button" data-f="clinic" aria-pressed="false">Клиники</button>
+        <button type="button" data-f="b2b" aria-pressed="false">Услуги и B2B</button>
+      </div>
+    </div>
+    <ul class="pf" id="pf">
+      <li class="pf-i" data-g="barber"><a href="vinil/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/vinil-lt.webp" data-live="assets/work/live/vinil-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/vinil-ph.webp" data-live="assets/work/live/vinil-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Барбершоп</span><b>Винил</b><span class="pf-st mono">стиль «Квартирник» · демо</span><span class="pf-what">сайт-пластинка · цена по уровню мастера · запись · приложение</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="barber"><a href="stal/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/stal-lt.webp" data-live="assets/work/live/stal-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/stal-ph.webp" data-live="assets/work/live/stal-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Барбершоп</span><b>Сталь</b><span class="pf-st mono">стиль «Ателье» · демо</span><span class="pf-what">видео на первом экране · запись · приложение · бот</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="beauty"><a href="shelk/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/shelk-lt.webp" data-live="assets/work/live/shelk-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/shelk-ph.webp" data-live="assets/work/live/shelk-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Студия красоты</span><b>Шёлк</b><span class="pf-st mono">стиль «Ателье» · демо</span><span class="pf-what">светлый стиль · приложение с бонусами</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="beauty"><a href="tiho/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/tiho-lt.webp" data-live="assets/work/live/tiho-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/tiho-ph.webp" data-live="assets/work/live/tiho-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Массаж и SPA</span><b>Тихо</b><span class="pf-st mono">стиль «Облака» · демо</span><span class="pf-what">заставка «Свеча» · вечер для двоих · сертификаты</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="beauty"><a href="mramor/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/mramor-lt.webp" data-live="assets/work/live/mramor-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/mramor-ph.webp" data-live="assets/work/live/mramor-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Студия пилатеса</span><b>Мрамор</b><span class="pf-st mono">стиль «Форма» · демо</span><span class="pf-what">арки и свет · занятие по минутам</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="auto"><a href="blik/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/blik-lt.webp" data-live="assets/work/live/blik-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/blik-ph.webp" data-live="assets/work/live/blik-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Детейлинг</span><b>Блик</b><span class="pf-st mono">стиль «Свет» · демо</span><span class="pf-what">«Карта защиты» · блик по лаку · машина в приложении</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="auto"><a href="privod/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/privod-lt.webp" data-live="assets/work/live/privod-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/privod-ph.webp" data-live="assets/work/live/privod-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Автотехцентр</span><b>Привод</b><span class="pf-st mono">стиль «Ателье · сталь» · демо</span><span class="pf-what">ремонт и детейлинг · запись с госномером</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="auto"><a href="sedan/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/sedan-lt.webp" data-live="assets/work/live/sedan-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/sedan-ph.webp" data-live="assets/work/live/sedan-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Сервис немецких авто</span><b>Седан</b><span class="pf-st mono">стиль «Ателье · сталь» · демо</span><span class="pf-what">диагностика · ТО по пробегу в приложении</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="food"><a href="mun/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/mun-lt.webp" data-live="assets/work/live/mun-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/mun-ph.webp" data-live="assets/work/live/mun-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Бар</span><b>Moon</b><span class="pf-st mono">стиль «Полночь» · демо</span><span class="pf-what">сайт по часам вечера · бронь с предзаказом</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="food"><a href="sosedi/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/sosedi-lt.webp" data-live="assets/work/live/sosedi-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/sosedi-ph.webp" data-live="assets/work/live/sosedi-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Бар-кафе с играми</span><b>Соседи</b><span class="pf-st mono">стиль «Полночь» · демо</span><span class="pf-what">светящиеся шары · бронь стола · меню</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="food"><a href="glazur/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/glazur-lt.webp" data-live="assets/work/live/glazur-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/glazur-ph.webp" data-live="assets/work/live/glazur-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Кондитерская</span><b>Глазурь</b><span class="pf-st mono">стиль «Полночь · светлая» · демо</span><span class="pf-what">заказ торта без звонка · витрина дня</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="clinic"><a href="perlamutr/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/perlamutr-lt.webp" data-live="assets/work/live/perlamutr-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/perlamutr-ph.webp" data-live="assets/work/live/perlamutr-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Стоматология</span><b>Перламутр</b><span class="pf-st mono">стиль «Ателье» · демо</span><span class="pf-what">запись к врачу · приложение · бот</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="clinic"><a href="myata/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/myata-lt.webp" data-live="assets/work/live/myata-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/myata-ph.webp" data-live="assets/work/live/myata-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Ветклиника</span><b>Мята</b><span class="pf-st mono">стиль «Лист» · демо</span><span class="pf-what">«Кто у вас?» · цены под питомца</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="b2b"><a href="granit/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/granit-lt.webp" data-live="assets/work/live/granit-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/granit-ph.webp" data-live="assets/work/live/granit-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Юридическое бюро</span><b>Гранит</b><span class="pf-st mono">стиль «Бланк» · демо</span><span class="pf-what">бланк заполняется сам · консультация</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+      <li class="pf-i" data-g="b2b"><a href="stvor/">
+        <div class="pf-vis" aria-hidden="true">
+          <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/stvor-lt.webp" data-live="assets/work/live/stvor-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
+          <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/stvor-ph.webp" data-live="assets/work/live/stvor-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
+        </div>
+        <div class="pf-txt"><span class="mono">Речные грузоперевозки</span><b>Створ</b><span class="pf-st mono">стиль «Лоция» · демо</span><span class="pf-what">калькулятор рейса · «Где мой груз»</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+      </a></li>
+    </ul>
+    <p class="pf-n" aria-hidden="true"><span id="pfN">1 из 15</span><i id="pfBar"></i><span>листайте →</span></p>
+    <p class="note pf-note">У&nbsp;каждой работы пометка «демо»: названия, адреса и&nbsp;отзывы внутри&nbsp;— вымышленные. Каждую можно открыть: записаться, зайти в&nbsp;приложение, написать боту.</p>
+    <!-- портфолио:конец -->
   </div>
 
   <!-- кейс: бюро интерьеров «ОСЬ» — колода карточек -->
@@ -265,7 +400,7 @@
     <div class="wrap deck" id="deck">
       <article class="card c-stanok">
         <div class="card-txt">
-          <span class="mono card-n">01 · Бар · лофт</span>
+          <span class="mono card-n">Бар · лофт</span>
           <h4>Станок</h4>
           <p>Кирпич, сталь и&nbsp;тёплый свет. План зала с&nbsp;точками обзора, переключатель «день/вечер» и&nbsp;прогулка по&nbsp;бару в&nbsp;3D.</p>
           <ul class="card-tags mono"><li>рендеры</li><li>3D-прогулка</li><li>план зала</li></ul>
@@ -282,7 +417,7 @@
       </article>
       <article class="card c-len">
         <div class="card-txt">
-          <span class="mono card-n">02 · Кофейня · японди</span>
+          <span class="mono card-n">Кофейня · японди</span>
           <h4>Лён</h4>
           <p>Светлая штукатурка, дуб и&nbsp;арки. Страница меняет свет от&nbsp;утра к&nbsp;вечеру, а&nbsp;в&nbsp;телефоне живёт приложение кофейни: меню, бронь, бонусы.</p>
           <ul class="card-tags mono"><li>утро/вечер</li><li>приложение</li><li>3D-зал</li></ul>
@@ -299,7 +434,7 @@
       </article>
       <article class="card c-taiga">
         <div class="card-txt">
-          <span class="mono card-n">03 · Ресторан · сибирская кухня</span>
+          <span class="mono card-n">Ресторан · сибирская кухня</span>
           <h4>Тайга</h4>
           <p>Брёвна, камень и&nbsp;живой огонь. История проекта главами, галерея залов и&nbsp;3D-зал с&nbsp;камином прямо в&nbsp;экране ноутбука.</p>
           <ul class="card-tags mono"><li>главы-карточки</li><li>галерея</li><li>3D с&nbsp;огнём</li></ul>
@@ -317,25 +452,8 @@
     </div>
     <p class="wrap case-all"><a class="link" href="os/">Сайт бюро «ОСЬ» целиком →</a></p>
   </div>
-
-  <div class="wrap">
-    <p class="label w-sub">Сайты с&nbsp;онлайн-записью · 11&nbsp;ниш</p>
-    <ul class="works" id="works">
-      <li><a href="stal/" data-img="assets/work/sm/stal-site.webp"><span class="mono">01</span><b>Сталь</b><span class="w-kind">Барбершоп</span><span class="w-what">сайт · запись · приложение · бот</span><img class="w-thumb" src="assets/work/sm/stal-site.webp" width="760" height="475" alt="Сайт барбершопа «Сталь»" loading="lazy"><span class="arr">→</span></a></li>
-      <li><a href="mramor/" data-img="assets/work/sm/mramor-site.webp"><span class="mono">02</span><b>Мрамор</b><span class="w-kind">Студия пилатеса</span><span class="w-what">арки и&nbsp;свет · занятие по&nbsp;минутам</span><img class="w-thumb" src="assets/work/sm/mramor-site.webp" width="760" height="475" alt="Сайт студии пилатеса «Мрамор»" loading="lazy"><span class="arr">→</span></a></li>
-      <li><a href="granit/" data-img="assets/work/sm/granit-site.webp"><span class="mono">03</span><b>Гранит</b><span class="w-kind">Юридическое бюро</span><span class="w-what">бланк заполняется сам · печать</span><img class="w-thumb" src="assets/work/sm/granit-site.webp" width="760" height="475" alt="Сайт юридического бюро «Гранит»" loading="lazy"><span class="arr">→</span></a></li>
-      <li><a href="bazalt/" data-img="assets/work/sm/bazalt-site.webp"><span class="mono">04</span><b>Базальт</b><span class="w-kind">Бокс-клуб</span><span class="w-what">табло расписания · ближайшая тренировка</span><img class="w-thumb" src="assets/work/sm/bazalt-site.webp" width="760" height="475" alt="Сайт бокс-клуба «Базальт»" loading="lazy"><span class="arr">→</span></a></li>
-      <li><a href="tuman/" data-img="assets/work/sm/tuman-site.webp"><span class="mono">05</span><b>Туман</b><span class="w-kind">SPA и&nbsp;массаж</span><span class="w-what">кедр и&nbsp;пар · ритуал по&nbsp;минутам</span><img class="w-thumb" src="assets/work/sm/tuman-site.webp" width="760" height="475" alt="Сайт SPA «Туман»" loading="lazy"><span class="arr">→</span></a></li>
-      <li><a href="myata/" data-img="assets/work/sm/myata-site.webp"><span class="mono">06</span><b>Мята</b><span class="w-kind">Ветклиника</span><span class="w-what">«Кто у&nbsp;вас?» · цены под питомца</span><img class="w-thumb" src="assets/work/sm/myata-site.webp" width="760" height="475" alt="Сайт ветеринарной клиники «Мята»" loading="lazy"><span class="arr">→</span></a></li>
-      <li><a href="shelk/" data-img="assets/work/sm/shelk-site.webp"><span class="mono">07</span><b>Шёлк</b><span class="w-kind">Студия красоты</span><span class="w-what">светлый стиль · приложение с&nbsp;бонусами</span><img class="w-thumb" src="assets/work/sm/shelk-site.webp" width="760" height="475" alt="Сайт студии красоты «Шёлк»" loading="lazy"><span class="arr">→</span></a></li>
-      <li><a href="kvarc/" data-img="assets/work/sm/kvarc-site.webp"><span class="mono">08</span><b>Кварц</b><span class="w-kind">Ремонт техники</span><span class="w-what">квитанция на&nbsp;первом экране · запись</span><img class="w-thumb" src="assets/work/sm/kvarc-site.webp" width="760" height="475" alt="Сайт сервиса «Кварц»" loading="lazy"><span class="arr">→</span></a></li>
-      <li><a href="shinomontazh/" data-img="assets/work/sm/koleso-site.webp"><span class="mono">09</span><b>Колесо</b><span class="w-kind">Шиномонтаж</span><span class="w-what">сайт · запись · приложение автосервиса</span><img class="w-thumb" src="assets/work/sm/koleso-site.webp" width="760" height="475" alt="Сайт шиномонтажа «Колесо»" loading="lazy"><span class="arr">→</span></a></li>
-      <li><a href="yantar/" data-img="assets/work/sm/yantar-site.webp"><span class="mono">10</span><b>Янтарь</b><span class="w-kind">Школа танцев</span><span class="w-what">расписание по&nbsp;дням · приложение</span><img class="w-thumb" src="assets/work/sm/yantar-site.webp" width="760" height="475" alt="Сайт школы танцев «Янтарь»" loading="lazy"><span class="arr">→</span></a></li>
-      <li><a href="stvor/" data-img="assets/work/sm/stvor-site.webp"><span class="mono">11</span><b>Створ</b><span class="w-kind">Речные грузоперевозки</span><span class="w-what">калькулятор рейса · кабинет «Где мой груз» · экипаж</span><img class="w-thumb" src="assets/work/sm/stvor-site.webp" width="760" height="475" alt="Сайт речного перевозчика «Створ»" loading="lazy"><span class="arr">→</span></a></li>
-    </ul>
-  </div>
   <div class="strip" aria-hidden="true"><div class="strip-in" id="strip">
-    <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr"><img src="assets/work/sm/stal-phone.webp" width="600" height="1298" alt="" loading="lazy"></div></div></div>
+    <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/sm/stal-phone.webp" data-live="assets/work/live/stal-ph.webp" width="600" height="1298" alt="" loading="lazy"></div></div></div>
     <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr"><img src="assets/work/sm/len-app.webp" width="600" height="1267" alt="" loading="lazy"></div></div></div>
     <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr"><img src="assets/work/sm/mramor-phone.webp" width="600" height="1298" alt="" loading="lazy"></div></div></div>
     <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr"><img src="assets/work/sm/koleso-app.webp" width="600" height="1298" alt="" loading="lazy"></div></div></div>
@@ -353,10 +471,32 @@
   <div class="preview" id="preview" aria-hidden="true"><img src="assets/work/sm/stal-site.webp" alt="" width="760" height="475" loading="lazy"></div>
 </section>
 
+<!-- стили:начало -->
+<section class="styles" id="styles" aria-labelledby="styles-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="styles-h">10 стилей в каталоге. Ваш сайт не будет похож на соседский.</h2>
+      <p class="note">Стиль — не шаблон, а характер: шрифты, свет, движение и одна фишка, которую запоминают. Берём ближайший к вашему месту и делаем своим: ваши цвета, фото, тексты, своя заставка загрузки.</p>
+    </div>
+    <ul class="st" id="st">
+      <li><a href="stal/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/stal-ph.webp" data-live="assets/work/live/stal-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Ателье</b><span class="st-w">тёмный зал, видео на первом экране, латунь и сталь</span><span class="st-for mono">барбершопы · клиники · авто</span></a></li>
+      <li><a href="vinil/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/vinil-ph.webp" data-live="assets/work/live/vinil-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Квартирник</b><span class="st-w">сайт-пластинка: трек-лист цен, «состав группы»</span><span class="st-for mono">барбершопы · студии</span></a></li>
+      <li><a href="tiho/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/tiho-ph.webp" data-live="assets/work/live/tiho-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Облака</b><span class="st-w">свеча зажигается и раскрывает первый экран</span><span class="st-for mono">SPA · массаж · косметология</span></a></li>
+      <li><a href="blik/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/blik-ph.webp" data-live="assets/work/live/blik-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Свет</b><span class="st-w">тёмный бокс, световая решётка, блик по лаку</span><span class="st-for mono">детейлинг · оклейка · тюнинг</span></a></li>
+      <li><a href="mun/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/mun-ph.webp" data-live="assets/work/live/mun-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Полночь</b><span class="st-w">сайт живёт по часам вечера, неон и бронь</span><span class="st-for mono">бары · кафе · кондитерские</span></a></li>
+      <li><a href="mramor/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/mramor-ph.webp" data-live="assets/work/live/mramor-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Форма</b><span class="st-w">арки, мягкий свет, занятие по минутам</span><span class="st-for mono">пилатес · йога · SPA</span></a></li>
+      <li><a href="myata/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/myata-ph.webp" data-live="assets/work/live/myata-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Лист</b><span class="st-w">светлый и дружелюбный, «кто у вас?»</span><span class="st-for mono">ветклиники · детские центры</span></a></li>
+      <li><a href="granit/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/granit-ph.webp" data-live="assets/work/live/granit-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Бланк</b><span class="st-w">документ заполняется сам, печать ставится</span><span class="st-for mono">юристы · бухгалтеры · нотариусы</span></a></li>
+      <li><a href="bazalt/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr"><img src="assets/work/sm/bazalt-phone.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Табло</b><span class="st-w">табло расписания, ближайшая тренировка</span><span class="st-for mono">спорт · танцы · школы</span></a></li>
+      <li><a href="stvor/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/stvor-ph.webp" data-live="assets/work/live/stvor-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Лоция</b><span class="st-w">карта рейса, калькулятор и кабинет клиента</span><span class="st-for mono">перевозки · B2B-услуги</span></a></li>
+    </ul>
+  </div>
+</section>
+<!-- стили:конец -->
+
 <!-- 6. Сравнение -->
 <section class="cmp wrap" aria-labelledby="cmp-h">
   <div class="sec-head">
-    <p class="label">Почему мы</p>
     <h2 id="cmp-h">Быстрее студии, сильнее конструктора. И&nbsp;результат&nbsp;— до&nbsp;оплаты.</h2>
   </div>
   <div class="tbl-wrap">
@@ -375,10 +515,44 @@
   <p class="note">Цены рынка&nbsp;— по&nbsp;нашему анализу студий Красноярска и&nbsp;тарифов конструкторов, октябрь 2026.</p>
 </section>
 
+<!-- кто-делает:начало -->
+<section class="who wrap" id="who" aria-labelledby="who-h">
+  <div class="who-g who-np">
+    
+    <div class="who-t">
+      <h2 id="who-h">«Я сам веду каждый проект — от демо до первых записей».</h2>
+      <p class="who-lead">Меня зовут Руслан, я основатель «Точки записи». Делаю сайты, онлайн-запись, приложения и ботов для малого бизнеса. Сам пишу вам, сам собираю демо с вашими данными и остаюсь на связи после запуска — без менеджеров и «передам специалисту».</p>
+      <ul class="who-f">
+        <li><b>Самозанятый</b><span>договор и чек на каждую оплату, статус проверяется на сайте ФНС</span></li>
+        <li><b>Всё — ваше</b><span>домен оформляем на вас, доступы передаём</span></li>
+        <li><b>На связи</b><span><a href="tel:+79130364962">+7 913 036-49-62</a> · <a href="#max" data-max>MAX</a> · <a href="https://t.me/opiumxxxxl" target="_blank" rel="noopener">Telegram</a></span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="pilot" id="pilot">
+    <div class="pilot-t">
+      <h3>Первые 5&nbsp;проектов&nbsp;— без предоплаты.</h3>
+      <p>Оплата — после запуска и подписания акта. Взамен — честный отзыв и разрешение показать вашу работу в портфолио. Так у нас появятся настоящие отзывы, а у вас — сайт без риска.</p>
+    </div>
+    <div class="pilot-s">
+      <div class="seats" role="img" aria-label="Свободно 5 мест из 5"><i></i><i></i><i></i><i></i><i></i></div>
+      <p class="mono">Свободно мест: <b>5 из 5</b></p>
+      <a class="btn" href="#price"><i></i>Занять место</a>
+    </div>
+  </div>
+  <ul class="cnt">
+    <li><b>30+</b><span>концепт-проектов с записью, приложением и ботом</span></li>
+    <li><b>10</b><span>стилей в&nbsp;каталоге&nbsp;— и&nbsp;у&nbsp;каждого сайта своя заставка</span></li>
+    <li><b>15</b><span>ниш: от барбершопа до грузоперевозок</span></li>
+    <li><b>0 ₽</b><span>демо с вашими данными — до оплаты</span></li>
+  </ul>
+  <p class="note cnt-n">Цифры честные: концепты — работы студии с вымышленными названиями. Отзывов клиентов пока нет — их принесёт пилот.</p>
+</section>
+<!-- кто-делает:конец -->
+
 <!-- 6½. Окупаемость -->
 <section class="pay wrap" id="pay" aria-labelledby="pay-h">
   <div class="sec-head">
-    <p class="label">Окупаемость</p>
     <h2 id="pay-h">Посчитайте на&nbsp;своих цифрах.</h2>
     <p class="note">Не&nbsp;обещаем рост продаж. Считаем, сколько новых клиентов нужно, чтобы сайт окупился.</p>
   </div>
@@ -420,9 +594,8 @@
   <i class="glow" id="glow" aria-hidden="true"></i>
   <div class="wrap">
     <div class="sec-head">
-      <p class="label">Цены и&nbsp;демо</p>
       <h2 id="price-h">Соберите проект&nbsp;— демо покажем бесплатно.</h2>
-      <p class="note">Выберите, что нужно: сообщение составится само. Соберём демо по&nbsp;данным из&nbsp;ваших карточек на&nbsp;картах и&nbsp;пришлём ссылку. Оплата 50/50&nbsp;— вторая половина после сдачи.</p>
+      <p class="note">Выберите, что нужно: сообщение составится само. Соберём демо по&nbsp;данным из&nbsp;ваших карточек на&nbsp;картах и&nbsp;пришлём ссылку. Оплата 50/50&nbsp;— вторая половина после сдачи; первым пяти проектам&nbsp;— без предоплаты.</p>
     </div>
     <div class="order">
       <form class="calc" id="calc" onsubmit="return false">
@@ -487,14 +660,13 @@
 <!-- 8. Как работаем -->
 <section class="how wrap" id="how" aria-labelledby="how-h">
   <div class="sec-head">
-    <p class="label">Как работаем</p>
     <h2 id="how-h">От&nbsp;заявки до&nbsp;первых записей&nbsp;— за&nbsp;неделю.</h2>
   </div>
   <div class="steps" id="steps">
     <div class="steps-line" aria-hidden="true"><i id="stepsDot"></i></div>
     <div class="step"><span class="mono">День 0</span><h3>Заявка</h3><p>Пишете в&nbsp;Telegram или MAX, либо звоните. Хватит названия и&nbsp;ссылки на&nbsp;карточку в&nbsp;2ГИС или Яндексе.</p></div>
     <div class="step"><span class="mono">День 1</span><h3>Демо</h3><p>Собираем ваш сайт по&nbsp;вашим услугам и&nbsp;ценам, присылаем ссылку. Бесплатно.</p></div>
-    <div class="step"><span class="mono">Дни 3–10</span><h3>Запуск</h3><p>Договор, 50% предоплата, 2&nbsp;круга правок, ваш домен. Подключаем запись, бота, приложение.</p></div>
+    <div class="step"><span class="mono">Дни 3–10</span><h3>Запуск</h3><p>Договор, 50% предоплата (первым пяти&nbsp;— без неё), 2&nbsp;круга правок, ваш домен. Подключаем запись, бота, приложение.</p></div>
     <div class="step"><span class="mono">Дальше</span><h3>Сопровождение</h3><p>Хостинг, правки, отчёт по&nbsp;заявкам. Вы&nbsp;работаете&nbsp;— сайт записывает.</p></div>
   </div>
 </section>
@@ -503,7 +675,6 @@
 <section class="trust" aria-labelledby="trust-h">
   <div class="wrap">
     <div class="sec-head">
-      <p class="label">Гарантии</p>
       <h2 id="trust-h">Риск&nbsp;— на&nbsp;нас. Так честно.</h2>
     </div>
     <ul class="trust-l">
@@ -518,9 +689,29 @@
 </section>
 
 <!-- 10. Вопросы -->
+<!-- аудит:начало -->
+<section class="audit wrap" id="audit" aria-labelledby="audit-h">
+  <div class="audit-g">
+    <div>
+      <h2 id="audit-h">Разберём ваш сайт или карточку за один день.</h2>
+      <p class="note">Пришлите ссылку на сайт, карточку в 2ГИС или Яндекс Картах, страницу ВКонтакте. Проверим скорость с телефона, видно ли вас в поиске, есть ли запись онлайн, безопасность и 152-ФЗ — и пришлём короткий список, что исправить. Даже если сайт у нас вы заказывать не будете.</p>
+    </div>
+    <form class="audit-f" id="auditF" novalidate>
+      <label class="mono" for="auditU">Ссылка на ваш сайт или карточку</label>
+      <input id="auditU" name="u" type="text" inputmode="url" autocomplete="url" placeholder="https://… или ссылка на 2ГИС" required>
+      <div class="audit-b">
+        <button class="btn" type="submit" data-to="wa"><i></i>Отправить в WhatsApp</button>
+        <button class="btn btn-o" type="submit" data-to="tg">Telegram</button>
+        <button class="btn btn-o" type="submit" data-to="max">MAX</button>
+      </div>
+      <p class="mono audit-n" id="auditN" aria-live="polite">Ссылка уходит только нам в мессенджер — без регистрации.</p>
+    </form>
+  </div>
+</section>
+<!-- аудит:конец -->
+
 <section class="faq wrap" id="faq" aria-labelledby="faq-h">
   <div class="sec-head">
-    <p class="label">Вопросы</p>
     <h2 id="faq-h">Коротко о&nbsp;главном.</h2>
   </div>
   <div class="faq-l">
@@ -538,7 +729,6 @@
   <div class="fin-pin">
     <i class="fin-dot" id="finDot" aria-hidden="true"></i>
     <div class="wrap fin-in">
-      <p class="label">Поставьте точку</p>
       <h2 id="fin-h">Ваш сайт может записывать клиентов уже на&nbsp;этой неделе.</h2>
       <div class="cta">
         <a class="btn btn-k" href="#price"><i></i>Получить демо бесплатно</a>

@@ -1,5 +1,5 @@
 /* Точка записи — живые части сайта: часы Красноярска, график записи на первом экране, сцена «Один день»,
-   смена экранов продукта, превью работ, лента телефонов, путь по шагам, финальная точка, курсор-точка,
+   смена экранов продукта, превью работ, лента телефонов, путь по шагам, финальная точка,
    калькулятор заявки → готовое сообщение в Telegram / MAX / WhatsApp. */
 (function () {
   'use strict';
@@ -9,6 +9,12 @@
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const pad = n => String(n).padStart(2, '0');
+  /* переходы по ссылкам внутри страницы: сначала разложить все блоки (снять «ленивую раскладку»), потом прокрутить — иначе промах */
+  const cvAll = () => document.documentElement.classList.add('cv-all');
+  if (location.hash) { cvAll(); addEventListener('load', () => { const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }, { once: true }); }
+  document.addEventListener('pointerdown', e => { if (e.target.closest && e.target.closest('a[href^="#"]')) cvAll(); }, { capture: true, passive: true });
+  document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.closest && e.target.closest('a[href^="#"]')) cvAll(); }, true);
+  addEventListener('hashchange', () => { if (document.documentElement.classList.contains('cv-all')) return; cvAll(); const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); });
 
   /* часы Красноярска в шапке */
   const now = $('#now');
@@ -43,7 +49,7 @@
     const h = [23, 0, 1, 6, 7, 22, 21, 8][Math.floor(Math.random() * 8)], m = Math.floor(Math.random() * 60);
     const nightly = h >= 21 || h < 9; if (nightly) { night++; bNight.textContent = night; }
     const when = h >= 23 || h < 6 ? ' — пока вы спали' : h < 9 ? ' — до открытия' : h >= 21 ? ' — после закрытия' : ' — без звонка';
-    say(`<span>Новая запись · ${label(c)} · ${SERV[Math.floor(Math.random() * SERV.length)]}<small>оформлена в ${pad(h)}:${pad(m)}${when}</small></span>`);
+    say(`<span>Новая запись · ${label(c)} · ${SERV[Math.floor(Math.random() * SERV.length)]}<small>оформлена в ${pad(h)}:${pad(m)}${when}</small></span>`, 2500);
     return true;
   }
   if (grid) {
@@ -62,7 +68,7 @@
       setTimeout(function run() {
         if (autoStop || autoN > 14) return;
         if (grid.dataset.vis && !document.hidden) { if (book(true)) autoN++; }
-        setTimeout(run, 2600 + Math.random() * 1400);
+        setTimeout(run, 3800 + Math.random() * 1800);
       }, 1600);
     }
   }
@@ -111,17 +117,72 @@
 
   /* ——— продукт: какой экран показать ——— */
   const stage = $('#stage'), figs = stage ? $$('.fig', stage) : [], chs = $$('.ch'), stageN = $('#stageN');
-  const setCh = i => { chs.forEach((c, k) => c.classList.toggle('act', k === i)); figs.forEach((f, k) => f.classList.toggle('act', k === i)); if (stageN) stageN.textContent = '0' + (i + 1) + ' / 04'; };
+  const setCh = i => { chs.forEach((c, k) => c.classList.toggle('act', k === i)); figs.forEach((f, k) => f.classList.toggle('act', k === i)); if (stageN) stageN.textContent = (i + 1) + ' из 4'; if (window.__live) window.__live(); };
   if (chs.length) {
     setCh(0);
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) setCh(+e.target.dataset.i); }), { rootMargin: '-45% 0px -45% 0px' });
     chs.forEach(c => io.observe(c));
   }
 
-  /* ——— живые экраны: прокрутка страниц в рамках устройств идёт, только пока блок виден ——— */
+  /* ——— живые экраны (.dv-live): длинный снимок страницы прокручивается в рамке устройства.
+     data-live — длинный снимок, грузится только когда экран вот-вот понадобится; без него длинный снимок уже в src.
+     Идёт, пока экран виден; в работах и стилях на компьютере — под курсором, на телефоне — у карточки в середине экрана;
+     в «Что делаем» — только у показанной главы. ——— */
   if (!calm && 'IntersectionObserver' in window) {
-    const ioL = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('play', e.isIntersecting)), { threshold: .15 });
-    $$('.card, #stage').forEach(el => ioL.observe(el));
+    const lives = $$('.dv-live');
+    const arm = el => {
+      if (el._arm) return; el._arm = 1;
+      const img = $('img', el), src = img.dataset.live;
+      const go = () => {
+        /* пропорции экрана известны заранее (iPhone 17 Pro 402×874, MacBook 1512×982) — без замера, иначе браузер пересчитывает всю страницу */
+        const k = img.naturalHeight / img.naturalWidth / (el.closest('.dv-ph, .mini-phone') ? 874 / 402 : 982 / 1512);
+        el.style.setProperty('--dur', clamp(k * 2.4, 8, 22).toFixed(1) + 's');
+        el.classList.add('on'); live();
+      };
+      if (!src) { if (img.complete && img.naturalWidth) go(); else img.addEventListener('load', go, { once: true }); return; }
+      const pre = new Image(); pre.src = src;
+      (pre.decode ? pre.decode() : Promise.resolve()).catch(() => {}).then(() => { if (!pre.naturalWidth) return; img.removeAttribute('srcset'); img.src = src; go(); });
+    };
+    lives.forEach(el => { const img = $('img', el); if (!img || el.querySelector('.dv-roll')) return; const r = document.createElement('div'); r.className = 'dv-roll'; img.replaceWith(r); r.appendChild(img); });
+    const seen = new Set(), mid = new Set(), hov = new Set();
+    const pick = el => el.closest('.pf-i, .st li, .hero-dev');
+    const H = document.documentElement, held = () => H.classList.contains('intro') && !H.classList.contains('intro-out'); /* под заставкой экраны ждут */
+    const live = () => lives.forEach(el => {
+      if (!el.classList.contains('on')) return;
+      if (held()) { el.classList.remove('run'); return; }
+      const g = pick(el), f = el.closest('.fig');
+      let run = seen.has(el) && !(f && !f.classList.contains('act'));
+      if (g && !g.classList.contains('hero-dev')) run = run && (fine ? hov.has(g) : mid.has(g));
+      if (el.classList.contains('hd-s')) run = run && el.classList.contains('is-cur');
+      el.classList.toggle('run', run);
+    });
+    window.__live = live; document.addEventListener('tz-intro-done', live);
+    const ioA = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { arm(e.target); ioA.unobserve(e.target); } }), { rootMargin: '60% 30% 60% 30%' });
+    lives.forEach(el => { if (!el.classList.contains('hd-s')) ioA.observe(el); }); /* сайты первого экрана грузит сама смена: текущий и следующий */
+    window.__arm = arm;
+    const ioV = new IntersectionObserver(es => { es.forEach(e => e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)); live(); }, { threshold: .2 });
+    lives.forEach(el => ioV.observe(el));
+    const groups = [...new Set(lives.map(pick).filter(g => g && !g.classList.contains('hero-dev')))];
+    if (fine) groups.forEach(g => { g.addEventListener('mouseenter', () => { hov.add(g); live(); }); g.addEventListener('mouseleave', () => { hov.delete(g); live(); }); g.addEventListener('focusin', () => { hov.add(g); live(); }); g.addEventListener('focusout', () => { hov.delete(g); live(); }); });
+    else { const ioM = new IntersectionObserver(es => { es.forEach(e => e.isIntersecting ? mid.add(e.target) : mid.delete(e.target)); live(); }, { rootMargin: '-30% -30% -30% -30%' }); groups.forEach(g => ioM.observe(g)); }
+  }
+
+  /* ——— первый экран: сайты студии в ноутбуке сменяют друг друга, подпись ведёт на работу ——— */
+  const reel = $('#reel'), shows = reel ? $$('.hd-s', reel) : [], cap = $('#reelCap'), capT = $('#reelTxt');
+  if (shows.length) {
+    let ri = 0, rt = 0, rvis = true;
+    const show = i => {
+      ri = (i + shows.length) % shows.length;
+      shows.forEach((s, k) => s.classList.toggle('is-cur', k === ri));
+      cap.href = shows[ri].dataset.href; capT.textContent = shows[ri].dataset.cap;
+      if (window.__arm) { window.__arm(shows[ri]); window.__arm(shows[(ri + 1) % shows.length]); }
+      if (window.__live) window.__live();
+    };
+    const next = () => { clearTimeout(rt); const hd = document.documentElement.classList; if (calm || !rvis || document.hidden || (hd.contains('intro') && !hd.contains('intro-out'))) return; rt = setTimeout(() => { show(ri + 1); next(); }, 7200); };
+    show(0);
+    new IntersectionObserver(es => { rvis = es[0].isIntersecting; next(); }).observe(reel);
+    document.addEventListener('tz-intro-done', next); /* смена сайтов — с конца заставки */
+    document.addEventListener('visibilitychange', next);
   }
 
   /* ——— работы: превью за курсором ——— */
@@ -135,14 +196,10 @@
     });
   }
 
-  /* ——— курсор-точка ——— */
-  const cur = $('.cur');
+  /* ——— положение мыши: за ним плывёт превью работ (точку за курсором убрали по просьбе владельца 27.10.2026) ——— */
+  const cur = null;
   let cx = -100, cy = -100, kx = -100, ky = -100;
-  if (fine && cur && !calm) {
-    addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; tx = e.clientX + 24; ty = e.clientY - 120; cur.classList.add('on'); }, { passive: true });
-    document.addEventListener('mouseleave', () => cur.classList.remove('on'));
-    document.addEventListener('mouseover', e => cur.classList.toggle('big', !!e.target.closest('a, button, label, summary, .cell')));
-  }
+  if (fine && !calm) addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; tx = e.clientX + 24; ty = e.clientY - 120; }, { passive: true });
 
   /* ——— прокрутка: шапка, лента, шаги, финал, панель на телефоне ——— */
   const topEl = $('#top'), strip = $('#strip'), work = $('#work'), steps = $('#steps'), sdot = $('#stepsDot'), fin = $('#fin'), finDot = $('#finDot'), dock = $('#dock'), start = $('#start'), price = $('#price');
@@ -165,7 +222,7 @@
       set(finDot, '--s', (1 + (need - 1) * clamp(p / .55, 0, 1)).toFixed(3));
       set(fin, '--o', clamp((p - .45) / .25, 0, 1).toFixed(3));
     }
-    if (dock && rp) dock.classList.toggle('on', sy > H * .8 && !(rp.top < H && rp.bottom > 0));
+    if (dock && rp) dock.classList.toggle('on', sy > H * .8 && !(rp.top < H && rp.bottom > 0) && !(rf && rf.top < H * .7)); /* у заявки и в финале своя кнопка */
     /* колода кейса: карточка уходит назад, когда следующая ложится сверху (только на широком экране) */
     if (cards.length && !calm && innerWidth > 1080) {
       const rd = deck.getBoundingClientRect();
@@ -175,7 +232,7 @@
   addEventListener('resize', () => { stripW = 0; });
   let ticking = false;
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; frame(); }); } };
-  addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll); frame();
+  addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll); requestAnimationFrame(frame); /* первый замер — в кадре, а не во время запуска скрипта: иначе лишний пересчёт всей страницы */
   /* плавное следование курсора и превью */
   let looping = false;
   function loop() {
@@ -196,11 +253,12 @@
     el.textContent = ''; out.forEach(n => el.appendChild(n)); el.classList.add('split');
   }
   if (!calm) {
-    const hs = $$('.hero h1, .sec-head h2, .day-head h2, .fin h2');
+    /* заголовок первого экрана не разбиваем: он виден сразу (иначе браузер считает главную отрисовку только после появления слов — минус к скорости);
+       под ним по-прежнему рисуются подчёркивание и точка */
+    const hs = $$('.sec-head h2, .day-head h2, .fin h2');
     hs.forEach(split);
-    const h1 = $('.hero h1'); requestAnimationFrame(() => setTimeout(() => h1 && h1.classList.add('in'), 100));
     const io2 = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io2.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px' });
-    hs.forEach(h => h !== h1 && io2.observe(h));
+    hs.forEach(h => io2.observe(h));
   }
 
   /* мышь: кнопки тянутся за курсором, экран продукта наклоняется, свет в ценах — всё в одном кадре */
@@ -347,3 +405,43 @@
 
 // Кнопка блока «Реклама» выбирает пакет «Сайт + клиенты»
 document.querySelectorAll("[data-ads]").forEach(a => a.addEventListener("click", () => { const r = document.querySelector("#plan input[value=\"Сайт + клиенты\"]"); if (r) { r.checked = true; r.dispatchEvent(new Event("change", { bubbles: true })); } }));
+
+/* ——— портфолио, аудит: начало ——— */
+/* работы: фильтр по нишам; бесплатный разбор: ссылка → готовое сообщение в мессенджер */
+(() => {
+  const f = document.getElementById('pfF'), items = [...document.querySelectorAll('#pf .pf-i')];
+  if (f) f.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    f.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    items.forEach(li => { li.hidden = b.dataset.f !== 'all' && li.dataset.g !== b.dataset.f; });
+    const pf = document.getElementById('pf'); if (pf) pf.scrollLeft = 0; count();
+  });
+  /* лента работ на телефоне: «3 из 15» и полоска */
+  const pfl = document.getElementById('pf'), pfN = document.getElementById('pfN'), pfB = document.getElementById('pfBar');
+  function count() {
+    if (!pfl || !pfN) return;
+    const vis = items.filter(li => !li.hidden), sl = pfl.scrollLeft; /* в начале ленты — без замера ширины (при запуске это пересчёт всей страницы) */
+    const i = sl < 2 || !vis[0] ? 1 : Math.min(vis.length, Math.round(sl / (vis[0].offsetWidth + 14)) + 1);
+    pfN.textContent = i + ' из ' + vis.length; pfB.style.setProperty('--p', (i / Math.max(1, vis.length)).toFixed(3));
+  }
+  if (pfl) { pfl.addEventListener('scroll', () => requestAnimationFrame(count), { passive: true }); if (pfB) pfB.style.setProperty('--p', (1 / Math.max(1, items.length)).toFixed(3)); } /* «1 из 15» уже в разметке — без замера при запуске */
+
+  const form = document.getElementById('auditF'); if (!form) return;
+  const inp = document.getElementById('auditU'), note = document.getElementById('auditN');
+  let to = 'wa';
+  form.querySelectorAll('button[data-to]').forEach(b => b.addEventListener('click', () => { to = b.dataset.to; }));
+  const copy = async s => { try { await navigator.clipboard.writeText(s); return true; } catch (e) { return false; } };
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const u = inp.value.trim();
+    if (u.length < 4) { inp.setAttribute('aria-invalid', 'true'); note.textContent = 'Вставьте ссылку на сайт или карточку — например, из 2ГИС.'; inp.focus(); return; }
+    inp.removeAttribute('aria-invalid');
+    const text = 'Здравствуйте! Хочу бесплатный разбор сайта или карточки: ' + u;
+    if (to === 'wa') { window.open('https://wa.me/79130364962?text=' + encodeURIComponent(text), '_blank', 'noopener'); note.textContent = 'Открыли WhatsApp с готовым сообщением — осталось нажать «Отправить».'; return; }
+    const ok = await copy(text);
+    if (to === 'tg') { window.open('https://t.me/opiumxxxxl', '_blank', 'noopener'); note.textContent = ok ? 'Текст скопирован — вставьте его в чат Telegram и отправьте.' : text; return; }
+    note.textContent = ok ? 'Текст скопирован — найдите нас в MAX по номеру и вставьте сообщение.' : text;
+    const m = document.querySelector('a[data-max]'); if (m) m.click();
+  });
+})();
+/* ——— портфолио, аудит: конец ——— */
