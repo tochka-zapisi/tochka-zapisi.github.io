@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Соседи — приложение для гостей</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#14110e">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="../assets/site/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preload" href="../assets/fonts/golos-text-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/golos-text-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/martian-mono-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/martian-mono-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/unbounded-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/unbounded-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="app.css">
+<style>:root{--bg:#14110e;--bg-2:#1c1814;--surface:#221d18;--surface-2:#2d2620;--ink:#f4ede3;--night:#14110e;--night-2:#1c1814;--wood:#33281e;--wood-2:#4a3a2b;--kraft:#efe6d8;--kraft-ink:#3d3226;--cream:#f4ede3;--muted:#a89c8c;--neon:#f5a64a;--neon-2:#7fc8a9}</style>
+</head>
+<body>
+<div class="splash" data-splash aria-hidden="true"><svg class="rings orbs " viewBox="0 0 220 120" aria-hidden="true"><path class="deck" d="M0 6 H220"/><path class="ring r1" d="M30 6 V61 M66 6 V38 M104 6 V72 M142 6 V32 M178 6 V57 M206 6 V83"/><path class="ring r2" d="M10 114 H210"/><circle class="lamp" style="--i:0" cx="30" cy="70" r="9"/><circle class="lamp l2" style="--i:1" cx="66" cy="46" r="8"/><circle class="lamp" style="--i:2" cx="104" cy="82" r="10"/><circle class="lamp l2" style="--i:3" cx="142" cy="40" r="8"/><circle class="lamp" style="--i:4" cx="178" cy="66" r="9"/><circle class="lamp l2" style="--i:5" cx="206" cy="90" r="7"/></svg><p>Соседи · Красноярск</p></div>
+<header class="bar">
+  <p class="bar-logo">СОСЕДИ</p>
+  <span class="bar-st" data-st><i></i><b></b></span>
+</header>
+<main class="screens">
+  <section class="scr" id="home" data-scr></section>
+  <section class="scr" id="menu" data-scr hidden></section>
+  <section class="scr" id="book" data-scr hidden></section>
+  <section class="scr" id="card" data-scr hidden></section>
+  <section class="scr" id="more" data-scr hidden></section>
+</main>
+<nav class="tabs" aria-label="Разделы">
+  <button type="button" data-tab="home" aria-current="page"><svg viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></svg><span>Главная</span></button>
+  <button type="button" data-tab="menu"><svg viewBox="0 0 24 24"><path d="M6 3v8a3 3 0 0 0 3 3v7M9 3v8M12 3v8M17 3c-2 2-2 6 0 8v10"/></svg><span>Меню</span></button>
+  <button type="button" data-tab="book" class="tab-main"><svg viewBox="0 0 24 24"><path d="M8 2 V10 M16 2 V7"/><circle cx="8" cy="14" r="4"/><circle cx="16" cy="11" r="3.5"/></svg><span>Бронь</span></button>
+  <button type="button" data-tab="card"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg><span>Карта</span></button>
+  <button type="button" data-tab="more"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg><span>Ещё</span></button>
+</nav>
+<div class="sheet" data-sheet hidden><div class="sheet-in" role="dialog" aria-modal="true" aria-label="Сообщение" tabindex="-1"></div></div>
+<script src="vendor/qrcode.js" defer></script>
+<script src="data.js" defer></script>
+<script src="app.js" defer></script>
+</body>
+</html>

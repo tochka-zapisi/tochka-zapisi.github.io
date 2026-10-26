@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Бронь столика — бар-кафе Соседи, Красноярск</title>
+<meta name="description" content="Забронируйте столик — бар-кафе Соседи: дата, время, гости, зона зала и предзаказ блюд к приходу.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../assets/site/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#14110e">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Бронь столика — бар-кафе Соседи, Красноярск">
+<meta property="og:description" content="Забронируйте столик — бар-кафе Соседи: дата, время, гости, зона зала и предзаказ блюд к приходу.">
+<meta property="og:url" content="https://tochka-zapisi.github.io/sosedi/">
+<meta property="og:image" content="https://tochka-zapisi.github.io/sosedi/og.jpg">
+<link rel="canonical" href="https://tochka-zapisi.github.io/sosedi/">
+<link rel="preload" href="../assets/fonts/golos-text-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/golos-text-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/martian-mono-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/martian-mono-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/unbounded-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/unbounded-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site/style.css">
+<style>:root{--bg:#14110e;--bg-2:#1c1814;--surface:#221d18;--surface-2:#2d2620;--ink:#f4ede3;--night:#14110e;--night-2:#1c1814;--wood:#33281e;--wood-2:#4a3a2b;--kraft:#efe6d8;--kraft-ink:#3d3226;--cream:#f4ede3;--muted:#a89c8c;--neon:#f5a64a;--neon-2:#7fc8a9}</style>
+</head>
+<body class="page-bron">
+<a class="skip" href="#main">К содержанию</a>
+<header class="top" data-top>
+  <a class="logo" href="../" aria-label="Соседи — на главную">СОСЕДИ <small>бар-кафе</small></a>
+  <span class="clock" aria-hidden="true"><span data-clock>18:00</span></span>
+  <span class="status" data-status data-open="14:00" data-close="01:00"><i></i><b>каждый день с 14:00 до 01:00</b></span>
+  <a class="btn btn-s" href="../bron/">Бронь</a>
+</header>
+<main id="main" class="wrap bron">
+  <p class="time" aria-hidden="true" data-bron-time>18:00</p>
+  <h1 class="h2">Бронь столика</h1>
+  <p class="text">Без звонка: выберите вечер, время и место — администратор подтвердит бронь в мессенджере.</p>
+  <form class="bform" data-bron novalidate>
+    <fieldset><legend>Вечер</legend><div class="chips" data-days role="radiogroup" aria-label="Дата"></div></fieldset>
+    <fieldset><legend>Время</legend><div class="chips chips-t" data-slots role="radiogroup" aria-label="Время"></div></fieldset>
+    <fieldset><legend>Гостей</legend>
+      <div class="step"><button type="button" data-g="-1" aria-label="Меньше гостей">−</button><output data-guests aria-live="polite">2</output><button type="button" data-g="1" aria-label="Больше гостей">+</button></div>
+    </fieldset>
+    <fieldset><legend>Где сесть</legend><div class="zones" data-zones role="radiogroup" aria-label="Зона зала"></div><p class="small">Зоны зала — для примера: в рабочей версии сделаем по вашему залу и столам.</p></fieldset>
+    <fieldset><legend>Повод</legend><div class="chips" data-reasons></div></fieldset>
+    <fieldset class="pre"><legend>Предзаказ к приходу <span class="small">— по желанию</span></legend>
+      <p class="small">Кухня начнёт готовить к вашему времени — ничего не придётся ждать.</p>
+      <div class="pre-list" data-pre></div>
+    </fieldset>
+    <fieldset><legend>Контакты</legend>
+      <label class="field"><span>Имя</span><input name="name" autocomplete="given-name" required></label>
+      <label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7" required></label>
+      <label class="check"><input type="checkbox" name="ok" required> <span>Даю <a href="../consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a></span></label>
+      <p class="small consent-note">Как мы храним и защищаем данные — в <a href="../privacy.html" target="_blank" rel="noopener">политике конфиденциальности</a>.</p>
+    </fieldset>
+    <div class="summary" data-summary aria-live="polite"></div>
+    <button class="btn btn-wide" type="submit">Забронировать</button>
+    <p class="err" data-err role="alert"></p>
+  </form>
+  <div class="ticket" data-ticket hidden tabindex="-1"></div>
+  <details class="admin" data-admin>
+    <summary>Как это видит администратор</summary>
+    <p class="small">Каждая бронь сразу приходит администратору в MAX или Telegram с кнопками «Подтвердить» и «Перезвонить». Ниже — брони, сделанные в этом браузере (демо).</p>
+    <div data-admin-list></div>
+  </details>
+</main>
+<script>window.BRON={"name":"Соседи","phone":"+7 391 200-00-00","tel":"tel:+73912000000","open":"14:00","close":"01:00","slots":{"from":"14:00","to":"23:30","step":30},"zones":[{"id":"two","name":"Столик на двоих","seats":"1–2","max":2},{"id":"games","name":"Игровой стол","seats":"3–6","max":6},{"id":"big","name":"Большой стол","seats":"6–12","max":12},{"id":"hall","name":"Весь зал","seats":"от 15","max":40}],"reasons":["Просто отдохнуть","Игротека","День рождения","С друзьями","С семьёй"],"preorder":[["Сет на компанию",1290],["Хрустящие крылья",490],["Рёбра в брусничном соусе",720],["Облепиховый чай",390],["Медовик",320]]}</script>
+<script src="../assets/site/bron.js" defer></script>
+</body>
+</html>
