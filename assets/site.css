@@ -171,6 +171,7 @@ p { margin: 0; }
 .w-thumb { display: none; }
 .arr { font-size: 26px; transition: transform .3s var(--ease); }
 .works a:hover .arr { transform: translateX(6px); color: var(--dot); }
+.preview:not(.ok) { display: none; }
 .preview { position: fixed; left: 0; top: 0; z-index: 40; width: 380px; pointer-events: none; opacity: 0; transform: scale(.9); transition: opacity .25s, transform .3s var(--ease); }
 .preview.on { opacity: 1; transform: none; }
 .preview img { border-radius: 10px; box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .45); }

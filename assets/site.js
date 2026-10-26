@@ -170,14 +170,22 @@
   /* ——— первый экран: сайты студии в ноутбуке сменяют друг друга, подпись ведёт на работу ——— */
   const reel = $('#reel'), shows = reel ? $$('.hd-s', reel) : [], cap = $('#reelCap'), capT = $('#reelTxt');
   if (shows.length) {
-    let ri = 0, rt = 0, rvis = true;
+    let ri = 0, rt = 0, rvis = true, armOk = false;
+    /* скрытые кадры ленты — без src (data-src): на медленном телефоне первый экран не ждёт пять невидимых картинок.
+       Длинные снимки — после загрузки страницы (под заставкой они ещё стоят), иначе ими занят канал до первой отрисовки */
+    const armRe = () => {
+      [shows[ri], shows[(ri + 1) % shows.length]].forEach(s => { const im = $('img', s); if (!window.__arm && !im.getAttribute('src') && im.dataset.src) im.src = im.dataset.src; });
+      if (armOk && window.__arm) { window.__arm(shows[ri]); window.__arm(shows[(ri + 1) % shows.length]); }
+    };
     const show = i => {
       ri = (i + shows.length) % shows.length;
       shows.forEach((s, k) => s.classList.toggle('is-cur', k === ri));
       cap.href = shows[ri].dataset.href; capT.textContent = shows[ri].dataset.cap;
-      if (window.__arm) { window.__arm(shows[ri]); window.__arm(shows[(ri + 1) % shows.length]); }
+      armRe();
       if (window.__live) window.__live();
     };
+    const armLater = () => setTimeout(() => { armOk = true; armRe(); }, 600);
+    if (document.readyState === 'complete') armLater(); else addEventListener('load', armLater, { once: true });
     const next = () => { clearTimeout(rt); const hd = document.documentElement.classList; if (calm || !rvis || document.hidden || (hd.contains('intro') && !hd.contains('intro-out'))) return; rt = setTimeout(() => { show(ri + 1); next(); }, 7200); };
     show(0);
     new IntersectionObserver(es => { rvis = es[0].isIntersecting; next(); }).observe(reel);
@@ -191,7 +199,8 @@
   if (fine && prev) {
     const img = $('img', prev);
     $$('#works a').forEach(a => {
-      a.addEventListener('mouseenter', () => { img.src = a.dataset.img; prev.classList.add('on'); });
+      /* до первого наведения превью скрыто совсем (.ok) — его картинка не грузится вместе с первым экраном */
+      a.addEventListener('mouseenter', () => { img.src = a.dataset.img; if (prev.classList.contains('ok')) prev.classList.add('on'); else { prev.classList.add('ok'); requestAnimationFrame(() => requestAnimationFrame(() => a.matches(':hover') && prev.classList.add('on'))); } });
       a.addEventListener('mouseleave', () => prev.classList.remove('on'));
     });
   }
