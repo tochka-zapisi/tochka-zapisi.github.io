@@ -950,3 +950,8 @@ h1, h2 { font-weight: 600; }
   .hero-dev { order: 5; margin-top: 26px; }
   .hero-show .proof { order: 6; margin-top: 30px; }
 }
+/* переключатель языка RU / EN в шапке (27.10.2026) */
+.lang { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 10px; border-radius: 99px; font: 600 14px/1 var(--f); text-decoration: none; box-shadow: inset 0 0 0 1.5px var(--line); transition: box-shadow .2s; }
+.lang:hover { box-shadow: inset 0 0 0 1.5px currentColor; }
+.top.dark .lang { box-shadow: inset 0 0 0 1.5px var(--night-line); }
+@media (max-width: 1080px) { .top .lang { margin-left: auto; } .top .lang + .btn-s { margin-left: 0; } }
