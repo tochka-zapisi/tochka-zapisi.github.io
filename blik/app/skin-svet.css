@@ -1,0 +1,112 @@
+/* Оформление приложения автосервиса под стиль сайта «Свет» (детейлинг, тёмный бокс). Подключает tools/clientapp.mjs, если у сайта
+   theme.style = "svet" (<html data-skin="svet">). Чёрная стена, белый свет ламп, одна латунь, тонкая антиква Spectral, острые углы.
+   Только поверх styles.css и auto.css. */
+:root[data-skin="svet"] {
+  --sv-wall: #0b0b0c; --sv-led: #f6f5f0; --sv-brass: #c6a466; --sv-brass-2: #dcc08a;
+  --bg: #0b0b0c; --surface: #121214; --surface-2: #19191c; --ink: #eeece7; --muted: rgba(238, 236, 231, .62); --line: rgba(238, 236, 231, .12);
+  --accent: #f6f5f0; --accent-ink: #0b0b0c; --gold: #c6a466; --dark: #050506; --ok: #8fc9a4;
+  --r: 0px; --r-sm: 0px; --wd: 300;
+}
+:root[data-skin="svet"] body { background: #000; }
+/* острые углы везде; круглыми остаются только точки этапов, переключатели и индикаторы */
+:root[data-skin="svet"] .app *:not(.pulse):not(.badge):not(.sw):not(.track i):not(.dot) { border-radius: 0 !important; }
+:root[data-skin="svet"] .sw::after { border-radius: 0 !important; }
+:root[data-skin="svet"] .sw { border-radius: 0 !important; }
+
+/* заголовки — тонкая антиква; подписи — капитель латунью */
+:root[data-skin="svet"] .h1, :root[data-skin="svet"] .sec-h h2, :root[data-skin="svet"] h2 { font-family: var(--f-display); font-weight: 200; letter-spacing: 0; }
+:root[data-skin="svet"] .lbl, :root[data-skin="svet"] .kick, :root[data-skin="svet"] .live-top small { color: var(--sv-brass-2); font-weight: 500; letter-spacing: .22em; }
+:root[data-skin="svet"] em { font-family: var(--f-display); font-style: italic; font-weight: 300; }
+:root[data-skin="svet"] .brandbar > span:not(.demo-tag) { font-family: var(--f-display); font-weight: 300; letter-spacing: .3em; }
+:root[data-skin="svet"] .demo-tag { border: 1px solid rgba(198, 164, 102, .5); color: var(--sv-brass-2); background: transparent; }
+
+/* первый экран — фото бокса под решёткой ламп; линия света по низу */
+:root[data-skin="svet"] .hero { box-shadow: none; border-bottom: 1px solid rgba(246, 245, 240, .35); }
+:root[data-skin="svet"] .hero b { font-weight: 200; font-size: 36px; }
+:root[data-skin="svet"] .hero small { font-family: var(--f-display); font-style: italic; font-size: 17px; color: rgba(238, 236, 231, .8); }
+
+/* кнопки — прямоугольные, капитель; главная — белый свет, при нажатии латунь */
+:root[data-skin="svet"] .btn { font-weight: 500; letter-spacing: .01em; font-size: 13px; }
+:root[data-skin="svet"] .btn.primary, :root[data-skin="svet"] .btn.white { background: var(--sv-led); color: var(--sv-wall); }
+:root[data-skin="svet"] .btn.primary:active { background: var(--sv-brass); }
+:root[data-skin="svet"] .btn.light, :root[data-skin="svet"] .btn:not(.primary):not(.white):not(.ghost) { background: transparent; border: 1px solid rgba(238, 236, 231, .24); color: var(--ink); }
+:root[data-skin="svet"] .quick > * { background: transparent; border-color: rgba(238, 236, 231, .14); font-weight: 500; letter-spacing: .04em; }
+:root[data-skin="svet"] .quick svg { color: var(--sv-brass-2); }
+
+/* машина в студии: тонкая латунная рамка, этапы — точки света */
+:root[data-skin="svet"] .live { background: linear-gradient(180deg, #151517, var(--sv-wall)); border: 1px solid rgba(198, 164, 102, .35); }
+:root[data-skin="svet"] .live::after { background: radial-gradient(circle, rgba(246, 245, 240, .12), transparent 70%); }
+:root[data-skin="svet"] .pulse { background: var(--sv-led); }
+:root[data-skin="svet"] .track .pass i { background: var(--sv-brass); border-color: var(--sv-brass); }
+:root[data-skin="svet"] .track li.pass + li::before { background: var(--sv-brass); }
+:root[data-skin="svet"] .track .now i { border-color: var(--sv-led); background: var(--sv-led); box-shadow: 0 0 0 5px rgba(246, 245, 240, .14), 0 0 16px rgba(246, 245, 240, .7); }
+:root[data-skin="svet"] .est { border-top-style: solid; }
+:root[data-skin="svet"] .est em { color: var(--sv-brass-2); }
+:root[data-skin="svet"] .est .tot b, :root[data-skin="svet"] .live-car b { font-family: var(--f-display); font-weight: 300; }
+
+/* ближайшая запись — лист под лампой */
+:root[data-skin="svet"] .next { background: var(--sv-led); color: var(--sv-wall); box-shadow: none; }
+:root[data-skin="svet"] .next::after { display: none; }
+:root[data-skin="svet"] .next small, :root[data-skin="svet"] .next p { color: rgba(11, 11, 12, .62) !important; }
+:root[data-skin="svet"] .next .btn { background: var(--sv-wall); color: var(--sv-led); border: 0; }
+:root[data-skin="svet"] .next .btn.btn:not(.primary):not(.white) { background: transparent; color: var(--sv-wall); border: 1px solid rgba(11, 11, 12, .3); }
+:root[data-skin="svet"] .next .in { background: var(--sv-wall); color: var(--sv-led); font-weight: 500; letter-spacing: .06em; }
+
+/* карточки, машины, история */
+:root[data-skin="svet"] .card, :root[data-skin="svet"] .carc, :root[data-skin="svet"] .hist, :root[data-skin="svet"] .menu, :root[data-skin="svet"] .ref, :root[data-skin="svet"] .bk, :root[data-skin="svet"] .levels div { background: var(--surface); box-shadow: none; border: 1px solid var(--line); }
+:root[data-skin="svet"] .carc-h b, :root[data-skin="svet"] .vis b, :root[data-skin="svet"] .bk b { font-family: var(--f-display); font-weight: 300; font-size: 18px; }
+:root[data-skin="svet"] .carc-ic { background: transparent; border: 1px solid rgba(198, 164, 102, .35); color: var(--sv-brass-2); }
+:root[data-skin="svet"] .to-h svg { color: var(--sv-brass-2); }
+:root[data-skin="svet"] .bar { height: 2px; background: var(--line); }
+:root[data-skin="svet"] .bar i { background: var(--sv-led); box-shadow: 0 0 8px rgba(246, 245, 240, .6); }
+:root[data-skin="svet"] .bar.warn i { background: var(--sv-brass); }
+:root[data-skin="svet"] .demo-note { background: transparent; border: 1px solid var(--line); }
+:root[data-skin="svet"] .demo-note svg { color: var(--sv-brass-2); }
+
+/* запись: услуги строками прайса, выбранное — белый свет */
+:root[data-skin="svet"] .opt { background: transparent; border: 0; border-bottom: 1px solid var(--line); padding-left: 2px; padding-right: 2px; }
+:root[data-skin="svet"] .opt b { font-family: var(--f-display); font-weight: 300; font-size: 18px; }
+:root[data-skin="svet"] .opt .p { font-family: var(--f-display); font-weight: 300; font-size: 17px; white-space: nowrap; }
+:root[data-skin="svet"] .opt small { letter-spacing: .04em; }
+:root[data-skin="svet"] .opt[aria-pressed="true"] { background: linear-gradient(90deg, rgba(246, 245, 240, .1), transparent 75%); box-shadow: inset 2px 0 0 var(--sv-led); }
+:root[data-skin="svet"] .chip, :root[data-skin="svet"] .day, :root[data-skin="svet"] .time, :root[data-skin="svet"] .field input, :root[data-skin="svet"] .field textarea { background: transparent; border-width: 1px; }
+:root[data-skin="svet"] .day b { font-family: var(--f-display); font-weight: 300; font-size: 22px; }
+:root[data-skin="svet"] .time { font-weight: 400; letter-spacing: .04em; }
+:root[data-skin="svet"] .chip[aria-pressed="true"], :root[data-skin="svet"] .day[aria-pressed="true"], :root[data-skin="svet"] .time[aria-pressed="true"] { background: var(--sv-led); border-color: var(--sv-led); color: var(--sv-wall); box-shadow: 0 0 20px rgba(246, 245, 240, .2); }
+:root[data-skin="svet"] .chip[aria-pressed="true"] .mini { background: rgba(11, 11, 12, .08); color: var(--sv-wall); }
+:root[data-skin="svet"] .chip .mini { background: transparent; color: var(--sv-brass-2); }
+:root[data-skin="svet"] .steps i { height: 2px; background: var(--line); }
+:root[data-skin="svet"] .steps i.on { background: var(--sv-led); box-shadow: 0 0 8px rgba(246, 245, 240, .6); }
+
+/* бонусная карта — латунная пластина с тонкой рамкой, без кругов */
+:root[data-skin="svet"] .loyal { background: linear-gradient(135deg, #3a301f, #15130f 55%, #0b0b0c); border: 1px solid rgba(198, 164, 102, .45); }
+:root[data-skin="svet"] .loyal::before { border-radius: 0 !important; left: 9px; top: 9px; right: 9px; bottom: 9px; width: auto; height: auto; border: 1px solid rgba(198, 164, 102, .25); }
+:root[data-skin="svet"] .loyal::after { display: none; }
+:root[data-skin="svet"] .loyal .lvl { background: var(--sv-brass); color: var(--sv-wall); font-weight: 600; letter-spacing: .2em; }
+:root[data-skin="svet"] .bonus-mini .ic { background: transparent; border: 1px solid var(--sv-brass); color: var(--sv-brass-2); }
+
+/* подарок, акции, сертификаты */
+:root[data-skin="svet"] .gift { background: var(--surface); border: 1px solid rgba(198, 164, 102, .35); }
+:root[data-skin="svet"] .gift .g { background: transparent; border: 1px solid rgba(198, 164, 102, .35); color: var(--sv-brass-2); }
+:root[data-skin="svet"] .promo .tag { background: var(--sv-led); color: var(--sv-wall); font-weight: 600; letter-spacing: .14em; }
+:root[data-skin="svet"] .cert::after { border-radius: 0 !important; right: 9px; top: 9px; left: 9px; bottom: 9px; width: auto; height: auto; border-color: rgba(255, 255, 255, .22); }
+
+/* нижнее меню, шторка, всплывашки */
+:root[data-skin="svet"] .tabs { background: rgba(11, 11, 12, .96); border-top: 1px solid var(--line); }
+:root[data-skin="svet"] .tabs .main span:first-child { background: var(--sv-led); color: var(--sv-wall); box-shadow: 0 0 22px rgba(246, 245, 240, .3); }
+:root[data-skin="svet"] .sheet .panel { background: #0f0f11; border-top: 1px solid rgba(198, 164, 102, .35); }
+:root[data-skin="svet"] .toast { background: var(--sv-led); color: var(--sv-wall); }
+:root[data-skin="svet"] .done .ck { background: transparent; border: 1px solid var(--sv-led); color: var(--sv-led); box-shadow: 0 0 30px rgba(246, 245, 240, .18); }
+:root[data-skin="svet"] .rate button.on { color: var(--sv-brass-2); border-color: var(--sv-brass); }
+
+/* заставка приложения — полоса света */
+:root[data-skin="svet"] .splash b { font-family: var(--f-display); font-weight: 200; letter-spacing: .4em; font-size: 20px; }
+:root[data-skin="svet"] .splash i::after { background: var(--sv-led); box-shadow: 0 0 12px rgba(246, 245, 240, .8); }
+
+/* 15.10.2026, правка после показа: госномер — как настоящая табличка (гротеск, а не антиква); метка «выполнено» — обычным шрифтом;
+   пульс «машина в работе» — мягкое свечение вместо серого круга */
+:root[data-skin="svet"] .plate, :root[data-skin="svet"] .plate * { font-family: "Roboto Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace !important; font-style: normal !important; font-weight: 700; }
+:root[data-skin="svet"] .est em { font-family: var(--f-body); font-style: normal; font-weight: 500; font-size: 13px; letter-spacing: .01em; padding: 1px 6px; }
+:root[data-skin="svet"] .pulse { box-shadow: 0 0 10px rgba(246, 245, 240, .8); animation: svPulse 2s ease-in-out infinite; }
+@keyframes svPulse { 50% { opacity: .45; } }
+@media (prefers-reduced-motion: reduce) { :root[data-skin="svet"] .pulse { animation: none; } }

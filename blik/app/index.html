@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru" data-skin="svet" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Блик — приложение</title>
+<meta name="description" content="Запись, статус ремонта, гараж, бонусы и сертификаты автосервиса — в одном приложении.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Блик">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="auto.css">
+<style>:root{--accent:#f6f5f0;--accent-ink:#111;--bg:#0b0b0c;--surface:color-mix(in srgb, #0b0b0c 92%, #fff);--surface-2:color-mix(in srgb, #0b0b0c 86%, #fff);--ink:#eeece7;--muted:#a4a19b;--gold:color-mix(in srgb, #f6f5f0 55%, #fff);--f-display:"Spectral", Georgia, serif;--f-body:"Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;--wd:300}</style>
+<link rel="stylesheet" href="skin-svet.css">
+</head>
+<body>
+<div class="app" id="app">
+  <div class="splash" id="splash" aria-hidden="true"><img src="" alt=""><b></b><i></i></div>
+  <main class="view" id="view"></main>
+  <nav class="tabs" id="tabs" aria-label="Разделы"></nav>
+  <div class="sheet" id="sheet" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</div>
+<script src="data.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="app.js"></script>
+<script src="tg.js"></script>
+</body>
+</html>
