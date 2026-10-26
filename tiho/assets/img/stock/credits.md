@@ -1,0 +1,17 @@
+# Фото: авторы и лицензии
+
+- `white-and-black-round-table-AV0KNliG.webp` — фото: [Cherosi](https://unsplash.com/@cherosi?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `a-massage-table-with-a-JnsuyfJr.webp` — фото: [Mayur Roxan](https://unsplash.com/@mayurroxanphotography?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `brown-wooden-table-on-brown-FOF-epMl.webp` — фото: [Cherosi](https://unsplash.com/@cherosi?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `cozy-wooden-sauna-with-warm-HOplEhR9.webp` — фото: [Auroom Wellness](https://unsplash.com/@auroom?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `warm-wooden-sauna-interior-with-zQxPUONN.webp` — фото: [Auroom Wellness](https://unsplash.com/@auroom?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `a-glass-mug-filled-with-O7sKj9cj.webp` — фото: [Elena Leya](https://unsplash.com/@foodistika?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `an-overhead-view-of-a-PiVZUFps.webp` — фото: [Maria Klichik](https://unsplash.com/@switchinglanes?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `white-ceramic-mug-with-brown-6LjKkxNs.webp` — фото: [Tuyen Vo](https://unsplash.com/@bitu2104?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `a-hand-pressing-into-the-RcHB2c_7.webp` — фото: [Rosalie Gdy](https://unsplash.com/@rosaliegdy?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `white-clouds-WHJ1VaQp.webp` — фото: [Matt Palmer](https://unsplash.com/@mattpalmer?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `close-up-of-sauna-stones-6lYjzIko.webp` — фото: [HUUM](https://unsplash.com/@huumsauna?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `candle-and-dried-flowers-in-pNFmIL2F.webp` — фото: [Stefan H](https://unsplash.com/@alterego85?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `a-vase-with-dried-flowers-RZ_i2lmp.webp` — фото: [phoebe lynch](https://unsplash.com/@siorraidh?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `a-wooden-table-with-flowers-ZXAfTltL.webp` — фото: [dlxmedia.hu](https://unsplash.com/@dlxmedia?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)
+- `two-candles-flank-a-vase-IXPwBIaq.webp` — фото: [mdreza jalali](https://unsplash.com/@mdrezajalali?utm_source=studio&utm_medium=referral) на [Unsplash](https://unsplash.com/?utm_source=studio&utm_medium=referral)

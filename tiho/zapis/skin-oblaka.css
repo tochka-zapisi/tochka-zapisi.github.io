@@ -1,0 +1,57 @@
+/* Оформление онлайн-записи под стиль сайта «Облака» (строгий вечер в SPA). Подключает tools/booking.mjs, если у сайта
+   theme.style = "oblaka" (<html data-skin="oblaka">); шрифт сайта (Cormorant Garamond) он же докладывает в assets/fonts.
+   Тёплая ночь, тонкая антиква, острые углы, латунь — единственный акцент; итог записи — приглашение на вечер. Только поверх styles.css. */
+:root[data-skin="oblaka"] {
+  --ob-head: "Cormorant Garamond", Georgia, serif;
+  --ob-paper: #f1ebe3; --ob-night: #151215; --ob-brass: #d2b48a;
+  --bg: #151215; --page: #151215; --surface: #1d181c; --surface-2: #241e23; --ink: #f1ebe3; --muted: rgba(241, 235, 227, .6);
+  --line: rgba(241, 235, 227, .14); --line-soft: rgba(241, 235, 227, .08); --accent: #f1ebe3; --accent-ink: #151215; --accent-soft: rgba(210, 180, 138, .14);
+  --signal: #d2b48a; --signal-soft: rgba(210, 180, 138, .14); --r: 0px; --glass: rgba(21, 18, 21, .94);
+}
+:root[data-skin="oblaka"] body { background: var(--ob-night); }
+/* заголовки — антиква, светлая; подписи — капителью с разрядкой */
+:root[data-skin="oblaka"] .hero h1, :root[data-skin="oblaka"] .step-h h2, :root[data-skin="oblaka"] .done h2 { font-family: var(--ob-head); font-weight: 300; letter-spacing: -.01em; line-height: 1; text-transform: none; }
+:root[data-skin="oblaka"] .hero h1 { font-size: 46px; }
+:root[data-skin="oblaka"] .step-h h2 { font-size: 34px; }
+:root[data-skin="oblaka"] .topbar .ttl { font-family: var(--ob-head); font-weight: 400; font-size: 20px; letter-spacing: .02em; }
+:root[data-skin="oblaka"] .hero-sub { font-family: var(--ob-head); font-style: italic; font-weight: 300; font-size: 20px; color: rgba(241, 235, 227, .75); }
+:root[data-skin="oblaka"] .step-h small, :root[data-skin="oblaka"] .kv dt, :root[data-skin="oblaka"] .day small, :root[data-skin="oblaka"] .mst small { font-size: 13px; font-weight: 500; letter-spacing: .01em; }
+
+/* услуги — строки меню: тонкие линии вместо карточек, цена антиквой */
+:root[data-skin="oblaka"] .svc { border-radius: 0; background: transparent; border: 0; border-bottom: 1px solid var(--line); }
+:root[data-skin="oblaka"] .svc .ic { border: 1px solid var(--line); border-radius: 50%; color: var(--ob-brass); }
+:root[data-skin="oblaka"] .svc b { font-family: var(--ob-head); font-weight: 400; font-size: 21px; letter-spacing: 0; }
+:root[data-skin="oblaka"] .svc .price { font-family: var(--ob-head); font-weight: 400; font-size: 20px; }
+:root[data-skin="oblaka"] .svc .dur { font-size: 13px; letter-spacing: .01em; }
+:root[data-skin="oblaka"] .svc[aria-pressed="true"] { background: rgba(210, 180, 138, .08); box-shadow: inset 2px 0 0 var(--ob-brass); color: var(--ink); }
+:root[data-skin="oblaka"] .svc[aria-pressed="true"] .ic { color: var(--ob-brass); border-color: var(--ob-brass); }
+
+/* дни, время, мастера — квадратные ячейки, выбранное — бумага */
+:root[data-skin="oblaka"] .day, :root[data-skin="oblaka"] .chip, :root[data-skin="oblaka"] .mst, :root[data-skin="oblaka"] .time { border-radius: 0; }
+:root[data-skin="oblaka"] .day strong { font-family: var(--ob-head); font-weight: 400; font-size: 24px; }
+:root[data-skin="oblaka"] .time { font-variant-numeric: tabular-nums; letter-spacing: .06em; }
+:root[data-skin="oblaka"] .day[aria-pressed="true"], :root[data-skin="oblaka"] .chip[aria-pressed="true"], :root[data-skin="oblaka"] .mst[aria-pressed="true"], :root[data-skin="oblaka"] .time[aria-pressed="true"] { background: var(--ob-paper); border-color: var(--ob-paper); color: var(--ob-night); }
+:root[data-skin="oblaka"] .mst small { letter-spacing: .06em; }
+:root[data-skin="oblaka"] .mst b { font-family: var(--ob-head); font-weight: 400; font-size: 19px; }
+:root[data-skin="oblaka"] .mst .av { border: 1px solid var(--ob-brass); background: transparent; color: var(--ob-brass); font-family: var(--ob-head); font-size: 18px; }
+:root[data-skin="oblaka"] .mst[aria-pressed="true"] .av { background: var(--ob-night); }
+
+/* кнопки — прямоугольные, капитель */
+:root[data-skin="oblaka"] .btn { border-radius: 0; font-weight: 500; letter-spacing: .01em; font-size: 13px; }
+
+/* итог — приглашение: бумага, двойная рамка, время «с … до …» */
+:root[data-skin="oblaka"] .check { border-color: var(--ob-brass); color: var(--ob-brass); }
+:root[data-skin="oblaka"] .ticket { border: 0; border-radius: 0; background: var(--ob-paper); color: var(--ob-night); padding: 34px 26px 30px; position: relative; overflow: hidden; }
+:root[data-skin="oblaka"] .ticket::before { content: "Приглашение на вечер"; display: block; margin-bottom: 16px; text-align: center; font-size: 13px; font-weight: 500; letter-spacing: .01em; color: #8a6a44; }
+:root[data-skin="oblaka"] .ticket::after { content: ""; position: absolute; inset: 9px; border: 1px solid rgba(138, 106, 68, .35); pointer-events: none; }
+:root[data-skin="oblaka"] .ticket .perf { border-top: 1px solid rgba(21, 18, 21, .14); margin: 16px 0; }
+:root[data-skin="oblaka"] .ticket .kv dt { color: rgba(21, 18, 21, .55); }
+:root[data-skin="oblaka"] .ticket .kv dd.big { font-family: var(--ob-head); font-weight: 400; font-size: 30px; }
+/* мастера в шапке: тёмные кружки с латунной обводкой и антиквой вместо серых заливок */
+:root[data-skin="oblaka"] .avs .av { background: var(--ob-night); border: 1px solid rgba(210, 180, 138, .55); color: var(--ob-paper); font-family: var(--ob-head); font-weight: 400; font-size: 19px; margin-left: -6px; }
+:root[data-skin="oblaka"] .avs .av:first-child { margin-left: 0; }
+:root[data-skin="oblaka"] .avs .av.more { color: var(--ob-brass); font-family: inherit; font-size: 12px; }
+/* 15.10.2026: имя и роль мастера в карточке не обрезаются («Светлана …», «МАСТЕР-ПРЕПОДАВАТЕ») */
+:root[data-skin="oblaka"] .mst { flex-basis: 118px; }
+:root[data-skin="oblaka"] .mst b { font-size: 17px; }
+:root[data-skin="oblaka"] .mst small { font-size: 11px; letter-spacing: .02em; text-transform: none; }

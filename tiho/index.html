@@ -1,0 +1,416 @@
+<!doctype html>
+<!-- Собрано tools/build.mjs из site.json и шаблона «лендинги». Правки — в site.json или шаблоне: этот файл перезаписывается. -->
+<html lang="ru" data-theme="light" data-style="oblaka" data-italic>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Тихо — студия массажа и SPA в центре, Красноярск (демо)</title>
+<meta name="description" content="Массаж, сауна и программы для двоих в центре Красноярска. Ежедневно до 23:00, онлайн-запись к мастеру. Демо студии «Точка записи».">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#efe8df">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Тихо">
+<meta property="og:title" content="Тихо — студия массажа и SPA в центре, Красноярск (демо)">
+<meta property="og:description" content="Массаж, сауна и программы для двоих в центре Красноярска. Ежедневно до 23:00, онлайн-запись к мастеру. Демо студии «Точка записи».">
+<meta property="og:image" content="og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32">
+<link rel="icon" href="assets/brand/mark.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/cormorant-garamond-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/manrope-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/site/style.css">
+<link rel="stylesheet" href="assets/site/oblaka.css">
+<script>document.documentElement.className+=" js"</script>
+<style>:root{--accent:#231d22;--on-accent:#ffffff;--font-head:"Cormorant Garamond",Georgia,serif;--font-body:"Manrope",system-ui,sans-serif}:root[data-theme]{--bg:#efe8df;--ink:#231d22;--muted:#6e6268;--brass:#a6825a;--night:#151215}</style>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "DaySpa",
+      "name": "Тихо",
+      "description": "Массаж, сауна и программы для двоих в центре Красноярска. Ежедневно до 23:00, онлайн-запись к мастеру. Демо студии «Точка записи».",
+      "telephone": "+7 900 000-00-00",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "ул. Ленина, 112 (демо)",
+        "addressLocality": "Красноярск",
+        "addressCountry": "RU"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 56.0153,
+        "longitude": 92.8669
+      },
+      "openingHours": [
+        "Mo-Su 10:00-23:00"
+      ],
+      "priceRange": "₽₽",
+      "sameAs": [
+        "https://max.ru/u/tiho_demo",
+        "https://t.me/tiho_demo",
+        "https://wa.me/79000000000"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": 4.9,
+        "reviewCount": 184,
+        "bestRating": 5
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Можно прийти вдвоём?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да: семь программ для двоих, от 4 900 до 12 600 ₽. Два мастера работают одновременно, в одной комнате."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Есть скидка на первый визит?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Первый сеанс массажа в будни — 1 750 ₽ за час при онлайн-записи."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Можно выбрать мастера?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да, в онлайн-записи — шесть мастеров. Если сомневаетесь, администратор подберёт мастера и программу."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Есть противопоказания?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "У массажа и прогревания они есть. Расскажите о самочувствии при записи, а при сомнениях — проконсультируйтесь с врачом."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как подарить сертификат?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Номинал — от 1 000 ₽, на сумму или на программу. Оформим в студии или пришлём QR в приложение."
+          }
+        }
+      ]
+    }
+  ]
+}</script>
+
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<div class="demo">Демо-версия — так может выглядеть сайт «Тихо». Данные для примера</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <clipPath id="ob-cloud" clipPathUnits="objectBoundingBox"><path d="M.2 .94C.09 .94 0 .86 0 .75 0 .64.08 .56.18 .55.17 .52.17 .5.17 .47.17 .32.29 .2.44 .2.47 .2.5 .21.53 .22.58 .1.69 .02.81 .06.93 .1 1 .22 1 .35 1 .38.99 .41.98 .44 1 .5 1 .56 1 .62 1 .8.9 .94.76 .94Z"/></clipPath>
+  <linearGradient id="ob-pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".7" stop-color="#fff6ee" stop-opacity=".7"/><stop offset="1" stop-color="#ffe6d6" stop-opacity=".25"/></linearGradient>
+  <symbol id="ob-puff" viewBox="0 0 120 60"><path d="M24 58C11 58 2 50 2 40 2 30 10 23 20 23 21 11 31 2 44 2 54 2 62 8 66 16 70 13 75 11 81 11 94 11 104 21 104 33 112 34 118 40 118 47 118 53 113 58 106 58Z"/></symbol>
+</svg>
+<script>(function(){var r=document.documentElement;try{if(matchMedia('(prefers-reduced-motion: reduce)').matches||sessionStorage.getItem('ob-pre')==='1')return;sessionStorage.setItem('ob-pre','1')}catch(e){}r.classList.add('ob-intro')})()</script>
+<div class="ob-pre" aria-hidden="true"><div class="ob-pre-night"></div><div class="ob-pre-in"><span class="ob-pre-candle"><i class="ob-pre-glow"></i><i class="ob-pre-flame"></i><i class="ob-pre-wick"></i></span><p class="ob-pre-k">18:00 · зажигаем свечу</p><p class="ob-pre-t"><span style="--i:0">Т</span><span style="--i:1">и</span><span style="--i:2">х</span><span style="--i:3">о</span></p></div></div>
+<div class="ob-dial" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" class="ob-dial-face"/><path class="ob-dial-arc" d=""/><g class="ob-dial-ticks"><line x1="50" y1="7" x2="50" y2="14" transform="rotate(0 50 50)"/><line x1="50" y1="9" x2="50" y2="12" transform="rotate(30 50 50)"/><line x1="50" y1="9" x2="50" y2="12" transform="rotate(60 50 50)"/><line x1="50" y1="7" x2="50" y2="14" transform="rotate(90 50 50)"/><line x1="50" y1="9" x2="50" y2="12" transform="rotate(120 50 50)"/><line x1="50" y1="9" x2="50" y2="12" transform="rotate(150 50 50)"/><line x1="50" y1="7" x2="50" y2="14" transform="rotate(180 50 50)"/><line x1="50" y1="9" x2="50" y2="12" transform="rotate(210 50 50)"/><line x1="50" y1="9" x2="50" y2="12" transform="rotate(240 50 50)"/><line x1="50" y1="7" x2="50" y2="14" transform="rotate(270 50 50)"/><line x1="50" y1="9" x2="50" y2="12" transform="rotate(300 50 50)"/><line x1="50" y1="9" x2="50" y2="12" transform="rotate(330 50 50)"/></g><line class="ob-hand-h" x1="50" y1="50" x2="50" y2="28"/><line class="ob-hand-m" x1="50" y1="50" x2="50" y2="15"/><circle cx="50" cy="50" r="2.6" class="ob-dial-pin"/></svg><p><b data-clock>18:00</b><span data-dial-note>закат</span></p></div>
+<header class="ob-top">
+  <div class="wrap ob-top-in">
+    <a class="ob-logo" href="./" aria-label="Тихо — на главную"><svg class="ob-logo-svg" viewBox="-4.4 -142.8 408 158" role="img" aria-label="Тихо"><path fill="#231d22" d="M39.80-121L39.80-121Q27.40-121 20.40-114.10Q13.40-107.20 10-92L10-92Q9.80-91.60 8.70-91.60Q7.60-91.60 7.60-92.20L7.60-92.20Q8-94.80 8.50-99.60Q9-104.40 9.40-110Q9.80-115.60 10.10-120.80Q10.40-126 10.40-129.40L10.40-129.40Q10.40-130.40 11.60-130.40Q12.80-130.40 12.80-129.40L12.80-129.40Q12.80-127.40 14.80-126.50Q16.80-125.60 19.40-125.30Q22-125 23.80-125L23.80-125Q41-124.40 64-124.40L64-124.40Q78-124.40 86.40-124.70Q94.80-125 102.60-125L102.60-125Q109.40-125 113.10-125.90Q116.80-126.80 117.80-130L117.80-130Q118-130.80 119.10-130.80Q120.20-130.80 120.20-130L120.20-130Q119.80-127 119.50-121.60Q119.20-116.20 118.90-110.40Q118.60-104.60 118.40-99.60Q118.20-94.60 118.20-92.20L118.20-92.20Q118.20-91.60 117.10-91.60Q116-91.60 116-92.20L116-92.20Q114.60-107.80 108-114.40Q101.40-121 88.40-121L88.40-121Q81.40-121 77.90-120.10Q74.40-119.20 73.30-116.60Q72.20-114 72.20-108.40L72.20-108.40L72.20-16.20Q72.20-10.40 73.50-7.40Q74.80-4.40 78.70-3.40Q82.60-2.40 90.80-2.40L90.80-2.40Q91.20-2.40 91.20-1.20Q91.20 0 90.80 0L90.80 0Q85.40 0 78.70-0.20Q72-0.40 64-0.40L64-0.40Q56.40-0.40 49.70-0.20Q43 0 37.40 0L37.40 0Q36.80 0 36.80-1.20Q36.80-2.40 37.40-2.40L37.40-2.40Q45.20-2.40 49.30-3.40Q53.40-4.40 54.80-7.40Q56.20-10.40 56.20-16.20L56.20-16.20L56.20-108.80Q56.20-114.20 55-116.90Q53.80-119.60 50.20-120.30Q46.60-121 39.80-121ZM130.40 2L130.40 2Q129.60 2 128.80 1.60Q128 1.20 128 1L128 1L128-61Q128-69.80 125.90-72.30Q123.80-74.80 116-74.80L116-74.80Q115.60-74.80 115.60-76Q115.60-77.20 116-77.20L116-77.20Q120-77.20 124.30-77Q128.60-76.80 134.60-76.80L134.60-76.80Q141.40-76.80 146-77Q150.60-77.20 153.80-77.20L153.80-77.20Q154.40-77.20 154.40-76Q154.40-74.80 153.80-74.80L153.80-74.80Q146.20-74.80 143.90-72.30Q141.60-69.80 141.60-61L141.60-61L141.60-12.60L136-9.80L192.40-78.40Q193-79 194-79L194-79Q196.40-79 196.40-78L196.40-78L196.40-16.20Q196.40-7.60 198.60-5Q200.80-2.40 208.60-2.40L208.60-2.40Q208.80-2.40 208.80-1.20Q208.80 0 208.40 0L208.40 0Q204.40 0 199.70-0.20Q195-0.40 189.80-0.40L189.80-0.40Q184.60-0.40 179.50-0.20Q174.40 0 170.60 0L170.60 0Q170 0 170-1.20Q170-2.40 170.60-2.40L170.60-2.40Q178.20-2.40 180.50-5Q182.80-7.60 182.80-16.20L182.80-16.20L182.80-65.20L188.80-67.80L132.20 1.20Q132 1.60 131.50 1.80Q131 2 130.40 2ZM264.60 0L264.60 0Q264 0 264-1.20Q264-2.40 264.60-2.40L264.60-2.40Q269.80-2.40 270.40-4.10Q271-5.80 268.20-10.20L268.20-10.20L234.60-60.60Q229.60-68 224.80-71.40Q220-74.80 216.40-74.80L216.40-74.80Q216-74.80 216-76Q216-77.20 216.40-77.20L216.40-77.20Q219.40-77.20 222.60-77Q225.80-76.80 228.80-76.80L228.80-76.80Q235.60-76.80 240.80-77Q246-77.20 250.20-77.20L250.20-77.20Q250.60-77.20 250.60-76Q250.60-74.80 250.20-74.80L250.20-74.80Q245.40-74.80 244.50-73.20Q243.60-71.60 246.60-67L246.60-67L280-16.60Q285.40-8.60 290.60-5.50Q295.80-2.40 299.40-2.40L299.40-2.40Q299.80-2.40 299.80-1.20Q299.80 0 299.40 0L299.40 0Q296.20 0 292.60-0.20Q289-0.40 286-0.40L286-0.40Q279.20-0.40 274-0.20Q268.80 0 264.60 0ZM215.40 0L215.40 0Q215 0 215-1.20Q215-2.40 215.40-2.40L215.40-2.40Q221-2.40 227.30-6.60Q233.60-10.80 239.20-18.40L239.20-18.40L254.40-39.40L257-37L243.20-17Q240-12.40 239.20-9.10Q238.40-5.80 240.80-4.10Q243.20-2.40 249.60-2.40L249.60-2.40Q250.20-2.40 250.20-1.20Q250.20 0 249.60 0L249.60 0Q245 0 240.70-0.20Q236.40-0.40 229.60-0.40L229.60-0.40Q225-0.40 222.20-0.20Q219.40 0 215.40 0ZM272.80-58.80L257.80-38.40L255.60-40.60L268.60-60.20Q273.80-67.60 272.80-71.20Q271.80-74.80 262.20-74.80L262.20-74.80Q261.80-74.80 261.80-76Q261.80-77.20 262.20-77.20L262.20-77.20Q267-77.20 271.30-77Q275.60-76.80 282.40-76.80L282.40-76.80Q287-76.80 289.80-77Q292.60-77.20 296.60-77.20L296.60-77.20Q297-77.20 297-76Q297-74.80 296.60-74.80L296.60-74.80Q291.20-74.80 284.90-70.80Q278.60-66.80 272.80-58.80L272.80-58.80ZM347.80 2.60L347.80 2.60Q335.60 2.60 326.70-3.20Q317.80-9 313.00-18.70Q308.20-28.40 308.20-39.60L308.20-39.60Q308.20-50 312.10-57.60Q316.00-65.20 322.40-70.10Q328.80-75 336.40-77.40Q344.00-79.80 351.40-79.80L351.40-79.80Q363.80-79.80 372.60-73.80Q381.40-67.80 386.10-58.40Q390.80-49 390.80-38.60L390.80-38.60Q390.80-26 384.80-16.70Q378.80-7.40 369.10-2.40Q359.40 2.60 347.80 2.60ZM353.60-1.20L353.60-1.20Q363.40-1.20 368.90-8.90Q374.40-16.60 374.40-32.40L374.40-32.40Q374.40-45.80 370.40-55.50Q366.40-65.20 359.70-70.50Q353.00-75.80 344.60-75.80L344.60-75.80Q334.80-75.80 329.50-68.30Q324.20-60.80 324.20-46.20L324.20-46.20Q324.20-33.60 328.00-23.30Q331.80-13 338.40-7.10Q345.00-1.20 353.60-1.20Z"/></svg></a>
+    <p class="ob-now" aria-hidden="true"><b data-clock>18:00</b><span data-phase>закат</span></p>
+    <nav class="ob-nav" aria-label="Разделы"><a href="#prices">Массаж</a><a href="#pairs">Для двоих</a><a href="#team">Мастера</a><a href="#gifts">Подарки</a><a href="#contacts">Контакты</a></nav>
+    <a class="ob-tel" href="tel:+79000000000">+7 900 000-00-00</a>
+    <a class="btn btn-main btn-sm" href="zapis/" data-booking>Записаться</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="ob-hero ob-sec ob-day" data-door data-time="18:00" data-phase="закат" style="--a:#f1ebe3;--b:#ece2d6">
+    <div class="wrap ob-hero-in">
+      <p class="ob-meta"><span class="ob-time"><b>18:00</b><span>закат</span></span><span>Ленина, 112 · центр</span>
+        <span class="ob-sign" data-sign data-hours='{&quot;0&quot;:[&quot;10:00&quot;,&quot;23:00&quot;],&quot;1&quot;:[&quot;10:00&quot;,&quot;23:00&quot;],&quot;2&quot;:[&quot;10:00&quot;,&quot;23:00&quot;],&quot;3&quot;:[&quot;10:00&quot;,&quot;23:00&quot;],&quot;4&quot;:[&quot;10:00&quot;,&quot;23:00&quot;],&quot;5&quot;:[&quot;10:00&quot;,&quot;23:00&quot;],&quot;6&quot;:[&quot;10:00&quot;,&quot;23:00&quot;]}' aria-live="polite"><i aria-hidden="true"></i><span class="a-sign-t">Ждём вас</span> <small></small></span></p>
+      <div class="ob-hero-grid">
+        <div class="ob-hero-text">
+          <p class="ob-kind">Студия массажа и SPA</p>
+          <h1 data-words>Вечер, когда тихо</h1>
+          <p class="ob-lead">Студия массажа и SPA в центре: массаж, сауна, семь программ для двоих — и травяной чай с мёдом после. Каждый день до 23:00.</p>
+          <div class="ob-cta"><a class="btn btn-main" href="zapis/" data-booking>Выбрать вечер</a><a class="ob-link" href="#pairs">Программы для двоих ↓</a></div>
+          <ul class="ob-rates"><li><a href="#reviews"><b>4,9</b><small>184 оценки на 2ГИС (демо)</small></a></li><li><a href="#reviews"><b>5,0</b><small>72 оценки на Яндекс Карты (демо)</small></a></li></ul>
+        </div>
+        <figure class="ob-hero-photo" data-sky>
+          <div class="ob-frame"><img src="assets/img/stock/a-massage-table-with-a-JnsuyfJr.webp" srcset="assets/img/stock/a-massage-table-with-a-JnsuyfJr-480.webp 480w, assets/img/stock/a-massage-table-with-a-JnsuyfJr-960.webp 960w, assets/img/stock/a-massage-table-with-a-JnsuyfJr-1280.webp 1280w, assets/img/stock/a-massage-table-with-a-JnsuyfJr.webp 1920w" sizes="(min-width: 900px) 50vw, 92vw" alt="Массажный стол с бежевой простынёй у каменной раковины" width="1920" height="2880" fetchpriority="high"></div>
+          <figcaption>ул. Ленина, 112 (демо), Красноярск</figcaption>
+        </figure>
+      </div>
+    </div>
+    <p class="ob-scroll" aria-hidden="true"><span></span>Листайте — вечер идёт</p>
+  </section>
+
+  <section class="ob-sec ob-day ob-intro-sec" data-time="18:30" data-phase="закат" style="--a:#ece2d6;--b:#e6d6c6">
+    <div class="wrap">
+      <header class="ob-head"><p class="ob-time"><b>18:30</b><span>закат</span></p><h2 data-words>Приходите после работы</h2></header>
+      <ul class="ob-facts">
+        <li data-rise><b>До 23:00</b><span>Каждый день, без выходных — можно прийти и после позднего ужина.</span></li>
+        <li data-rise><b>7 программ</b><span>для двоих: от часа с четвертью до трёх часов вместе.</span></li>
+        <li data-rise><b>6 мастеров</b><span>в онлайн-записи — выбираете того, кто подходит вам.</span></li>
+        <li data-rise><b>Чай — в подарок</b><span>травяной, с мёдом, после любого сеанса.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="steam" class="ob-sec ob-day ob-steam-sec" data-time="19:00" data-phase="сумерки" style="--a:#e6d6c6;--b:#dccbbd">
+    <div class="wrap">
+      <header class="ob-head"><p class="ob-time"><b>19:00</b><span>сумерки</span></p><h2 data-words>Сначала — пар</h2><p class="ob-sub">Финская сауна — двадцать минут тепла, чтобы мышцы отпустило ещё до массажа.</p></header>
+      <div class="ob-steam">
+        <ul class="ob-chips"><li data-rise><b>Финская сауна</b><span>20 мин · Сухой пар</span><em>750 ₽</em></li><li data-rise><b>Скрабирование тела</b><span>20 мин</span><em>1 050 ₽</em></li><li data-rise><b>Обёртывание, горячее или холодное</b><span>25 мин</span><em>1 050 ₽</em></li></ul>
+        <div class="ob-steam-photos"><figure class="ob-steam-ph ob-steam-1" data-rise><div class="ob-ph"><img src="assets/img/stock/cozy-wooden-sauna-with-warm-HOplEhR9.webp" srcset="assets/img/stock/cozy-wooden-sauna-with-warm-HOplEhR9-480.webp 480w, assets/img/stock/cozy-wooden-sauna-with-warm-HOplEhR9-960.webp 960w, assets/img/stock/cozy-wooden-sauna-with-warm-HOplEhR9-1280.webp 1280w, assets/img/stock/cozy-wooden-sauna-with-warm-HOplEhR9.webp 1920w" sizes="(min-width: 900px) 26vw, 46vw" alt="Деревянная сауна в тёплом свете" width="1920" height="1200" loading="lazy" decoding="async"></div><figcaption>финская сауна</figcaption></figure><figure class="ob-steam-ph ob-steam-2" data-rise><div class="ob-ph"><img src="assets/img/stock/warm-wooden-sauna-interior-with-zQxPUONN.webp" srcset="assets/img/stock/warm-wooden-sauna-interior-with-zQxPUONN-480.webp 480w, assets/img/stock/warm-wooden-sauna-interior-with-zQxPUONN-960.webp 960w, assets/img/stock/warm-wooden-sauna-interior-with-zQxPUONN-1280.webp 1280w, assets/img/stock/warm-wooden-sauna-interior-with-zQxPUONN.webp 1920w" sizes="(min-width: 900px) 26vw, 46vw" alt="Полки сауны с мягкой подсветкой" width="1920" height="2485" loading="lazy" decoding="async"></div><figcaption>тёплые полки</figcaption></figure></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="prices" class="ob-sec ob-day ob-prices-sec" data-time="19:30" data-phase="сумерки" style="--a:#dccbbd;--b:#3a2f36">
+    <div class="wrap">
+      <header class="ob-head"><p class="ob-time"><b>19:30</b><span>сумерки</span></p><h2 data-words>Потом — руки мастера</h2><p class="ob-sub">Цены и длительность — как в нашей записи. Время под «бережный» и «проминающий» массаж подберём вместе.</p></header>
+      <div class="ob-menu">
+        <div class="ob-card"><h3>Массаж</h3><ol><li data-rise><span class="ob-svc"><b>Общий (проминающий) массаж тела</b><small>Есть 75 мин — 2 950 ₽ и 90 мин — 3 450 ₽</small></span><span class="ob-dur" style="--d:0.500"><i aria-hidden="true"></i>60 мин</span><span class="ob-price">2 450 ₽</span></li><li data-rise><span class="ob-svc"><b>Релаксирующий массаж тела</b><small>Мягкий, для глубокого расслабления. 90 мин — 3 150 ₽</small></span><span class="ob-dur" style="--d:0.500"><i aria-hidden="true"></i>60 мин</span><span class="ob-price">2 150 ₽</span></li><li data-rise><span class="ob-svc"><b>Общий массаж + лицо и голова</b><small>Можно добавить горячие камни</small></span><span class="ob-dur" style="--d:1.000"><i aria-hidden="true"></i>120 мин</span><span class="ob-price">4 550 ₽</span></li><li data-rise><span class="ob-svc"><b>Массаж с горячими камнями</b><small>90 мин — 3 450 ₽</small></span><span class="ob-dur" style="--d:0.500"><i aria-hidden="true"></i>60 мин</span><span class="ob-price">2 450 ₽</span></li><li data-rise><span class="ob-svc"><b>Медовый массаж тела</b></span><span class="ob-dur" style="--d:0.500"><i aria-hidden="true"></i>60 мин</span><span class="ob-price">2 550 ₽</span></li><li data-rise><span class="ob-svc"><b>Спортивный массаж тела</b></span><span class="ob-dur" style="--d:0.500"><i aria-hidden="true"></i>60 мин</span><span class="ob-price">2 550 ₽</span></li><li data-rise><span class="ob-svc"><b>Лимфодренажный массаж</b></span><span class="ob-dur" style="--d:0.500"><i aria-hidden="true"></i>60 мин</span><span class="ob-price">2 550 ₽</span></li><li data-rise><span class="ob-svc"><b>Антицеллюлитный массаж (ручной)</b></span><span class="ob-dur" style="--d:0.500"><i aria-hidden="true"></i>60 мин</span><span class="ob-price">2 550 ₽</span></li><li data-rise><span class="ob-svc"><b>Комплексный массаж лица и тела</b></span><span class="ob-dur" style="--d:0.750"><i aria-hidden="true"></i>90 мин</span><span class="ob-price">3 250 ₽</span></li><li data-rise><span class="ob-svc"><b>Массаж лица и головы</b></span><span class="ob-dur" style="--d:0.500"><i aria-hidden="true"></i>60 мин</span><span class="ob-price">2 450 ₽</span></li><li data-rise><span class="ob-svc"><b>Спина + шейно-воротниковая зона</b></span><span class="ob-dur" style="--d:0.500"><i aria-hidden="true"></i>60 мин</span><span class="ob-price">2 450 ₽</span></li><li data-rise><span class="ob-svc"><b>Массаж спины</b></span><span class="ob-dur" style="--d:0.375"><i aria-hidden="true"></i>45 мин</span><span class="ob-price">1 800 ₽</span></li><li data-rise><span class="ob-svc"><b>Массаж шейно-воротниковой зоны</b></span><span class="ob-dur" style="--d:0.250"><i aria-hidden="true"></i>30 мин</span><span class="ob-price">1 250 ₽</span></li><li data-rise><span class="ob-svc"><b>Массаж ног</b></span><span class="ob-dur" style="--d:0.250"><i aria-hidden="true"></i>30 мин</span><span class="ob-price">1 250 ₽</span></li><li data-rise><span class="ob-svc"><b>Бережный массаж для беременных</b><small>Со второго триместра</small></span><span class="ob-dur" style="--d:0.500"><i aria-hidden="true"></i>60 мин</span><span class="ob-price">2 650 ₽</span></li></ol></div>
+        <div class="ob-card"><h3>К массажу</h3><ol><li data-rise><span class="ob-svc"><b>Массаж головы «экспресс»</b></span><span class="ob-dur" style="--d:0.125"><i aria-hidden="true"></i>15 мин</span><span class="ob-price">450 ₽</span></li><li data-rise><span class="ob-svc"><b>Массаж лица «экспресс»</b></span><span class="ob-dur" style="--d:0.125"><i aria-hidden="true"></i>15 мин</span><span class="ob-price">450 ₽</span></li><li data-rise><span class="ob-svc"><b>Тканевая маска для лица</b><small>Дополнение к массажу</small></span><span class="ob-dur" style="--d:0.083"><i aria-hidden="true"></i>10 мин</span><span class="ob-price">450 ₽</span></li><li data-rise><span class="ob-svc"><b>Массаж с домашним мёдом</b><small>Дополнение, зона на выбор</small></span><span class="ob-dur" style="--d:0.125"><i aria-hidden="true"></i>15 мин</span><span class="ob-price">350 ₽</span></li><li data-rise><span class="ob-svc"><b>Баттер для тела вместо масла</b><small>Фирменный, аромат на выбор</small></span><span class="ob-dur" style="--d:0.042"><i aria-hidden="true"></i>5 мин</span><span class="ob-price">250 ₽</span></li><li data-rise><span class="ob-svc"><b>Банки во время массажа</b><small>Зона на выбор</small></span><span class="ob-dur" style="--d:0.042"><i aria-hidden="true"></i>5 мин</span><span class="ob-price">150 ₽</span></li></ol></div>
+      </div>
+      <div class="ob-more"><a class="btn btn-main" href="zapis/" data-booking>Выбрать вечер</a></div>
+    </div>
+  </section>
+
+
+  <section id="pairs" class="ob-sec ob-night ob-pairs-sec" data-time="20:30" data-phase="вечер" style="--a:#3a2f36;--b:#2f262d">
+    <div class="wrap">
+      <header class="ob-head"><p class="ob-time"><b>20:30</b><span>вечер</span></p><h2 data-words>Вечер на двоих</h2><p class="ob-sub">Семь программ: два мастера, одна комната, одно время. Дуга — сколько длится вечер.</p></header>
+      <ol class="ob-pairs">
+        <li class="ob-pair" data-rise data-min="75" tabindex="0">
+          <div class="ob-pair-ring"><svg class="ob-ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="ob-ring-bg"/><circle cx="50" cy="50" r="44" class="ob-ring-fg" style="--len:115.2;--circ:276.5"/></svg><span>1 ч<br>15 мин</span></div>
+          <div class="ob-pair-t"><small>до 5 000 ₽</small><b>«Двое и пар»</b><span>без прогревания</span></div>
+          <p class="ob-pair-p">4 900 ₽<small>за двоих</small></p>
+          <a class="ob-pair-go" href="zapis/?s=%D0%A1%D0%9F%D0%90%20%D0%B4%D0%BB%D1%8F%20%D0%B4%D0%B2%D0%BE%D0%B8%D1%85%20%C2%AB%D0%94%D0%B2%D0%BE%D0%B5%20%D0%B8%20%D0%BF%D0%B0%D1%80%C2%BB" data-booking aria-label="Записаться: СПА для двоих «Двое и пар»">Выбрать</a>
+        </li>
+        <li class="ob-pair" data-rise data-min="85" tabindex="0">
+          <div class="ob-pair-ring"><svg class="ob-ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="ob-ring-bg"/><circle cx="50" cy="50" r="44" class="ob-ring-fg" style="--len:130.6;--circ:276.5"/></svg><span>1 ч<br>25 мин</span></div>
+          <div class="ob-pair-t"><small>до 5 000 ₽</small><b>«Тёплый вечер»</b></div>
+          <p class="ob-pair-p">5 000 ₽<small>за двоих</small></p>
+          <a class="ob-pair-go" href="zapis/?s=%D0%A1%D0%9F%D0%90%20%D0%B4%D0%BB%D1%8F%20%D0%B4%D0%B2%D0%BE%D0%B8%D1%85%20%C2%AB%D0%A2%D1%91%D0%BF%D0%BB%D1%8B%D0%B9%20%D0%B2%D0%B5%D1%87%D0%B5%D1%80%C2%BB" data-booking aria-label="Записаться: СПА для двоих «Тёплый вечер»">Выбрать</a>
+        </li>
+        <li class="ob-pair" data-rise data-min="95" tabindex="0">
+          <div class="ob-pair-ring"><svg class="ob-ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="ob-ring-bg"/><circle cx="50" cy="50" r="44" class="ob-ring-fg" style="--len:145.9;--circ:276.5"/></svg><span>1 ч<br>35 мин</span></div>
+          <div class="ob-pair-t"><small>хит</small><b>«Тихо вдвоём»</b></div>
+          <p class="ob-pair-p">6 400 ₽<small>за двоих</small></p>
+          <a class="ob-pair-go" href="zapis/?s=%D0%A1%D0%9F%D0%90%20%D0%B4%D0%BB%D1%8F%20%D0%B4%D0%B2%D0%BE%D0%B8%D1%85%20%C2%AB%D0%A2%D0%B8%D1%85%D0%BE%20%D0%B2%D0%B4%D0%B2%D0%BE%D1%91%D0%BC%C2%BB" data-booking aria-label="Записаться: СПА для двоих «Тихо вдвоём»">Выбрать</a>
+        </li>
+        <li class="ob-pair" data-rise data-min="110" tabindex="0">
+          <div class="ob-pair-ring"><svg class="ob-ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="ob-ring-bg"/><circle cx="50" cy="50" r="44" class="ob-ring-fg" style="--len:168.9;--circ:276.5"/></svg><span>1 ч<br>50 мин</span></div>
+          <div class="ob-pair-t"><small>хит</small><b>«Медленно»</b></div>
+          <p class="ob-pair-p">7 300 ₽<small>за двоих</small></p>
+          <a class="ob-pair-go" href="zapis/?s=%D0%A1%D0%9F%D0%90%20%D0%B4%D0%BB%D1%8F%20%D0%B4%D0%B2%D0%BE%D0%B8%D1%85%20%C2%AB%D0%9C%D0%B5%D0%B4%D0%BB%D0%B5%D0%BD%D0%BD%D0%BE%C2%BB" data-booking aria-label="Записаться: СПА для двоих «Медленно»">Выбрать</a>
+        </li>
+        <li class="ob-pair" data-rise data-min="125" tabindex="0">
+          <div class="ob-pair-ring"><svg class="ob-ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="ob-ring-bg"/><circle cx="50" cy="50" r="44" class="ob-ring-fg" style="--len:192.0;--circ:276.5"/></svg><span>2 ч<br>5 мин</span></div>
+          <div class="ob-pair-t"><small>хит</small><b>«Уютный вечер»</b></div>
+          <p class="ob-pair-p">8 400 ₽<small>за двоих</small></p>
+          <a class="ob-pair-go" href="zapis/?s=%D0%A1%D0%9F%D0%90%20%D0%B4%D0%BB%D1%8F%20%D0%B4%D0%B2%D0%BE%D0%B8%D1%85%20%C2%AB%D0%A3%D1%8E%D1%82%D0%BD%D1%8B%D0%B9%20%D0%B2%D0%B5%D1%87%D0%B5%D1%80%C2%BB" data-booking aria-label="Записаться: СПА для двоих «Уютный вечер»">Выбрать</a>
+        </li>
+        <li class="ob-pair" data-rise data-min="125" tabindex="0">
+          <div class="ob-pair-ring"><svg class="ob-ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="ob-ring-bg"/><circle cx="50" cy="50" r="44" class="ob-ring-fg" style="--len:192.0;--circ:276.5"/></svg><span>2 ч<br>5 мин</span></div>
+          <div class="ob-pair-t"><small>супер</small><b>«Блаженство»</b></div>
+          <p class="ob-pair-p">8 500 ₽<small>за двоих</small></p>
+          <a class="ob-pair-go" href="zapis/?s=%D0%A1%D0%9F%D0%90%20%D0%B4%D0%BB%D1%8F%20%D0%B4%D0%B2%D0%BE%D0%B8%D1%85%20%C2%AB%D0%91%D0%BB%D0%B0%D0%B6%D0%B5%D0%BD%D1%81%D1%82%D0%B2%D0%BE%C2%BB" data-booking aria-label="Записаться: СПА для двоих «Блаженство»">Выбрать</a>
+        </li>
+        <li class="ob-pair" data-rise data-min="180" tabindex="0">
+          <div class="ob-pair-ring"><svg class="ob-ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="ob-ring-bg"/><circle cx="50" cy="50" r="44" class="ob-ring-fg" style="--len:276.5;--circ:276.5"/></svg><span>3 ч</span></div>
+          <div class="ob-pair-t"><small>супер</small><b>«Роскошное время»</b></div>
+          <p class="ob-pair-p">12 600 ₽<small>за двоих</small></p>
+          <a class="ob-pair-go" href="zapis/?s=%D0%A1%D0%9F%D0%90%20%D0%B4%D0%BB%D1%8F%20%D0%B4%D0%B2%D0%BE%D0%B8%D1%85%20%C2%AB%D0%A0%D0%BE%D1%81%D0%BA%D0%BE%D1%88%D0%BD%D0%BE%D0%B5%20%D0%B2%D1%80%D0%B5%D0%BC%D1%8F%C2%BB" data-booking aria-label="Записаться: СПА для двоих «Роскошное время»">Выбрать</a>
+        </li>
+      </ol>
+      <div class="ob-plan" data-plan hidden data-book="zapis/" data-app="app/" data-hours='{&quot;0&quot;:[&quot;10:00&quot;,&quot;23:00&quot;],&quot;1&quot;:[&quot;10:00&quot;,&quot;23:00&quot;],&quot;2&quot;:[&quot;10:00&quot;,&quot;23:00&quot;],&quot;3&quot;:[&quot;10:00&quot;,&quot;23:00&quot;],&quot;4&quot;:[&quot;10:00&quot;,&quot;23:00&quot;],&quot;5&quot;:[&quot;10:00&quot;,&quot;23:00&quot;],&quot;6&quot;:[&quot;10:00&quot;,&quot;23:00&quot;]}' data-place="ул. Ленина, 112 (демо)" data-brand="Тихо" data-after="после — травяной чай с мёдом">
+        <div class="ob-plan-ctl">
+          
+          <h3 class="ob-plan-h">Соберите вечер на двоих</h3>
+          <div class="ob-plan-row"><span id="pl-p">Программа</span><div class="ob-chips" role="group" aria-labelledby="pl-p" data-p><button type="button" data-name="СПА для двоих «Двое и пар»" data-short="«Двое и пар»" data-min="75" data-price="4 900 ₽">«Двое и пар»</button><button type="button" data-name="СПА для двоих «Тёплый вечер»" data-short="«Тёплый вечер»" data-min="85" data-price="5 000 ₽">«Тёплый вечер»</button><button type="button" data-name="СПА для двоих «Тихо вдвоём»" data-short="«Тихо вдвоём»" data-min="95" data-price="6 400 ₽">«Тихо вдвоём»</button><button type="button" data-name="СПА для двоих «Медленно»" data-short="«Медленно»" data-min="110" data-price="7 300 ₽">«Медленно»</button><button type="button" data-name="СПА для двоих «Уютный вечер»" data-short="«Уютный вечер»" data-min="125" data-price="8 400 ₽">«Уютный вечер»</button><button type="button" data-name="СПА для двоих «Блаженство»" data-short="«Блаженство»" data-min="125" data-price="8 500 ₽">«Блаженство»</button><button type="button" data-name="СПА для двоих «Роскошное время»" data-short="«Роскошное время»" data-min="180" data-price="12 600 ₽">«Роскошное время»</button></div></div>
+          <div class="ob-plan-row"><span id="pl-d">День</span><div class="ob-chips" role="group" aria-labelledby="pl-d" data-d></div></div>
+          <div class="ob-plan-row"><span id="pl-t">Начало</span><div class="ob-chips ob-chips-t" role="group" aria-labelledby="pl-t" data-t></div></div>
+        </div>
+        <article class="ob-invite" aria-live="polite" data-inv></article>
+      </div>
+      <ul class="ob-deals"><li data-rise><em>1 750 ₽</em><b>Первый сеанс в будни</b><span>Час массажа для тех, кто у нас впервые, — при онлайн-записи.</span></li><li data-rise><em>−15 %</em><b>Курс массажа</b><span>Курс из пяти сеансов — со скидкой.</span></li><li data-rise><em>в подарок</em><b>Травяной чай с мёдом</b><span>После любого сеанса, 15 минут.</span></li></ul>
+    </div>
+  </section>
+
+  <section id="kadry" class="ob-sec ob-night ob-tea-sec" data-time="21:40" data-phase="вечер" style="--a:#2f262d;--b:#272026">
+    <div class="wrap">
+      <header class="ob-head"><p class="ob-time"><b>21:40</b><span>вечер</span></p><h2 data-words>И чай с мёдом</h2><p class="ob-sub">После сеанса — травяной чай с чабрецом и мёдом. Бесплатно и без спешки: пятнадцать минут, чтобы вернуться в город.</p></header>
+      <div class="ob-strip" tabindex="0" aria-label="Фото студии, листайте вбок"><ul>
+        <li><figure class="ob-fr ob-fr-1"><div class="ob-ph"><img src="assets/img/stock/a-glass-mug-filled-with-O7sKj9cj.webp" srcset="assets/img/stock/a-glass-mug-filled-with-O7sKj9cj-480.webp 480w, assets/img/stock/a-glass-mug-filled-with-O7sKj9cj-960.webp 960w, assets/img/stock/a-glass-mug-filled-with-O7sKj9cj-1280.webp 1280w, assets/img/stock/a-glass-mug-filled-with-O7sKj9cj.webp 1920w" sizes="(min-width: 900px) 28vw, 70vw" alt="Травяной чай в стеклянной кружке и полевые цветы" width="1920" height="1280" loading="lazy" decoding="async"></div><figcaption>чай после сеанса</figcaption></figure></li>
+        <li><figure class="ob-fr ob-fr-2"><div class="ob-ph"><img src="assets/img/stock/white-and-black-round-table-AV0KNliG.webp" srcset="assets/img/stock/white-and-black-round-table-AV0KNliG-480.webp 480w, assets/img/stock/white-and-black-round-table-AV0KNliG-960.webp 960w, assets/img/stock/white-and-black-round-table-AV0KNliG-1280.webp 1280w, assets/img/stock/white-and-black-round-table-AV0KNliG.webp 1920w" sizes="(min-width: 900px) 28vw, 70vw" alt="Светлая комната для массажа" width="1920" height="1280" loading="lazy" decoding="async"></div><figcaption>комната для массажа</figcaption></figure></li>
+        <li><figure class="ob-fr ob-fr-3"><div class="ob-ph"><img src="assets/img/stock/candle-and-dried-flowers-in-pNFmIL2F.webp" srcset="assets/img/stock/candle-and-dried-flowers-in-pNFmIL2F-480.webp 480w, assets/img/stock/candle-and-dried-flowers-in-pNFmIL2F-960.webp 960w, assets/img/stock/candle-and-dried-flowers-in-pNFmIL2F-1280.webp 1280w, assets/img/stock/candle-and-dried-flowers-in-pNFmIL2F.webp 1920w" sizes="(min-width: 900px) 28vw, 70vw" alt="Свеча и сухоцветы в вазе" width="1920" height="3041" loading="lazy" decoding="async"></div><figcaption>свеча и сухоцветы</figcaption></figure></li>
+        <li><figure class="ob-fr ob-fr-1"><div class="ob-ph"><img src="assets/img/stock/an-overhead-view-of-a-PiVZUFps.webp" srcset="assets/img/stock/an-overhead-view-of-a-PiVZUFps-480.webp 480w, assets/img/stock/an-overhead-view-of-a-PiVZUFps-960.webp 960w, assets/img/stock/an-overhead-view-of-a-PiVZUFps-1280.webp 1280w, assets/img/stock/an-overhead-view-of-a-PiVZUFps.webp 1920w" sizes="(min-width: 900px) 28vw, 70vw" alt="Чашка чая на блюдце, вид сверху" width="1920" height="2880" loading="lazy" decoding="async"></div><figcaption>чай с ромашкой</figcaption></figure></li>
+        <li><figure class="ob-fr ob-fr-2"><div class="ob-ph"><img src="assets/img/stock/close-up-of-sauna-stones-6lYjzIko.webp" srcset="assets/img/stock/close-up-of-sauna-stones-6lYjzIko-480.webp 480w, assets/img/stock/close-up-of-sauna-stones-6lYjzIko-960.webp 960w, assets/img/stock/close-up-of-sauna-stones-6lYjzIko-1280.webp 1280w, assets/img/stock/close-up-of-sauna-stones-6lYjzIko.webp 1920w" sizes="(min-width: 900px) 28vw, 70vw" alt="Камни в печи сауны" width="1920" height="1280" loading="lazy" decoding="async"></div><figcaption>камни сауны</figcaption></figure></li>
+        <li><figure class="ob-fr ob-fr-3"><div class="ob-ph"><img src="assets/img/stock/white-ceramic-mug-with-brown-6LjKkxNs.webp" srcset="assets/img/stock/white-ceramic-mug-with-brown-6LjKkxNs-480.webp 480w, assets/img/stock/white-ceramic-mug-with-brown-6LjKkxNs-960.webp 960w, assets/img/stock/white-ceramic-mug-with-brown-6LjKkxNs-1280.webp 1280w, assets/img/stock/white-ceramic-mug-with-brown-6LjKkxNs.webp 1920w" sizes="(min-width: 900px) 28vw, 70vw" alt="Белая чашка с травяным сбором" width="1920" height="2885" loading="lazy" decoding="async"></div><figcaption>травяной сбор</figcaption></figure></li>
+        <li><figure class="ob-fr ob-fr-1"><div class="ob-ph"><img src="assets/img/stock/a-vase-with-dried-flowers-RZ_i2lmp.webp" srcset="assets/img/stock/a-vase-with-dried-flowers-RZ_i2lmp-480.webp 480w, assets/img/stock/a-vase-with-dried-flowers-RZ_i2lmp-960.webp 960w, assets/img/stock/a-vase-with-dried-flowers-RZ_i2lmp-1280.webp 1280w, assets/img/stock/a-vase-with-dried-flowers-RZ_i2lmp.webp 1920w" sizes="(min-width: 900px) 28vw, 70vw" alt="Ваза с сухоцветами на деревянном столе" width="1920" height="2879" loading="lazy" decoding="async"></div><figcaption>сухоцветы</figcaption></figure></li>
+        <li><figure class="ob-fr ob-fr-2"><div class="ob-ph"><img src="assets/img/stock/two-candles-flank-a-vase-IXPwBIaq.webp" srcset="assets/img/stock/two-candles-flank-a-vase-IXPwBIaq-480.webp 480w, assets/img/stock/two-candles-flank-a-vase-IXPwBIaq-960.webp 960w, assets/img/stock/two-candles-flank-a-vase-IXPwBIaq-1280.webp 1280w, assets/img/stock/two-candles-flank-a-vase-IXPwBIaq.webp 1920w" sizes="(min-width: 900px) 28vw, 70vw" alt="Две свечи и ваза с сухоцветами" width="1920" height="1280" loading="lazy" decoding="async"></div><figcaption>вечерний свет</figcaption></figure></li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section id="team" class="ob-sec ob-night ob-team-sec" data-time="22:00" data-phase="ночь" style="--a:#272026;--b:#211b20">
+    <div class="wrap">
+      <header class="ob-head"><p class="ob-time"><b>22:00</b><span>ночь</span></p><h2 data-words>Кто встречает</h2><p class="ob-sub">Шесть мастеров в записи. Можно выбрать мастера или довериться администратору.</p></header>
+      <div class="ob-team">
+        <figure class="ob-team-ph" data-rise><div class="ob-frame"><img src="assets/img/stock/a-hand-pressing-into-the-RcHB2c_7.webp" srcset="assets/img/stock/a-hand-pressing-into-the-RcHB2c_7-480.webp 480w, assets/img/stock/a-hand-pressing-into-the-RcHB2c_7-960.webp 960w, assets/img/stock/a-hand-pressing-into-the-RcHB2c_7-1280.webp 1280w, assets/img/stock/a-hand-pressing-into-the-RcHB2c_7.webp 1920w" sizes="(min-width: 900px) 36vw, 88vw" alt="Руки мастера на пояснице гостя" width="1920" height="2880" loading="lazy" decoding="async"></div><figcaption>руки мастера</figcaption></figure>
+        <ol class="ob-masters">
+          <li data-rise>
+            
+            <span class="ob-m"><b>Ольга Т.</b><small>Мастер-преподаватель · 48 отзывов</small><q>Ольга спросила, где болит, и весь час работала именно с этим</q></span>
+            <a class="ob-to" href="zapis/?m=m1" data-booking aria-label="Записаться к мастеру Ольге Т.">→</a>
+          </li>
+          <li data-rise>
+            
+            <span class="ob-m"><b>Илья С.</b><small>Мастер, спортивный массаж · 31 отзыв</small></span>
+            <a class="ob-to" href="zapis/?m=m2" data-booking aria-label="Записаться к мастеру Илье С.">→</a>
+          </li>
+          <li data-rise>
+            
+            <span class="ob-m"><b>Вера Н.</b><small>Мастер, спа-эстетист · 22 отзыва</small></span>
+            <a class="ob-to" href="zapis/?m=m3" data-booking aria-label="Записаться к мастеру Вере Н.">→</a>
+          </li>
+          <li data-rise>
+            
+            <span class="ob-m"><b>Роман К.</b><small>Мастер, спа-эстетист · 14 отзывов</small></span>
+            <a class="ob-to" href="zapis/?m=m4" data-booking aria-label="Записаться к мастеру Роману К.">→</a>
+          </li>
+          <li data-rise>
+            
+            <span class="ob-m"><b>Дарья М.</b><small>Мастер, спа-эстетист · 9 отзывов</small></span>
+            <a class="ob-to" href="zapis/?m=m5" data-booking aria-label="Записаться к мастеру Дарье М.">→</a>
+          </li>
+          <li data-rise>
+            
+            <span class="ob-m"><b>Ян Л.</b><small>Мастер, спа-эстетист · 5 отзывов</small></span>
+            <a class="ob-to" href="zapis/?m=m6" data-booking aria-label="Записаться к мастеру Яну Л.">→</a>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews" class="ob-sec ob-night ob-reviews-sec" data-time="22:30" data-phase="ночь" style="--a:#211b20;--b:#1c171b">
+    <div class="wrap">
+      <header class="ob-head"><p class="ob-time"><b>22:30</b><span>ночь</span></p><h2 data-words>Что пишут после</h2></header>
+      <ul class="ob-score"><li><b>4,9</b><span>184 оценки<br>на 2ГИС (демо)</span></li><li><b>5,0</b><span>72 оценки<br>на Яндекс Карты (демо)</span></li></ul>
+      <div class="ob-quotes">
+        <figure data-rise><blockquote>Подарила мужу «Тихо вдвоём». Сауна, массаж, чай с мёдом — вышли другими людьми. Уже записались снова.</blockquote><figcaption>Мария · сентябрь 2026 · 2ГИС (демо)</figcaption></figure>
+        <figure data-rise><blockquote>Записался онлайн в 22:00 на завтра. Массаж спины после рабочей недели — то, что нужно.</blockquote><figcaption>Павел · август 2026 · 2ГИС (демо)</figcaption></figure>
+        <figure data-rise><blockquote>Ольга спросила, где болит, и весь час работала именно с этим. Тихо, тепло, без лишних разговоров.</blockquote><figcaption>Ксения · октябрь 2026 · Яндекс Карты (демо)</figcaption></figure>
+        <figure data-rise><blockquote>Сертификат пришёл QR в приложение — удобно дарить, даже если живёшь в другом городе.</blockquote><figcaption>Алина · июль 2026 · 2ГИС (демо)</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="gifts" class="ob-sec ob-night ob-gift-sec" data-time="23:00" data-phase="ночь" style="--a:#1c171b;--b:#181417">
+    <div class="wrap">
+      <header class="ob-head"><p class="ob-time"><b>23:00</b><span>ночь</span></p><h2 data-words>Подарить вечер</h2></header>
+      <div class="ob-gift">
+        <div class="ob-cert" data-rise aria-hidden="true"><span class="ob-cert-line"></span><span class="ob-cert-logo"><svg class="ob-cert-svg" viewBox="-4.4 -142.8 408 158" role="img" aria-label="Тихо"><path fill="#231d22" d="M39.80-121L39.80-121Q27.40-121 20.40-114.10Q13.40-107.20 10-92L10-92Q9.80-91.60 8.70-91.60Q7.60-91.60 7.60-92.20L7.60-92.20Q8-94.80 8.50-99.60Q9-104.40 9.40-110Q9.80-115.60 10.10-120.80Q10.40-126 10.40-129.40L10.40-129.40Q10.40-130.40 11.60-130.40Q12.80-130.40 12.80-129.40L12.80-129.40Q12.80-127.40 14.80-126.50Q16.80-125.60 19.40-125.30Q22-125 23.80-125L23.80-125Q41-124.40 64-124.40L64-124.40Q78-124.40 86.40-124.70Q94.80-125 102.60-125L102.60-125Q109.40-125 113.10-125.90Q116.80-126.80 117.80-130L117.80-130Q118-130.80 119.10-130.80Q120.20-130.80 120.20-130L120.20-130Q119.80-127 119.50-121.60Q119.20-116.20 118.90-110.40Q118.60-104.60 118.40-99.60Q118.20-94.60 118.20-92.20L118.20-92.20Q118.20-91.60 117.10-91.60Q116-91.60 116-92.20L116-92.20Q114.60-107.80 108-114.40Q101.40-121 88.40-121L88.40-121Q81.40-121 77.90-120.10Q74.40-119.20 73.30-116.60Q72.20-114 72.20-108.40L72.20-108.40L72.20-16.20Q72.20-10.40 73.50-7.40Q74.80-4.40 78.70-3.40Q82.60-2.40 90.80-2.40L90.80-2.40Q91.20-2.40 91.20-1.20Q91.20 0 90.80 0L90.80 0Q85.40 0 78.70-0.20Q72-0.40 64-0.40L64-0.40Q56.40-0.40 49.70-0.20Q43 0 37.40 0L37.40 0Q36.80 0 36.80-1.20Q36.80-2.40 37.40-2.40L37.40-2.40Q45.20-2.40 49.30-3.40Q53.40-4.40 54.80-7.40Q56.20-10.40 56.20-16.20L56.20-16.20L56.20-108.80Q56.20-114.20 55-116.90Q53.80-119.60 50.20-120.30Q46.60-121 39.80-121ZM130.40 2L130.40 2Q129.60 2 128.80 1.60Q128 1.20 128 1L128 1L128-61Q128-69.80 125.90-72.30Q123.80-74.80 116-74.80L116-74.80Q115.60-74.80 115.60-76Q115.60-77.20 116-77.20L116-77.20Q120-77.20 124.30-77Q128.60-76.80 134.60-76.80L134.60-76.80Q141.40-76.80 146-77Q150.60-77.20 153.80-77.20L153.80-77.20Q154.40-77.20 154.40-76Q154.40-74.80 153.80-74.80L153.80-74.80Q146.20-74.80 143.90-72.30Q141.60-69.80 141.60-61L141.60-61L141.60-12.60L136-9.80L192.40-78.40Q193-79 194-79L194-79Q196.40-79 196.40-78L196.40-78L196.40-16.20Q196.40-7.60 198.60-5Q200.80-2.40 208.60-2.40L208.60-2.40Q208.80-2.40 208.80-1.20Q208.80 0 208.40 0L208.40 0Q204.40 0 199.70-0.20Q195-0.40 189.80-0.40L189.80-0.40Q184.60-0.40 179.50-0.20Q174.40 0 170.60 0L170.60 0Q170 0 170-1.20Q170-2.40 170.60-2.40L170.60-2.40Q178.20-2.40 180.50-5Q182.80-7.60 182.80-16.20L182.80-16.20L182.80-65.20L188.80-67.80L132.20 1.20Q132 1.60 131.50 1.80Q131 2 130.40 2ZM264.60 0L264.60 0Q264 0 264-1.20Q264-2.40 264.60-2.40L264.60-2.40Q269.80-2.40 270.40-4.10Q271-5.80 268.20-10.20L268.20-10.20L234.60-60.60Q229.60-68 224.80-71.40Q220-74.80 216.40-74.80L216.40-74.80Q216-74.80 216-76Q216-77.20 216.40-77.20L216.40-77.20Q219.40-77.20 222.60-77Q225.80-76.80 228.80-76.80L228.80-76.80Q235.60-76.80 240.80-77Q246-77.20 250.20-77.20L250.20-77.20Q250.60-77.20 250.60-76Q250.60-74.80 250.20-74.80L250.20-74.80Q245.40-74.80 244.50-73.20Q243.60-71.60 246.60-67L246.60-67L280-16.60Q285.40-8.60 290.60-5.50Q295.80-2.40 299.40-2.40L299.40-2.40Q299.80-2.40 299.80-1.20Q299.80 0 299.40 0L299.40 0Q296.20 0 292.60-0.20Q289-0.40 286-0.40L286-0.40Q279.20-0.40 274-0.20Q268.80 0 264.60 0ZM215.40 0L215.40 0Q215 0 215-1.20Q215-2.40 215.40-2.40L215.40-2.40Q221-2.40 227.30-6.60Q233.60-10.80 239.20-18.40L239.20-18.40L254.40-39.40L257-37L243.20-17Q240-12.40 239.20-9.10Q238.40-5.80 240.80-4.10Q243.20-2.40 249.60-2.40L249.60-2.40Q250.20-2.40 250.20-1.20Q250.20 0 249.60 0L249.60 0Q245 0 240.70-0.20Q236.40-0.40 229.60-0.40L229.60-0.40Q225-0.40 222.20-0.20Q219.40 0 215.40 0ZM272.80-58.80L257.80-38.40L255.60-40.60L268.60-60.20Q273.80-67.60 272.80-71.20Q271.80-74.80 262.20-74.80L262.20-74.80Q261.80-74.80 261.80-76Q261.80-77.20 262.20-77.20L262.20-77.20Q267-77.20 271.30-77Q275.60-76.80 282.40-76.80L282.40-76.80Q287-76.80 289.80-77Q292.60-77.20 296.60-77.20L296.60-77.20Q297-77.20 297-76Q297-74.80 296.60-74.80L296.60-74.80Q291.20-74.80 284.90-70.80Q278.60-66.80 272.80-58.80L272.80-58.80ZM347.80 2.60L347.80 2.60Q335.60 2.60 326.70-3.20Q317.80-9 313.00-18.70Q308.20-28.40 308.20-39.60L308.20-39.60Q308.20-50 312.10-57.60Q316.00-65.20 322.40-70.10Q328.80-75 336.40-77.40Q344.00-79.80 351.40-79.80L351.40-79.80Q363.80-79.80 372.60-73.80Q381.40-67.80 386.10-58.40Q390.80-49 390.80-38.60L390.80-38.60Q390.80-26 384.80-16.70Q378.80-7.40 369.10-2.40Q359.40 2.60 347.80 2.60ZM353.60-1.20L353.60-1.20Q363.40-1.20 368.90-8.90Q374.40-16.60 374.40-32.40L374.40-32.40Q374.40-45.80 370.40-55.50Q366.40-65.20 359.70-70.50Q353.00-75.80 344.60-75.80L344.60-75.80Q334.80-75.80 329.50-68.30Q324.20-60.80 324.20-46.20L324.20-46.20Q324.20-33.60 328.00-23.30Q331.80-13 338.40-7.10Q345.00-1.20 353.60-1.20Z"/></svg></span><span class="ob-cert-k">Сертификат · вечер для двоих</span><span class="ob-cert-n">№ 0001</span></div>
+        <ul class="ob-gifts"><li data-rise><b>Подарочный сертификат</b><em>от 1 000 ₽</em><span>На сумму или на программу — конверт или QR в телефоне.</span></li><li data-rise><b>Свеча студии</b><em>690 ₽</em><span>Соевый воск, аромат чабреца и кедра.</span></li><li data-rise><b>Масло для массажа</b><em>850 ₽</em><span>Тем же работают мастера.</span></li></ul>
+      </div>
+      <div class="ob-dev">
+        <div class="ob-dev-text"><h3>Тихо — в телефоне</h3><p>Запись за минуту — программа, мастер и время без переписки. Приложение с бонусами и сертификатами, бот напомнит о записи накануне.</p>
+          <div class="ob-cta"><a class="btn btn-main" href="zapis/">Выбрать время</a><a class="ob-link" href="app/">Приложение</a><a class="ob-link" href="bot.html">Бот</a></div></div>
+        <div class="ob-devices">
+          <div class="ob-phone ob-ph-a"><div class="ob-screen"><img src="assets/img/screens/zapis-m.webp" alt="Онлайн-запись в телефоне" width="402" height="874" loading="lazy" decoding="async"></div></div>
+          <div class="ob-phone ob-ph-b"><div class="ob-screen"><img src="assets/img/screens/app.webp" alt="Приложение в телефоне" width="402" height="874" loading="lazy" decoding="async"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ob-ticket-sec ob-sec ob-night" data-time="23:30" data-phase="ночь" style="--a:#181417;--b:#151215">
+    <span class="ob-lamp" aria-hidden="true"></span>
+    <div class="wrap">
+      <p class="ob-time"><b>23:30</b><span>ночь</span></p>
+      <div class="ob-ticket" data-rise>
+        <h2 class="ob-ticket-t" data-words>Выберите свой вечер</h2>
+        <dl>
+          <div><dt>Где</dt><dd>ул. Ленина, 112 (демо), Красноярск</dd></div>
+          <div><dt>Когда</dt><dd>Ежедневно 10:00–23:00, по записи</dd></div>
+          <div><dt>Цена</dt><dd>массаж от 2 150 ₽ · для двоих от 4 900 ₽</dd></div>
+        </dl>
+        <div class="ob-cta"><a class="btn btn-main" href="zapis/" data-booking>Выбрать время</a><a class="ob-link" href="tel:+79000000000">+7 900 000-00-00</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ob-sec ob-night ob-faq-sec" style="--a:#17121f;--b:#17121f">
+    <div class="wrap">
+      <header class="ob-head"><h2 data-words>Вопросы</h2></header>
+      <div class="faq">
+        <details><summary>Можно прийти вдвоём?</summary><p>Да: семь программ для двоих, от 4 900 до 12 600 ₽. Два мастера работают одновременно, в одной комнате.</p></details>
+        <details><summary>Есть скидка на первый визит?</summary><p>Первый сеанс массажа в будни — 1 750 ₽ за час при онлайн-записи.</p></details>
+        <details><summary>Можно выбрать мастера?</summary><p>Да, в онлайн-записи — шесть мастеров. Если сомневаетесь, администратор подберёт мастера и программу.</p></details>
+        <details><summary>Есть противопоказания?</summary><p>У массажа и прогревания они есть. Расскажите о самочувствии при записи, а при сомнениях — проконсультируйтесь с врачом.</p></details>
+        <details><summary>Как подарить сертификат?</summary><p>Номинал — от 1 000 ₽, на сумму или на программу. Оформим в студии или пришлём QR в приложение.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacts" class="ob-sec ob-contacts-sec">
+    <div class="wrap ob-contacts">
+      <div>
+        <div class="ob-head"><h2>Как нас найти</h2></div>
+        <dl class="c-list">
+          <div><dt><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Адрес</dt><dd>ул. Ленина, 112 (демо), Красноярск<small>отдельный вход со двора, звонок «Тихо»</small></dd></div>
+          <div><dt><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Часы работы</dt><dd>Ежедневно 10:00–23:00, по записи</dd></div>
+          <div><dt><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>Телефон</dt><dd><a href="tel:+79000000000">+7 900 000-00-00</a></dd></div>
+        </dl>
+        <div class="c-btns">
+          <a class="btn" href="https://max.ru/u/tiho_demo" target="_blank" rel="noopener">MAX</a>
+          <a class="btn" href="https://t.me/tiho_demo" target="_blank" rel="noopener">Telegram</a>
+          <a class="btn" href="https://wa.me/79000000000" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn" href="https://yandex.ru/maps/?rtext=~56.0153%2C92.8669&amp;rtt=auto" target="_blank" rel="noopener">Маршрут</a>
+        </div>
+      </div>
+      <div class="map" data-src="https://yandex.ru/map-widget/v1/?ll=92.8669%2C56.0153&z=16&pt=92.8669%2C56.0153%2Cpm2rdm">
+        <span class="map-pin"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <p class="map-addr">ул. Ленина, 112 (демо), Красноярск</p>
+        <button class="btn map-load" type="button">Показать карту</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ob-foot ob-night">
+  <div class="wrap">
+    <p class="ob-good">Спокойной ночи<small>Ежедневно 10:00–23:00, по записи · ул. Ленина, 112 (демо)</small></p>
+    <div class="ob-foot-grid">
+      <a class="ob-foot-logo" href="./" aria-label="Тихо"><svg class="ob-foot-svg" viewBox="-4.4 -142.8 408 158" role="img" aria-label="Тихо"><path fill="#231d22" d="M39.80-121L39.80-121Q27.40-121 20.40-114.10Q13.40-107.20 10-92L10-92Q9.80-91.60 8.70-91.60Q7.60-91.60 7.60-92.20L7.60-92.20Q8-94.80 8.50-99.60Q9-104.40 9.40-110Q9.80-115.60 10.10-120.80Q10.40-126 10.40-129.40L10.40-129.40Q10.40-130.40 11.60-130.40Q12.80-130.40 12.80-129.40L12.80-129.40Q12.80-127.40 14.80-126.50Q16.80-125.60 19.40-125.30Q22-125 23.80-125L23.80-125Q41-124.40 64-124.40L64-124.40Q78-124.40 86.40-124.70Q94.80-125 102.60-125L102.60-125Q109.40-125 113.10-125.90Q116.80-126.80 117.80-130L117.80-130Q118-130.80 119.10-130.80Q120.20-130.80 120.20-130L120.20-130Q119.80-127 119.50-121.60Q119.20-116.20 118.90-110.40Q118.60-104.60 118.40-99.60Q118.20-94.60 118.20-92.20L118.20-92.20Q118.20-91.60 117.10-91.60Q116-91.60 116-92.20L116-92.20Q114.60-107.80 108-114.40Q101.40-121 88.40-121L88.40-121Q81.40-121 77.90-120.10Q74.40-119.20 73.30-116.60Q72.20-114 72.20-108.40L72.20-108.40L72.20-16.20Q72.20-10.40 73.50-7.40Q74.80-4.40 78.70-3.40Q82.60-2.40 90.80-2.40L90.80-2.40Q91.20-2.40 91.20-1.20Q91.20 0 90.80 0L90.80 0Q85.40 0 78.70-0.20Q72-0.40 64-0.40L64-0.40Q56.40-0.40 49.70-0.20Q43 0 37.40 0L37.40 0Q36.80 0 36.80-1.20Q36.80-2.40 37.40-2.40L37.40-2.40Q45.20-2.40 49.30-3.40Q53.40-4.40 54.80-7.40Q56.20-10.40 56.20-16.20L56.20-16.20L56.20-108.80Q56.20-114.20 55-116.90Q53.80-119.60 50.20-120.30Q46.60-121 39.80-121ZM130.40 2L130.40 2Q129.60 2 128.80 1.60Q128 1.20 128 1L128 1L128-61Q128-69.80 125.90-72.30Q123.80-74.80 116-74.80L116-74.80Q115.60-74.80 115.60-76Q115.60-77.20 116-77.20L116-77.20Q120-77.20 124.30-77Q128.60-76.80 134.60-76.80L134.60-76.80Q141.40-76.80 146-77Q150.60-77.20 153.80-77.20L153.80-77.20Q154.40-77.20 154.40-76Q154.40-74.80 153.80-74.80L153.80-74.80Q146.20-74.80 143.90-72.30Q141.60-69.80 141.60-61L141.60-61L141.60-12.60L136-9.80L192.40-78.40Q193-79 194-79L194-79Q196.40-79 196.40-78L196.40-78L196.40-16.20Q196.40-7.60 198.60-5Q200.80-2.40 208.60-2.40L208.60-2.40Q208.80-2.40 208.80-1.20Q208.80 0 208.40 0L208.40 0Q204.40 0 199.70-0.20Q195-0.40 189.80-0.40L189.80-0.40Q184.60-0.40 179.50-0.20Q174.40 0 170.60 0L170.60 0Q170 0 170-1.20Q170-2.40 170.60-2.40L170.60-2.40Q178.20-2.40 180.50-5Q182.80-7.60 182.80-16.20L182.80-16.20L182.80-65.20L188.80-67.80L132.20 1.20Q132 1.60 131.50 1.80Q131 2 130.40 2ZM264.60 0L264.60 0Q264 0 264-1.20Q264-2.40 264.60-2.40L264.60-2.40Q269.80-2.40 270.40-4.10Q271-5.80 268.20-10.20L268.20-10.20L234.60-60.60Q229.60-68 224.80-71.40Q220-74.80 216.40-74.80L216.40-74.80Q216-74.80 216-76Q216-77.20 216.40-77.20L216.40-77.20Q219.40-77.20 222.60-77Q225.80-76.80 228.80-76.80L228.80-76.80Q235.60-76.80 240.80-77Q246-77.20 250.20-77.20L250.20-77.20Q250.60-77.20 250.60-76Q250.60-74.80 250.20-74.80L250.20-74.80Q245.40-74.80 244.50-73.20Q243.60-71.60 246.60-67L246.60-67L280-16.60Q285.40-8.60 290.60-5.50Q295.80-2.40 299.40-2.40L299.40-2.40Q299.80-2.40 299.80-1.20Q299.80 0 299.40 0L299.40 0Q296.20 0 292.60-0.20Q289-0.40 286-0.40L286-0.40Q279.20-0.40 274-0.20Q268.80 0 264.60 0ZM215.40 0L215.40 0Q215 0 215-1.20Q215-2.40 215.40-2.40L215.40-2.40Q221-2.40 227.30-6.60Q233.60-10.80 239.20-18.40L239.20-18.40L254.40-39.40L257-37L243.20-17Q240-12.40 239.20-9.10Q238.40-5.80 240.80-4.10Q243.20-2.40 249.60-2.40L249.60-2.40Q250.20-2.40 250.20-1.20Q250.20 0 249.60 0L249.60 0Q245 0 240.70-0.20Q236.40-0.40 229.60-0.40L229.60-0.40Q225-0.40 222.20-0.20Q219.40 0 215.40 0ZM272.80-58.80L257.80-38.40L255.60-40.60L268.60-60.20Q273.80-67.60 272.80-71.20Q271.80-74.80 262.20-74.80L262.20-74.80Q261.80-74.80 261.80-76Q261.80-77.20 262.20-77.20L262.20-77.20Q267-77.20 271.30-77Q275.60-76.80 282.40-76.80L282.40-76.80Q287-76.80 289.80-77Q292.60-77.20 296.60-77.20L296.60-77.20Q297-77.20 297-76Q297-74.80 296.60-74.80L296.60-74.80Q291.20-74.80 284.90-70.80Q278.60-66.80 272.80-58.80L272.80-58.80ZM347.80 2.60L347.80 2.60Q335.60 2.60 326.70-3.20Q317.80-9 313.00-18.70Q308.20-28.40 308.20-39.60L308.20-39.60Q308.20-50 312.10-57.60Q316.00-65.20 322.40-70.10Q328.80-75 336.40-77.40Q344.00-79.80 351.40-79.80L351.40-79.80Q363.80-79.80 372.60-73.80Q381.40-67.80 386.10-58.40Q390.80-49 390.80-38.60L390.80-38.60Q390.80-26 384.80-16.70Q378.80-7.40 369.10-2.40Q359.40 2.60 347.80 2.60ZM353.60-1.20L353.60-1.20Q363.40-1.20 368.90-8.90Q374.40-16.60 374.40-32.40L374.40-32.40Q374.40-45.80 370.40-55.50Q366.40-65.20 359.70-70.50Q353.00-75.80 344.60-75.80L344.60-75.80Q334.80-75.80 329.50-68.30Q324.20-60.80 324.20-46.20L324.20-46.20Q324.20-33.60 328.00-23.30Q331.80-13 338.40-7.10Q345.00-1.20 353.60-1.20Z"/></svg></a>
+      <p>Студия массажа и SPA<br><span class="legal">ИП Демо Д. Д., ИНН 000000000000 (демо)</span></p>
+      <p><a href="privacy.html">Политика конфиденциальности</a></p>
+    </div>
+    <p class="med-warn">Есть противопоказания, проконсультируйтесь с врачом.</p>
+    <p class="ob-credit">Сайт, онлайн-запись и приложение — <a href="https://tochka-zapisi.github.io/" target="_blank" rel="noopener">студия «Точка записи»</a></p>
+  </div>
+</footer>
+
+<nav class="dock" aria-label="Связаться">
+  <a href="tel:+79000000000"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><span>Позвонить</span></a><a href="https://max.ru/u/tiho_demo" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span>Написать</span></a><a class="dock-main" href="zapis/" data-booking><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Записаться</span></a>
+</nav>
+<script src="assets/vendor/lenis.min.js" defer></script>
+<script src="assets/site/oblaka.js" defer></script>
+<script src="assets/vendor/ob-sky.js" defer></script>
+<script src="assets/site/main.js" defer></script>
+</body>
+</html>
