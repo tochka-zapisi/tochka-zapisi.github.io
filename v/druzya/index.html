@@ -9,7 +9,7 @@
 :root{--bg:#121114;--bg2:#1a191d;--sf:#1f1e22;--ink:#f2eee9;--mu:#a19ca6;--ln:color-mix(in srgb,#f2eee9 13%,transparent);--n:#a77bff;--n2:#f5bf5c;--kr:#efe9e1;--kri:#3a3530}
 *{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--ink);font:400 17px/1.6 "Golos Text",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit}.w{max-width:1160px;margin:0 auto;padding:0 20px}img{max-width:100%}
-.mono{font:500 12px/1.4 "Martian Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--mu)}
+.mono{font:500 13px/1.4 "Golos Text",system-ui,sans-serif;letter-spacing: .01em; color:var(--mu); font-variant-numeric: tabular-nums }
 .mono b{color:var(--n);font-weight:600}
 h1,h2,h3{font-family:Unbounded,sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.02}
 h2{font-size:clamp(30px,5.4vw,58px);margin:12px 0 18px;max-width:18ch}h3{font-size:19px;font-weight:600;letter-spacing:0;line-height:1.25;margin:20px 0 6px}
@@ -32,7 +32,7 @@ section{padding:88px 0;border-top:1px solid var(--ln);position:relative}
 .cover .k{opacity:0;animation:nm .8s ease 2.2s forwards}.cover .lead{margin:22px auto 0;opacity:0;animation:nm .8s ease 2.5s forwards}
 .cover .go{opacity:0;animation:nm .8s ease 2.8s forwards}
 @keyframes nm{from{opacity:0;transform:translateY(16px);letter-spacing:.2em}to{opacity:1;transform:none}}
-.scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font:500 11px "Martian Mono",monospace;letter-spacing:.2em;color:var(--mu);text-decoration:none}
+.scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font:500 11px "Golos Text",system-ui,sans-serif;letter-spacing: .01em;color:var(--mu);text-decoration:none; font-variant-numeric: tabular-nums }
 @media (prefers-reduced-motion:reduce){.sg *,.cover h1,.cover .k,.cover .lead,.cover .go{animation:none!important;opacity:1!important;stroke-dashoffset:0!important}}
 .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:inherit;margin-top:30px}.cover .cta{justify-content:center}
 .btn{display:inline-flex;align-items:center;min-height:52px;padding:0 26px;border-radius:999px;border:1px solid color-mix(in srgb,var(--ink) 40%,transparent);text-decoration:none;font:600 14px "Golos Text",sans-serif;transition:transform .2s}
@@ -54,7 +54,7 @@ section{padding:88px 0;border-top:1px solid var(--ln);position:relative}
 .pair{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:34px}.pair .ph-f{width:min(270px,76vw)}
 ol.f{list-style:none;padding:0;counter-reset:f;display:grid;gap:0;max-width:820px;margin-top:20px}
 ol.f li{counter-increment:f;display:grid;grid-template-columns:64px 1fr;padding:22px 0;border-bottom:1px solid var(--ln);font-size:18px}
-ol.f li::before{content:"0" counter(f);font:600 15px/1.9 "Martian Mono",monospace;color:var(--n)}
+ol.f li::before{content:counter(f);font:600 15px/1.9 "Golos Text",system-ui,sans-serif;color:var(--n); font-variant-numeric: tabular-nums }
 .inc{display:grid;gap:0 30px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));list-style:none;padding:0;margin-top:26px}.inc li{padding:14px 0 14px 28px;border-bottom:1px solid var(--ln);position:relative;font-size:16px}.inc li::before{content:"✓";position:absolute;left:0;color:var(--n)}
 .calc{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:28px}.calc label{display:grid;gap:6px;font-size:14px;color:var(--mu)}
 .calc input{min-height:56px;background:var(--bg2);border:1px solid var(--ln);border-radius:14px;color:#fff;font:600 24px Unbounded,sans-serif;padding:0 16px;width:100%}
@@ -80,65 +80,65 @@ footer{padding:40px 0 70px;border-top:1px solid var(--ln);font-size:14px;color:v
   <p class="lead">Так «Друзья» может встречать гостей в интернете — в вашем стиле: светящиеся шары вашего зала, ваше меню и фото, бронь без звонка, приложение и бот. Это заставка — так открывается ваш сайт.</p>
   <div class="go"><div class="stats"><div><b>5,0</b><span>рейтинг в 2ГИС</span></div><div><b>222</b><span>оценки гостей</span></div><div><b>59</b><span>отзывов с ответами</span></div></div>
   <div class="cta"><a class="btn p" href="#start">Хочу так же</a><a class="btn" href="#site">Смотреть набросок</a></div></div>
-  <a class="scroll" href="#site">ЛИСТАЙТЕ ↓</a>
+  <a class="scroll" href="#site">Листайте ↓</a>
 </header>
 <section id="site"><div class="w">
-  <p class="mono"><b>01</b> · Ваш сайт</p><h2>Ваш зал — с первого экрана</h2>
+  <h2>Ваш зал — с первого экрана</h2>
   <p class="lead">Сайт в вашем стиле: графит, белая надпись «ДРУЗЬЯ», фиолетовый и янтарный свет шаров под потолком. Сайт живёт по часам вечера — кухня, компания, игры, отзывы. Фото и меню — ваши, из 2ГИС.</p>
   <div class="mac"><div class="mac-s"><img src="img/desk.webp" alt="Сайт Друзья на ноутбуке" width="1512" height="982" loading="lazy"></div><div class="mac-b"></div></div>
   <div class="pair"><figure class="ph "><div class="ph-f"><img src="img/site.webp" alt="С телефона — так открывают 8 из 10 гостей" width="402" height="874" loading="lazy"><i></i></div><figcaption>С телефона — так открывают 8 из 10 гостей</figcaption></figure></div>
   <p class="note">Набросок на основе нашей работы: фото, меню и тексты будут ваши, стиль подберём под ваш зал и вывеску.</p>
 </div></section>
 <section><div class="w">
-  <p class="mono"><b>02</b> · Бронь без звонка</p>
+  
   <div class="duo"><div><figure class="ph "><div class="ph-f"><img src="img/bron.webp" alt="" width="402" height="874" loading="lazy"><i></i></div></figure></div><div>
   <h2>Стол, время, гости — и условия заранее</h2>
   <ul class="pts"><li>Гость выбирает вечер, время, число гостей и где сесть — столик, диван, большой стол, весь зал</li><li>Условия брони видны сразу — без сюрпризов на месте</li><li>Предзаказ «Микса на компанию» и рёбер к приходу</li><li>Повод: день рождения, встреча друзей — вы готовитесь заранее</li><li>Работает ночью, когда администратору не до телефона</li></ul>
   </div></div>
 </div></section>
 <section><div class="w">
-  <p class="mono"><b>03</b> · Приложение гостя</p><h2>Иконка «Друзья» на экране телефона</h2>
+  <h2>Иконка «Друзья» на экране телефона</h2>
   <p class="lead">Без магазина приложений: гость добавляет иконку «Друзей» на экран за секунду. Бронь в два касания, меню, карта гостя с уровнями «Друг» и «Лучший друг», сертификаты — повод вернуться своей компанией.</p>
   <div class="row"><figure class="ph "><div class="ph-f"><img src="img/app.webp" alt="Главная: бронь и вечер" width="402" height="874" loading="lazy"><i></i></div><figcaption>Главная: бронь и вечер</figcaption></figure><figure class="ph "><div class="ph-f"><img src="img/app-menu.webp" alt="Меню и предзаказ" width="402" height="874" loading="lazy"><i></i></div><figcaption>Меню и предзаказ</figcaption></figure><figure class="ph "><div class="ph-f"><img src="img/app-card.webp" alt="Карта гостя: баллы и уровни" width="402" height="874" loading="lazy"><i></i></div><figcaption>Карта гостя: баллы и уровни</figcaption></figure><figure class="ph "><div class="ph-f"><img src="img/app-gift.webp" alt="Сертификаты в подарок" width="402" height="874" loading="lazy"><i></i></div><figcaption>Сертификаты в подарок</figcaption></figure></div>
 </div></section>
 <section><div class="w">
-  <p class="mono"><b>04</b> · Бот брони в MAX и Telegram</p><h2>Гость пишет — администратор подтверждает одной кнопкой</h2>
+  <h2>Гость пишет — администратор подтверждает одной кнопкой</h2>
   <div class="pair"><figure class="ph "><div class="ph-f"><img src="img/bot.webp" alt="Гость бронирует в переписке" width="402" height="874" loading="lazy"><i></i></div><figcaption>Гость бронирует в переписке</figcaption></figure><figure class="ph "><div class="ph-f"><img src="img/bot-admin.webp" alt="Администратор: «Подтвердить» или «Перезвонить»" width="402" height="874" loading="lazy"><i></i></div><figcaption>Администратор: «Подтвердить» или «Перезвонить»</figcaption></figure></div>
   <ul class="pts" style="max-width:760px;margin:34px auto 0"><li>Напоминание гостю за 2 часа — меньше «не пришли»</li><li>После вечера — просьба оценить вас в 2ГИС: рейтинг растёт сам</li><li>Все брони — в одном чате, видно всей смене</li></ul>
 </div></section>
 <section><div class="w">
-  <p class="mono"><b>05</b> · Что мы заметили</p><h2>Почему «Друзья» это нужно</h2>
+  <h2>Почему «Друзья» это нужно</h2>
   <ol class="f"><li><span>5,0 и 222 оценки в 2ГИС — самый высокий рейтинг среди баров города, но своего сайта нет: в Яндексе вас находят только через карты и ВКонтакте.</span></li><li><span>Вы сами отвечаете на отзывы — гостям это видно. Бот после вечера попросит оценку в 2ГИС, и отзывов станет больше без лишних усилий.</span></li><li><span>Бронь сейчас — звонком или в Telegram. Бронь ниши на сайте и в боте работает и в час ночи, когда администратору не до телефона.</span></li><li><span>В одном из отзывов гость удивился минимальному чеку. При онлайн-брони условия видны заранее — меньше неловких ситуаций и спорных оценок.</span></li><li><span>Гости хвалят музыку, настольные игры, чай и персонал — это и покажем на сайте. Кальян по закону нельзя рекламировать в интернете, поэтому сайт продаёт атмосферу: свет, диваны, компанию, вечер — гости и так знают, за чем идут.</span></li></ol>
 </div></section>
 <section><div class="w">
-  <p class="mono"><b>06</b> · Посчитайте сами</p><h2>Когда это окупается</h2>
+  <h2>Когда это окупается</h2>
   <p class="lead">Поставьте свои цифры: средний чек на гостя, сколько гостей в брони и сколько броней в месяц придёт с сайта, бота и приложения. Это не обещание, а арифметика.</p>
   <div class="calc"><label>Средний чек на гостя, ₽<input id="ck" type="number" inputmode="numeric" value="1500" min="0" step="100"></label><label>Гостей в одной брони<input id="gs" type="number" inputmode="numeric" value="3" min="1"></label><label>Новых броней в месяц<input id="nw" type="number" inputmode="numeric" value="8" min="0"></label></div>
   <div class="res" id="res"></div>
   <script>(()=>{const $=i=>document.getElementById(i),f=n=>Math.round(n).toLocaleString('ru-RU');const go=()=>{const one=(+$('ck').value||0)*(+$('gs').value||0),m=one*(+$('nw').value||0);$('res').innerHTML='<span class="mono">Выручка от новых броней</span><b>'+f(m)+' ₽ в месяц</b><p>'+(m>0?'Одна бронь — это '+f(one)+' ₽. «Сайт + бронь» за 48 900 ₽ окупается примерно за '+Math.max(1,Math.ceil(48900/m))+' мес., сайт по подписке (4 900 ₽ в месяц) — с '+Math.max(1,Math.ceil(4900/(one||1)))+'-й брони.':'')+'</p>';};['ck','gs','nw'].forEach(i=>$(i).oninput=go);go();})();</script>
 </div></section>
 <section><div class="w">
-  <p class="mono"><b>07</b> · Что входит</p><h2>Всё, чтобы гость нашёл вас и забронировал</h2>
+  <h2>Всё, чтобы гость нашёл вас и забронировал</h2>
   <ul class="inc"><li>Сайт в стиле вашего места: фото зала, атмосфера, события</li><li>Меню с ценами и вкладками, удобное с телефона</li><li>Бронь столика без звонка: дата, время, гости, зона зала</li><li>Предзаказ блюд к приходу — кухня готовит заранее</li><li>Заявка на банкет с расчётом</li><li>Рейтинг и отзывы из 2ГИС на первом экране</li><li>Афиша вечеров и событий</li><li>Кнопки звонка, MAX, Telegram и ВКонтакте</li><li>Настройка под поиск Яндекса и карты</li><li>Яндекс Метрика: сколько гостей пришло и откуда</li><li>Политика и согласие по 152-ФЗ, без рекламы алкоголя и кальяна</li><li>Домен, хостинг и SSL — берём на себя</li></ul>
 </div></section>
 <section><div class="w">
-  <p class="mono"><b>08</b> · Сколько стоит</p><h2>Фиксированная цена, срок от 5 дней</h2>
+  <h2>Фиксированная цена, срок от 5 дней</h2>
   <div class="price"><div class=""><span class="mono">Сайт с меню</span><b>31 900 ₽</b><p>Сайт под ваш стиль: меню с ценами, события, банкеты, отзывы, карта. Яндекс и скорость. 5 дней.</p></div><div class="hit"><span class="mono">Сайт + бронь</span><b>48 900 ₽</b><p>Плюс бронь столика с предзаказом блюд и уведомления администратору в MAX или Telegram. 3 месяца сопровождения в подарок.</p></div><div class=""><span class="mono">Всё вместе</span><b>71 900 ₽</b><p>Сайт, бронь, приложение гостя с баллами и сертификатами, бот брони. 3 месяца сопровождения в подарок.</p></div></div>
   <p class="note">Или сайт по подписке: 0 ₽ за разработку и 4 900 ₽ в месяц. Демо с вашим меню и фото покажем до оплаты — бесплатно.</p>
 </div></section>
 <section><div class="w">
-  <p class="mono"><b>09</b> · Частые вопросы</p><h2>Коротко о главном</h2>
+  <h2>Коротко о главном</h2>
   <details class="q"><summary>У нас всё идёт через ВКонтакте и телефон. Зачем сайт?</summary><p>ВКонтакте и телефон остаются. Сайт добавляет тех, кто ищет «бар рядом» в Яндексе и на картах, и тех, кто хочет забронировать стол поздно вечером, когда никто не берёт трубку.</p></details><details class="q"><summary>Можно показать барную карту и кальян?</summary><p>Нет: закон запрещает рекламировать алкоголь в интернете и кальян вообще (38-ФЗ, 15-ФЗ). На сайте — кухня, атмосфера, музыка, игры и события. Это защищает вас от штрафов, а гость всё равно знает, за чем идёт.</p></details><details class="q"><summary>У нас депозит или минимальный чек. Как быть?</summary><p>Условия покажем прямо при брони: гость видит их заранее и приходит без неожиданностей. Меньше спорных ситуаций и плохих отзывов.</p></details><details class="q"><summary>Как администратор узнаёт о брони?</summary><p>Сразу в MAX или Telegram: время, гости, зона, предзаказ и кнопки «Подтвердить» и «Перезвонить». Гостю приходит напоминание за 2 часа.</p></details><details class="q"><summary>Что нужно от меня?</summary><p>Около 15 минут: ответить на 5 вопросов, прислать меню, фото зала и схему столов. Тексты, дизайн и запуск делаем мы.</p></details><details class="q"><summary>Сколько ждать и кому принадлежит сайт?</summary><p>Демо с вашими данными — 2 дня, бесплатно. Готовый сайт — 5–10 дней после «да». Домен оформляем на вас, все доступы передаём.</p></details>
 </div></section>
 <section><div class="w">
-  <p class="mono"><b>10</b> · Кто делает</p>
+  
   <div class="who"><div class="mono-av">Р</div>
   <div><h2>Руслан, студия «Точка записи»</h2>
   <p class="lead">Делаю сайты, онлайн-бронь и приложения для лаунжей, баров и кафе Красноярского края. Вы общаетесь напрямую с тем, кто делает, без менеджеров. Работаю официально как самозанятый — чек на каждую оплату.</p>
   <div class="cta"><a class="btn" href="https://tochka-zapisi.github.io/" target="_blank" rel="noopener">Сайт студии и другие работы</a></div></div></div>
 </div></section>
 <section id="start" class="final"><div class="w">
-  <p class="mono"><b>11</b> · Как начнём</p><h2>Ответьте одним словом</h2>
+  <h2>Ответьте одним словом</h2>
   <ol class="f"><li><span>Напишите «интересно» — зададим 5 вопросов о зале, меню и вечерах.</span></li><li><span>За 2 дня соберём демо с вашими фото и меню — бесплатно.</span></li><li><span>Понравится — запускаем за 5–10 дней. Нет — вы ничего не должны.</span></li></ol>
   <div class="cta"><a class="btn p" href="https://t.me/opiumxxxxl">Написать в Telegram</a><a class="btn" href="https://wa.me/79130364962">WhatsApp</a><a class="btn" href="tel:+79130364962">+7 913 036-49-62</a></div>
 </div></section>

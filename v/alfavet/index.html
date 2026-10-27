@@ -5,7 +5,7 @@
 :root{--bg:#0a0a09;--bg2:#111110;--sf:#161614;--ink:#ebe7df;--mu:#8e8a83;--ln:#2a2926}
 *{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--ink);font:400 17px/1.55 Onest,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:inherit}.w{max-width:1120px;margin:0 auto;padding:0 20px}
-.mono{font:500 12px/1.4 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--mu)}
+.mono{font:500 14px/1.45 Onest,system-ui,sans-serif;color:var(--mu)}
 h1,h2{font-family:Spectral,Georgia,serif;font-weight:200;letter-spacing:-.01em;line-height:1.02}
 h1{font-size:clamp(44px,9vw,104px);margin:18px 0 22px}h2{font-size:clamp(34px,5.4vw,60px);margin:10px 0 18px}
 section{padding:72px 0;border-top:1px solid var(--ln)}
@@ -22,28 +22,28 @@ section{padding:72px 0;border-top:1px solid var(--ln)}
 .grid h3{font:500 19px/1.3 Onest,sans-serif;margin:18px 0 6px}.grid p{font-size:15px;color:var(--mu)}
 ol.f{list-style:none;padding:0;counter-reset:f;display:grid;gap:18px;max-width:760px}
 ol.f li{counter-increment:f;display:grid;grid-template-columns:56px 1fr;padding:20px 0;border-bottom:1px solid var(--ln)}
-ol.f li::before{content:"0" counter(f);font:300 30px/1 Spectral,serif;color:var(--mu)}
+ol.f li::before{content:counter(f);font:300 30px/1 Spectral,serif;color:var(--mu)}
 .price{display:grid;gap:1px;background:var(--ln);border:1px solid var(--ln);grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:30px}
 .price div{background:var(--bg2);padding:26px 22px}.price b{display:block;font:300 34px/1.1 Spectral,serif;margin:10px 0}.price p{font-size:14px;color:var(--mu)}
-.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{display:inline-flex;align-items:center;min-height:52px;padding:0 26px;border:1px solid var(--ink);text-decoration:none;font:500 13px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{display:inline-flex;align-items:center;min-height:52px;padding:0 26px;border:1px solid var(--ink);text-decoration:none;font:500 15px Onest,system-ui,sans-serif}
 .btn.p{background:var(--ink);color:var(--bg)}
 .who{display:grid;gap:24px;align-items:start;margin-top:18px}@media(min-width:700px){.who{grid-template-columns:180px 1fr}}.who img{width:160px;height:200px;object-fit:cover;filter:grayscale(1) contrast(1.05)}.who h2{margin-top:0}
 .mono-av{width:120px;height:120px;border:1px solid var(--ln);display:grid;place-items:center;font:200 64px Spectral,serif;color:var(--mu)}.note{font-size:13px;color:var(--mu);margin-top:40px}
 footer{padding:40px 0 60px;border-top:1px solid var(--ln);font-size:14px;color:var(--mu)}
-</style></head><body>
+.addr{margin:-8px 0 24px;font-size:15px;line-height:1.4;color:var(--mu)}@media(max-width:899px){h1{font-size:34px}}</style></head><body>
 <header class="w top">
-  <p class="mono">Для АльфаВет · Ленина, 23</p>
   <h1>АльфаВет. Сайт, запись и приложение в одном стиле</h1>
+  <p class="addr">Ленина, 23</p>
   <p class="lead">Мы студия «Точка записи» из Красноярска. Собрали для вас набросок: как клиника «АльфаВет» может выглядеть в интернете. Это займёт пару минут, ничего не нужно устанавливать.</p>
   <div class="stats"><div><b>4,5</b><span>рейтинг в 2ГИС</span></div><div><b>176</b><span>оценок клиентов</span></div><div><b>2</b><span>точки</span></div></div>
 </header>
 <section><div class="w">
-  <p class="mono">01 · Ваш сайт</p><h2>Так «АльфаВет» может выглядеть с телефона и компьютера</h2>
+  <h2>Так «АльфаВет» может выглядеть с телефона и компьютера</h2>
   <div class="duo"><div class="mac"><div class="mac-s"><img src="img/desk.webp" alt="Сайт АльфаВет на ноутбуке" width="1512" height="982"></div><div class="mac-b"></div></div><figure class="ph"><div class="ph-f"><img src="img/site.webp" alt="Первый экран на телефоне" width="402" height="874"><i></i></div><figcaption>Первый экран на телефоне</figcaption></figure></div>
   <p class="note">Набросок на основе нашей работы: тексты, фото и цены будут ваши. Стиль подбираем под интерьер и характер места.</p>
 </div></section>
 <section><div class="w">
-  <p class="mono">02 · Что можно добавить</p><h2>Клиент записывается сам, без звонков</h2>
+  <h2>Клиент записывается сам, без звонков</h2>
   <div class="grid">
     <div><figure class="ph"><div class="ph-f"><img src="img/zapis.webp" alt="Онлайн-запись" width="402" height="874"><i></i></div><figcaption>Онлайн-запись</figcaption></figure><h3>Онлайн-запись</h3><p>Услуга, мастер, время за минуту. Вам приходит уведомление в MAX или Telegram.</p></div>
     <div><figure class="ph"><div class="ph-f"><img src="img/app.webp" alt="Приложение клиента" width="402" height="874"><i></i></div><figcaption>Приложение клиента</figcaption></figure><h3>Приложение на телефоне клиента</h3><p>Иконка на экране: запись, бонусная карта с QR, подарочные сертификаты.</p></div>
@@ -51,11 +51,11 @@ footer{padding:40px 0 60px;border-top:1px solid var(--ln);font-size:14px;color:v
   </div>
 </div></section>
 <section><div class="w">
-  <p class="mono">03 · Что мы заметили</p><h2>Почему это стоит сделать</h2>
+  <h2>Почему это стоит сделать</h2>
   <ol class="f"><li><span>176 оценок в 2ГИС, а своего сайта нет: в поиске Яндекса вас находят только через карты.</span></li><li><span>В карточке 2ГИС нет онлайн-записи: записаться можно только звонком, а люди чаще выбирают вечером, когда трубку уже не берут.</span></li><li><span>2 точки, а единого места, где сравнить адреса, услуги и цены, нет.</span></li></ol>
 </div></section>
 <section><div class="w">
-  <p class="mono">04 · Сколько стоит</p><h2>Фиксированная цена, срок от 3 дней</h2>
+  <h2>Фиксированная цена, срок от 3 дней</h2>
   <div class="price">
     <div><span class="mono">Сайт</span><b>31 900 ₽</b><p>Сайт под ваш бренд, тексты, Яндекс, скорость. 5 дней.</p></div>
     <div><span class="mono">Сайт + запись</span><b>48 900 ₽</b><p>Плюс онлайн-запись и уведомления. 3 месяца сопровождения в подарок.</p></div>
@@ -64,14 +64,14 @@ footer{padding:40px 0 60px;border-top:1px solid var(--ln);font-size:14px;color:v
   <p class="note">Или сайт по подписке: 0 ₽ за разработку и 4 900 ₽ в месяц. Готовое демо с вашими фото и ценами покажем до оплаты.</p>
 </div></section>
 <section><div class="w">
-  <p class="mono">05 · Кто делает</p>
+  
   <div class="who"><div class="mono-av">Р</div>
   <div><h2>Руслан, студия «Точка записи»</h2>
   <p class="lead">Делаю сайты, онлайн-запись и приложения для бизнеса Красноярска. Вы общаетесь напрямую с тем, кто делает, без менеджеров. Работаю официально как самозанятый — чек на каждую оплату.</p>
   <div class="cta"><a class="btn" href="https://tochka-zapisi.github.io/" target="_blank" rel="noopener">Сайт студии и другие работы</a></div></div></div>
 </div></section>
 <section><div class="w">
-  <p class="mono">06 · Как начнём</p><h2>Ответьте одним словом</h2>
+  <h2>Ответьте одним словом</h2>
   <ol class="f"><li><span>Напишите «интересно» — зададим 5 вопросов о ценах, мастерах и фото.</span></li><li><span>За 2 дня соберём демо с вашими данными, бесплатно.</span></li><li><span>Понравится — запускаем. Нет — вы ничего не должны.</span></li></ol>
   <div class="cta"><a class="btn p" href="https://t.me/opiumxxxxl">Написать в Telegram</a><a class="btn" href="https://wa.me/79130364962">WhatsApp</a><a class="btn" href="tel:+79130364962">+7 913 036-49-62</a></div>
 </div></section>

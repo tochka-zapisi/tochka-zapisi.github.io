@@ -8,7 +8,7 @@
 :root{--bg:#0a0a09;--bg2:#111110;--sf:#161614;--ink:#ebe7df;--mu:#8e8a83;--ln:#2a2926}
 *{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--ink);font:400 17px/1.55 Onest,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:inherit}.w{max-width:1120px;margin:0 auto;padding:0 20px}
-.mono{font:500 12px/1.4 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--mu)}
+.mono{font:500 13px/1.4 Onest,system-ui,sans-serif;letter-spacing: .01em; color:var(--mu); font-variant-numeric: tabular-nums }
 h1,h2{font-family:Spectral,Georgia,serif;font-weight:200;letter-spacing:-.01em;line-height:1.02}
 h1{font-size:clamp(44px,9vw,104px);margin:18px 0 22px}h2{font-size:clamp(34px,5.4vw,60px);margin:10px 0 18px}
 section{padding:72px 0;border-top:1px solid var(--ln)}
@@ -29,19 +29,23 @@ details.q{border-bottom:1px solid var(--ln);padding:16px 0}details.q summary{cur
 .grid h3{font:500 19px/1.3 Onest,sans-serif;margin:18px 0 6px}.grid p{font-size:15px;color:var(--mu)}
 ol.f{list-style:none;padding:0;counter-reset:f;display:grid;gap:18px;max-width:760px}
 ol.f li{counter-increment:f;display:grid;grid-template-columns:56px 1fr;padding:20px 0;border-bottom:1px solid var(--ln)}
-ol.f li::before{content:"0" counter(f);font:300 30px/1 Spectral,serif;color:var(--mu)}
+ol.f li::before{content:counter(f);font:300 30px/1 Spectral,serif;color:var(--mu)}
 .price{display:grid;gap:1px;background:var(--ln);border:1px solid var(--ln);grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:30px}
 .price div{background:var(--bg2);padding:26px 22px}.price b{display:block;font:300 34px/1.1 Spectral,serif;margin:10px 0}.price p{font-size:14px;color:var(--mu)}
-.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{display:inline-flex;align-items:center;min-height:52px;padding:0 26px;border:1px solid var(--ink);text-decoration:none;font:500 13px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{display:inline-flex;align-items:center;min-height:52px;padding:0 26px;border:1px solid var(--ink);text-decoration:none;font:500 13px Onest,system-ui,sans-serif;letter-spacing: .01em; font-variant-numeric: tabular-nums }
 .btn.p{background:var(--ink);color:var(--bg)}
 .who{display:grid;gap:24px;align-items:start;margin-top:18px}@media(min-width:700px){.who{grid-template-columns:180px 1fr}}.who img{width:160px;height:200px;object-fit:cover;filter:grayscale(1) contrast(1.05)}.who h2{margin-top:0}
 .mono-av{width:120px;height:120px;border:1px solid var(--ln);display:grid;place-items:center;font:200 64px Spectral,serif;color:var(--mu)}.note{font-size:13px;color:var(--mu);margin-top:40px}
+h1.long{font-size:clamp(34px,7vw,64px)}
+.h-sub{font:400 clamp(24px,3.4vw,34px)/1.2 Spectral,serif;margin:-6px 0 14px;max-width:560px}
+.addr{margin:0 0 24px;font-size:15px;line-height:1.4;color:var(--mu)}
 footer{padding:40px 0 60px;border-top:1px solid var(--ln);font-size:14px;color:var(--mu)}
 </style></head><body>
 <header class="w top hero">
   <div>
-  <p class="mono">Для Пространство здорового тела · Линейная улица, 122</p>
-  <h1>Пространство здорового тела. Сайт, запись и приложение в одном стиле</h1>
+  <h1 class="long">Пространство здорового тела</h1>
+  <p class="h-sub">Сайт, запись и приложение в одном стиле</p>
+  <p class="addr">Линейная улица, 122</p>
   <p class="lead">Мы студия «Точка записи» из Красноярска. Собрали для вас набросок: как «Пространство здорового тела» может выглядеть в интернете — с вашим названием, адресом и рейтингом. Это пара минут, ничего не нужно устанавливать.</p>
   <div class="stats"><div><b>5,0</b><span>рейтинг в 2ГИС</span></div><div><b>210</b><span>оценок клиентов</span></div></div>
   <div class="cta"><a class="btn p" href="#start">Хочу такой сайт</a><a class="btn" href="#site">Смотреть набросок</a></div>
@@ -49,12 +53,12 @@ footer{padding:40px 0 60px;border-top:1px solid var(--ln);font-size:14px;color:v
   <figure class="ph"><div class="ph-f"><img src="img/site.webp" alt="Ваш сайт на телефоне" width="402" height="874"><i></i></div><figcaption>Ваш сайт на телефоне</figcaption></figure>
 </header>
 <section id="site"><div class="w">
-  <p class="mono">01 · Ваш сайт</p><h2>Так «Пространство здорового тела» может выглядеть с телефона и компьютера</h2>
+  <h2>Так «Пространство здорового тела» может выглядеть с телефона и компьютера</h2>
   <div class="mac"><div class="mac-s"><img src="img/desk.webp" alt="Сайт Пространство здорового тела на ноутбуке" width="1512" height="982"></div><div class="mac-b"></div></div>
   <p class="note">Набросок на основе нашей работы: тексты, фото и цены будут ваши. Стиль подбираем под интерьер и характер места.</p>
 </div></section>
 <section><div class="w">
-  <p class="mono">02 · Что можно добавить</p><h2>Клиент записывается сам, без звонков</h2>
+  <h2>Клиент записывается сам, без звонков</h2>
   <div class="grid">
     <div><figure class="ph"><div class="ph-f"><img src="img/zapis.webp" alt="Онлайн-запись" width="402" height="874"><i></i></div><figcaption>Онлайн-запись</figcaption></figure><h3>Онлайн-запись</h3><p>Услуга, мастер, время за минуту. Вам приходит уведомление в MAX или Telegram.</p></div>
     <div><figure class="ph"><div class="ph-f"><img src="img/app.webp" alt="Приложение клиента" width="402" height="874"><i></i></div><figcaption>Приложение клиента</figcaption></figure><h3>Приложение на телефоне клиента</h3><p>Иконка на экране: запись, бонусная карта с QR, подарочные сертификаты.</p></div>
@@ -62,22 +66,22 @@ footer{padding:40px 0 60px;border-top:1px solid var(--ln);font-size:14px;color:v
   </div>
 </div></section>
 <section><div class="w">
-  <p class="mono">03 · Что мы заметили</p><h2>Почему это стоит сделать</h2>
+  <h2>Почему это стоит сделать</h2>
   <ol class="f"><li><span>210 оценок в 2ГИС, а своего сайта нет: в поиске Яндекса вас находят только через карты.</span></li><li><span>Запись — на странице YCLIENTS: без ваших фото, отзывов и стиля. Её можно встроить в свой сайт.</span></li><li><span>Рейтинг 5 стоит показать на сайте сразу, на первом экране: это лучший довод для нового клиента.</span></li></ol>
 </div></section>
 <section><div class="w">
-  <p class="mono">04 · Что входит</p><h2>Всё, чтобы клиент нашёл вас и записался</h2>
+  <h2>Всё, чтобы клиент нашёл вас и записался</h2>
   <ul class="inc"><li>Сайт под ваш стиль: фото, услуги, цены</li><li>Удобно с телефона — открывается за секунду</li><li>Рейтинг и отзывы из 2ГИС на первом экране</li><li>Мастера или специалисты с фото</li><li>Карта, адрес и как добраться</li><li>Кнопки звонка, MAX, Telegram и WhatsApp</li><li>Настройка под поиск Яндекса</li><li>Онлайн-запись с уведомлением вам</li><li>Яндекс Метрика: сколько людей пришло и откуда</li><li>Политика и согласие по закону 152-ФЗ</li><li>Домен, хостинг и SSL — берём на себя</li><li>Правки после запуска</li></ul>
 </div></section>
 <section><div class="w">
-  <p class="mono">05 · Посчитайте сами</p><h2>Когда это окупается</h2>
+  <h2>Когда это окупается</h2>
   <p class="lead">Поставьте свой средний чек и сколько новых записей в месяц принесёт сайт. Это не обещание, а простая арифметика — цифры ваши.</p>
   <div class="calc"><label>Средний чек, ₽<input id="ck" type="number" inputmode="numeric" value="2000" min="0" step="100"></label><label>Новых записей в месяц<input id="nw" type="number" inputmode="numeric" value="4" min="0"></label></div>
   <div class="res" id="res"></div>
   <script>(()=>{const f=n=>Math.round(n).toLocaleString('ru-RU'),ck=document.getElementById('ck'),nw=document.getElementById('nw'),r=document.getElementById('res');const go=()=>{const m=(+ck.value||0)*(+nw.value||0);r.innerHTML='Выручка от новых записей: <b>'+f(m)+' ₽ в месяц</b>'+(m>0?'Сайт по подписке (4 900 ₽ в месяц) окупается с '+Math.max(1,Math.ceil(4900/(+ck.value||1)))+'-й записи, сайт с записью за 48 900 ₽ — примерно за '+Math.max(1,Math.ceil(48900/m))+' мес.':'');};ck.oninput=nw.oninput=go;go();})();</script>
 </div></section>
 <section><div class="w">
-  <p class="mono">06 · Сколько стоит</p><h2>Фиксированная цена, срок от 3 дней</h2>
+  <h2>Фиксированная цена, срок от 3 дней</h2>
   <div class="price">
     <div><span class="mono">Сайт</span><b>31 900 ₽</b><p>Сайт под ваш бренд, тексты, Яндекс, скорость. 5 дней.</p></div>
     <div><span class="mono">Сайт + запись</span><b>48 900 ₽</b><p>Плюс онлайн-запись и уведомления. 3 месяца сопровождения в подарок.</p></div>
@@ -86,18 +90,18 @@ footer{padding:40px 0 60px;border-top:1px solid var(--ln);font-size:14px;color:v
   <p class="note">Или сайт по подписке: 0 ₽ за разработку и 4 900 ₽ в месяц. Готовое демо с вашими фото и ценами покажем до оплаты.</p>
 </div></section>
 <section><div class="w">
-  <p class="mono">07 · Частые вопросы</p><h2>Коротко о главном</h2>
+  <h2>Коротко о главном</h2>
   <details class="q"><summary>У нас уже есть YCLIENTS или DIKIDI. Что с ним?</summary><p>Оставляем: встроим вашу запись в сайт, чтобы человек видел ваши фото и отзывы, а записывался туда же. Ничего переносить не нужно.</p></details><details class="q"><summary>Что нужно от меня?</summary><p>Около 15 минут: ответить на 5 вопросов, прислать фото и прайс. Тексты, дизайн, настройку и публикацию делаем мы.</p></details><details class="q"><summary>Сколько ждать?</summary><p>Демо с вашими данными — 2 дня, бесплатно. Готовый сайт — от 3 до 7 дней после «да».</p></details><details class="q"><summary>А если не понравится?</summary><p>Демо ни к чему не обязывает: не подошло — просто скажите, вы ничего не должны.</p></details><details class="q"><summary>Кому принадлежит сайт?</summary><p>Вам: домен оформляем на вас, все файлы и доступы передаём.</p></details>
 </div></section>
 <section><div class="w">
-  <p class="mono">08 · Кто делает</p>
+  
   <div class="who"><div class="mono-av">Р</div>
   <div><h2>Руслан, студия «Точка записи»</h2>
   <p class="lead">Делаю сайты, онлайн-запись и приложения для бизнеса Красноярска. Вы общаетесь напрямую с тем, кто делает, без менеджеров. Работаю официально как самозанятый — чек на каждую оплату.</p>
   <div class="cta"><a class="btn" href="https://tochka-zapisi.github.io/" target="_blank" rel="noopener">Сайт студии и другие работы</a></div></div></div>
 </div></section>
 <section id="start"><div class="w">
-  <p class="mono">09 · Как начнём</p><h2>Ответьте одним словом</h2>
+  <h2>Ответьте одним словом</h2>
   <ol class="f"><li><span>Напишите «интересно» — зададим 5 вопросов о ценах, мастерах и фото.</span></li><li><span>За 2 дня соберём демо с вашими данными, бесплатно.</span></li><li><span>Понравится — запускаем. Нет — вы ничего не должны.</span></li></ol>
   <div class="cta"><a class="btn p" href="https://t.me/opiumxxxxl">Написать в Telegram</a><a class="btn" href="https://wa.me/79130364962">WhatsApp</a><a class="btn" href="tel:+79130364962">+7 913 036-49-62</a></div>
 </div></section>
