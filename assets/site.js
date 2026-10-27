@@ -174,7 +174,8 @@
     /* скрытые кадры ленты — без src (data-src): на медленном телефоне первый экран не ждёт пять невидимых картинок.
        Длинные снимки — после загрузки страницы (под заставкой они ещё стоят), иначе ими занят канал до первой отрисовки */
     const armRe = () => {
-      [shows[ri], shows[(ri + 1) % shows.length]].forEach(s => { const im = $('img', s); if (!window.__arm && !im.getAttribute('src') && im.dataset.src) im.src = im.dataset.src; });
+      /* показанный кадр без картинки (длинный снимок ещё грузится на плохой связи) — сразу обычный снимок, чтобы не было пустого экрана */
+      [shows[ri], shows[(ri + 1) % shows.length]].forEach((s, k) => { const im = $('img', s); if ((!window.__arm || k === 0) && !im.getAttribute('src') && im.dataset.src) im.src = im.dataset.src; });
       if (armOk && window.__arm) { window.__arm(shows[ri]); window.__arm(shows[(ri + 1) % shows.length]); }
     };
     const show = i => {
