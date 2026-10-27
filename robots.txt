@@ -1,2 +1,13 @@
+# Сайт студии «Точка записи»: страницы студии открыты для поиска, демо-сайты (папки рядом) — закрыты
 User-agent: *
+Allow: /$
+Allow: /index.html
+Allow: /reklama.html
+Allow: /master.html
+Allow: /en/$
+Allow: /en/index.html
+Allow: /assets/
+Allow: /og.jpg
 Disallow: /
+
+Sitemap: https://tochka-zapisi.github.io/sitemap.xml

@@ -9,6 +9,7 @@
 <link rel="canonical" href="https://tochka-zapisi.github.io/">
 <link rel="alternate" hreflang="ru" href="https://tochka-zapisi.github.io/">
 <link rel="alternate" hreflang="en" href="https://tochka-zapisi.github.io/en/">
+<link rel="alternate" hreflang="x-default" href="https://tochka-zapisi.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Точка записи — сайт, который записывает клиентов. Даже ночью">
 <meta property="og:description" content="Сайт, онлайн-запись, бот и приложение для бизнеса. Демо — бесплатно, за 1 день, до оплаты.">
@@ -20,7 +21,6 @@
 <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/geologica-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/jetbrains-mono-var-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <script>/* заставка «Неделя заполняется»: один раз за визит, не при «меньше движения»; без скрипта её нет */try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!sessionStorage.getItem('tz-intro')){document.documentElement.classList.add('intro');sessionStorage.setItem('tz-intro','1')}}catch(e){}</script>
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="assets/site.css">
@@ -89,7 +89,7 @@ t.push(setTimeout(function(){h.classList.add('intro-go')},2150));t.push(setTimeo
   <div class="hero-dev" id="heroDev">
     <div class="hd-lt dv-lt"><div class="dv-lt-lid"><div class="dv-scr hd-reel" id="reel">
       <div class="hd-s dv-live is-cur" data-href="vinil/" data-cap="Винил · барбершоп · стиль «Квартирник»"><img src="assets/work/pf/vinil-lt.webp" data-live="assets/work/live/vinil-lt.webp" width="1200" height="779" alt="Демо-сайт барбершопа «Винил» на ноутбуке" fetchpriority="high"></div>
-      <div class="hd-s dv-live" data-href="tiho/" data-cap="Тихо · массаж и SPA · стиль «Облака»"><img data-src="assets/work/pf/tiho-lt.webp" data-live="assets/work/live/tiho-lt.webp" width="1200" height="779" alt="Демо-сайт студии массажа «Тихо»" loading="lazy"></div>
+      <div class="hd-s dv-live" data-href="tiho/" data-cap="Тихо · массаж и спа · стиль «Облака»"><img data-src="assets/work/pf/tiho-lt.webp" data-live="assets/work/live/tiho-lt.webp" width="1200" height="779" alt="Демо-сайт студии массажа «Тихо»" loading="lazy"></div>
       <div class="hd-s dv-live" data-href="blik/" data-cap="Блик · детейлинг · стиль «Свет»"><img data-src="assets/work/pf/blik-lt.webp" data-live="assets/work/live/blik-lt.webp" width="1200" height="779" alt="Демо-сайт детейлинга «Блик»" loading="lazy"></div>
       <div class="hd-s dv-live" data-href="myata/" data-cap="Мята · ветклиника · стиль «Лист»"><img data-src="assets/work/pf/myata-lt.webp" data-live="assets/work/live/myata-lt.webp" width="1200" height="779" alt="Демо-сайт ветклиники «Мята»" loading="lazy"></div>
       <div class="hd-s dv-live" data-href="mun/" data-cap="Moon · бар · стиль «Полночь»"><img data-src="assets/work/pf/mun-lt.webp" data-live="assets/work/live/mun-lt.webp" width="1200" height="779" alt="Демо-сайт бара Moon" loading="lazy"></div>
@@ -270,7 +270,7 @@ t.push(setTimeout(function(){h.classList.add('intro-go')},2150));t.push(setTimeo
       <div class="pf-f" id="pfF" role="group" aria-label="Показать работы по нише">
         <button type="button" data-f="all" aria-pressed="true">Все</button>
         <button type="button" data-f="barber" aria-pressed="false">Барбершопы</button>
-        <button type="button" data-f="beauty" aria-pressed="false">Красота и SPA</button>
+        <button type="button" data-f="beauty" aria-pressed="false">Красота и спа</button>
         <button type="button" data-f="auto" aria-pressed="false">Авто</button>
         <button type="button" data-f="food" aria-pressed="false">Бары и кафе</button>
         <button type="button" data-f="clinic" aria-pressed="false">Клиники</button>
@@ -304,7 +304,7 @@ t.push(setTimeout(function(){h.classList.add('intro-go')},2150));t.push(setTimeo
           <div class="dv-lt"><div class="dv-lt-lid"><div class="dv-scr dv-live"><img src="assets/work/pf/tiho-lt.webp" data-live="assets/work/live/tiho-lt.webp" width="1200" height="779" alt="" loading="lazy"></div></div><i class="dv-lt-base"></i></div>
           <div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/tiho-ph.webp" data-live="assets/work/live/tiho-ph.webp" width="600" height="1304" alt="" loading="lazy"></div></div></div>
         </div>
-        <div class="pf-txt"><span class="mono">Массаж и SPA</span><b>Тихо</b><span class="pf-st mono">стиль «Облака» · демо</span><span class="pf-what">заставка «Свеча» · вечер для двоих · сертификаты</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
+        <div class="pf-txt"><span class="mono">Массаж и спа</span><b>Тихо</b><span class="pf-st mono">стиль «Облака» · демо</span><span class="pf-what">заставка «Свеча» · вечер для двоих · сертификаты</span><span class="pf-go">Открыть и потрогать <span>→</span></span></div>
       </a></li>
       <li class="pf-i" data-g="beauty"><a href="mramor/">
         <div class="pf-vis" aria-hidden="true">
@@ -484,10 +484,10 @@ t.push(setTimeout(function(){h.classList.add('intro-go')},2150));t.push(setTimeo
     <ul class="st" id="st">
       <li><a href="stal/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/stal-ph.webp" data-live="assets/work/live/stal-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Ателье</b><span class="st-w">тёмный зал, видео на первом экране, латунь и сталь</span><span class="st-for mono">барбершопы · клиники · авто</span></a></li>
       <li><a href="vinil/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/vinil-ph.webp" data-live="assets/work/live/vinil-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Квартирник</b><span class="st-w">сайт-пластинка: трек-лист цен, «состав группы»</span><span class="st-for mono">барбершопы · студии</span></a></li>
-      <li><a href="tiho/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/tiho-ph.webp" data-live="assets/work/live/tiho-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Облака</b><span class="st-w">свеча зажигается и раскрывает первый экран</span><span class="st-for mono">SPA · массаж · косметология</span></a></li>
+      <li><a href="tiho/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/tiho-ph.webp" data-live="assets/work/live/tiho-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Облака</b><span class="st-w">свеча зажигается и раскрывает первый экран</span><span class="st-for mono">Спа · массаж · косметология</span></a></li>
       <li><a href="blik/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/blik-ph.webp" data-live="assets/work/live/blik-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Свет</b><span class="st-w">тёмный бокс, световая решётка, блик по лаку</span><span class="st-for mono">детейлинг · оклейка · тюнинг</span></a></li>
       <li><a href="mun/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/mun-ph.webp" data-live="assets/work/live/mun-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Полночь</b><span class="st-w">сайт живёт по часам вечера, неон и бронь</span><span class="st-for mono">бары · кафе · кондитерские</span></a></li>
-      <li><a href="mramor/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/mramor-ph.webp" data-live="assets/work/live/mramor-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Форма</b><span class="st-w">арки, мягкий свет, занятие по минутам</span><span class="st-for mono">пилатес · йога · SPA</span></a></li>
+      <li><a href="mramor/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/mramor-ph.webp" data-live="assets/work/live/mramor-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Форма</b><span class="st-w">арки, мягкий свет, занятие по минутам</span><span class="st-for mono">пилатес · йога · спа</span></a></li>
       <li><a href="myata/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/myata-ph.webp" data-live="assets/work/live/myata-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Лист</b><span class="st-w">светлый и дружелюбный, «кто у вас?»</span><span class="st-for mono">ветклиники · детские центры</span></a></li>
       <li><a href="granit/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr dv-live"><img src="assets/work/pf/granit-ph.webp" data-live="assets/work/live/granit-ph.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Бланк</b><span class="st-w">документ заполняется сам, печать ставится</span><span class="st-for mono">юристы · бухгалтеры · нотариусы</span></a></li>
       <li><a href="bazalt/"><div class="dv-ph"><div class="dv-ph-b"><div class="dv-scr"><img src="assets/work/sm/bazalt-phone.webp" width="600" height="1300" alt="" loading="lazy"></div></div></div><b>Табло</b><span class="st-w">табло расписания, ближайшая тренировка</span><span class="st-for mono">спорт · танцы · школы</span></a></li>
